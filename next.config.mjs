@@ -1,4 +1,5 @@
 import CompressionPlugin from "compression-webpack-plugin";
+import withBundleAnalyzer from "@next/bundle-analyzer";
 
 let userConfig = undefined;
 try {
@@ -14,7 +15,9 @@ try {
 }
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+})({
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -28,7 +31,9 @@ const nextConfig = {
     webpackBuildWorker: true,
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
+    outputFileTracingRoot: "./", // Trace only necessary files
   },
+  output: "standalone", // Enable standalone mode for smaller server bundles
   webpack: (config) => {
     // Enable code splitting and set max chunk size
     config.optimization.splitChunks = {
@@ -50,7 +55,7 @@ const nextConfig = {
     // Return the modified config
     return config;
   },
-};
+});
 
 if (userConfig) {
   // ESM imports will have a "default" property
