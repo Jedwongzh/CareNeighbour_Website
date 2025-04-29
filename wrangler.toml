@@ -1,0 +1,6 @@
+name = "careneighbor-website"
+compatibility_date = "2023-12-01"
+
+# Specify the build output directory for Pages
+[build]
+command = "npm run build"

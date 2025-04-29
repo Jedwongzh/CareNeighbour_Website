@@ -1,6 +1,8 @@
 "use client"
 
-import { useState, useRef } from "react"
+import type React from "react"
+
+import { useState, useRef, lazy, Suspense } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
@@ -10,15 +12,30 @@ import Autoplay from "embla-carousel-autoplay"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel"
-import { FeatureCarousel } from "@/components/feature-carousel"
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
 import { MobileNav } from "@/components/mobile-nav"
 import { joinWaitlist, submitFeedback } from "./actions"
 
+// Lazy load non-critical components
+const FeatureCarousel = lazy(() =>
+  import("@/components/feature-carousel").then((mod) => ({ default: mod.FeatureCarousel })),
+)
+
+// Loading fallback component
+const LoadingFallback = () => (
+  <div className="w-full h-64 flex items-center justify-center">
+    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-600"></div>
+  </div>
+)
+
 export default function LandingPage() {
   const router = useRouter()
-  const [waitlistStatus, setWaitlistStatus] = useState<{ success?: boolean; message?: string; error?: string } | null>(null)
-  const [feedbackStatus, setFeedbackStatus] = useState<{ success?: boolean; message?: string; error?: string } | null>(null)
+  const [waitlistStatus, setWaitlistStatus] = useState<{ success?: boolean; message?: string; error?: string } | null>(
+    null,
+  )
+  const [feedbackStatus, setFeedbackStatus] = useState<{ success?: boolean; message?: string; error?: string } | null>(
+    null,
+  )
   const [isSubmittingWaitlist, setIsSubmittingWaitlist] = useState(false)
   const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false)
   const [topWaitlistEmail, setTopWaitlistEmail] = useState("")
@@ -181,92 +198,95 @@ export default function LandingPage() {
           {/* Subtle Background Gradient */}
           <div className="absolute inset-0 bg-white z-0"></div>
 
-            <div className="container px-4 md:px-6 relative z-10">
-              <div className="max-w-5xl mx-auto">
+          <div className="container px-4 md:px-6 relative z-10">
+            <div className="max-w-5xl mx-auto">
               <div className="space-y-8 md:space-y-10">
-              <div className="flex flex-col md:flex-row md:items-center gap-3">
-                <motion.h1
-                className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-gray-900 leading-tight"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                >
-                Culturally Considerate Care, <span className="bg-gradient-to-r from-purple-700 to-gray-900 text-transparent bg-clip-text">Simplified.</span>
-                </motion.h1>
-                
-                <div className="hidden md:block flex-shrink-0 md:-ml-6">
-                <Image
-                  src="/images/CN_Figure2.png"
-                  alt="CareNeighbor Guide"
-                  width={220}
-                  height={220}
-                  className="object-contain"
-                />
+                <div className="flex flex-col md:flex-row md:items-center gap-3">
+                  <motion.h1
+                    className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-gray-900 leading-tight"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    Culturally Considerate Care,{" "}
+                    <span className="bg-gradient-to-r from-purple-700 to-gray-900 text-transparent bg-clip-text">
+                      Simplified.
+                    </span>
+                  </motion.h1>
+
+                  <div className="hidden md:block flex-shrink-0 md:-ml-6">
+                    <Image
+                      src="/images/CN_Figure2.png"
+                      alt="CareNeighbor Guide"
+                      width={220}
+                      height={220}
+                      className="object-contain"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <motion.p
-                className="text-xl md:text-2xl text-gray-600 max-w-3xl"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
-                CareNeighbour connects you with verified caregivers who understand your language and culture, making
-                finding the right support effortless.
-              </motion.p>
+                <motion.p
+                  className="text-xl md:text-2xl text-gray-600 max-w-3xl"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                  CareNeighbour connects you with verified caregivers who understand your language and culture, making
+                  finding the right support effortless.
+                </motion.p>
 
-              {/* CTAs: Experience Demo & Join Waitlist - Apple-style buttons */}
-              <motion.div
-                className="flex flex-col sm:flex-row gap-5 pt-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-              >
+                {/* CTAs: Experience Demo & Join Waitlist - Apple-style buttons */}
                 <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                animate={{ y: [0, -10, 0] }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  repeatType: "reverse"
-                }}
+                  className="flex flex-col sm:flex-row gap-5 pt-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
                 >
-                <Button
-                  size="lg"
-                  className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-6 text-lg h-auto"
-                  onClick={() => router.push("/app-demo")}
-                >
-                  <PlayCircle className="mr-2 h-5 w-5" />
-                  Experience CareNeighbour
-                </Button>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    animate={{ y: [0, -10, 0] }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Number.POSITIVE_INFINITY,
+                      repeatType: "reverse",
+                    }}
+                  >
+                    <Button
+                      size="lg"
+                      className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-6 text-lg h-auto"
+                      onClick={() => router.push("/app-demo")}
+                    >
+                      <PlayCircle className="mr-2 h-5 w-5" />
+                      Experience CareNeighbour
+                    </Button>
+                  </motion.div>
+
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    animate={{ y: [0, -10, 0] }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Number.POSITIVE_INFINITY,
+                      repeatType: "reverse",
+                      delay: 0.75, // Offset timing for second button
+                    }}
+                  >
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="rounded-full px-8 py-6 text-lg h-auto border-gray-300 hover:bg-gray-50"
+                      onClick={() => document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })}
+                    >
+                      Join Waitlist
+                      <ChevronRight className="ml-1 h-5 w-5" />
+                    </Button>
+                  </motion.div>
                 </motion.div>
-                
-                <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                animate={{ y: [0, -10, 0] }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  delay: 0.75 // Offset timing for second button
-                }}
-                >
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="rounded-full px-8 py-6 text-lg h-auto border-gray-300 hover:bg-gray-50"
-                  onClick={() => document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })}
-                >
-                  Join Waitlist
-                  <ChevronRight className="ml-1 h-5 w-5" />
-                </Button>
-                </motion.div>
-              </motion.div>
               </div>
             </div>
-            </div>
+          </div>
         </section>
 
         {/* Problem Statement Section - Apple-inspired with large typography and clean layout */}
@@ -277,41 +297,44 @@ export default function LandingPage() {
             {/* Text content - takes 60% width on desktop, full width on mobile */}
             <div className="flex flex-col mb-12 md:mb-16 md:max-w mx-auto">
               <div className="flex items-center gap-2 mb-8">
-          <div className="hidden md:block">
-            <Image
-              src="/images/CN_Figure1.png"
-              alt="CareNeighbor Guide"
-              width={220}
-              height={220}
-              className="object-contain"
-            />
-          </div>
-          <motion.h2
-            className="text-4xl md:text-6xl font-bold tracking-tight text-gray-900"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            Finding the Right Care Shouldn't Be a Struggle
-          </motion.h2>
+                <div className="hidden md:block">
+                  <Image
+                    src="/images/CN_Figure1.png"
+                    alt="CareNeighbor Guide"
+                    width={220}
+                    height={220}
+                    className="object-contain"
+                  />
+                </div>
+                <motion.h2
+                  className="text-4xl md:text-6xl font-bold tracking-tight text-gray-900"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                >
+                  Finding the Right Care Shouldn't Be a Struggle
+                </motion.h2>
               </div>
 
               <motion.div
-          className="space-y-6 text-lg md:text-xl text-gray-600"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+                className="space-y-6 text-lg md:text-xl text-gray-600"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
               >
-          <p>
-          Every year, thousands of people who don't speak English as their first language struggle to access the care they need. Language barriers, lack of time, and unfamiliarity with the system leave many feeling isolated and overlooked. It’s not just about translation — it’s about dignity, understanding, and culturally respectful support. Right now, too many are suffering in silence simply because the system wasn't built for them.
-          </p>
-          <p className="text-gray-800 font-medium">
-            We believe finding compassionate care that resonates with your cultural background should be simple
-            and stress-free.{" "}
-            <span className="text-purple-700">CareNeighbour is here to make that possible.</span>
-          </p>
+                <p>
+                  Every year, thousands of people who don't speak English as their first language struggle to access the
+                  care they need. Language barriers, lack of time, and unfamiliarity with the system leave many feeling
+                  isolated and overlooked. It's not just about translation — it's about dignity, understanding, and
+                  culturally respectful support. Right now, too many are suffering in silence simply because the system
+                  wasn't built for them.
+                </p>
+                <p className="text-gray-800 font-medium">
+                  We believe finding compassionate care that resonates with your cultural background should be simple
+                  and stress-free. <span className="text-purple-700">CareNeighbour is here to make that possible.</span>
+                </p>
               </motion.div>
             </div>
 
@@ -319,53 +342,53 @@ export default function LandingPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* First Image */}
               <motion.div
-          className="rounded-2xl overflow-hidden shadow-xl"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+                className="rounded-2xl overflow-hidden shadow-xl"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
               >
-          <Image
-            src="/images/senior-couple.jpg"
-            alt="Senior couple using technology"
-            width={500}
-            height={350}
-            className="object-cover w-full h-[300px]"
-          />
+                <Image
+                  src="/images/senior-couple.jpg"
+                  alt="Senior couple using technology"
+                  width={500}
+                  height={350}
+                  className="object-cover w-full h-[300px]"
+                />
               </motion.div>
-              
+
               {/* Second Image */}
               <motion.div
-          className="rounded-2xl overflow-hidden shadow-xl"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+                className="rounded-2xl overflow-hidden shadow-xl"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
               >
-          <Image
-            src="/images/seniors-cards.jpg"
-            alt="Seniors playing cards"
-            width={500}
-            height={350}
-            className="object-cover w-full h-[300px]"
-          />
+                <Image
+                  src="/images/seniors-cards.jpg"
+                  alt="Seniors playing cards"
+                  width={500}
+                  height={350}
+                  className="object-cover w-full h-[300px]"
+                />
               </motion.div>
-              
+
               {/* Third Image */}
               <motion.div
-          className="rounded-2xl overflow-hidden shadow-xl"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+                className="rounded-2xl overflow-hidden shadow-xl"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
               >
-          <Image
-            src="/images/seniors-social.jpg"
-            alt="Seniors socializing"
-            width={500}
-            height={350}
-            className="object-cover w-full h-[300px]"
-          />
+                <Image
+                  src="/images/seniors-social.jpg"
+                  alt="Seniors socializing"
+                  width={500}
+                  height={350}
+                  className="object-cover w-full h-[300px]"
+                />
               </motion.div>
             </div>
           </div>
@@ -396,112 +419,91 @@ export default function LandingPage() {
               plugins={[testimonialPlugin.current]}
               className="w-full max-w-none"
               opts={{
-          align: "start",
-          loop: true,
-          dragFree: true,
+                align: "start",
+                loop: true,
+                dragFree: true,
               }}
             >
               <CarouselContent className="-ml-4">
-          {/* Item 1 */}
-          <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
-            <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
-              <div className="flex items-center mb-4 text-gray-500">
-          <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-          <p className="text-sm font-medium">Maria, 48 (Spanish Speaking)</p>
-              </div>
-              <blockquote className="text-gray-700 justify-left flex-grow">
-              Finding someone who speaks Spanish and understands our traditions for my father was so hard. We
-              needed more than just basic help—we needed someone who could connect with him.
-              </blockquote>
-            </div>
-          </CarouselItem>
-          {/* Item 2 */}
-          <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
-            <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
-              <div className="flex items-center mb-4 text-gray-500">
-          <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-          <p className="text-sm font-medium">Chen, 41 (Mandarin Speaking)</p>
-              </div>
-              <blockquote className="text-gray-700 justify-left flex-grow">
-          My work hours are unpredictable. Trying to coordinate care for my mother, who prefers speaking
-          Mandarin, felt like a second job.
-              </blockquote>
-            </div>
-          </CarouselItem>
-          {/* Item 3 */}
-          <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
-            <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
-              <div className="flex items-center mb-4 text-gray-500">
-          <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-          <p className="text-sm font-medium">Ahmed, 55 (Arabic Speaking)</p>
-              </div>
-              <blockquote className="text-gray-700 justify-left flex-grow">
-          We needed someone urgently when my wife had surgery. Explaining the specific cultural needs and
-          dietary restrictions quickly was stressful. Finding the right caregiver felt impossible.
-              </blockquote>
-            </div>
-          </CarouselItem>
-          {/* Item 4 */}
-          <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
-            <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
-              <div className="flex items-center mb-4 text-gray-500">
-          <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-          <p className="text-sm font-medium">Sarah, 42</p>
-              </div>
-              <blockquote className="text-gray-700 justify-left flex-grow">
-          Living hours away from my mom needing daily assistance felt impossible. Finding reliable,
-          trustworthy help was a constant worry. I needed someone I could trust completely.
-              </blockquote>
-            </div>
-          </CarouselItem>
-          {/* Item 5 */}
-          <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
-            <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
-              <div className="flex items-center mb-4 text-gray-500">
-          <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-          <p className="text-sm font-medium">Elena, 52 (Russian Speaking)</p>
-              </div>
-              <blockquote className="text-gray-700 justify-left flex-grow">
-          When my father began showing signs of dementia, we struggled to find someone who could speak Russian and understand him. The language barrier made his confusion worse.
-              </blockquote>
-            </div>
-          </CarouselItem>
-          {/* Item 6 */}
-          <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
-            <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
-              <div className="flex items-center mb-4 text-gray-500">
-          <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-          <p className="text-sm font-medium">Raj, 45 (Hindi Speaking)</p>
-              </div>
-              <blockquote className="text-gray-700 justify-left flex-grow">
-          My parents moved here to help raise our children, but now they need care themselves. Finding someone who respects their vegetarian diet and understands Hindu customs has been incredibly challenging.
-              </blockquote>
-            </div>
-          </CarouselItem>
-          {/* Item 7 */}
-          <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
-            <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
-              <div className="flex items-center mb-4 text-gray-500">
-          <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-          <p className="text-sm font-medium">Fatima, 39 (Farsi Speaking)</p>
-              </div>
-              <blockquote className="text-gray-700 justify-left flex-grow">
-          After my mother's stroke, we needed someone who could communicate in Farsi and understand our prayer times and customs. The stress of translating medical instructions was overwhelming.
-              </blockquote>
-            </div>
-          </CarouselItem>
-          {/* Item 8 */}
-          <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
-            <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
-              <div className="flex items-center mb-4 text-gray-500">
-          <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-          <p className="text-sm font-medium">Min-Jun, 50 (Korean Speaking)</p>
-              </div>
-              <blockquote className="text-gray-700 justify-left flex-grow">
-          My mother-in-law refused help from anyone who didn't understand Korean culture. Finding someone who knew proper honorifics and cultural etiquette was essential for her dignity but nearly impossible.
-              </blockquote>
-            </div>
-          </CarouselItem>
+                {/* Item 1 */}
+                <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
+                  <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
+                    <div className="flex items-center mb-4 text-gray-500">
+                      <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
+                      <p className="text-sm font-medium">Maria, 48 (Spanish Speaking)</p>
+                    </div>
+                    <blockquote className="text-gray-700 justify-left flex-grow">
+                      Finding someone who speaks Spanish and understands our traditions for my father was so hard. We
+                      needed more than just basic help—we needed someone who could connect with him.
+                    </blockquote>
+                  </div>
+                </CarouselItem>
+                {/* Item 2 */}
+                <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
+                  <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
+                    <div className="flex items-center mb-4 text-gray-500">
+                      <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
+                      <p className="text-sm font-medium">Chen, 41 (Mandarin Speaking)</p>
+                    </div>
+                    <blockquote className="text-gray-700 justify-left flex-grow">
+                      My work hours are unpredictable. Trying to coordinate care for my mother, who prefers speaking
+                      Mandarin, felt like a second job.
+                    </blockquote>
+                  </div>
+                </CarouselItem>
+                {/* Item 3 */}
+                <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
+                  <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
+                    <div className="flex items-center mb-4 text-gray-500">
+                      <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
+                      <p className="text-sm font-medium">Ahmed, 55 (Arabic Speaking)</p>
+                    </div>
+                    <blockquote className="text-gray-700 justify-left flex-grow">
+                      We needed someone urgently when my wife had surgery. Explaining the specific cultural needs and
+                      dietary restrictions quickly was stressful. Finding the right caregiver felt impossible.
+                    </blockquote>
+                  </div>
+                </CarouselItem>
+                {/* Item 4 */}
+                <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
+                  <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
+                    <div className="flex items-center mb-4 text-gray-500">
+                      <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
+                      <p className="text-sm font-medium">Sarah, 42</p>
+                    </div>
+                    <blockquote className="text-gray-700 justify-left flex-grow">
+                      Living hours away from my mom needing daily assistance felt impossible. Finding reliable,
+                      trustworthy help was a constant worry. I needed someone I could trust completely.
+                    </blockquote>
+                  </div>
+                </CarouselItem>
+                {/* Item 5 */}
+                <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
+                  <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
+                    <div className="flex items-center mb-4 text-gray-500">
+                      <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
+                      <p className="text-sm font-medium">Elena, 52 (Russian Speaking)</p>
+                    </div>
+                    <blockquote className="text-gray-700 justify-left flex-grow">
+                      When my father began showing signs of dementia, we struggled to find someone who could speak
+                      Russian and understand him. The language barrier made his confusion worse.
+                    </blockquote>
+                  </div>
+                </CarouselItem>
+                {/* Item 6 */}
+                <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
+                  <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
+                    <div className="flex items-center mb-4 text-gray-500">
+                      <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
+                      <p className="text-sm font-medium">Raj, 45 (Hindi Speaking)</p>
+                    </div>
+                    <blockquote className="text-gray-700 justify-left flex-grow">
+                      My parents moved here to help raise our children, but now they need care themselves. Finding
+                      someone who respects their vegetarian diet and understands Hindu customs has been incredibly
+                      challenging.
+                    </blockquote>
+                  </div>
+                </CarouselItem>
               </CarouselContent>
             </Carousel>
           </div>
@@ -510,32 +512,32 @@ export default function LandingPage() {
         {/* How It Works Section - Apple-inspired with large numbers and clean layout */}
         <section id="how-it-works" className="w-full py-20 md:py-28 bg-white relative" ref={howItWorksRef}>
           {/* CN Figure - Positioned as a guide */}
-            <div className="container px-4 md:px-6">
+          <div className="container px-4 md:px-6">
             <div className="flex flex-col items-left justify-center space-y-4 text-center mb-16 md:mb-24">
               <motion.div
-              className="space-y-3 flex flex-col md:flex-row items-center justify-between w-full"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+                className="space-y-3 flex flex-col md:flex-row items-center justify-between w-full"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
               >
-              <div className="md:text-left flex-grow">
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-left text-gray-900">
-              Care, Simplified in 3 Steps
-              </h2>
-              <p className="max-w-[1800px] text-gray-600 text-lg md:text-xl lg:text-2xl text-left md:text-left mt-3">
-              Our intuitive platform makes finding the perfect culturally-matched caregiver effortless.
-              </p>
-              </div>
-              <div className="hidden md:block flex-shrink-0 ml-auto">
-              <Image
-              src="/images/CN_Figure3.png"
-              alt="CareNeighbor Guide"
-              width={220}
-              height={220}
-              className="object-contain"
-              />
-              </div>
+                <div className="md:text-left flex-grow">
+                  <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-left text-gray-900">
+                    Care, Simplified in 3 Steps
+                  </h2>
+                  <p className="max-w-[1800px] text-gray-600 text-lg md:text-xl lg:text-2xl text-left md:text-left mt-3">
+                    Our intuitive platform makes finding the perfect culturally-matched caregiver effortless.
+                  </p>
+                </div>
+                <div className="hidden md:block flex-shrink-0 ml-auto">
+                  <Image
+                    src="/images/CN_Figure3.png"
+                    alt="CareNeighbor Guide"
+                    width={220}
+                    height={220}
+                    className="object-contain"
+                  />
+                </div>
               </motion.div>
             </div>
 
@@ -608,7 +610,14 @@ export default function LandingPage() {
                 transition={{ duration: 0.6 }}
               >
                 <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-gray-900">
-                  When <span className="bg-gradient-to-r from-purple-700 to-gray-900 text-transparent bg-clip-text">Technology</span> Meets <span className="bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">Compassion</span>
+                  When{" "}
+                  <span className="bg-gradient-to-r from-purple-700 to-gray-900 text-transparent bg-clip-text">
+                    Technology
+                  </span>{" "}
+                  Meets{" "}
+                  <span className="bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
+                    Compassion
+                  </span>
                 </h2>
                 <p className="max-w-[900px] text-gray-600 text-lg md:text-xl lg:text-2xl text-center">
                   Explore the features designed to make finding and managing care seamless and effective.
@@ -617,7 +626,9 @@ export default function LandingPage() {
             </div>
 
             {/* Feature Carousel Component */}
-            <FeatureCarousel />
+            <Suspense fallback={<LoadingFallback />}>
+              <FeatureCarousel />
+            </Suspense>
 
             {/* Try Our Demo Button - Apple-style prominent CTA */}
             <motion.div
@@ -712,7 +723,7 @@ export default function LandingPage() {
                     duration: 0.6,
                     delay: 0.4,
                     hover: { type: "spring", stiffness: 400, damping: 17 },
-                    tap: { type: "spring", stiffness: 400, damping: 17 }
+                    tap: { type: "spring", stiffness: 400, damping: 17 },
                   }}
                 >
                   <Button
