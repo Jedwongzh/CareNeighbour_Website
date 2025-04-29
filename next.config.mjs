@@ -1,3 +1,5 @@
+import CompressionPlugin from 'compression-webpack-plugin';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -64,7 +66,7 @@ const nextConfig = {
 
     return config;
   },
-});
+};
 
 if (userConfig) {
   const config = userConfig.default || userConfig;
