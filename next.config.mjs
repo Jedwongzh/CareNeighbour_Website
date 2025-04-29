@@ -54,9 +54,9 @@ const nextConfig = {
 
     return config;
   },
-  // Optimize image loading
+  // Optimize package imports without CSS optimization
   experimental: {
-    optimizeCss: true,
+    // Removed optimizeCss: true as it requires the critters package
     optimizePackageImports: ['lucide-react', 'framer-motion', 'recharts'],
   },
 };
