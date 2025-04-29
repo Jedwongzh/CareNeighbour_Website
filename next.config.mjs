@@ -22,7 +22,7 @@ const nextConfig = {
   webpack: (config, { isServer }) => {
     // Enable aggressive code splitting and smaller chunks
     config.optimization.splitChunks = {
-      chunks: 'all',
+      chunks: "all",
       maxInitialRequests: 25,
       minSize: 20000,
       maxSize: 25000, // Reduce chunk size to 25 KB
@@ -30,8 +30,8 @@ const nextConfig = {
         default: false,
         vendors: false,
         commons: {
-          name: 'commons',
-          chunks: 'all',
+          name: "commons",
+          chunks: "all",
           minChunks: 2,
           reuseExistingChunk: true,
         },
@@ -39,9 +39,9 @@ const nextConfig = {
           test: /[\\/]node_modules[\\/]/,
           name(module) {
             const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-            return `npm.${packageName.replace('@', '')}`;
+            return `npm.${packageName.replace("@", "")}`;
           },
-          chunks: 'all',
+          chunks: "all",
           priority: 10,
           reuseExistingChunk: true,
         },
