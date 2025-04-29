@@ -58,6 +58,12 @@ const nextConfig = {
       config.devtool = false;
     }
 
+    if (isServer) {
+      // Exclude specific modules from server bundle
+      config.externals = config.externals || [];
+      config.externals.push("big-dependency-name");
+    }
+
     return config;
   },
 };
