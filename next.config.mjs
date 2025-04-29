@@ -19,7 +19,6 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
-  output: "standalone",
   webpack: (config, { isServer }) => {
     // Enable aggressive code splitting and smaller chunks
     config.optimization.splitChunks = {
