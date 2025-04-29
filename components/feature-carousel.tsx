@@ -1,5 +1,7 @@
 "use client"
 
+import type React from "react"
+
 import { useState } from "react"
 import Image from "next/image"
 import { Check, ChevronLeft, ChevronRight } from "lucide-react"
@@ -87,11 +89,11 @@ export function FeatureCarousel() {
   }
 
   // Handle touch events for swiping
-  const handleTouchStart = (e) => {
+  const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX)
   }
 
-  const handleTouchMove = (e) => {
+  const handleTouchMove = (e: React.TouchEvent) => {
     setTouchEnd(e.targetTouches[0].clientX)
   }
 
@@ -209,3 +211,5 @@ export function FeatureCarousel() {
     </div>
   )
 }
+
+export default FeatureCarousel
