@@ -1,3 +1,5 @@
+import CompressionPlugin from "compression-webpack-plugin";
+
 let userConfig = undefined;
 try {
   // try to import ESM first
@@ -33,6 +35,17 @@ const nextConfig = {
       chunks: "all",
       maxSize: 250000, // Limit chunk size to 250 KB
     };
+
+    // Add compression plugin
+    config.plugins.push(
+      new CompressionPlugin({
+        filename: "[path][base].gz",
+        algorithm: "gzip",
+        test: /\.(js|css|html|svg)$/,
+        threshold: 10240, // Only compress files larger than 10 KB
+        minRatio: 0.8, // Compress files with a compression ratio below 0.8
+      })
+    );
 
     // Return the modified config
     return config;
