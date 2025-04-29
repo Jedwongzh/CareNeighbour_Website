@@ -18,25 +18,42 @@ const nextConfig = {
     // Optimize image loading
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 60,
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    unoptimized: true,
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128],
+    unoptimized: false, // Enable image optimization
   },
   // Enable webpack bundle analyzer in development mode
   webpack: (config, { isServer, dev }) => {
-    // Optimize bundle size
+    // Optimize bundle size with more aggressive splitting
     config.optimization.splitChunks = {
       chunks: 'all',
-      maxInitialRequests: 25,
-      minSize: 20000,
-      maxSize: 20 * 1024 * 1024, // 20MB max chunk size
+      maxInitialRequests: 30,
+      minSize: 10000,
+      maxSize: 10 * 1024 * 1024, // 10MB max chunk size (reduced from 20MB)
       cacheGroups: {
         framework: {
           name: 'framework',
-          test: /[\\/]node_modules[\\/](react|react-dom|framer-motion)[\\/]/,
+          test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
           priority: 40,
-          // Don't create a framework chunk in development mode
-          enforce: !dev,
+          enforce: true,
+        },
+        framerMotion: {
+          name: 'framer-motion',
+          test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
+          priority: 39,
+          enforce: true,
+        },
+        lucide: {
+          name: 'lucide',
+          test: /[\\/]node_modules[\\/]lucide-react[\\/]/,
+          priority: 38,
+          enforce: true,
+        },
+        radix: {
+          name: 'radix',
+          test: /[\\/]node_modules[\\/]@radix-ui[\\/]/,
+          priority: 37,
+          enforce: true,
         },
         lib: {
           test: /[\\/]node_modules[\\/]/,
@@ -52,13 +69,22 @@ const nextConfig = {
       },
     };
 
+    // Exclude large libraries from the server bundle
+    if (isServer) {
+      config.externals = [...(config.externals || []), 'framer-motion', 'recharts'];
+    }
+
     return config;
   },
-  // Optimize package imports without CSS optimization
+  // Optimize package imports
   experimental: {
-    // Removed optimizeCss: true as it requires the critters package
-    optimizePackageImports: ['lucide-react', 'framer-motion', 'recharts'],
+    optimizePackageImports: ['lucide-react', 'framer-motion', 'recharts', '@radix-ui/react-icons'],
   },
+  // Disable unnecessary features
+  swcMinify: true,
+  compress: true,
+  poweredByHeader: false,
+  productionBrowserSourceMaps: false,
 };
 
 export default nextConfig;
