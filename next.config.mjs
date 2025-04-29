@@ -27,37 +27,62 @@ const nextConfig = withBundleAnalyzer({
   images: {
     unoptimized: true,
   },
+  swcMinify: true,
+  compress: true,
   experimental: {
     webpackBuildWorker: true,
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
-    outputFileTracingRoot: "./", // Trace only necessary files
   },
-  output: "standalone", // Enable standalone mode for smaller server bundles
-  webpack: (config) => {
-    // Enable code splitting and set smaller max chunk size
+  output: "standalone",
+  webpack: (config, { isServer }) => {
+    // Enable aggressive code splitting and smaller chunks
     config.optimization.splitChunks = {
-      chunks: "all",
-      maxSize: 200000, // Reduce chunk size to 200 KB
+      chunks: 'all',
+      maxInitialRequests: 25,
+      minSize: 20000,
+      maxSize: 100000, // Reduce chunk size to 100 KB
+      cacheGroups: {
+        default: false,
+        vendors: false,
+        commons: {
+          name: 'commons',
+          chunks: 'all',
+          minChunks: 2,
+          reuseExistingChunk: true,
+        },
+        lib: {
+          test: /[\\/]node_modules[\\/]/,
+          name(module) {
+            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+            return `npm.${packageName.replace('@', '')}`;
+          },
+          chunks: 'all',
+          priority: 10,
+          reuseExistingChunk: true,
+        },
+      },
     };
 
-    // Add compression plugin
-    config.plugins.push(
-      new CompressionPlugin({
-        filename: "[path][base].gz",
-        algorithm: "gzip",
-        test: /\.(js|css|html|svg)$/,
-        threshold: 10240, // Only compress files larger than 10 KB
-        minRatio: 0.8, // Compress files with a compression ratio below 0.8
-      })
-    );
+    // Add compression plugin only for client bundles
+    if (!isServer) {
+      config.plugins.push(
+        new CompressionPlugin({
+          filename: "[path][base].gz",
+          algorithm: "gzip",
+          test: /\.(js|css|html|svg)$/,
+          threshold: 10240,
+          minRatio: 0.8,
+          deleteOriginalAssets: false,
+        })
+      );
+    }
 
     return config;
   },
 });
 
 if (userConfig) {
-  // ESM imports will have a "default" property
   const config = userConfig.default || userConfig;
 
   for (const key in config) {
