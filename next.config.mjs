@@ -32,6 +32,13 @@ const nextConfig = withBundleAnalyzer({
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
     outputFileTracingRoot: "./", // Trace only necessary files
+    outputFileTracingIgnores: [
+      "**/*.png",
+      "**/*.jpg",
+      "**/*.mp4",
+      "**/*.test.js",
+      "**/*.spec.js",
+    ],
   },
   output: "standalone", // Enable standalone mode for smaller server bundles
   webpack: (config) => {
