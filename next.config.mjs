@@ -1,5 +1,3 @@
-import CompressionPlugin from 'compression-webpack-plugin';
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -27,7 +25,7 @@ const nextConfig = {
       chunks: 'all',
       maxInitialRequests: 25,
       minSize: 20000,
-      maxSize: 50000, // Reduce chunk size to 50 KB
+      maxSize: 25000, // Reduce chunk size to 25 KB
       cacheGroups: {
         default: false,
         vendors: false,
@@ -49,20 +47,6 @@ const nextConfig = {
         },
       },
     };
-
-    // Add compression plugin only for client bundles
-    if (!isServer) {
-      config.plugins.push(
-        new CompressionPlugin({
-          filename: "[path][base].gz",
-          algorithm: "gzip",
-          test: /\.(js|css|html|svg)$/,
-          threshold: 10240,
-          minRatio: 0.8,
-          deleteOriginalAssets: false,
-        })
-      );
-    }
 
     return config;
   },
