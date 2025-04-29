@@ -27,7 +27,7 @@ const nextConfig = {
       chunks: 'all',
       maxInitialRequests: 25,
       minSize: 20000,
-      maxSize: 100000, // Reduce chunk size to 100 KB
+      maxSize: 50000, // Reduce chunk size to 50 KB
       cacheGroups: {
         default: false,
         vendors: false,
@@ -50,7 +50,7 @@ const nextConfig = {
       },
     };
 
-    // Add compression plugin
+    // Add compression plugin only for client bundles
     if (!isServer) {
       config.plugins.push(
         new CompressionPlugin({
