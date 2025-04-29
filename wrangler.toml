@@ -4,15 +4,3 @@ compatibility_date = "2023-12-01"
 # Specify the build output directory for Pages
 [build]
 command = "npm run build"
-
-# Specify where the built assets are located
-[site]
-bucket = ".next/static"
-
-# Add the build output directory for Pages
-[build.upload]
-format = "service-worker"
-
-# Specify the Pages build output directory
-[pages_build_output_dir]
-value = ".next"
