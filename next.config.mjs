@@ -10,7 +10,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  swcMinify: true,
+  // Remove swcMinify if Next.js 15.2.4 does not recognize it
+  // swcMinify: true, 
   compress: true,
   productionBrowserSourceMaps: false,
   experimental: {
@@ -25,7 +26,7 @@ const nextConfig = {
       chunks: "all",
       maxInitialRequests: 25,
       minSize: 20000,
-      maxSize: 25000, // Reduce chunk size to 25 KB
+      maxSize: 25000, // chunk size limit
       cacheGroups: {
         default: false,
         vendors: false,
@@ -38,7 +39,11 @@ const nextConfig = {
         lib: {
           test: /[\\/]node_modules[\\/]/,
           name(module) {
-            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+            const match = module?.context?.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
+            if (!match) {
+              return "misc-package"; // Fallback if no match
+            }
+            const packageName = match[1];
             return `npm.${packageName.replace("@", "")}`;
           },
           chunks: "all",
@@ -47,7 +52,6 @@ const nextConfig = {
         },
       },
     };
-
     return config;
   },
 };
