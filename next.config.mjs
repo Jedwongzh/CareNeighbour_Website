@@ -35,10 +35,10 @@ const nextConfig = withBundleAnalyzer({
   },
   output: "standalone", // Enable standalone mode for smaller server bundles
   webpack: (config) => {
-    // Enable code splitting and set max chunk size
+    // Enable code splitting and set smaller max chunk size
     config.optimization.splitChunks = {
       chunks: "all",
-      maxSize: 250000, // Limit chunk size to 250 KB
+      maxSize: 200000, // Reduce chunk size to 200 KB
     };
 
     // Add compression plugin
@@ -52,7 +52,6 @@ const nextConfig = withBundleAnalyzer({
       })
     );
 
-    // Return the modified config
     return config;
   },
 });
