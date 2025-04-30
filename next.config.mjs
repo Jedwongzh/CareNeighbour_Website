@@ -59,6 +59,7 @@ const nextConfig = {
     // Removed optimizeCss: true as it requires the critters package
     optimizePackageImports: ['lucide-react', 'framer-motion', 'recharts'],
   },
+  output: 'export',
 };
 
 export default nextConfig;
