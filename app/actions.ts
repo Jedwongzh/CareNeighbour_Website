@@ -89,8 +89,8 @@ async function sendToGoogleSheets(type: string, data: any) {
     return result
   } catch (error) {
     console.error("Error sending data to Google Sheets:", error)
-    // Don't throw here, as we want to continue with local storage even if Google Sheets fails
-    return { success: false, error: error.message }
+    const message = error instanceof Error ? error.message : String(error)
+    return { success: false, error: message }
   }
 }
 
