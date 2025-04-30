@@ -8,7 +8,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, MessageSquare, PlayCircle, ChevronRight } from "lucide-react"
 import { motion } from "framer-motion"
-import type { AutoplayOptions } from "embla-carousel-autoplay"
+import type { AutoplayOptionsType } from "embla-carousel-autoplay"
 import Autoplay from "embla-carousel-autoplay"
 
 import { Button } from "@/components/ui/button"
@@ -51,7 +51,7 @@ export default function LandingPage() {
     Autoplay({
       delay: 3000,
       stopOnInteraction: false,
-    } as AutoplayOptions)
+    } as AutoplayOptionsType)
   )
 
   // Testimonial carousel autoplay
@@ -59,7 +59,7 @@ export default function LandingPage() {
     Autoplay({
       delay: 5000,
       stopOnInteraction: false,
-    } as AutoplayOptions)
+    } as AutoplayOptionsType)
   )
 
   const handleWaitlistSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
