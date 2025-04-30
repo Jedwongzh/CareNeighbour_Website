@@ -8,7 +8,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, MessageSquare, PlayCircle, ChevronRight } from "lucide-react"
 import { motion } from "framer-motion"
-import type { AutoplayOptionsType } from "embla-carousel-autoplay"
 import Autoplay from "embla-carousel-autoplay"
 
 import { Button } from "@/components/ui/button"
@@ -47,20 +46,10 @@ export default function LandingPage() {
   const howItWorksRef = useRef(null)
 
   // Ref for autoplay plugin
-  const plugin = useRef(
-    Autoplay({
-      delay: 3000,
-      stopOnInteraction: false,
-    } as AutoplayOptionsType)
-  )
+  const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: false }))
 
   // Testimonial carousel autoplay
-  const testimonialPlugin = useRef(
-    Autoplay({
-      delay: 5000,
-      stopOnInteraction: false,
-    } as AutoplayOptionsType)
-  )
+  const testimonialPlugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: false }))
 
   const handleWaitlistSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

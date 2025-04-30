@@ -1,16 +1,5 @@
-name = "careneighbor-website"
+name = "careneighbour-website"
 compatibility_date = "2023-12-01"
 
 [build]
-command = "npm run build && npm run export"
-pages_build_output_dir = "out"
-
-[env]
-NODE_ENV = "production"
-
-[build.environment]
-NODE_VERSION = "20.19.0"
-NPM_VERSION = "9.6.7"
-
-[site]
-bucket = ".next/static"
+command = "npm run build"

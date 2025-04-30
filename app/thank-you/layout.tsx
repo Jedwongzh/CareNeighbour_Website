@@ -1,5 +1,3 @@
-import { PropsWithChildren } from "react"
-
 export const metadata = {
   title: "Thank You - CareNeighbor",
   description: "Thank you for your interest in CareNeighbor.",
@@ -9,6 +7,6 @@ export const metadata = {
   },
 }
 
-export default function ThankYouLayout({ children }: PropsWithChildren) {
+export default function ThankYouLayout({ children }) {
   return <div className="flex min-h-[100dvh] flex-col">{children}</div>
 }

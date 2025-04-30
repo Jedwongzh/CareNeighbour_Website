@@ -549,12 +549,6 @@ const backgroundIcons = [
   <Calendar key="calendar" className="h-4 w-4" />, // Added Calendar
 ]
 
-const fetchPlaceholderImage = async (params: Record<string, string>) => {
-  const query = new URLSearchParams(params).toString();
-  const response = await fetch(`/server/api/placeholder-image?${query}`);
-  return response.blob();
-};
-
 export default function AppDemoPage() {
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(0)
@@ -1156,7 +1150,7 @@ export default function AppDemoPage() {
                             priority={index === currentCaregiverIndex}
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Added sizes prop for optimization
                           />
-                          <div className="absolute bottom-0 left-0 right=0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
                             <h4 className="text-white font-bold text-xl mb-0.5">{displayData.name}</h4>
                             <div className="flex items-center text-white/90 text-sm">
                               <Star className="h-4 w-4 text-yellow-400 fill-yellow-400 mr-1.5" />
@@ -1209,7 +1203,10 @@ export default function AppDemoPage() {
                         <motion.div
                           className="absolute top-16 left-4 bg-red-500/90 text-white p-3 rounded-full shadow-lg"
                           initial={{ scale: 0, rotate: -30 }}
-                          animate={{ scale: swipeDirection === "left" ? 1 : 0, rotate: swipeDirection === "left" ? 0 : -30 }}
+                          animate={{
+                            scale: swipeDirection === "left" ? 1 : 0,
+                            rotate: swipeDirection === "left" ? 0 : -30,
+                          }}
                           transition={{ type: "spring", stiffness: 500, damping: 30 }}
                         >
                           {" "}
@@ -1218,7 +1215,10 @@ export default function AppDemoPage() {
                         <motion.div
                           className="absolute top-16 right-4 bg-green-500/90 text-white p-3 rounded-full shadow-lg"
                           initial={{ scale: 0, rotate: 30 }}
-                          animate={{ scale: swipeDirection === "right" ? 1 : 0, rotate: swipeDirection === "right" ? 0 : 30 }}
+                          animate={{
+                            scale: swipeDirection === "right" ? 1 : 0,
+                            rotate: swipeDirection === "right" ? 0 : 30,
+                          }}
                           transition={{ type: "spring", stiffness: 500, damping: 30 }}
                         >
                           {" "}
