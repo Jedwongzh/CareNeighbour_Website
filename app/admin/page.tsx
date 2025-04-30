@@ -5,14 +5,25 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Download } from "lucide-react"
 
+interface WaitlistEntry {
+  email: string;
+  timestamp: string;
+}
+
+interface FeedbackEntry {
+  email: string;
+  feedback: string;
+  timestamp: string;
+}
+
 export default function AdminPage() {
   // Read waitlist data
   const waitlistPath = path.join(process.cwd(), "data", "waitlist.json")
-  const waitlistData = fs.existsSync(waitlistPath) ? JSON.parse(fs.readFileSync(waitlistPath, "utf8")) : []
+  const waitlistData: WaitlistEntry[] = fs.existsSync(waitlistPath) ? JSON.parse(fs.readFileSync(waitlistPath, "utf8")) : []
 
   // Read feedback data
   const feedbackPath = path.join(process.cwd(), "data", "feedback.json")
-  const feedbackData = fs.existsSync(feedbackPath) ? JSON.parse(fs.readFileSync(feedbackPath, "utf8")) : []
+  const feedbackData: FeedbackEntry[] = fs.existsSync(feedbackPath) ? JSON.parse(fs.readFileSync(feedbackPath, "utf8")) : []
 
   return (
     <div className="container mx-auto py-10">
