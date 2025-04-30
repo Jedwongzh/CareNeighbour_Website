@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef, JSX } from "react"
+import { useState, useEffect, useRef, type JSX } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
@@ -19,7 +19,6 @@ import {
   Heart,
   Calendar,
   Home,
-  ArrowRight,
   Loader2,
   Star,
   X,
@@ -152,7 +151,12 @@ const caregiverProfiles = [
     translations: {
       es: {
         bio: "Asistente de terapia física con enfoque en asistencia de movilidad y recuperación postquirúrgica. Disfruto ayudando a los clientes a recuperar su fuerza y confianza.",
-        skills: ["Terapia Física", "Asistencia de Movilidad", "Recuperación Postquirúrgica", "Planificación de Ejercicios"],
+        skills: [
+          "Terapia Física",
+          "Asistencia de Movilidad",
+          "Recuperación Postquirúrgica",
+          "Planificación de Ejercicios",
+        ],
         experience: "Más de 4 años en terapia física",
       },
       fr: {
@@ -206,7 +210,7 @@ const caregiverProfiles = [
       },
     },
   },
-];
+]
 
 // Placeholder images (unchanged)
 const placeholderImages = {
@@ -226,7 +230,8 @@ const translations = {
     voicePrompt: "How can we help you today?",
     recordingStatus: "Listening...",
     processingStatus: "Processing your request...",
-    sampleTranscript: "I need someone to help my mother with medication management and light housekeeping twice a week.",
+    sampleTranscript:
+      "I need someone to help my mother with medication management and light housekeeping twice a week.",
     aiSummary: "Based on your request, you need:",
     careType: "Personal Care & Assistance",
     details: [
@@ -247,12 +252,29 @@ const translations = {
     completeBooking: "Complete Booking",
     tryAgain: "Try Again",
     exitDemo: "Exit demo", // Added
-    backgroundCommands: [ // Added more diverse terms
-        "Book a caregiver", "Medication reminder", "Find help nearby", "Schedule appointment",
-        "Personal care needed", "Companionship", "Check availability", "Light housekeeping",
-        "Mobility assistance", "Transport to doctor", "Meal preparation", "Post-surgery care",
-        "Elderly care", "Disability support", "Check my schedule", "Grocery shopping", "Respite care",
-        "Check vitals", "Wound dressing", "Physical therapy exercise", "Emergency contact",
+    backgroundCommands: [
+      // Added more diverse terms
+      "Book a caregiver",
+      "Medication reminder",
+      "Find help nearby",
+      "Schedule appointment",
+      "Personal care needed",
+      "Companionship",
+      "Check availability",
+      "Light housekeeping",
+      "Mobility assistance",
+      "Transport to doctor",
+      "Meal preparation",
+      "Post-surgery care",
+      "Elderly care",
+      "Disability support",
+      "Check my schedule",
+      "Grocery shopping",
+      "Respite care",
+      "Check vitals",
+      "Wound dressing",
+      "Physical therapy exercise",
+      "Emergency contact",
     ],
   },
   es: {
@@ -262,7 +284,8 @@ const translations = {
     voicePrompt: "¿Cómo podemos ayudarte hoy?",
     recordingStatus: "Escuchando...",
     processingStatus: "Procesando tu solicitud...",
-    sampleTranscript: "Necesito a alguien que ayude a mi madre con la gestión de medicamentos y la limpieza ligera dos veces por semana.",
+    sampleTranscript:
+      "Necesito a alguien que ayude a mi madre con la gestión de medicamentos y la limpieza ligera dos veces por semana.",
     aiSummary: "Según tu solicitud, necesitas:",
     careType: "Cuidado Personal y Asistencia",
     details: [
@@ -283,12 +306,29 @@ const translations = {
     completeBooking: "Completar Reserva",
     tryAgain: "Intentar de Nuevo",
     exitDemo: "Salir demo", // Added
-    backgroundCommands: [ // Added more diverse terms
-        "Reservar cuidador", "Recordatorio medicación", "Buscar ayuda cerca", "Agendar cita",
-        "Necesito cuidado personal", "Compañía", "Verificar disponibilidad", "Limpieza ligera",
-        "Asistencia movilidad", "Transporte al médico", "Preparación comidas", "Cuidado post-cirugía",
-        "Cuidado ancianos", "Apoyo discapacidad", "Revisar mi horario", "Compras supermercado", "Cuidado de respiro",
-        "Revisar vitales", "Curación de heridas", "Ejercicio fisioterapia", "Contacto emergencia",
+    backgroundCommands: [
+      // Added more diverse terms
+      "Reservar cuidador",
+      "Recordatorio medicación",
+      "Buscar ayuda cerca",
+      "Agendar cita",
+      "Necesito cuidado personal",
+      "Compañía",
+      "Verificar disponibilidad",
+      "Limpieza ligera",
+      "Asistencia movilidad",
+      "Transporte al médico",
+      "Preparación comidas",
+      "Cuidado post-cirugía",
+      "Cuidado ancianos",
+      "Apoyo discapacidad",
+      "Revisar mi horario",
+      "Compras supermercado",
+      "Cuidado de respiro",
+      "Revisar vitales",
+      "Curación de heridas",
+      "Ejercicio fisioterapia",
+      "Contacto emergencia",
     ],
   },
   fr: {
@@ -298,7 +338,8 @@ const translations = {
     voicePrompt: "Comment pouvons-nous vous aider aujourd'hui?",
     recordingStatus: "Écoute...",
     processingStatus: "Traitement de votre demande...",
-    sampleTranscript: "J'ai besoin de quelqu'un pour aider ma mère avec la gestion des médicaments et le ménage léger deux fois par semaine.",
+    sampleTranscript:
+      "J'ai besoin de quelqu'un pour aider ma mère avec la gestion des médicaments et le ménage léger deux fois par semaine.",
     aiSummary: "Selon votre demande, vous avez besoin de:",
     careType: "Soins Personnels et Assistance",
     details: [
@@ -319,51 +360,86 @@ const translations = {
     completeBooking: "Terminer la Réservation",
     tryAgain: "Réessayer",
     exitDemo: "Quitter démo", // Added
-    backgroundCommands: [ // Added more diverse terms
-        "Réserver soignant", "Rappel médicaments", "Trouver aide proche", "Planifier rendez-vous",
-        "Besoin soins personnels", "Compagnie", "Vérifier disponibilité", "Ménage léger",
-        "Aide mobilité", "Transport médecin", "Préparation repas", "Soins post-opératoires",
-        "Soins personnes âgées", "Soutien handicap", "Consulter mon horaire", "Faire les courses", "Soins de répit",
-        "Vérifier constantes vitales", "Pansement plaie", "Exercice physiothérapie", "Contact urgence",
+    backgroundCommands: [
+      // Added more diverse terms
+      "Réserver soignant",
+      "Rappel médicaments",
+      "Trouver aide proche",
+      "Planifier rendez-vous",
+      "Besoin soins personnels",
+      "Compagnie",
+      "Vérifier disponibilité",
+      "Ménage léger",
+      "Aide mobilité",
+      "Transport médecin",
+      "Préparation repas",
+      "Soins post-opératoires",
+      "Soins personnes âgées",
+      "Soutien handicap",
+      "Consulter mon horaire",
+      "Faire les courses",
+      "Soins de répit",
+      "Vérifier constantes vitales",
+      "Pansement plaie",
+      "Exercice physiothérapie",
+      "Contact urgence",
     ],
   },
-   de: {
-      title: "App-Demo",
-      subtitle: "Erleben Sie CareNeighbour",
-      description: "Sehen Sie, wie unsere App Sie mit qualifizierten Pflegekräften in Ihrer Nachbarschaft verbindet",
-      voicePrompt: "Wie können wir Ihnen heute helfen?",
-      recordingStatus: "Hören...",
-      processingStatus: "Verarbeitung Ihrer Anfrage...",
-      sampleTranscript: "Ich brauche jemanden, der meiner Mutter zweimal pro Woche bei der Medikamentenverwaltung und leichten Hausarbeiten hilft.",
-      aiSummary: "Basierend auf Ihrer Anfrage benötigen Sie:",
-      careType: "Persönliche Pflege und Unterstützung",
-      details: [
-        "Medikamentenmanagement und Erinnerungen",
-        "Leichte Haushaltsführung und Organisation",
-        "Pflegeplan zweimal wöchentlich",
-      ],
-      editRequest: "Anfragedetails bearbeiten",
-      findCaregivers: "Pflegekräfte finden",
-      searchingCaregivers: "Suche nach Pflegekräften in Ihrer Nähe...",
-      caregiverFound: "Wir haben Pflegekräfte gefunden, die jetzt verfügbar sind!",
-      swipeInstructions: "Wischen Sie nach rechts, um auszuwählen, nach links, um zu überspringen",
-      regenerate: "Zeigen Sie mehr Pflegekräfte",
-      bookNow: "Jetzt buchen",
-      trackingTitle: "Verfolgung Ihrer Pflegekraft",
-      trackingStatus: "Sarah ist unterwegs - ETA: 10 Minuten",
-      caregiverArrived: "Sarah ist angekommen!",
-      completeBooking: "Buchung abschließen",
-      tryAgain: "Erneut versuchen",
-      exitDemo: "Demo beenden", // Added
-      backgroundCommands: [ // Added more diverse terms
-        "Pflegekraft buchen", "Medikamentenerinnerung", "Hilfe in der Nähe finden", "Termin vereinbaren",
-        "Persönliche Pflege benötigt", "Gesellschaft", "Verfügbarkeit prüfen", "Leichte Hausarbeit",
-        "Mobilitätshilfe", "Transport zum Arzt", "Essenszubereitung", "Pflege nach OP",
-        "Altenpflege", "Behindertenunterstützung", "Meinen Zeitplan prüfen", "Lebensmitteleinkauf", "Verhinderungspflege",
-        "Vitalwerte prüfen", "Wundverband", "Physiotherapie-Übung", "Notfallkontakt",
-      ],
-    },
-    // ... (Add zh, ja, ar, hi similarly with diverse terms) ...
+  de: {
+    title: "App-Demo",
+    subtitle: "Erleben Sie CareNeighbour",
+    description: "Sehen Sie, wie unsere App Sie mit qualifizierten Pflegekräften in Ihrer Nachbarschaft verbindet",
+    voicePrompt: "Wie können wir Ihnen heute helfen?",
+    recordingStatus: "Hören...",
+    processingStatus: "Verarbeitung Ihrer Anfrage...",
+    sampleTranscript:
+      "Ich brauche jemanden, der meiner Mutter zweimal pro Woche bei der Medikamentenverwaltung und leichten Hausarbeiten hilft.",
+    aiSummary: "Basierend auf Ihrer Anfrage benötigen Sie:",
+    careType: "Persönliche Pflege und Unterstützung",
+    details: [
+      "Medikamentenmanagement und Erinnerungen",
+      "Leichte Haushaltsführung und Organisation",
+      "Pflegeplan zweimal wöchentlich",
+    ],
+    editRequest: "Anfragedetails bearbeiten",
+    findCaregivers: "Pflegekräfte finden",
+    searchingCaregivers: "Suche nach Pflegekräften in Ihrer Nähe...",
+    caregiverFound: "Wir haben Pflegekräfte gefunden, die jetzt verfügbar sind!",
+    swipeInstructions: "Wischen Sie nach rechts, um auszuwählen, nach links, um zu überspringen",
+    regenerate: "Zeigen Sie mehr Pflegekräfte",
+    bookNow: "Jetzt buchen",
+    trackingTitle: "Verfolgung Ihrer Pflegekraft",
+    trackingStatus: "Sarah ist unterwegs - ETA: 10 Minuten",
+    caregiverArrived: "Sarah ist angekommen!",
+    completeBooking: "Buchung abschließen",
+    tryAgain: "Erneut versuchen",
+    exitDemo: "Demo beenden", // Added
+    backgroundCommands: [
+      // Added more diverse terms
+      "Pflegekraft buchen",
+      "Medikamentenerinnerung",
+      "Hilfe in der Nähe finden",
+      "Termin vereinbaren",
+      "Persönliche Pflege benötigt",
+      "Gesellschaft",
+      "Verfügbarkeit prüfen",
+      "Leichte Hausarbeit",
+      "Mobilitätshilfe",
+      "Transport zum Arzt",
+      "Essenszubereitung",
+      "Pflege nach OP",
+      "Altenpflege",
+      "Behindertenunterstützung",
+      "Meinen Zeitplan prüfen",
+      "Lebensmitteleinkauf",
+      "Verhinderungspflege",
+      "Vitalwerte prüfen",
+      "Wundverband",
+      "Physiotherapie-Übung",
+      "Notfallkontakt",
+    ],
+  },
+  // ... (Add zh, ja, ar, hi similarly with diverse terms) ...
   zh: {
     title: "应用演示",
     subtitle: "体验 CareNeighbour",
@@ -374,11 +450,7 @@ const translations = {
     sampleTranscript: "我需要有人每周两次帮助我母亲进行药物管理和轻度家政服务。",
     aiSummary: "根据您的要求，您需要：",
     careType: "个人护理与协助",
-    details: [
-      "药物管理和提醒",
-      "轻度家政和家庭整理",
-      "每周两次护理安排",
-    ],
+    details: ["药物管理和提醒", "轻度家政和家庭整理", "每周两次护理安排"],
     editRequest: "编辑请求详情",
     findCaregivers: "寻找护理员",
     searchingCaregivers: "正在搜索您附近的护理员...",
@@ -393,29 +465,42 @@ const translations = {
     tryAgain: "再试一次",
     exitDemo: "退出演示",
     backgroundCommands: [
-        "预订护理员", "用药提醒", "查找附近帮助", "安排预约",
-        "需要个人护理", "陪伴", "检查可用性", "轻度家政",
-        "行动协助", "送医", "膳食准备", "术后护理",
-        "老年护理", "残疾支持", "检查我的日程", "购买食品", "临时护理",
-        "检查生命体征", "伤口敷料", "物理治疗运动", "紧急联系人",
+      "预订护理员",
+      "用药提醒",
+      "查找附近帮助",
+      "安排预约",
+      "需要个人护理",
+      "陪伴",
+      "检查可用性",
+      "轻度家政",
+      "行动协助",
+      "送医",
+      "膳食准备",
+      "术后护理",
+      "老年护理",
+      "残疾支持",
+      "检查我的日程",
+      "购买食品",
+      "临时护理",
+      "检查生命体征",
+      "伤口敷料",
+      "物理治疗运动",
+      "紧急联系人",
     ],
   },
   // ** Added Vietnamese translation placeholders **
   vi: {
     title: "Bản Demo Ứng Dụng",
     subtitle: "Trải nghiệm CareNeighbour",
-    description: "Xem cách ứng dụng của chúng tôi kết nối bạn với những người chăm sóc đủ tiêu chuẩn trong khu phố của bạn",
+    description:
+      "Xem cách ứng dụng của chúng tôi kết nối bạn với những người chăm sóc đủ tiêu chuẩn trong khu phố của bạn",
     voicePrompt: "Hôm nay chúng tôi có thể giúp gì cho bạn?",
     recordingStatus: "Đang nghe...",
     processingStatus: "Đang xử lý yêu cầu của bạn...",
     sampleTranscript: "Tôi cần người giúp mẹ tôi quản lý thuốc và làm việc nhà nhẹ nhàng hai lần một tuần.",
     aiSummary: "Dựa trên yêu cầu của bạn, bạn cần:",
     careType: "Chăm sóc Cá nhân & Hỗ trợ",
-    details: [
-      "Quản lý và nhắc nhở thuốc",
-      "Việc nhà nhẹ nhàng và sắp xếp nhà cửa",
-      "Lịch chăm sóc hai lần mỗi tuần",
-    ],
+    details: ["Quản lý và nhắc nhở thuốc", "Việc nhà nhẹ nhàng và sắp xếp nhà cửa", "Lịch chăm sóc hai lần mỗi tuần"],
     editRequest: "Chỉnh sửa chi tiết yêu cầu",
     findCaregivers: "Tìm Người Chăm Sóc",
     searchingCaregivers: "Đang tìm người chăm sóc gần bạn...",
@@ -430,24 +515,39 @@ const translations = {
     tryAgain: "Thử Lại",
     exitDemo: "Thoát demo",
     backgroundCommands: [
-        "Đặt người chăm sóc", "Nhắc nhở thuốc", "Tìm trợ giúp gần đây", "Lên lịch hẹn",
-        "Cần chăm sóc cá nhân", "Bầu bạn", "Kiểm tra tình trạng sẵn có", "Việc nhà nhẹ",
-        "Hỗ trợ di chuyển", "Đưa đến bác sĩ", "Chuẩn bị bữa ăn", "Chăm sóc sau phẫu thuật",
-        "Chăm sóc người già", "Hỗ trợ người khuyết tật", "Kiểm tra lịch trình của tôi", "Mua sắm tạp hóa", "Chăm sóc thay thế",
-        "Kiểm tra dấu hiệu sinh tồn", "Thay băng vết thương", "Bài tập vật lý trị liệu", "Liên hệ khẩn cấp",
+      "Đặt người chăm sóc",
+      "Nhắc nhở thuốc",
+      "Tìm trợ giúp gần đây",
+      "Lên lịch hẹn",
+      "Cần chăm sóc cá nhân",
+      "Bầu bạn",
+      "Kiểm tra tình trạng sẵn có",
+      "Việc nhà nhẹ",
+      "Hỗ trợ di chuyển",
+      "Đưa đến bác sĩ",
+      "Chuẩn bị bữa ăn",
+      "Chăm sóc sau phẫu thuật",
+      "Chăm sóc người già",
+      "Hỗ trợ người khuyết tật",
+      "Kiểm tra lịch trình của tôi",
+      "Mua sắm tạp hóa",
+      "Chăm sóc thay thế",
+      "Kiểm tra dấu hiệu sinh tồn",
+      "Thay băng vết thương",
+      "Bài tập vật lý trị liệu",
+      "Liên hệ khẩn cấp",
     ],
   },
 }
 
 // Define icons for background
 const backgroundIcons = [
-    <Pill key="pill" className="h-4 w-4" />,
-    <Users key="users" className="h-4 w-4" />,
-    <Thermometer key="thermometer" className="h-4 w-4" />,
-    <Heart key="heart" className="h-4 w-4" />, // Added Heart
-    <Calendar key="calendar" className="h-4 w-4" />, // Added Calendar
-];
-
+  <Pill key="pill" className="h-4 w-4" />,
+  <Users key="users" className="h-4 w-4" />,
+  <Thermometer key="thermometer" className="h-4 w-4" />,
+  <Heart key="heart" className="h-4 w-4" />, // Added Heart
+  <Calendar key="calendar" className="h-4 w-4" />, // Added Calendar
+]
 
 export default function AppDemoPage() {
   const router = useRouter()
@@ -466,7 +566,7 @@ export default function AppDemoPage() {
     { id: number; x: number; y: number; content: string | JSX.Element; speed: number; opacity: number; size: number }[]
   >([])
   const floatingItemIdRef = useRef(0)
-  const animationFrameIdRef = useRef<number | null>(null); // Ref to store animation frame ID
+  const animationFrameIdRef = useRef<number | null>(null) // Ref to store animation frame ID
   const [currentCaregiverIndex, setCurrentCaregiverIndex] = useState(0)
   const [swipeDirection, setSwipeDirection] = useState<null | "left" | "right">(null)
   const [selectedCaregiver, setSelectedCaregiver] = useState<(typeof caregiverProfiles)[0] | null>(null)
@@ -490,99 +590,98 @@ export default function AppDemoPage() {
 
   // Function to start the recording simulation and set language-specific transcript
   const startRecording = () => {
-    if (isProcessing || isTyping) return;
-    setIsRecording(true);
+    if (isProcessing || isTyping) return
+    setIsRecording(true)
     // Set the transcript words/chars based on the *current* language's sample
-    const currentSampleTranscript = t.sampleTranscript || translations.en.sampleTranscript;
+    const currentSampleTranscript = t.sampleTranscript || translations.en.sampleTranscript
 
     // ** Split by character for Chinese, otherwise by space **
-    const splitBy = language === 'zh' ? '' : ' ';
-    setTranscriptWords(currentSampleTranscript.split(splitBy));
+    const splitBy = language === "zh" ? "" : " "
+    setTranscriptWords(currentSampleTranscript.split(splitBy))
 
-    setCurrentWordIndex(0);
-    setTranscript(""); // Clear previous transcript
-  };
+    setCurrentWordIndex(0)
+    setTranscript("") // Clear previous transcript
+  }
 
   // ** REVISED: Generate floating items based on current language (with icons) **
   useEffect(() => {
-      const currentBgCommands = t.backgroundCommands || translations.en.backgroundCommands;
+    const currentBgCommands = t.backgroundCommands || translations.en.backgroundCommands
 
-      // Function to create a new item (text or icon)
-      const createFloatingItem = (startY?: number) => {
-        let content: string | JSX.Element;
-        let size: number;
-        // ~20% chance of showing an icon instead of text
-        if (Math.random() < 0.2) {
-            content = backgroundIcons[Math.floor(Math.random() * backgroundIcons.length)];
-            size = Math.random() * 6 + 18; // Slightly larger base size for icons (18-24px)
-        } else {
-            content = currentBgCommands[Math.floor(Math.random() * currentBgCommands.length)];
-            size = Math.random() * 5 + 11; // Text size (11-16px)
-        }
-
-        return {
-          id: floatingItemIdRef.current++,
-          x: Math.random() * 90 + 5, // 5-95% width
-          y: startY !== undefined ? startY : Math.random() * 90 + 5, // 5-95% height if no startY
-          content: content,
-          speed: Math.random() * 0.3 + 0.1, // Slower speed
-          opacity: Math.random() * 0.3 + 0.15, // Slightly higher base opacity (15-45%)
-          size: size, // Use determined size
-        };
-      };
-
-      // Only run animation on step 0
-      if (currentStep === 0) {
-          // Initial items
-          const initialItems = Array.from({ length: 25 }, () => createFloatingItem()); // Increased initial count slightly
-          setFloatingItems(initialItems);
-
-          // Add new items periodically from the bottom
-          const interval = setInterval(() => {
-              const newItem = createFloatingItem(110); // Start from below screen
-              setFloatingItems((prev) => {
-                  const updated = [...prev, newItem];
-                  // Keep a max number of items
-                  return updated.length > 30 ? updated.slice(updated.length - 30) : updated; // Keep up to 30
-              });
-          }, 3000); // Add items slightly faster
-
-          // Animation loop
-          function animateItems() {
-              setFloatingItems((prev) =>
-                  prev.map((item) => {
-                      const newY = item.y - item.speed * 0.1; // Adjust speed factor if needed
-                      return {
-                          ...item,
-                          y: newY < -10 ? 110 : newY, // Reset position if it goes off screen
-                          // Optionally reset X when wrapping
-                          ...(newY < -10 ? { x: Math.random() * 90 + 5 } : {}),
-                      };
-                  })
-              );
-              animationFrameIdRef.current = requestAnimationFrame(animateItems); // Continue animation loop, store ID
-          }
-          animationFrameIdRef.current = requestAnimationFrame(animateItems); // Start the loop
-
-          // Cleanup function
-          return () => {
-              clearInterval(interval);
-              if (animationFrameIdRef.current) {
-                  cancelAnimationFrame(animationFrameIdRef.current); // Use stored ID
-              }
-              // console.log("Cleared background animation for step 0");
-          };
+    // Function to create a new item (text or icon)
+    const createFloatingItem = (startY?: number) => {
+      let content: string | JSX.Element
+      let size: number
+      // ~20% chance of showing an icon instead of text
+      if (Math.random() < 0.2) {
+        content = backgroundIcons[Math.floor(Math.random() * backgroundIcons.length)]
+        size = Math.random() * 6 + 18 // Slightly larger base size for icons (18-24px)
       } else {
-          // Clear items when moving away from step 0
-          setFloatingItems([]);
-          // Ensure animation frame is cancelled if step changes quickly
-           if (animationFrameIdRef.current) {
-              cancelAnimationFrame(animationFrameIdRef.current);
-           }
+        content = currentBgCommands[Math.floor(Math.random() * currentBgCommands.length)]
+        size = Math.random() * 5 + 11 // Text size (11-16px)
       }
-  // ** Add t.backgroundCommands to dependency array **
-  }, [currentStep, language, t.backgroundCommands]);
 
+      return {
+        id: floatingItemIdRef.current++,
+        x: Math.random() * 90 + 5, // 5-95% width
+        y: startY !== undefined ? startY : Math.random() * 90 + 5, // 5-95% height if no startY
+        content: content,
+        speed: Math.random() * 0.3 + 0.1, // Slower speed
+        opacity: Math.random() * 0.3 + 0.15, // Slightly higher base opacity (15-45%)
+        size: size, // Use determined size
+      }
+    }
+
+    // Only run animation on step 0
+    if (currentStep === 0) {
+      // Initial items
+      const initialItems = Array.from({ length: 25 }, () => createFloatingItem()) // Increased initial count slightly
+      setFloatingItems(initialItems)
+
+      // Add new items periodically from the bottom
+      const interval = setInterval(() => {
+        const newItem = createFloatingItem(110) // Start from below screen
+        setFloatingItems((prev) => {
+          const updated = [...prev, newItem]
+          // Keep a max number of items
+          return updated.length > 30 ? updated.slice(updated.length - 30) : updated // Keep up to 30
+        })
+      }, 3000) // Add items slightly faster
+
+      // Animation loop
+      function animateItems() {
+        setFloatingItems((prev) =>
+          prev.map((item) => {
+            const newY = item.y - item.speed * 0.1 // Adjust speed factor if needed
+            return {
+              ...item,
+              y: newY < -10 ? 110 : newY, // Reset position if it goes off screen
+              // Optionally reset X when wrapping
+              ...(newY < -10 ? { x: Math.random() * 90 + 5 } : {}),
+            }
+          }),
+        )
+        animationFrameIdRef.current = requestAnimationFrame(animateItems) // Continue animation loop, store ID
+      }
+      animationFrameIdRef.current = requestAnimationFrame(animateItems) // Start the loop
+
+      // Cleanup function
+      return () => {
+        clearInterval(interval)
+        if (animationFrameIdRef.current) {
+          cancelAnimationFrame(animationFrameIdRef.current) // Use stored ID
+        }
+        // console.log("Cleared background animation for step 0");
+      }
+    } else {
+      // Clear items when moving away from step 0
+      setFloatingItems([])
+      // Ensure animation frame is cancelled if step changes quickly
+      if (animationFrameIdRef.current) {
+        cancelAnimationFrame(animationFrameIdRef.current)
+      }
+    }
+    // ** Add t.backgroundCommands to dependency array **
+  }, [currentStep, language, t.backgroundCommands])
 
   // Recording ripple effect (unchanged from original logic)
   useEffect(() => {
@@ -593,12 +692,12 @@ export default function AppDemoPage() {
       }, 1200)
 
       // Start typing effect *after* setting transcript words in startRecording
-      setIsTyping(true);
+      setIsTyping(true)
 
       return () => clearInterval(rippleInterval)
     } else {
-        // Stop typing if recording stops manually (before completion)
-        // setIsTyping(false); // Typing stops itself on completion
+      // Stop typing if recording stops manually (before completion)
+      // setIsTyping(false); // Typing stops itself on completion
     }
   }, [isRecording])
 
@@ -609,19 +708,19 @@ export default function AppDemoPage() {
         setCurrentWordIndex((prev) => {
           const newIndex = prev + 1
           // ** Join with empty string for Chinese, space otherwise **
-          const joinBy = language === 'zh' ? '' : ' ';
+          const joinBy = language === "zh" ? "" : " "
           setTranscript(transcriptWords.slice(0, newIndex).join(joinBy))
           if (newIndex >= transcriptWords.length) {
             setIsTyping(false)
             setIsRecording(false) // Stop recording animation
             clearInterval(typingInterval)
-             // Automatically move to processing
+            // Automatically move to processing
             setTimeout(() => {
-                // Check step again in case user navigated away quickly
-                if (currentStep === 0 && !isProcessing) {
-                    processRequest();
-                }
-            }, 800);
+              // Check step again in case user navigated away quickly
+              if (currentStep === 0 && !isProcessing) {
+                processRequest()
+              }
+            }, 800)
           }
           return newIndex
         })
@@ -629,12 +728,11 @@ export default function AppDemoPage() {
 
       return () => clearInterval(typingInterval)
     } else if (!isTyping) {
-        // If typing stopped abruptly or finished, ensure recording state is false
-        if(isRecording) setIsRecording(false);
+      // If typing stopped abruptly or finished, ensure recording state is false
+      if (isRecording) setIsRecording(false)
     }
-  // ** Add language to dependency array to handle joining correctly **
+    // ** Add language to dependency array to handle joining correctly **
   }, [isTyping, currentWordIndex, transcriptWords, currentStep, isProcessing, language]) // Added isProcessing dependency
-
 
   // Remove ripples (unchanged)
   useEffect(() => {
@@ -648,7 +746,7 @@ export default function AppDemoPage() {
 
   // Process request (unchanged logic, timing adjusted)
   const processRequest = () => {
-    if (isProcessing) return;
+    if (isProcessing) return
     setIsProcessing(true)
     setTimeout(() => {
       setIsProcessing(false)
@@ -673,7 +771,7 @@ export default function AppDemoPage() {
     setTimeout(() => {
       if (direction === "right") {
         setSelectedCaregiver(caregiverProfiles[currentCaregiverIndex])
-        bookNow(); // Directly proceed to booking/tracking
+        bookNow() // Directly proceed to booking/tracking
       } else {
         setCurrentCaregiverIndex((prev) => (prev < caregiverProfiles.length - 1 ? prev + 1 : 0))
       }
@@ -683,9 +781,9 @@ export default function AppDemoPage() {
 
   // Regenerate caregivers (unchanged)
   const regenerateCaregivers = () => {
-     setCurrentCaregiverIndex(0);
-     setCaregiverFound(false);
-     setTimeout(() => setCaregiverFound(true), 300);
+    setCurrentCaregiverIndex(0)
+    setCaregiverFound(false)
+    setTimeout(() => setCaregiverFound(true), 300)
   }
 
   // Book now / start tracking (unchanged logic, timing adjusted)
@@ -721,31 +819,30 @@ export default function AppDemoPage() {
   }
 
   const exitDemo = () => {
-    router.push("/"); // Navigate to home page
+    router.push("/") // Navigate to home page
   }
 
   // Helper to get translated profile data
   const getTranslatedProfileData = (caregiver: (typeof caregiverProfiles)[0]) => {
-    const langCode = language as keyof typeof caregiver.translations;
-    const fallbackLang = 'en'; // Assuming English is the fallback
+    const langCode = language as keyof typeof caregiver.translations
+    const fallbackLang = "en" // Assuming English is the fallback
 
-    const translated = caregiver.translations?.[langCode];
-    const fallback = caregiver; // Assuming base object has English data
+    const translated = caregiver.translations?.[langCode]
+    const fallback = caregiver // Assuming base object has English data
 
     return {
-        bio: translated?.bio || fallback.bio,
-        skills: translated?.skills || fallback.skills,
-        experience: translated?.experience || fallback.experience,
-        // Keep original non-translated fields
-        name: fallback.name,
-        photo: fallback.photo,
-        rating: fallback.rating,
-        distance: fallback.distance,
-        hourlyRate: fallback.hourlyRate,
-        languages: fallback.languages,
-    };
-  };
-
+      bio: translated?.bio || fallback.bio,
+      skills: translated?.skills || fallback.skills,
+      experience: translated?.experience || fallback.experience,
+      // Keep original non-translated fields
+      name: fallback.name,
+      photo: fallback.photo,
+      rating: fallback.rating,
+      distance: fallback.distance,
+      hourlyRate: fallback.hourlyRate,
+      languages: fallback.languages,
+    }
+  }
 
   return (
     // ** Aesthetic Change: Light Purple Theme Gradient **
@@ -768,13 +865,13 @@ export default function AppDemoPage() {
               transform: `translate(-50%, -50%)`, // Center the item on its x,y coordinate
               // Other styles:
               fontSize: `${item.size}px`,
-              padding: typeof item.content === 'string' ? '3px 8px' : '5px', // Slightly more padding
-              borderRadius: '14px', // More rounded
-              backgroundColor: 'rgba(255, 255, 255, 0.4)', // Slightly more visible background
-              backdropFilter: 'blur(3px)', // Slightly more blur
-              boxShadow: '0 1px 3px rgba(0,0,0,0.05)', // Subtle shadow
+              padding: typeof item.content === "string" ? "3px 8px" : "5px", // Slightly more padding
+              borderRadius: "14px", // More rounded
+              backgroundColor: "rgba(255, 255, 255, 0.4)", // Slightly more visible background
+              backdropFilter: "blur(3px)", // Slightly more blur
+              boxShadow: "0 1px 3px rgba(0,0,0,0.05)", // Subtle shadow
               // Ensure icons inherit text color
-              color: 'inherit',
+              color: "inherit",
             }}
             transition={{ duration: 0.8, ease: "linear" }} // Smooth fade in/out for opacity
           >
@@ -793,10 +890,14 @@ export default function AppDemoPage() {
           <h1 className="font-semibold text-lg text-slate-800">{t.title}</h1>
 
           {/* Right side elements */}
-          <div className="ml-auto flex items-center space-x-3"> {/* Adjusted spacing */}
+          <div className="ml-auto flex items-center space-x-3">
+            {" "}
+            {/* Adjusted spacing */}
             <Globe className="h-5 w-5 text-slate-500" />
             <Select value={language} onValueChange={setLanguage}>
-              <SelectTrigger className="w-[130px] border-slate-300 text-slate-700 text-sm h-9 focus:ring-purple-400"> {/* Adjusted focus color */}
+              <SelectTrigger className="w-[130px] border-slate-300 text-slate-700 text-sm h-9 focus:ring-purple-400">
+                {" "}
+                {/* Adjusted focus color */}
                 <SelectValue placeholder="Language" />
               </SelectTrigger>
               <SelectContent>
@@ -807,21 +908,27 @@ export default function AppDemoPage() {
                 ))}
               </SelectContent>
             </Select>
-
-             {/* ** Exit Demo Button ** */}
-             <Button variant="outline" size="sm" onClick={exitDemo} className="border-purple-300 text-purple-700 hover:bg-purple-50 hover:text-purple-800 h-9">
-                 <LogOut className="h-4 w-4 mr-1.5"/>
-                 {t.exitDemo}
-             </Button>
+            {/* ** Exit Demo Button ** */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={exitDemo}
+              className="border-purple-300 text-purple-700 hover:bg-purple-50 hover:text-purple-800 h-9"
+            >
+              <LogOut className="h-4 w-4 mr-1.5" />
+              {t.exitDemo}
+            </Button>
           </div>
         </div>
       </header>
 
       {/* Ensure main content is above background but below header */}
-      <main className="container mx-auto max-w-md px-4 pt-24 pb-16 relative z-10"> {/* Reduced pb slightly as footer is gone */}
+      <main className="container mx-auto max-w-md px-4 pt-24 pb-16 relative z-10">
+        {" "}
+        {/* Reduced pb slightly as footer is gone */}
         {/* Step 0: Voice Input */}
         {currentStep === 0 && (
-           <motion.div
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
@@ -829,10 +936,10 @@ export default function AppDemoPage() {
             // ** Adjusted height slightly if needed, ensure enough space **
             className="flex flex-col items-center justify-center text-center min-h-[calc(100vh-180px)]" // Use min-h for flexibility
           >
-             {/* ** BOLD Subtitle ** */}
-             <h2 className="text-2xl font-bold text-slate-800 mb-3">{t.subtitle}</h2>
-             {/* ** BOLD Voice Prompt ** */}
-             <p className="text-slate-500 mb-10 font-bold">{t.voicePrompt}</p>
+            {/* ** BOLD Subtitle ** */}
+            <h2 className="text-2xl font-bold text-slate-800 mb-3">{t.subtitle}</h2>
+            {/* ** BOLD Voice Prompt ** */}
+            <p className="text-slate-500 mb-10 font-bold">{t.voicePrompt}</p>
 
             {/* Recording Button Area */}
             <div className="relative mb-6 flex flex-col items-center">
@@ -846,7 +953,13 @@ export default function AppDemoPage() {
                     transition={{ duration: 2.5, ease: "easeOut" }}
                     // ** Aesthetic Change: Purple Ripple **
                     className="absolute inset-0 rounded-full bg-purple-200/70 z-0"
-                    style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '128px', height: '128px' }}
+                    style={{
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      width: "128px",
+                      height: "128px",
+                    }}
                   />
                 ))}
               </AnimatePresence>
@@ -854,7 +967,9 @@ export default function AppDemoPage() {
               {/* Recording Button */}
               <motion.button
                 className={`relative w-32 h-32 rounded-full flex items-center justify-center transition-all duration-300 ease-out text-white shadow-md hover:shadow-lg ${
-                  isRecording ? "bg-gradient-to-br from-red-500 to-red-600" : "bg-gradient-to-br from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700" // Purple gradient
+                  isRecording
+                    ? "bg-gradient-to-br from-red-500 to-red-600"
+                    : "bg-gradient-to-br from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700" // Purple gradient
                 } z-10 focus:outline-none focus:ring-2 focus:ring-purple-300 focus:ring-offset-2`}
                 onClick={startRecording} // Use the dedicated function
                 whileTap={{ scale: isProcessing ? 1 : 0.92 }}
@@ -864,45 +979,44 @@ export default function AppDemoPage() {
               </motion.button>
             </div>
 
-             {/* Transcript Display */}
-              <AnimatePresence>
-                {transcript && (
-                    <motion.div
-                    key="transcript"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                    // ** Added margin-top to prevent overlap **
-                    className="bg-white/60 backdrop-blur-sm rounded-lg p-4 mt-8 w-full max-w-sm shadow-sm border border-slate-200/70"
-                    >
-                    <p className="text-slate-700 text-center min-h-[40px]">
-                        {transcript}
-                        {(isTyping) && <span className="animate-pulse ml-1 text-purple-600">|</span>} {/* Purple cursor */}
-                    </p>
-                    </motion.div>
-                )}
-             </AnimatePresence>
+            {/* Transcript Display */}
+            <AnimatePresence>
+              {transcript && (
+                <motion.div
+                  key="transcript"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  // ** Added margin-top to prevent overlap **
+                  className="bg-white/60 backdrop-blur-sm rounded-lg p-4 mt-8 w-full max-w-sm shadow-sm border border-slate-200/70"
+                >
+                  <p className="text-slate-700 text-center min-h-[40px]">
+                    {transcript}
+                    {isTyping && <span className="animate-pulse ml-1 text-purple-600">|</span>} {/* Purple cursor */}
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {/* Processing Indicator */}
-             <AnimatePresence>
-                {isProcessing && (
-                  <motion.div
-                    key="processing"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="flex items-center justify-center mt-6 text-purple-700" // Purple indicator
-                  >
-                    <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                    <span>{t.processingStatus}</span>
-                  </motion.div>
-                )}
-             </AnimatePresence>
+            <AnimatePresence>
+              {isProcessing && (
+                <motion.div
+                  key="processing"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="flex items-center justify-center mt-6 text-purple-700" // Purple indicator
+                >
+                  <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                  <span>{t.processingStatus}</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         )}
-
         {/* Step 1: AI Summary */}
         {currentStep === 1 && (
           <motion.div
@@ -918,7 +1032,7 @@ export default function AppDemoPage() {
                 {/* Purple-themed detail box */}
                 <div className="bg-purple-50/50 rounded-lg p-4 mb-6 border border-purple-100">
                   <p className="text-purple-900 font-medium mb-4">{t.careType}</p>
-                   <div className="mt-4 pt-4 border-t border-purple-100/80">
+                  <div className="mt-4 pt-4 border-t border-purple-100/80">
                     <h4 className="text-xs font-medium text-slate-500 uppercase mb-3 tracking-wider">Details:</h4>
                     <ul className="space-y-2">
                       {t.details.map((detail, index) => (
@@ -937,13 +1051,20 @@ export default function AppDemoPage() {
                   </div>
                 </div>
 
-                <Button variant="outline" className="w-full mb-3 border-slate-300 text-slate-600 hover:bg-slate-100 hover:text-slate-700">
+                <Button
+                  variant="outline"
+                  className="w-full mb-3 border-slate-300 text-slate-600 hover:bg-slate-100 hover:text-slate-700"
+                >
                   <Edit className="h-4 w-4 mr-2" />
                   {t.editRequest}
                 </Button>
 
-                 {/* Purple Find button */}
-                <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white" onClick={findCaregivers} disabled={caregiverSearching}>
+                {/* Purple Find button */}
+                <Button
+                  className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+                  onClick={findCaregivers}
+                  disabled={caregiverSearching}
+                >
                   {caregiverSearching ? (
                     <>
                       <Loader2 className="h-4 w-4 animate-spin mr-2" />
@@ -960,9 +1081,8 @@ export default function AppDemoPage() {
             </Card>
           </motion.div>
         )}
-
         {/* Step 2: Caregiver Selection */}
-         {currentStep === 2 && (
+        {currentStep === 2 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -970,130 +1090,183 @@ export default function AppDemoPage() {
             transition={{ duration: 0.5 }}
           >
             <div className="text-center mb-5">
-                <h3 className="text-xl font-semibold text-slate-800">{t.caregiverFound}</h3>
-                 <p className="text-sm text-slate-500 mt-1">{t.swipeInstructions}</p>
+              <h3 className="text-xl font-semibold text-slate-800">{t.caregiverFound}</h3>
+              <p className="text-sm text-slate-500 mt-1">{t.swipeInstructions}</p>
             </div>
 
             {/* Caregiver Cards */}
             {/* ** Increased height significantly for card container ** */}
-            <div className="relative h-[650px] w-full mb-6"> {/* Increased height further */}
+            <div className="relative h-[650px] w-full mb-6">
+              {" "}
+              {/* Increased height further */}
               {caregiverProfiles.map((caregiver, index) => {
-                 // Get potentially translated data for the current caregiver
-                 const displayData = getTranslatedProfileData(caregiver);
+                // Get potentially translated data for the current caregiver
+                const displayData = getTranslatedProfileData(caregiver)
 
-                 return (
-                    <AnimatePresence key={caregiver.id}>
-                      {index === currentCaregiverIndex && (
+                return (
+                  <AnimatePresence key={caregiver.id}>
+                    {index === currentCaregiverIndex && (
+                      <motion.div
+                        className="absolute inset-0 bg-white rounded-xl overflow-hidden border border-slate-200/80 shadow-lg cursor-grab active:cursor-grabbing flex flex-col" // Added flex flex-col
+                        initial={{ scale: 0.95, opacity: 0 }}
+                        animate={{
+                          scale: 1,
+                          opacity: 1,
+                          x: swipeDirection === "left" ? -300 : swipeDirection === "right" ? 300 : 0,
+                          rotate: swipeDirection === "left" ? -5 : swipeDirection === "right" ? 5 : 0,
+                        }}
+                        exit={{
+                          scale: 0.95,
+                          opacity: 0,
+                          x: swipeDirection === "left" ? -300 : swipeDirection === "right" ? 300 : 0,
+                          rotate: swipeDirection === "left" ? -10 : swipeDirection === "right" ? 10 : 0,
+                        }}
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        drag="x"
+                        dragConstraints={{ left: 0, right: 0 }}
+                        dragElastic={0.5}
+                        onDragEnd={(e, { offset, velocity }) => {
+                          const swipePower = Math.abs(offset.x) * velocity.x
+                          if (swipePower < -10000) {
+                            handleSwipe("left")
+                          } else if (swipePower > 10000) {
+                            handleSwipe("right")
+                          }
+                        }}
+                      >
+                        {/* Card Content using displayData */}
+                        {/* ** Image container with fixed aspect ratio ** */}
+                        <div className="relative w-full aspect-[4/3] bg-slate-100 flex-shrink-0">
+                          {" "}
+                          {/* Aspect ratio container */}
+                          <Image
+                            src={
+                              placeholderImages[displayData.photo as keyof typeof placeholderImages] ||
+                              displayData.photo
+                            }
+                            alt={displayData.name}
+                            fill
+                            className="object-cover"
+                            priority={index === currentCaregiverIndex}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Added sizes prop for optimization
+                          />
+                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                            <h4 className="text-white font-bold text-xl mb-0.5">{displayData.name}</h4>
+                            <div className="flex items-center text-white/90 text-sm">
+                              <Star className="h-4 w-4 text-yellow-400 fill-yellow-400 mr-1.5" />
+                              <span>{displayData.rating}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* ** Text content area - removed overflow-y-auto ** */}
+                        <div className="p-5 space-y-4 flex-grow">
+                          {" "}
+                          {/* Increased padding, removed overflow */}
+                          <div className="flex justify-between items-center">
+                            {/* Use translated experience */}
+                            <span className="text-purple-700 font-medium text-sm">{displayData.experience}</span>
+                            <span className="font-bold text-slate-900 text-lg">
+                              ${displayData.hourlyRate}
+                              <span className="text-sm font-normal text-slate-500">/hr</span>
+                            </span>
+                          </div>
+                          {/* Use translated bio */}
+                          <p className="text-slate-600 text-sm leading-relaxed">{displayData.bio}</p>{" "}
+                          {/* Added leading-relaxed */}
+                          <div className="flex items-center text-sm text-slate-500">
+                            <MapPin className="h-4 w-4 mr-1.5 flex-shrink-0" />
+                            <span>{displayData.distance}</span>
+                          </div>
+                          <div>
+                            <h5 className="text-xs font-medium text-slate-500 uppercase mb-2 tracking-wider">Skills</h5>{" "}
+                            {/* Increased mb */}
+                            <div className="flex flex-wrap gap-2">
+                              {" "}
+                              {/* Increased gap */}
+                              {/* Use translated skills */}
+                              {displayData.skills.slice(0, 4).map((skill, i) => (
+                                <span
+                                  key={i}
+                                  className="text-xs bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full border border-slate-200"
+                                >
+                                  {" "}
+                                  {/* Increased px */}
+                                  {skill}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Swipe indicators (unchanged style) */}
                         <motion.div
-                          className="absolute inset-0 bg-white rounded-xl overflow-hidden border border-slate-200/80 shadow-lg cursor-grab active:cursor-grabbing flex flex-col" // Added flex flex-col
-                          initial={{ scale: 0.95, opacity: 0 }}
+                          className="absolute top-16 left-4 bg-red-500/90 text-white p-3 rounded-full shadow-lg"
+                          initial={{ scale: 0, rotate: -30 }}
                           animate={{
-                            scale: 1,
-                            opacity: 1,
-                            x: swipeDirection === "left" ? -300 : swipeDirection === "right" ? 300 : 0,
-                            rotate: swipeDirection === "left" ? -5 : swipeDirection === "right" ? 5 : 0,
+                            scale: swipeDirection === "left" ? 1 : 0,
+                            rotate: swipeDirection === "left" ? 0 : -30,
                           }}
-                          exit={{
-                            scale: 0.95,
-                            opacity: 0,
-                            x: swipeDirection === "left" ? -300 : swipeDirection === "right" ? 300 : 0,
-                            rotate: swipeDirection === "left" ? -10 : swipeDirection === "right" ? 10 : 0,
-                          }}
-                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                          drag="x"
-                          dragConstraints={{ left: 0, right: 0 }}
-                          dragElastic={0.5}
-                          onDragEnd={(e, { offset, velocity }) => {
-                            const swipePower = Math.abs(offset.x) * velocity.x;
-                            if (swipePower < -10000) { handleSwipe("left") }
-                            else if (swipePower > 10000) { handleSwipe("right") }
-                          }}
+                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
                         >
-                          {/* Card Content using displayData */}
-                          {/* ** Image container with fixed aspect ratio ** */}
-                          <div className="relative w-full aspect-[4/3] bg-slate-100 flex-shrink-0"> {/* Aspect ratio container */}
-                             <Image
-                                src={placeholderImages[displayData.photo as keyof typeof placeholderImages] || displayData.photo}
-                                alt={displayData.name}
-                                fill
-                                className="object-cover"
-                                priority={index === currentCaregiverIndex}
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Added sizes prop for optimization
-                             />
-                             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                               <h4 className="text-white font-bold text-xl mb-0.5">{displayData.name}</h4>
-                               <div className="flex items-center text-white/90 text-sm">
-                                 <Star className="h-4 w-4 text-yellow-400 fill-yellow-400 mr-1.5" />
-                                 <span>{displayData.rating}</span>
-                               </div>
-                             </div>
-                           </div>
-
-                           {/* ** Text content area - removed overflow-y-auto ** */}
-                           <div className="p-5 space-y-4 flex-grow"> {/* Increased padding, removed overflow */}
-                             <div className="flex justify-between items-center">
-                                {/* Use translated experience */}
-                               <span className="text-purple-700 font-medium text-sm">{displayData.experience}</span>
-                               <span className="font-bold text-slate-900 text-lg">${displayData.hourlyRate}<span className="text-sm font-normal text-slate-500">/hr</span></span>
-                             </div>
-
-                             {/* Use translated bio */}
-                             <p className="text-slate-600 text-sm leading-relaxed">{displayData.bio}</p> {/* Added leading-relaxed */}
-
-                             <div className="flex items-center text-sm text-slate-500">
-                               <MapPin className="h-4 w-4 mr-1.5 flex-shrink-0" />
-                               <span>{displayData.distance}</span>
-                             </div>
-
-                             <div>
-                               <h5 className="text-xs font-medium text-slate-500 uppercase mb-2 tracking-wider">Skills</h5> {/* Increased mb */}
-                               <div className="flex flex-wrap gap-2"> {/* Increased gap */}
-                                 {/* Use translated skills */}
-                                 {displayData.skills.slice(0, 4).map((skill, i) => (
-                                   <span key={i} className="text-xs bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full border border-slate-200"> {/* Increased px */}
-                                     {skill}
-                                   </span>
-                                 ))}
-                               </div>
-                             </div>
-                           </div>
-
-                          {/* Swipe indicators (unchanged style) */}
-                           <motion.div
-                             className="absolute top-16 left-4 bg-red-500/90 text-white p-3 rounded-full shadow-lg"
-                             initial={{ scale: 0, rotate: -30 }}
-                             animate={{ scale: swipeDirection === "left" ? 1 : 0, rotate: swipeDirection === "left" ? 0 : -30 }}
-                             transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                           > <X className="h-6 w-6" /> </motion.div>
-                           <motion.div
-                              className="absolute top-16 right-4 bg-green-500/90 text-white p-3 rounded-full shadow-lg"
-                              initial={{ scale: 0, rotate: 30 }}
-                              animate={{ scale: swipeDirection === "right" ? 1 : 0, rotate: swipeDirection === "right" ? 0 : 30 }}
-                              transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                           > <Check className="h-6 w-6" /> </motion.div>
+                          {" "}
+                          <X className="h-6 w-6" />{" "}
                         </motion.div>
-                      )}
-                    </AnimatePresence>
-                 )
+                        <motion.div
+                          className="absolute top-16 right-4 bg-green-500/90 text-white p-3 rounded-full shadow-lg"
+                          initial={{ scale: 0, rotate: 30 }}
+                          animate={{
+                            scale: swipeDirection === "right" ? 1 : 0,
+                            rotate: swipeDirection === "right" ? 0 : 30,
+                          }}
+                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                        >
+                          {" "}
+                          <Check className="h-6 w-6" />{" "}
+                        </motion.div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                )
               })}
             </div>
 
             {/* Swipe Buttons (unchanged style) */}
-             <div className="flex justify-center gap-6 mb-4 mt-2">
-               <Button variant="outline" size="icon" className="h-16 w-16 rounded-full border-2 border-red-200 text-red-500 hover:bg-red-50 hover:border-red-300" onClick={() => handleSwipe("left")}> <X className="h-7 w-7" /> </Button>
-               <Button variant="outline" size="icon" className="h-16 w-16 rounded-full border-2 border-green-200 text-green-600 hover:bg-green-50 hover:border-green-300" onClick={() => handleSwipe("right")}> <Check className="h-7 w-7" /> </Button>
-             </div>
+            <div className="flex justify-center gap-6 mb-4 mt-2">
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-16 w-16 rounded-full border-2 border-red-200 text-red-500 hover:bg-red-50 hover:border-red-300"
+                onClick={() => handleSwipe("left")}
+              >
+                {" "}
+                <X className="h-7 w-7" />{" "}
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-16 w-16 rounded-full border-2 border-green-200 text-green-600 hover:bg-green-50 hover:border-green-300"
+                onClick={() => handleSwipe("right")}
+              >
+                {" "}
+                <Check className="h-7 w-7" />{" "}
+              </Button>
+            </div>
 
-             {/* Regenerate Button */}
-              <div className="text-center">
-                 <Button variant="ghost" className="text-slate-500 hover:text-purple-700 hover:bg-purple-50 text-sm" onClick={regenerateCaregivers}> {/* Purple hover */}
-                   <RefreshCw className="h-4 w-4 mr-1.5" /> {t.regenerate}
-                 </Button>
-              </div>
-
+            {/* Regenerate Button */}
+            <div className="text-center">
+              <Button
+                variant="ghost"
+                className="text-slate-500 hover:text-purple-700 hover:bg-purple-50 text-sm"
+                onClick={regenerateCaregivers}
+              >
+                {" "}
+                {/* Purple hover */}
+                <RefreshCw className="h-4 w-4 mr-1.5" /> {t.regenerate}
+              </Button>
+            </div>
           </motion.div>
         )}
-
         {/* Step 3: Tracking */}
         {currentStep === 3 && selectedCaregiver && (
           <motion.div
@@ -1103,118 +1276,157 @@ export default function AppDemoPage() {
             transition={{ duration: 0.5 }}
           >
             {/* Get potentially translated data for the selected caregiver */}
-            {(() => { // IIFE to use displayData easily
-               const displayData = getTranslatedProfileData(selectedCaregiver);
-               return (
-                  <Card className="bg-white/90 backdrop-blur-sm shadow-lg border-slate-200/70 mb-6 overflow-hidden">
+            {(() => {
+              // IIFE to use displayData easily
+              const displayData = getTranslatedProfileData(selectedCaregiver)
+              return (
+                <Card className="bg-white/90 backdrop-blur-sm shadow-lg border-slate-200/70 mb-6 overflow-hidden">
                   <CardContent className="pt-6 pb-6">
-                      <h3 className="text-lg font-semibold text-slate-800 mb-4 text-center">{t.trackingTitle}</h3>
+                    <h3 className="text-lg font-semibold text-slate-800 mb-4 text-center">{t.trackingTitle}</h3>
 
-                      {/* Map Visualization */}
-                      <div className="relative w-full h-64 bg-slate-200 rounded-lg mb-6 overflow-hidden border border-slate-300">
+                    {/* Map Visualization */}
+                    <div className="relative w-full h-64 bg-slate-200 rounded-lg mb-6 overflow-hidden border border-slate-300">
                       {/* Simulated Map */}
                       <div className="absolute inset-0">
-                          <Image
+                        <Image
                           src="/placeholder.svg?height=400&width=600&text=Map+Area&color=e2e8f0"
                           alt="Map"
                           fill
                           className="object-cover opacity-60"
-                          />
+                        />
 
-                          {/* Destination Pin (Home) */}
-                          <motion.div
-                              className="absolute"
-                              initial={{ scale: 0.8, opacity: 0 }}
-                              animate={{ scale: 1, opacity: 1 }}
-                              transition={{ delay: 0.2, duration: 0.5 }}
-                              style={{ top: '25%', right: '25%' }}
-                          >
+                        {/* Destination Pin (Home) */}
+                        <motion.div
+                          className="absolute"
+                          initial={{ scale: 0.8, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          transition={{ delay: 0.2, duration: 0.5 }}
+                          style={{ top: "25%", right: "25%" }}
+                        >
                           <Home className="h-8 w-8 text-purple-600 drop-shadow-md" /> {/* Purple home */}
-                          </motion.div>
+                        </motion.div>
 
-                          {/* Moving Caregiver Pin */}
-                          <motion.div
+                        {/* Moving Caregiver Pin */}
+                        <motion.div
                           className="absolute"
                           initial={{ bottom: "15%", left: "15%" }}
-                          animate={ caregiverArrived ? { top: "28%", right: "30%", scale: 1.1 } : { bottom: "auto", left: "auto", top: "50%", right: "50%", scale: 1 } }
+                          animate={
+                            caregiverArrived
+                              ? { top: "28%", right: "30%", scale: 1.1 }
+                              : { bottom: "auto", left: "auto", top: "50%", right: "50%", scale: 1 }
+                          }
                           transition={{ duration: caregiverArrived ? 1.5 : 6, ease: "easeInOut" }}
-                          >
+                        >
                           <div className="relative flex flex-col items-center">
-                              <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center shadow-md border-2 border-white"> <User className="h-4 w-4 text-white" /> </div>
-                              {!caregiverArrived && ( <div className="absolute -bottom-1 w-2 h-2 bg-green-500 rounded-full animate-pulse" /> )}
+                            <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center shadow-md border-2 border-white">
+                              {" "}
+                              <User className="h-4 w-4 text-white" />{" "}
+                            </div>
+                            {!caregiverArrived && (
+                              <div className="absolute -bottom-1 w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                            )}
                           </div>
-                          </motion.div>
+                        </motion.div>
                       </div>
-                      </div>
+                    </div>
 
-                      {/* Status Information */}
-                      <div className="bg-slate-50/70 p-4 rounded-lg mb-6 border border-slate-200">
+                    {/* Status Information */}
+                    <div className="bg-slate-50/70 p-4 rounded-lg mb-6 border border-slate-200">
                       <div className="flex items-center mb-3">
-                          <div className="relative h-12 w-12 rounded-full overflow-hidden border-2 border-white mr-3 shadow-sm">
-                          <Image src={placeholderImages[displayData.photo as keyof typeof placeholderImages] || displayData.photo} alt={displayData.name} fill className="object-cover" />
-                          </div>
-                          <div>
+                        <div className="relative h-12 w-12 rounded-full overflow-hidden border-2 border-white mr-3 shadow-sm">
+                          <Image
+                            src={
+                              placeholderImages[displayData.photo as keyof typeof placeholderImages] ||
+                              displayData.photo
+                            }
+                            alt={displayData.name}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <div>
                           <h4 className="font-medium text-slate-900">{displayData.name}</h4>
                           {/* Use first translated skill as example */}
                           <p className="text-sm text-slate-600">{displayData.skills[0]} Specialist</p>
-                          </div>
+                        </div>
                       </div>
 
                       <div className="border-t border-slate-200/80 pt-3">
-                          <AnimatePresence mode="wait">
+                        <AnimatePresence mode="wait">
                           <motion.div
-                              key={caregiverArrived ? "arrived" : "enroute"}
-                              initial={{ opacity: 0, y: 5 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, y: -5 }}
-                              transition={{ duration: 0.3 }}
-                              className="flex items-center justify-between"
+                            key={caregiverArrived ? "arrived" : "enroute"}
+                            initial={{ opacity: 0, y: 5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -5 }}
+                            transition={{ duration: 0.3 }}
+                            className="flex items-center justify-between"
                           >
-                              <div className="flex items-center">
+                            <div className="flex items-center">
                               <Clock className="h-5 w-5 text-purple-600 mr-2" /> {/* Purple clock */}
-                              <span className="text-slate-800 text-sm"> {caregiverArrived ? t.caregiverArrived : t.trackingStatus} </span>
+                              <span className="text-slate-800 text-sm">
+                                {" "}
+                                {caregiverArrived ? t.caregiverArrived : t.trackingStatus}{" "}
+                              </span>
+                            </div>
+                            {caregiverArrived && (
+                              <div className="bg-green-100 text-green-700 px-2.5 py-1 rounded-full text-xs font-semibold border border-green-200">
+                                {" "}
+                                Arrived{" "}
                               </div>
-                              {caregiverArrived && ( <div className="bg-green-100 text-green-700 px-2.5 py-1 rounded-full text-xs font-semibold border border-green-200"> Arrived </div> )}
+                            )}
                           </motion.div>
-                          </AnimatePresence>
+                        </AnimatePresence>
                       </div>
-                      </div>
+                    </div>
 
-                      {/* Buttons */}
-                      <AnimatePresence mode="wait">
-                          {caregiverArrived ? (
-                              <motion.div key="complete-btn" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-                                  <Button className="w-full bg-green-600 hover:bg-green-700 text-white">{t.completeBooking}</Button>
-                              </motion.div>
-                          ) : (
-                              <motion.div key="message-btn" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-                                  <Button variant="outline" className="w-full border-slate-300 text-slate-600 hover:bg-slate-100 hover:text-slate-700">
-                                  <MessageSquare className="h-4 w-4 mr-2" /> Message {displayData.name.split(' ')[0]}
-                                  </Button>
-                              </motion.div>
-                          )}
-                      </AnimatePresence>
-
+                    {/* Buttons */}
+                    <AnimatePresence mode="wait">
+                      {caregiverArrived ? (
+                        <motion.div
+                          key="complete-btn"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <Button className="w-full bg-green-600 hover:bg-green-700 text-white">
+                            {t.completeBooking}
+                          </Button>
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          key="message-btn"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <Button
+                            variant="outline"
+                            className="w-full border-slate-300 text-slate-600 hover:bg-slate-100 hover:text-slate-700"
+                          >
+                            <MessageSquare className="h-4 w-4 mr-2" /> Message {displayData.name.split(" ")[0]}
+                          </Button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </CardContent>
-                  </Card>
-               )
-             })()}
+                </Card>
+              )
+            })()}
           </motion.div>
         )}
-
-
         {/* Try Again Button */}
         {currentStep > 0 && (
-            <div className="mt-6 text-center">
-                <Button variant="link" className="text-slate-500 hover:text-purple-600" onClick={resetDemo}> {/* Purple hover */}
-                    {t.tryAgain}
-                </Button>
-            </div>
+          <div className="mt-6 text-center">
+            <Button variant="link" className="text-slate-500 hover:text-purple-600" onClick={resetDemo}>
+              {" "}
+              {/* Purple hover */}
+              {t.tryAgain}
+            </Button>
+          </div>
         )}
       </main>
 
       {/* NO BOTTOM NAVIGATION BANNER */}
-
     </div>
   )
 }

@@ -8,62 +8,56 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
+    domains: ['v0.blob.com', 'hebbkx1anhila5yf.public.blob.vercel-storage.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
+    // Optimize image loading
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 60,
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     unoptimized: true,
   },
-  // Remove swcMinify if Next.js 15.2.4 does not recognize it
-  // swcMinify: true, 
-  compress: true,
-  productionBrowserSourceMaps: false,
-  experimental: {
-    webpackBuildWorker: true,
-    parallelServerBuildTraces: true,
-    parallelServerCompiles: true,
-  },
-  webpack: (config, { isServer }) => {
-    // Enable aggressive code splitting and smaller chunks
+  // Enable webpack bundle analyzer in development mode
+  webpack: (config, { isServer, dev }) => {
+    // Optimize bundle size
     config.optimization.splitChunks = {
       chunks: 'all',
-      maxInitialRequests: 20,
-      minSize: 10000,
-      maxSize: 15000, // Reduce chunk size to 15 KB
+      maxInitialRequests: 25,
+      minSize: 20000,
+      maxSize: 20 * 1024 * 1024, // 20MB max chunk size
       cacheGroups: {
-        default: false,
-        vendors: false,
-        commons: {
-          name: 'commons',
-          chunks: 'all',
-          minChunks: 2,
-          reuseExistingChunk: true,
+        framework: {
+          name: 'framework',
+          test: /[\\/]node_modules[\\/](react|react-dom|framer-motion)[\\/]/,
+          priority: 40,
+          // Don't create a framework chunk in development mode
+          enforce: !dev,
         },
         lib: {
           test: /[\\/]node_modules[\\/]/,
-          name(module) {
-            const match = module?.context?.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
-            if (!match) {
-              return "misc-package";
-            }
-            const packageName = match[1];
-            return `npm.${packageName.replace("@", "")}`;
-          },
-          chunks: 'all',
-          priority: 10,
+          priority: 30,
+          minChunks: 2,
           reuseExistingChunk: true,
+        },
+        commons: {
+          name: 'commons',
+          minChunks: 2,
+          priority: 20,
         },
       },
     };
 
-    // Remove source maps in production
-    if (!isServer) {
-      config.devtool = false;
-    }
-
-    if (isServer) {
-      // Exclude specific modules from server bundle
-      config.externals = config.externals || [];
-      config.externals.push("big-dependency-name");
-    }
-
     return config;
+  },
+  // Optimize package imports without CSS optimization
+  experimental: {
+    // Removed optimizeCss: true as it requires the critters package
+    optimizePackageImports: ['lucide-react', 'framer-motion', 'recharts'],
   },
 };
 

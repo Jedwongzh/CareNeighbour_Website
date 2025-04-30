@@ -24,10 +24,10 @@ export function FeatureCarousel() {
   const [touchEnd, setTouchEnd] = useState(0)
   const isMobile = useMobile()
 
-  // Simplified feature sets with optimized image references
   const featureSets: FeatureSet[] = [
     {
-      image: "/placeholder.svg?height=600&width=800&text=App+Features",
+      image:
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/CareNeighbor%20-%20Market%20Validation%20Posters%20V1.jpg-ZeNM7ZLCj3I78ZoQRMCvi3JZhL41as.jpeg",
       imageAlt: "CareNeighbor app features showing home screen, request care, and available caregivers",
       features: [
         {
@@ -45,7 +45,7 @@ export function FeatureCarousel() {
       ],
     },
     {
-      image: "/placeholder.svg?height=600&width=800&text=Booking+Features",
+      image: "/images/app-screens-2.jpeg",
       imageAlt: "CareNeighbor app features showing booking, caregiver profile, and location tracking",
       features: [
         {
@@ -72,8 +72,8 @@ export function FeatureCarousel() {
       setActiveIndex((prev) => (prev === featureSets.length - 1 ? 0 : prev + 1))
       setTimeout(() => {
         setIsTransitioning(false)
-      }, 300) // Reduced from 500ms
-    }, 300) // Reduced from 500ms
+      }, 500)
+    }, 500)
   }
 
   const prevSlide = () => {
@@ -84,8 +84,8 @@ export function FeatureCarousel() {
       setActiveIndex((prev) => (prev === 0 ? featureSets.length - 1 : prev - 1))
       setTimeout(() => {
         setIsTransitioning(false)
-      }, 300) // Reduced from 500ms
-    }, 300) // Reduced from 500ms
+      }, 500)
+    }, 500)
   }
 
   // Handle touch events for swiping
@@ -144,11 +144,11 @@ export function FeatureCarousel() {
         </div>
 
         {/* Image Container - Adjusted height for mobile */}
-        <div className="relative h-[300px] sm:h-[350px] md:h-[400px] lg:h-[450px] overflow-hidden">
+        <div className="relative h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden">
           {featureSets.map((set, index) => (
             <div
               key={index}
-              className={`absolute inset-0 flex justify-center transition-opacity duration-300 ease-in-out ${
+              className={`absolute inset-0 flex justify-center transition-opacity duration-500 ease-in-out ${
                 index === activeIndex
                   ? isTransitioning
                     ? "opacity-0"
@@ -162,7 +162,6 @@ export function FeatureCarousel() {
                 width={800}
                 height={600}
                 className="object-contain max-h-full"
-                priority={index === 0}
               />
             </div>
           ))}
@@ -183,8 +182,8 @@ export function FeatureCarousel() {
                   setActiveIndex(index)
                   setTimeout(() => {
                     setIsTransitioning(false)
-                  }, 300) // Reduced from 500ms
-                }, 300) // Reduced from 500ms
+                  }, 500)
+                }, 500)
               }}
               aria-label={`Go to slide ${index + 1}`}
             />
@@ -197,7 +196,7 @@ export function FeatureCarousel() {
         {featureSets[activeIndex].features.map((feature, index) => (
           <div
             key={index}
-            className={`flex flex-col items-start space-y-3 rounded-lg border p-4 md:p-6 transition-opacity duration-300 ${
+            className={`flex flex-col items-start space-y-3 rounded-lg border p-4 md:p-6 transition-opacity duration-500 ${
               isTransitioning ? "opacity-0" : "opacity-100"
             }`}
           >
