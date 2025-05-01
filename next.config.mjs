@@ -29,7 +29,7 @@ const nextConfig = {
       chunks: 'all',
       maxInitialRequests: 25,
       minSize: 20000,
-      maxSize: 15 * 1024 * 1024, // Reduced max chunk size to 15MB
+      maxSize: 20 * 1024 * 1024, // 20MB max chunk size
       cacheGroups: {
         framework: {
           name: 'framework',
@@ -41,7 +41,7 @@ const nextConfig = {
         lib: {
           test: /[\\/]node_modules[\\/]/,
           priority: 30,
-          minChunks: 1, // Allow splitting libraries used even once
+          minChunks: 2,
           reuseExistingChunk: true,
         },
         commons: {
@@ -49,26 +49,8 @@ const nextConfig = {
           minChunks: 2,
           priority: 20,
         },
-        // Add a vendor group to catch other node_modules
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name(module) {
-            // get the name. E.g. node_modules/packageName/not/this/part.js
-            // or node_modules/packageName
-            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)?.[1];
-            // npm package names are URL-safe, but some servers don't like @ symbols
-            return `npm.${packageName?.replace('@', '')}`;
-          },
-          priority: 10,
-          reuseExistingChunk: true,
-          enforce: true,
-        },
       },
     };
-
-    // Ensure minimize is enabled for production builds
-    config.optimization.minimize = !dev;
-    // Consider adding TerserPlugin options if needed, but minimize should be enough
 
     return config;
   },
