@@ -64,7 +64,12 @@ export async function POST(request: Request) {
       const timestamp = new Date().toISOString()
 
       if (type === "waitlist") {
-        const waitlistEntries = readDataFile("waitlist.json")
+        interface WaitlistEntry {
+          email: string
+          timestamp: string
+        }
+
+        const waitlistEntries: WaitlistEntry[] = readDataFile("waitlist.json")
 
         // Check if email already exists
         if (waitlistEntries.some((entry) => entry.email === email)) {
