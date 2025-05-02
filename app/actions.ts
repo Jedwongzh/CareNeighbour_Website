@@ -97,7 +97,7 @@ export async function joinWaitlist(formData: FormData) {
     console.log("Successfully added to Waitlist sheet:", email);
     revalidatePath("/"); // Revalidate the page if needed
     // Redirect on success
-    return { success: true, message: "Successfully joined waitlist!", redirectUrl: "/thank-you" };
+    return { success: true, message: "Successfully joined waitlist!", redirectUrl: "/thank-you/waitlist" };
 
   } catch (error) {
     console.error("Error in Google Sheets submission (Waitlist):", error);
@@ -156,7 +156,7 @@ export async function submitFeedback(formData: FormData) {
      console.log("Successfully added to Feedback sheet:", email);
      revalidatePath("/"); // Revalidate the page if needed
      // Redirect on success
-     return { success: true, message: "Feedback submitted successfully!", redirectUrl: "/thank-you" };
+     return { success: true, message: "Feedback submitted successfully!", redirectUrl: "/thank-you/feedback" };
 
    } catch (error) {
      console.error("Error in Google Sheets submission (Feedback):", error);
