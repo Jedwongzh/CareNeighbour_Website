@@ -68,7 +68,7 @@ export async function joinWaitlist(formData: FormData) {
   if (!validatedFields.success) {
     return {
       success: false,
-      message: "Validation failed.",
+      message: "Please enter a valid email.",
       error: validatedFields.error.flatten().fieldErrors.email?.[0] || "Invalid input.",
     };
   }
@@ -128,7 +128,7 @@ export async function submitFeedback(formData: FormData) {
      const errors = validatedFields.error.flatten().fieldErrors;
      return {
        success: false,
-       message: "Validation failed.",
+       message: "Please enter a valid email.",
        error: errors.email?.[0] || errors.feedback?.[0] || "Invalid input.",
      };
    }
