@@ -798,18 +798,19 @@ export default function LandingPage() {
         </section>
       </main>
 
-      {/* Footer with contact email */}
-      <footer className="w-full bg-white/90 text-center py-6 border-t border-gray-200">
-        <p className="text-sm text-gray-600">
-          Contact us at{' '}
-          <a
-            href="mailto:careneighbour.team@gmail.com"
-            className="text-purple-600 hover:underline"
-          >
-            careneighbour.team@gmail.com
-          </a>{' '}
-          — open for collaboration
-        </p>
+      {/* Footer */}
+      <footer className="border-t bg-purple-50">
+        <div className="container px-4 md:px-6 py-8 flex flex-col md:flex-row items-center justify-between text-sm text-gray-500">
+          <div className="flex items-center space-x-2 mb-4 md:mb-0">
+            <Image src="/images/logo.png" alt="CareNeighbour Logo" width={24} height={24} />
+            <span>&copy; {new Date().getFullYear()} CareNeighbour, Inc. All rights reserved.</span>
+          </div>
+          <div className="flex gap-6">
+            <Link href="/about" className="hover:text-primary transition-colors">
+              About Us
+            </Link>
+          </div>
+        </div>
       </footer>
     </div>
   )
