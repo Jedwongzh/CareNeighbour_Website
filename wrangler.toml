@@ -4,8 +4,6 @@ compatibility_date = "2025-05-01"
 [build]
 command = "npm run build"
 
-pages_build_output_dir = "./.next"
-
 [vars]
 NODE_VERSION = "20"
 VERCEL_FORCE_NO_BUILD_CACHE = "1"
