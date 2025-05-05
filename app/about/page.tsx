@@ -38,17 +38,9 @@ export default function AboutPage() {
                 one that has deeply affected us. CareNeighbor was born from our own struggles of being far from our
                 aging grandparents when they needed us the most. Like many expats and busy professionals, we've
                 experienced the helplessness of knowing a loved one needs care but being unable to drop everything and
-                fly home. We knew there had to be a better way.
-              </p>
-
-              <p className="text-justify">
-                That's why we built CareNeighbor—a platform that connects families with trusted, local caregivers in
+                fly home. We knew there had to be a better way. That's why we built CareNeighbor—a platform that connects families with trusted, local caregivers in
                 minutes. Whether it's a quick check-in, companionship, or urgent assistance, we make sure help is always
-                within reach.
-              </p>
-
-              <p className="text-justify">
-                But we know technology alone isn't enough—we need insights from those who truly understand aged care. If
+                within reach. But we know technology alone isn't enough—we need insights from those who truly understand aged care. If
                 you're an expert in elder care, healthcare, or community support, we'd love to hear from you. Your
                 feedback and guidance can help us refine CareNeighbor into something that truly makes a difference.
               </p>
@@ -72,7 +64,7 @@ export default function AboutPage() {
 
       {/* Minimal copyright notice */}
       <div className="w-full py-4 text-center text-sm text-gray-500">
-        &copy; {new Date().getFullYear()} CareNeighbor, Inc. All rights reserved.
+        &copy; {new Date().getFullYear()} CareNeighbour, Inc. All rights reserved.
       </div>
     </div>
   )

@@ -27,7 +27,7 @@ export function FeatureCarousel() {
   const featureSets: FeatureSet[] = [
     {
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/CareNeighbor%20-%20Market%20Validation%20Posters%20V1.jpg-ZeNM7ZLCj3I78ZoQRMCvi3JZhL41as.jpeg",
+        "/images/featureshowcase1.jpg",
       imageAlt: "CareNeighbor app features showing home screen, request care, and available caregivers",
       features: [
         {
@@ -35,8 +35,8 @@ export function FeatureCarousel() {
           description: "Speak your needs—our AI transcribes and processes instantly.",
         },
         {
-          title: "Quick Care Options",
-          description: "Choose from pre-defined options for fast, targeted assistance.",
+          title: "AI-Powered Matching",
+          description: "AI cross-references caregiver profiles for language, qualifications, and cultural fit.",
         },
         {
           title: "Real-Time Availability",
@@ -45,7 +45,7 @@ export function FeatureCarousel() {
       ],
     },
     {
-      image: "/images/app-screens-2.jpeg",
+      image: "/images/featureshowcase2.jpg",
       imageAlt: "CareNeighbor app features showing booking, caregiver profile, and location tracking",
       features: [
         {
@@ -62,7 +62,10 @@ export function FeatureCarousel() {
         },
       ],
     },
-  ]
+  ].map((set) => ({
+    ...set,
+    image: `${set.image}?w=2400&h=1800&fit=cover`, // Increase query parameters for larger image resolution
+  }))
 
   const nextSlide = () => {
     if (isTransitioning) return
