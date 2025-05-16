@@ -7,11 +7,11 @@ export default function AboutPage() {
   return (
     <div className="flex min-h-[100dvh] flex-col">
       {/* Header */}
-      <header className="w-full py-4 border-b">
-        <div className="container px-4 md:px-6 flex items-center justify-between">
+      <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur-sm">
+        <div className="container px-4 md:px-6 flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
-            <Image src="/images/logo.png" alt="CareNeighbor Logo" width={40} height={40} />
-            <span className="font-bold text-xl">CareNeighbour</span>
+            <Image src="/images/logo.png" alt="CareNeighbor Logo" width={36} height={36} />
+            <span className="font-semibold text-lg">CareNeighbour</span>
           </Link>
           <Link href="/">
             <Button variant="ghost" size="sm" className="flex items-center gap-1">
