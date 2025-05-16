@@ -160,20 +160,32 @@ export default function LandingPage() {
             <Link
               href="#problem-statement"
               className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
+              onClick={e => {
+              e.preventDefault()
+              document.getElementById("problem-statement")?.scrollIntoView({ behavior: "smooth" })
+              }}
             >
               Our Mission
             </Link>
             <Link
               href="#how-it-works"
               className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
+              onClick={e => {
+              e.preventDefault()
+              document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })
+              }}
             >
-              How It Works
+              Our Approach
             </Link>
             <Link
               href="#our-approach"
               className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
+              onClick={e => {
+              e.preventDefault()
+              document.getElementById("our-approach")?.scrollIntoView({ behavior: "smooth" })
+              }}
             >
-              Our Approach
+              How It Works
             </Link>
             <Link href="/about" className="text-sm font-medium text-gray-600 hover:text-primary transition-colors">
               About Us
@@ -255,10 +267,10 @@ export default function LandingPage() {
                     <Button
                       size="lg"
                       className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-6 text-lg h-auto"
-                      onClick={() => router.push("/app-demo")}
+                      onClick={() => document.getElementById("our-approach")?.scrollIntoView({ behavior: "smooth" })}
                     >
                       <PlayCircle className="mr-2 h-5 w-5" />
-                      Experience CareNeighbour
+                      How It Works
                     </Button>
                   </motion.div>
 
@@ -307,7 +319,7 @@ export default function LandingPage() {
                   />
                 </div>
                 <motion.h2
-                  className="text-4xl md:text-6xl font-bold tracking-tight text-gray-900"
+                  className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -395,7 +407,7 @@ export default function LandingPage() {
         </section>
 
         {/* Experiences Carousel Section - Continuously sliding */}
-        <section id="experiences" className="w-full py-20 md:py-5 bg-gray-50 overflow-hidden">
+        <section id="experiences" className="w-full py-20 md:py-5 bg-white overflow-hidden">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col space-y-4 mb-12 md:mb-16">
               <motion.div
@@ -405,7 +417,7 @@ export default function LandingPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
               >
-                <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 text-left">
+                <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4">
                   Shared Experiences, Common Challenges
                 </h2>
                 <p className="max-w-[900px] text-gray-600 text-lg md:text-xl lg:text-2xl text-left">
@@ -430,7 +442,7 @@ export default function LandingPage() {
                   <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">Maria, 48 (Spanish Speaking)</p>
+                      <p className="text-sm font-medium">Maria, 48</p>
                     </div>
                     <blockquote className="text-gray-700 justify-left flex-grow">
                       Finding someone who speaks Spanish and understands our traditions for my father was so hard. We
@@ -443,7 +455,7 @@ export default function LandingPage() {
                   <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">Chen, 41 (Mandarin Speaking)</p>
+                      <p className="text-sm font-medium">Chen, 41</p>
                     </div>
                     <blockquote className="text-gray-700 justify-left flex-grow">
                       My work hours are unpredictable. Trying to coordinate care for my mother, who prefers speaking
@@ -456,7 +468,7 @@ export default function LandingPage() {
                   <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">Ahmed, 55 (Arabic Speaking)</p>
+                      <p className="text-sm font-medium">Ahmed, 55</p>
                     </div>
                     <blockquote className="text-gray-700 justify-left flex-grow">
                       We needed someone urgently when my wife had surgery. Explaining the specific cultural needs and
@@ -482,7 +494,7 @@ export default function LandingPage() {
                   <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">Elena, 52 (Russian Speaking)</p>
+                      <p className="text-sm font-medium">Elena, 52 </p>
                     </div>
                     <blockquote className="text-gray-700 justify-left flex-grow">
                       When my father began showing signs of dementia, we struggled to find someone who could speak
@@ -495,7 +507,7 @@ export default function LandingPage() {
                   <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">Raj, 45 (Hindi Speaking)</p>
+                      <p className="text-sm font-medium">Raj, 45</p>
                     </div>
                     <blockquote className="text-gray-700 justify-left flex-grow">
                       My parents moved here to help raise our children, but now they need care themselves. Finding
@@ -522,7 +534,7 @@ export default function LandingPage() {
                 transition={{ duration: 0.6 }}
               >
                 <div className="md:text-left flex-grow">
-                  <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-left text-gray-900">
+                  <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-2">
                     Care, Simplified in 3 Steps
                   </h2>
                   <p className="max-w-[1800px] text-gray-600 text-lg md:text-xl lg:text-2xl text-left md:text-left mt-3">
@@ -603,59 +615,232 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8 md:mb-0">
               <motion.div
-                className="space-y-3"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
+          className="space-y-3"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7 }}
               >
-                <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-gray-900">
-                  When{" "}
-                  <span className="bg-gradient-to-r from-purple-700 to-gray-900 text-transparent bg-clip-text">
-                    Technology
-                  </span>{" "}
-                  Meets{" "}
-                  <span className="bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
-                    Compassion
-                  </span>
-                </h2>
-                <p className="max-w-[900px] text-gray-600 text-lg md:text-xl lg:text-2xl text-center">
-                  Explore the features designed to make finding and managing care seamless and effective.
-                </p>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-gray-900">
+            When{" "}
+            <span className="bg-gradient-to-r from-purple-700 to-gray-900 text-transparent bg-clip-text">
+              Technology
+            </span>{" "}
+            Meets{" "}
+            <span className="bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
+              Compassion
+            </span>
+          </h2>
+          <p className="max-w-[900px] text-gray-600 text-lg md:text-xl lg:text-2xl text-center">
+            Explore the features designed to make finding and managing care seamless and effective.
+          </p>
+          <div className="h-8" />
               </motion.div>
             </div>
 
-            {/* Feature Carousel Component */}
-            <Suspense fallback={<LoadingFallback />}>
-              <FeatureCarousel />
-            </Suspense>
-
-            {/* Try Our Demo Button - Apple-style prominent CTA */}
-            <motion.div
-              className="mt-20 text-center"
-              initial={{ opacity: 0, y: 20 }}
+            {/* Feature Section 1: Text left, video right */}
+            <motion.section
+              className="feature-section flex flex-col md:flex-row items-center justify-center gap-8 md:gap-20"
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
             >
-              <div className="inline-block">
-                <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                >
-                  <Button
-                    size="lg"
-                    className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-10 py-7 text-xl h-auto shadow-lg"
-                    onClick={() => router.push("/app-demo")}
-                  >
-                    <PlayCircle className="mr-3 h-6 w-6" />
-                    Try Our Interactive Demo
-                  </Button>
-                </motion.div>
+              {/* Text */}
+              <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start order-2 md:order-1">
+          <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
+            Instant Care Requests
+          </h2>
+          <p className="text-lg text-gray-700 justify-left">
+            Simply speak or type your needs and watch as our AI transcribes and processes your requests in real-time.
+          </p>
               </div>
-              <p className="text-gray-500 mt-4">Experience the platform's workflow firsthand.</p>
-            </motion.div>
+              {/* Video */}
+              <div className="flex-shrink-0 w-full md:w-[350px] flex justify-center order-1 md:order-2">
+          <div
+            style={{
+              width: "100%",
+              maxWidth: "350px",
+              height: "500px",
+              overflow: "hidden",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "2rem",
+              background: "#fff",
+            }}
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: "2rem",
+              }}
+            >
+              <source src="videos/Care-request-demo.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+              </div>
+            </motion.section>
+
+            {/* Feature Section 2: Video left, text right */}
+            <motion.section
+              className="feature-section flex flex-col md:flex-row items-center justify-center gap-8 md:gap-20 mt-16"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+            >
+              {/* Video */}
+              <div className="flex-shrink-0 w-full md:w-[350px] flex justify-center">
+          <div
+            style={{
+              width: "100%",
+              maxWidth: "350px",
+              height: "500px",
+              overflow: "hidden",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "2rem",
+              background: "#fff",
+            }}
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: "2rem",
+              }}
+            >
+              <source src="videos/AI-Chat-demo.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+              </div>
+              {/* Text */}
+              <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start">
+          <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
+            Your Personal Care Concierge
+          </h2>
+          <p className="text-lg text-gray-700">
+            Voice your unique needs through our intelligent AI chat and receive personalized recommendations for nearby, available carers and services within moments.
+          </p>
+              </div>
+            </motion.section>
+
+            {/* Feature Section 3: Text left, video right */}
+            <motion.section
+              className="feature-section flex flex-col md:flex-row items-center justify-center gap-8 md:gap-20 mt-16"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+            >
+              {/* Text */}
+              <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start order-2 md:order-1">
+          <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
+            Clarity at Your Fingertips
+          </h2>
+          <p className="text-lg text-gray-700">
+            Instantly access comprehensive carer profiles, neatly summarized on a single page. Save your preferred choices or book with seamless, one-click convenience.
+          </p>
+              </div>
+              {/* Video */}
+              <div className="flex-shrink-0 w-full md:w-[350px] flex justify-center order-1 md:order-2">
+          <div
+            style={{
+              width: "100%",
+              maxWidth: "350px",
+              height: "500px",
+              overflow: "hidden",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "2rem",
+              background: "#fff",
+            }}
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: "2rem",
+              }}
+            >
+              <source src="videos/Carer-Review-demo.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+              </div>
+            </motion.section>
+
+            {/* Feature Section 4: Video left, text right */}
+            <motion.section
+              className="feature-section flex flex-col md:flex-row items-center justify-center gap-8 md:gap-20 mt-16"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+            >
+              {/* Video */}
+              <div className="flex-shrink-0 w-full md:w-[350px] flex justify-center">
+          <div
+            style={{
+              width: "100%",
+              maxWidth: "350px",
+              height: "500px",
+              overflow: "hidden",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "2rem",
+              background: "#fff",
+            }}
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: "2rem",
+              }}
+            >
+              <source src="videos/Explore-Page-demo.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+              </div>
+              {/* Text */}
+              <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start">
+          <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
+            Explore with Ease
+          </h2>
+          <p className="text-lg text-gray-700">
+            Effortlessly browse a comprehensive map of all available care services within your chosen regions, putting expert help right on your doorstep.
+          </p>
+              </div>
+            </motion.section>
           </div>
         </section>
 
@@ -663,8 +848,8 @@ export default function LandingPage() {
         <section id="waitlist" className="w-full py-20 md:py-18 bg-purple-100">
           <div className="container px-4 md:px-6">
             <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
-              {/* Waitlist Column */}
-              <div className="flex flex-col justify-center space-y-6">
+                {/* Waitlist Column */}
+                <div className="flex flex-col justify-start space-y-6 self-start">
                 <motion.div
                   className="space-y-3"
                   initial={{ opacity: 0, y: 20 }}
@@ -674,7 +859,7 @@ export default function LandingPage() {
                 >
                   <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">Be the First to Know</h2>
                   <p className="text-gray-600 text-lg md:text-xl">
-                    Join our waitlist for early access, priority matching, and exclusive launch updates.
+                  Join our waitlist for early access, priority matching, and exclusive launch updates.
                   </p>
                 </motion.div>
 
@@ -726,15 +911,6 @@ export default function LandingPage() {
                     tap: { type: "spring", stiffness: 400, damping: 17 },
                   }}
                 >
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="rounded-xl border-gray-300 hover:bg-gray-50 h-14 text-base"
-                    onClick={() => router.push("/app-demo")}
-                  >
-                    <PlayCircle className="mr-2 h-5 w-5" />
-                    Try the Interactive Demo
-                  </Button>
                 </motion.div>
               </div>
 
