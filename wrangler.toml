@@ -1,9 +1,19 @@
-name = "careneighbour-website"
-compatibility_date = "2025-05-02"
+name = "careneighbor-landing"
+compatibility_date = "2023-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+[site]
+bucket = "./.next/static"
 
 [build]
 command = "npm run build"
+output_directory = ".next"
+
+[build.upload]
+format = "service-worker"
 
 [vars]
 NODE_VERSION = "20"
-VERCEL_FORCE_NO_BUILD_CACHE = "1"
+
+[functions]
+node_compat = true

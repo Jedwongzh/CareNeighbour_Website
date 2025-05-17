@@ -8,56 +8,51 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    domains: ['v0.blob.com', 'hebbkx1anhila5yf.public.blob.vercel-storage.com'],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
-    // Optimize image loading
-    formats: ['image/avif', 'image/webp'],
-    minimumCacheTTL: 60,
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    unoptimized: true,
+    domains: ['blob.v0.dev'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256],
+    formats: ['image/webp'],
   },
-  // Enable webpack bundle analyzer in development mode
-  webpack: (config, { isServer, dev }) => {
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'framer-motion'],
+  },
+  webpack: (config) => {
     // Optimize bundle size
     config.optimization.splitChunks = {
       chunks: 'all',
       maxInitialRequests: 25,
       minSize: 20000,
-      maxSize: 20 * 1024 * 1024, // 20MB max chunk size
+      maxSize: 1000000,
       cacheGroups: {
         framework: {
           name: 'framework',
-          test: /[\\/]node_modules[\\/](react|react-dom|framer-motion)[\\/]/,
+          test: /[\\/]node_modules[\\/](react|react-dom|next)[\\/]/,
           priority: 40,
-          // Don't create a framework chunk in development mode
-          enforce: !dev,
-        },
-        lib: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: 30,
-          minChunks: 2,
-          reuseExistingChunk: true,
+          chunks: 'all',
         },
         commons: {
           name: 'commons',
-          minChunks: 2,
-          priority: 20,
+          test: /[\\/]node_modules[\\/]/,
+          priority: 30,
+          chunks: 'all',
+        },
+        // Specific chunks for large libraries
+        framerMotion: {
+          test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
+          name: 'framer-motion',
+          priority: 50,
+          chunks: 'all',
+        },
+        lucideReact: {
+          test: /[\\/]node_modules[\\/]lucide-react[\\/]/,
+          name: 'lucide-react',
+          priority: 50,
+          chunks: 'all',
         },
       },
     };
 
     return config;
-  },
-  // Optimize package imports without CSS optimization
-  experimental: {
-    // Removed optimizeCss: true as it requires the critters package
-    optimizePackageImports: ['lucide-react', 'framer-motion', 'recharts'],
   },
 };
 

@@ -38,7 +38,7 @@ export async function GET() {
     })
 
     const client = await auth.getClient()
-    const sheets = google.sheets({ version: "v4", auth: client as any })
+    const sheets = google.sheets({ version: "v4", auth: client })
 
     // Get spreadsheet info
     const spreadsheet = await sheets.spreadsheets.get({
@@ -83,7 +83,7 @@ export async function GET() {
     }
 
     // Now look for any data in Sheet1 or other sheets that needs to be organized
-    const results: { waitlistMoved: number; feedbackMoved: number; errors: string[] } = {
+    const results = {
       waitlistMoved: 0,
       feedbackMoved: 0,
       errors: [],
@@ -151,13 +151,11 @@ export async function GET() {
               results.feedbackMoved++
             }
           } catch (rowError) {
-            const errorMessage = rowError instanceof Error ? rowError.message : String(rowError)
-            results.errors.push(`Error processing row ${i} in sheet ${sheetName}: ${errorMessage}`)
+            results.errors.push(`Error processing row ${i} in sheet ${sheetName}: ${rowError.message}`)
           }
         }
       } catch (sheetError) {
-        const errorMessage = sheetError instanceof Error ? sheetError.message : String(sheetError)
-        results.errors.push(`Error processing sheet ${sheetName}: ${errorMessage}`)
+        results.errors.push(`Error processing sheet ${sheetName}: ${sheetError.message}`)
       }
     }
 

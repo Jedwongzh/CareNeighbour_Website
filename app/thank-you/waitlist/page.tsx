@@ -10,7 +10,7 @@ export default function WaitlistThankYouPage() {
           <div className="max-w-2xl mx-auto text-center space-y-8">
             <div className="flex justify-center">
               <div className="h-20 w-20 flex items-center justify-center">
-                <Image src="/images/logo.png" alt="CareNeighbour Logo" width={80} height={80} />
+                <Image src="/images/logo.png" alt="CareNeighbor Logo" width={80} height={80} />
               </div>
             </div>
 
@@ -23,7 +23,7 @@ export default function WaitlistThankYouPage() {
 
             <div className="bg-purple-50 p-6 rounded-lg">
               <p className="text-gray-700">
-                In the meantime, feel free to share CareNeighbour with friends and family who might benefit from our
+                In the meantime, feel free to share CareNeighbor with friends and family who might benefit from our
                 service.
               </p>
             </div>
@@ -43,11 +43,11 @@ export default function WaitlistThankYouPage() {
       <div className="w-full py-6 bg-white border-t">
         <div className="container px-4 md:px-6 mx-auto text-center">
           <div className="flex items-center justify-center space-x-2 mb-4">
-            <Image src="/images/logo.png" alt="CareNeighbour Logo" width={30} height={30} />
-            <span className="font-bold text-xl">CareNeighbour</span>
+            <Image src="/images/logo.png" alt="CareNeighbor Logo" width={30} height={30} />
+            <span className="font-bold text-xl">CareNeighbor</span>
           </div>
           <p className="text-sm text-gray-500">
-            &copy; {new Date().getFullYear()} CareNeighbour, Inc. All rights reserved.
+            &copy; {new Date().getFullYear()} CareNeighbor, Inc. All rights reserved.
           </p>
         </div>
       </div>

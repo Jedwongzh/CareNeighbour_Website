@@ -2,11 +2,11 @@
 
 import type React from "react"
 
-import { useState, useRef, lazy, Suspense } from "react"
+import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, MessageSquare, PlayCircle, ChevronRight } from "lucide-react"
+import { ArrowRight, MessageSquare, ChevronRight } from "lucide-react"
 import { motion } from "framer-motion"
 import Autoplay from "embla-carousel-autoplay"
 
@@ -15,18 +15,6 @@ import { Input } from "@/components/ui/input"
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
 import { MobileNav } from "@/components/mobile-nav"
 import { joinWaitlist, submitFeedback } from "./actions"
-
-// Lazy load non-critical components
-const FeatureCarousel = lazy(() =>
-  import("@/components/feature-carousel").then((mod) => ({ default: mod.FeatureCarousel })),
-)
-
-// Loading fallback component
-const LoadingFallback = () => (
-  <div className="w-full h-64 flex items-center justify-center">
-    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-600"></div>
-  </div>
-)
 
 export default function LandingPage() {
   const router = useRouter()
@@ -44,9 +32,6 @@ export default function LandingPage() {
   const problemRef = useRef(null)
   const approachRef = useRef(null)
   const howItWorksRef = useRef(null)
-
-  // Ref for autoplay plugin
-  const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: false }))
 
   // Testimonial carousel autoplay
   const testimonialPlugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: false }))
@@ -151,7 +136,7 @@ export default function LandingPage() {
       <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur-sm">
         <div className="container px-4 md:px-6 flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
-            <Image src="/images/logo.png" alt="CareNeighbour Logo" width={36} height={36} />
+            <Image src="/CNlogo.png" alt="CareNeighbour Logo" width={36} height={36} />
             <span className="font-semibold text-lg">CareNeighbour</span>
           </Link>
 
@@ -160,32 +145,20 @@ export default function LandingPage() {
             <Link
               href="#problem-statement"
               className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
-              onClick={e => {
-              e.preventDefault()
-              document.getElementById("problem-statement")?.scrollIntoView({ behavior: "smooth" })
-              }}
             >
               Our Mission
             </Link>
             <Link
               href="#how-it-works"
               className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
-              onClick={e => {
-              e.preventDefault()
-              document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })
-              }}
             >
-              Our Approach
+              How It Works
             </Link>
             <Link
               href="#our-approach"
               className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
-              onClick={e => {
-              e.preventDefault()
-              document.getElementById("our-approach")?.scrollIntoView({ behavior: "smooth" })
-              }}
             >
-              How It Works
+              Our Approach
             </Link>
             <Link href="/about" className="text-sm font-medium text-gray-600 hover:text-primary transition-colors">
               About Us
@@ -206,16 +179,16 @@ export default function LandingPage() {
 
       <main className="flex-1">
         {/* Hero Section - Apple-inspired with large typography and clean layout */}
-        <section className="w-full py-20 md:py-28 lg:py-36 relative overflow-hidden">
+        <section className="w-full py-12 md:py-20 lg:py-28 relative overflow-hidden">
           {/* Subtle Background Gradient */}
           <div className="absolute inset-0 bg-white z-0"></div>
 
           <div className="container px-4 md:px-6 relative z-10">
             <div className="max-w-5xl mx-auto">
-              <div className="space-y-8 md:space-y-10">
+              <div className="space-y-6 md:space-y-8">
                 <div className="flex flex-col md:flex-row md:items-center gap-3">
                   <motion.h1
-                    className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-gray-900 leading-tight"
+                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-gray-900 leading-tight"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
@@ -229,7 +202,7 @@ export default function LandingPage() {
                   <div className="hidden md:block flex-shrink-0 md:-ml-6">
                     <Image
                       src="/images/CN_Figure2.png"
-                      alt="CareNeighbor Guide"
+                      alt="CareNeighbour Guide"
                       width={220}
                       height={220}
                       className="object-contain"
@@ -238,7 +211,7 @@ export default function LandingPage() {
                 </div>
 
                 <motion.p
-                  className="text-xl md:text-2xl text-gray-600 max-w-3xl"
+                  className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-3xl"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
@@ -247,48 +220,28 @@ export default function LandingPage() {
                   finding the right support effortless.
                 </motion.p>
 
-                {/* CTAs: Experience Demo & Join Waitlist - Apple-style buttons */}
+                {/* CTAs: Join Waitlist - Apple-style buttons */}
                 <motion.div
-                  className="flex flex-col sm:flex-row gap-5 pt-4"
+                  className="flex flex-col sm:flex-row gap-4 pt-2 md:pt-4"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
                 >
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    animate={{ y: [0, -10, 0] }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Number.POSITIVE_INFINITY,
-                      repeatType: "reverse",
-                    }}
-                  >
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
                     <Button
                       size="lg"
-                      className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-6 text-lg h-auto"
+                      className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg h-auto w-full sm:w-auto"
                       onClick={() => document.getElementById("our-approach")?.scrollIntoView({ behavior: "smooth" })}
                     >
-                      <PlayCircle className="mr-2 h-5 w-5" />
-                      How It Works
+                      Watch App Demo
                     </Button>
                   </motion.div>
 
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    animate={{ y: [0, -10, 0] }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Number.POSITIVE_INFINITY,
-                      repeatType: "reverse",
-                      delay: 0.75, // Offset timing for second button
-                    }}
-                  >
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
                     <Button
                       size="lg"
                       variant="outline"
-                      className="rounded-full px-8 py-6 text-lg h-auto border-gray-300 hover:bg-gray-50"
+                      className="rounded-full px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg h-auto border-gray-300 hover:bg-gray-50 w-full sm:w-auto"
                       onClick={() => document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })}
                     >
                       Join Waitlist
@@ -302,24 +255,24 @@ export default function LandingPage() {
         </section>
 
         {/* Problem Statement Section - Apple-inspired with large typography and clean layout */}
-        <section id="problem-statement" className="w-full py-20 md:py-28 relative overflow-hidden" ref={problemRef}>
+        <section id="problem-statement" className="w-full py-16 md:py-20 relative overflow-hidden" ref={problemRef}>
           <div className="absolute inset-0 bg-gradient-to-b from-white to-gray-50 z-0"></div>
 
           <div className="container px-4 md:px-6 relative z-10">
             {/* Text content - takes 60% width on desktop, full width on mobile */}
-            <div className="flex flex-col mb-12 md:mb-16 md:max-w mx-auto">
-              <div className="flex items-center gap-2 mb-8">
+            <div className="flex flex-col mb-10 md:mb-16 md:max-w mx-auto">
+              <div className="flex flex-col md:flex-row md:items-center gap-4 mb-6 md:mb-8">
                 <div className="hidden md:block">
                   <Image
                     src="/images/CN_Figure1.png"
-                    alt="CareNeighbor Guide"
-                    width={220}
-                    height={220}
+                    alt="CareNeighbour Guide"
+                    width={180}
+                    height={180}
                     className="object-contain"
                   />
                 </div>
                 <motion.h2
-                  className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4"
+                  className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gray-900"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -330,7 +283,7 @@ export default function LandingPage() {
               </div>
 
               <motion.div
-                className="space-y-6 text-lg md:text-xl text-gray-600"
+                className="space-y-4 md:space-y-6 text-base sm:text-lg md:text-xl text-gray-600"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -351,7 +304,7 @@ export default function LandingPage() {
             </div>
 
             {/* Images appear at the bottom on all screen sizes */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
               {/* First Image */}
               <motion.div
                 className="rounded-2xl overflow-hidden shadow-xl"
@@ -365,13 +318,13 @@ export default function LandingPage() {
                   alt="Senior couple using technology"
                   width={500}
                   height={350}
-                  className="object-cover w-full h-[300px]"
+                  className="object-cover w-full h-[200px] sm:h-[250px] md:h-[300px]"
                 />
               </motion.div>
 
-              {/* Second Image */}
+              {/* Second Image - Hide on smallest screens */}
               <motion.div
-                className="rounded-2xl overflow-hidden shadow-xl"
+                className="rounded-2xl overflow-hidden shadow-xl hidden sm:block"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -382,13 +335,13 @@ export default function LandingPage() {
                   alt="Seniors playing cards"
                   width={500}
                   height={350}
-                  className="object-cover w-full h-[300px]"
+                  className="object-cover w-full h-[200px] sm:h-[250px] md:h-[300px]"
                 />
               </motion.div>
 
-              {/* Third Image */}
+              {/* Third Image - Hide on smaller screens */}
               <motion.div
-                className="rounded-2xl overflow-hidden shadow-xl"
+                className="rounded-2xl overflow-hidden shadow-xl hidden md:block"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -399,7 +352,7 @@ export default function LandingPage() {
                   alt="Seniors socializing"
                   width={500}
                   height={350}
-                  className="object-cover w-full h-[300px]"
+                  className="object-cover w-full h-[200px] sm:h-[250px] md:h-[300px]"
                 />
               </motion.div>
             </div>
@@ -407,7 +360,7 @@ export default function LandingPage() {
         </section>
 
         {/* Experiences Carousel Section - Continuously sliding */}
-        <section id="experiences" className="w-full py-20 md:py-5 bg-white overflow-hidden">
+        <section id="experiences" className="w-full py-20 md:py-5 bg-gray-50 overflow-hidden">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col space-y-4 mb-12 md:mb-16">
               <motion.div
@@ -417,7 +370,7 @@ export default function LandingPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
               >
-                <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4">
+                <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 text-left">
                   Shared Experiences, Common Challenges
                 </h2>
                 <p className="max-w-[900px] text-gray-600 text-lg md:text-xl lg:text-2xl text-left">
@@ -442,7 +395,7 @@ export default function LandingPage() {
                   <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">Maria, 48</p>
+                      <p className="text-sm font-medium">Maria, 48 (Spanish Speaking)</p>
                     </div>
                     <blockquote className="text-gray-700 justify-left flex-grow">
                       Finding someone who speaks Spanish and understands our traditions for my father was so hard. We
@@ -455,7 +408,7 @@ export default function LandingPage() {
                   <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">Chen, 41</p>
+                      <p className="text-sm font-medium">Chen, 41 (Mandarin Speaking)</p>
                     </div>
                     <blockquote className="text-gray-700 justify-left flex-grow">
                       My work hours are unpredictable. Trying to coordinate care for my mother, who prefers speaking
@@ -468,7 +421,7 @@ export default function LandingPage() {
                   <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">Ahmed, 55</p>
+                      <p className="text-sm font-medium">Ahmed, 55 (Arabic Speaking)</p>
                     </div>
                     <blockquote className="text-gray-700 justify-left flex-grow">
                       We needed someone urgently when my wife had surgery. Explaining the specific cultural needs and
@@ -494,7 +447,7 @@ export default function LandingPage() {
                   <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">Elena, 52 </p>
+                      <p className="text-sm font-medium">Elena, 52 (Russian Speaking)</p>
                     </div>
                     <blockquote className="text-gray-700 justify-left flex-grow">
                       When my father began showing signs of dementia, we struggled to find someone who could speak
@@ -507,7 +460,7 @@ export default function LandingPage() {
                   <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">Raj, 45</p>
+                      <p className="text-sm font-medium">Raj, 45 (Hindi Speaking)</p>
                     </div>
                     <blockquote className="text-gray-700 justify-left flex-grow">
                       My parents moved here to help raise our children, but now they need care themselves. Finding
@@ -534,7 +487,7 @@ export default function LandingPage() {
                 transition={{ duration: 0.6 }}
               >
                 <div className="md:text-left flex-grow">
-                  <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-2">
+                  <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-left text-gray-900">
                     Care, Simplified in 3 Steps
                   </h2>
                   <p className="max-w-[1800px] text-gray-600 text-lg md:text-xl lg:text-2xl text-left md:text-left mt-3">
@@ -544,7 +497,7 @@ export default function LandingPage() {
                 <div className="hidden md:block flex-shrink-0 ml-auto">
                   <Image
                     src="/images/CN_Figure3.png"
-                    alt="CareNeighbor Guide"
+                    alt="CareNeighbour Guide"
                     width={220}
                     height={220}
                     className="object-contain"
@@ -610,31 +563,30 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Our Approach Section - Apple-inspired with feature carousel */}
+        {/* Our Approach Section - REPLACED WITH NEW IMPLEMENTATION */}
         <section id="our-approach" className="w-full py-20 md:py-28 bg-white" ref={approachRef}>
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8 md:mb-0">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
               <motion.div
-          className="space-y-3"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7 }}
+                className="space-y-3"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
               >
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-gray-900">
-            When{" "}
-            <span className="bg-gradient-to-r from-purple-700 to-gray-900 text-transparent bg-clip-text">
-              Technology
-            </span>{" "}
-            Meets{" "}
-            <span className="bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
-              Compassion
-            </span>
-          </h2>
-          <p className="max-w-[900px] text-gray-600 text-lg md:text-xl lg:text-2xl text-center">
-            Explore the features designed to make finding and managing care seamless and effective.
-          </p>
-          <div className="h-8" />
+                <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-gray-900">
+                  When{" "}
+                  <span className="bg-gradient-to-r from-purple-700 to-gray-900 text-transparent bg-clip-text">
+                    Technology
+                  </span>{" "}
+                  Meets{" "}
+                  <span className="bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
+                    Compassion
+                  </span>
+                </h2>
+                <p className="max-w-[900px] text-gray-600 text-lg md:text-xl lg:text-2xl text-center">
+                  Explore the features designed to make finding and managing care seamless and effective.
+                </p>
               </motion.div>
             </div>
 
@@ -648,44 +600,45 @@ export default function LandingPage() {
             >
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start order-2 md:order-1">
-          <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
-            Instant Care Requests
-          </h2>
-          <p className="text-lg text-gray-700 justify-left">
-            Simply speak or type your needs and watch as our AI transcribes and processes your requests in real-time.
-          </p>
+                <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
+                  Instant Care Requests
+                </h2>
+                <p className="text-lg text-gray-700 justify-left">
+                  Simply speak or type your needs and watch as our AI transcribes and processes your requests in
+                  real-time.
+                </p>
               </div>
               {/* Video */}
               <div className="flex-shrink-0 w-full md:w-[350px] flex justify-center order-1 md:order-2">
-          <div
-            style={{
-              width: "100%",
-              maxWidth: "350px",
-              height: "500px",
-              overflow: "hidden",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "2rem",
-              background: "#fff",
-            }}
-          >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: "2rem",
-              }}
-            >
-              <source src="videos/Care-request-demo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
+                <div
+                  style={{
+                    width: "100%",
+                    maxWidth: "350px",
+                    height: "500px",
+                    overflow: "hidden",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "2rem",
+                    background: "#fff",
+                  }}
+                >
+                  <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      borderRadius: "2rem",
+                    }}
+                  >
+                    <source src="/videos/Care-request-demo.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
               </div>
             </motion.section>
 
@@ -699,44 +652,45 @@ export default function LandingPage() {
             >
               {/* Video */}
               <div className="flex-shrink-0 w-full md:w-[350px] flex justify-center">
-          <div
-            style={{
-              width: "100%",
-              maxWidth: "350px",
-              height: "500px",
-              overflow: "hidden",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "2rem",
-              background: "#fff",
-            }}
-          >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: "2rem",
-              }}
-            >
-              <source src="videos/AI-Chat-demo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
+                <div
+                  style={{
+                    width: "100%",
+                    maxWidth: "350px",
+                    height: "500px",
+                    overflow: "hidden",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "2rem",
+                    background: "#fff",
+                  }}
+                >
+                  <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      borderRadius: "2rem",
+                    }}
+                  >
+                    <source src="/videos/AI-Chat-demo.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
               </div>
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start">
-          <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
-            Your Personal Care Concierge
-          </h2>
-          <p className="text-lg text-gray-700">
-            Voice your unique needs through our intelligent AI chat and receive personalized recommendations for nearby, available carers and services within moments.
-          </p>
+                <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
+                  Your Personal Care Concierge
+                </h2>
+                <p className="text-lg text-gray-700">
+                  Voice your unique needs through our intelligent AI chat and receive personalized recommendations for
+                  nearby, available carers and services within moments.
+                </p>
               </div>
             </motion.section>
 
@@ -750,44 +704,45 @@ export default function LandingPage() {
             >
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start order-2 md:order-1">
-          <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
-            Clarity at Your Fingertips
-          </h2>
-          <p className="text-lg text-gray-700">
-            Instantly access comprehensive carer profiles, neatly summarized on a single page. Save your preferred choices or book with seamless, one-click convenience.
-          </p>
+                <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
+                  Clarity at Your Fingertips
+                </h2>
+                <p className="text-lg text-gray-700">
+                  Instantly access comprehensive carer profiles, neatly summarized on a single page. Save your preferred
+                  choices or book with seamless, one-click convenience.
+                </p>
               </div>
               {/* Video */}
               <div className="flex-shrink-0 w-full md:w-[350px] flex justify-center order-1 md:order-2">
-          <div
-            style={{
-              width: "100%",
-              maxWidth: "350px",
-              height: "500px",
-              overflow: "hidden",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "2rem",
-              background: "#fff",
-            }}
-          >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: "2rem",
-              }}
-            >
-              <source src="videos/Carer-Review-demo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
+                <div
+                  style={{
+                    width: "100%",
+                    maxWidth: "350px",
+                    height: "500px",
+                    overflow: "hidden",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "2rem",
+                    background: "#fff",
+                  }}
+                >
+                  <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      borderRadius: "2rem",
+                    }}
+                  >
+                    <source src="/videos/Carer-Review-demo.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
               </div>
             </motion.section>
 
@@ -801,55 +756,110 @@ export default function LandingPage() {
             >
               {/* Video */}
               <div className="flex-shrink-0 w-full md:w-[350px] flex justify-center">
-          <div
-            style={{
-              width: "100%",
-              maxWidth: "350px",
-              height: "500px",
-              overflow: "hidden",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "2rem",
-              background: "#fff",
-            }}
-          >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: "2rem",
-              }}
-            >
-              <source src="videos/Explore-Page-demo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
+                <div
+                  style={{
+                    width: "100%",
+                    maxWidth: "350px",
+                    height: "500px",
+                    overflow: "hidden",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "2rem",
+                    background: "#fff",
+                  }}
+                >
+                  <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      borderRadius: "2rem",
+                    }}
+                  >
+                    <source src="/videos/Explore-Page-demo.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
               </div>
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start">
-          <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
-            Explore with Ease
-          </h2>
-          <p className="text-lg text-gray-700">
-            Effortlessly browse a comprehensive map of all available care services within your chosen regions, putting expert help right on your doorstep.
-          </p>
+                <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
+                  Explore with Ease
+                </h2>
+                <p className="text-lg text-gray-700">
+                  Effortlessly browse a comprehensive map of all available care services within your chosen regions,
+                  putting expert help right on your doorstep.
+                </p>
               </div>
             </motion.section>
           </div>
         </section>
 
-        {/* Early Access Signup & Feedback - Apple-inspired with clean forms */}
-        <section id="waitlist" className="w-full py-20 md:py-18 bg-purple-100">
+        {/* About Our Team Section */}
+        <section id="our-team" className="w-full py-20 md:py-28 bg-gray-50">
           <div className="container px-4 md:px-6">
-            <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
-                {/* Waitlist Column */}
-                <div className="flex flex-col justify-start space-y-6 self-start">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+              <motion.div
+                className="space-y-3"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-gray-900">Meet Our Team</h2>
+                <p className="max-w-[900px] text-gray-600 text-lg md:text-xl lg:text-2xl text-center mx-auto">
+                  We're passionate about making care accessible to everyone, regardless of language or cultural
+                  background.
+                </p>
+              </motion.div>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <motion.div
+                className="relative w-full max-w-3xl rounded-2xl overflow-hidden shadow-xl mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <Image
+                  src="/images/founding-team.jpeg"
+                  alt="CareNeighbour Founding Team"
+                  width={1200}
+                  height={800}
+                  className="object-cover w-full"
+                />
+              </motion.div>
+
+              <div className="max-w-3xl text-center">
+                <p className="text-gray-600 text-lg">
+                  We're a team of Monash University students passionate about solving real-world problems—starting with
+                  one that has deeply affected us. CareNeighbour was born from our own struggles of being far from our
+                  aging grandparents when they needed us the most.
+                </p>
+                <div className="mt-8">
+                  <Link href="/about">
+                    <Button variant="outline" size="lg" className="rounded-full">
+                      Learn More About Us
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Early Access Signup & Feedback - Apple-inspired with clean forms */}
+        <section id="waitlist" className="w-full py-16 md:py-20 bg-purple-100">
+          <div className="container px-4 md:px-6">
+            <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 items-start">
+              {/* Waitlist Column */}
+              <div className="flex flex-col justify-center space-y-6">
                 <motion.div
                   className="space-y-3"
                   initial={{ opacity: 0, y: 20 }}
@@ -857,14 +867,16 @@ export default function LandingPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6 }}
                 >
-                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">Be the First to Know</h2>
-                  <p className="text-gray-600 text-lg md:text-xl">
-                  Join our waitlist for early access, priority matching, and exclusive launch updates.
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-gray-900">
+                    Be the First to Know
+                  </h2>
+                  <p className="text-base sm:text-lg md:text-xl text-gray-600">
+                    Join our waitlist for early access, priority matching, and exclusive launch updates.
                   </p>
                 </motion.div>
 
                 <motion.div
-                  className="w-full max-w-md space-y-4"
+                  className="w-full space-y-4"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -875,13 +887,13 @@ export default function LandingPage() {
                       type="email"
                       name="email"
                       placeholder="Enter your email"
-                      className="h-14 text-base rounded-xl border-gray-300"
+                      className="h-12 sm:h-14 text-base rounded-xl border-gray-300"
                       required
                       disabled={isSubmittingWaitlist}
                     />
                     <Button
                       type="submit"
-                      className="w-full h-14 text-base rounded-xl bg-purple-600 hover:bg-purple-700 text-white"
+                      className="w-full h-12 sm:h-14 text-base rounded-xl bg-purple-600 hover:bg-purple-700 text-white"
                       disabled={isSubmittingWaitlist}
                     >
                       {isSubmittingWaitlist ? "Submitting..." : "Join Waitlist"}
@@ -895,23 +907,6 @@ export default function LandingPage() {
                   )}
                   <p className="text-xs text-gray-500">We respect your privacy. Unsubscribe anytime.</p>
                 </motion.div>
-
-                {/* Demo button */}
-                <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="mt-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{
-                    duration: 0.6,
-                    delay: 0.4,
-                    hover: { type: "spring", stiffness: 400, damping: 17 },
-                    tap: { type: "spring", stiffness: 400, damping: 17 },
-                  }}
-                >
-                </motion.div>
               </div>
 
               {/* Feedback Column with Image */}
@@ -923,8 +918,10 @@ export default function LandingPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6 }}
                 >
-                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">Share Your Thoughts</h2>
-                  <p className="text-gray-600 text-lg md:text-xl">
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-gray-900">
+                    Share Your Thoughts
+                  </h2>
+                  <p className="text-base sm:text-lg md:text-xl text-gray-600">
                     Have ideas or feedback? Help us shape the future of culturally sensitive caregiving.
                   </p>
                 </motion.div>
@@ -940,21 +937,21 @@ export default function LandingPage() {
                       type="email"
                       name="email"
                       placeholder="Enter your email"
-                      className="h-14 text-base rounded-xl border-gray-300"
+                      className="h-12 sm:h-14 text-base rounded-xl border-gray-300"
                       required
                       disabled={isSubmittingFeedback}
                     />
                     <textarea
                       name="feedback"
                       placeholder="Your feedback or ideas..."
-                      className="w-full p-4 border rounded-xl min-h-[120px] bg-white border-gray-300 text-base"
+                      className="w-full p-4 border rounded-xl min-h-[100px] sm:min-h-[120px] bg-white border-gray-300 text-base"
                       required
                       disabled={isSubmittingFeedback}
                     />
                     <Button
                       type="submit"
                       variant="outline"
-                      className="w-full h-14 text-base rounded-xl border-purple-300 text-purple-700 hover:bg-purple-50"
+                      className="w-full h-12 sm:h-14 text-base rounded-xl border-purple-300 text-purple-700 hover:bg-purple-50"
                       disabled={isSubmittingFeedback}
                     >
                       {isSubmittingFeedback ? "Submitting..." : "Send Feedback"}
@@ -978,7 +975,7 @@ export default function LandingPage() {
       <footer className="border-t bg-purple-50">
         <div className="container px-4 md:px-6 py-8 flex flex-col md:flex-row items-center justify-between text-sm text-gray-500">
           <div className="flex items-center space-x-2 mb-4 md:mb-0">
-            <Image src="/images/logo.png" alt="CareNeighbour Logo" width={24} height={24} />
+            <Image src="/CNlogo.png" alt="CareNeighbour Logo" width={24} height={24} />
             <span>&copy; {new Date().getFullYear()} CareNeighbour, Inc. All rights reserved.</span>
           </div>
           <div className="flex gap-6">

@@ -50,7 +50,7 @@ async function getAuthSheets() {
     })
 
     const client = await auth.getClient()
-    const sheets = google.sheets({ version: "v4", auth: client as any })
+    const sheets = google.sheets({ version: "v4", auth: client })
 
     return { sheets }
   } catch (error) {
@@ -70,7 +70,7 @@ async function ensureSheets(sheets: any) {
     console.log("Successfully connected to spreadsheet:", spreadsheet.data.properties?.title)
 
     // Get existing sheet names
-    const existingSheets = spreadsheet.data.sheets?.map((sheet: { properties?: { title?: string } }) => sheet.properties?.title || "") || []
+    const existingSheets = spreadsheet.data.sheets?.map((sheet) => sheet.properties?.title || "") || []
 
     console.log("Existing sheets:", existingSheets)
 

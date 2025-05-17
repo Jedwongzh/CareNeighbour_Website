@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Check, ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -23,11 +23,25 @@ export function FeatureCarousel() {
   const [touchStart, setTouchStart] = useState(0)
   const [touchEnd, setTouchEnd] = useState(0)
   const isMobile = useMobile()
+  const [windowWidth, setWindowWidth] = useState(0)
+
+  // Track window width for responsive adjustments
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth)
+    }
+
+    // Set initial width
+    handleResize()
+
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
 
   const featureSets: FeatureSet[] = [
     {
       image:
-        "/images/featureshowcase1.jpg",
+        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/CareNeighbor%20-%20Market%20Validation%20Posters%20V1.jpg-ZeNM7ZLCj3I78ZoQRMCvi3JZhL41as.jpeg",
       imageAlt: "CareNeighbor app features showing home screen, request care, and available caregivers",
       features: [
         {
@@ -35,8 +49,8 @@ export function FeatureCarousel() {
           description: "Speak your needs—our AI transcribes and processes instantly.",
         },
         {
-          title: "AI-Powered Matching",
-          description: "AI cross-references caregiver profiles for language, qualifications, and cultural fit.",
+          title: "Quick Care Options",
+          description: "Choose from pre-defined options for fast, targeted assistance.",
         },
         {
           title: "Real-Time Availability",
@@ -45,7 +59,7 @@ export function FeatureCarousel() {
       ],
     },
     {
-      image: "/images/featureshowcase2.jpg",
+      image: "/images/app-screens-2.jpeg",
       imageAlt: "CareNeighbor app features showing booking, caregiver profile, and location tracking",
       features: [
         {
@@ -62,10 +76,7 @@ export function FeatureCarousel() {
         },
       ],
     },
-  ].map((set) => ({
-    ...set,
-    image: `${set.image}?w=2400&h=1800&fit=cover`, // Increase query parameters for larger image resolution
-  }))
+  ]
 
   const nextSlide = () => {
     if (isTransitioning) return
@@ -75,8 +86,8 @@ export function FeatureCarousel() {
       setActiveIndex((prev) => (prev === featureSets.length - 1 ? 0 : prev + 1))
       setTimeout(() => {
         setIsTransitioning(false)
-      }, 500)
-    }, 500)
+      }, 300)
+    }, 300)
   }
 
   const prevSlide = () => {
@@ -87,8 +98,8 @@ export function FeatureCarousel() {
       setActiveIndex((prev) => (prev === 0 ? featureSets.length - 1 : prev - 1))
       setTimeout(() => {
         setIsTransitioning(false)
-      }, 500)
-    }, 500)
+      }, 300)
+    }, 300)
   }
 
   // Handle touch events for swiping
@@ -112,8 +123,16 @@ export function FeatureCarousel() {
     }
   }
 
+  // Calculate responsive image height based on screen width
+  const getImageHeight = () => {
+    if (windowWidth < 640) return 250
+    if (windowWidth < 768) return 300
+    if (windowWidth < 1024) return 400
+    return 500
+  }
+
   return (
-    <div className="w-full max-w-6xl mx-auto">
+    <div className="w-full max-w-6xl mx-auto px-2 sm:px-0">
       <div
         className="relative"
         onTouchStart={handleTouchStart}
@@ -125,7 +144,7 @@ export function FeatureCarousel() {
           <Button
             variant="ghost"
             size="icon"
-            className="h-10 w-10 rounded-full bg-white/80 hover:bg-white/90"
+            className="h-10 w-10 rounded-full bg-white/80 hover:bg-white/90 shadow-sm"
             onClick={prevSlide}
             disabled={isTransitioning}
           >
@@ -137,7 +156,7 @@ export function FeatureCarousel() {
           <Button
             variant="ghost"
             size="icon"
-            className="h-10 w-10 rounded-full bg-white/80 hover:bg-white/90"
+            className="h-10 w-10 rounded-full bg-white/80 hover:bg-white/90 shadow-sm"
             onClick={nextSlide}
             disabled={isTransitioning}
           >
@@ -146,12 +165,15 @@ export function FeatureCarousel() {
           </Button>
         </div>
 
-        {/* Image Container - Adjusted height for mobile */}
-        <div className="relative h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden">
+        {/* Image Container - Dynamically adjusted height */}
+        <div
+          className="relative overflow-hidden rounded-lg mx-auto"
+          style={{ height: `${getImageHeight()}px`, maxWidth: "100%" }}
+        >
           {featureSets.map((set, index) => (
             <div
               key={index}
-              className={`absolute inset-0 flex justify-center transition-opacity duration-500 ease-in-out ${
+              className={`absolute inset-0 flex justify-center items-center transition-opacity duration-300 ease-in-out ${
                 index === activeIndex
                   ? isTransitioning
                     ? "opacity-0"
@@ -164,10 +186,16 @@ export function FeatureCarousel() {
                 alt={set.imageAlt}
                 width={800}
                 height={600}
-                className="object-contain max-h-full"
+                className="object-contain max-h-full max-w-full"
+                priority={index === 0}
               />
             </div>
           ))}
+        </div>
+
+        {/* Mobile swipe indicator */}
+        <div className="md:hidden text-center text-xs text-gray-500 mt-2">
+          <span>Swipe left or right to navigate</span>
         </div>
 
         {/* Indicators */}
@@ -175,7 +203,7 @@ export function FeatureCarousel() {
           {featureSets.map((_, index) => (
             <button
               key={index}
-              className={`w-3 h-3 rounded-full transition-colors ${
+              className={`w-2.5 h-2.5 rounded-full transition-colors ${
                 index === activeIndex ? "bg-primary" : "bg-gray-300"
               }`}
               onClick={() => {
@@ -185,8 +213,8 @@ export function FeatureCarousel() {
                   setActiveIndex(index)
                   setTimeout(() => {
                     setIsTransitioning(false)
-                  }, 500)
-                }, 500)
+                  }, 300)
+                }, 300)
               }}
               aria-label={`Go to slide ${index + 1}`}
             />
@@ -195,19 +223,19 @@ export function FeatureCarousel() {
       </div>
 
       {/* Features - Responsive grid */}
-      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
+      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
         {featureSets[activeIndex].features.map((feature, index) => (
           <div
             key={index}
-            className={`flex flex-col items-start space-y-3 rounded-lg border p-4 md:p-6 transition-opacity duration-500 ${
+            className={`flex flex-col items-start space-y-2 rounded-lg border p-3 md:p-5 transition-opacity duration-300 ${
               isTransitioning ? "opacity-0" : "opacity-100"
             }`}
           >
-            <div className="flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full bg-primary/10">
-              <Check className="h-4 w-4 md:h-5 md:w-5 text-primary" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
+              <Check className="h-4 w-4 text-primary" />
             </div>
-            <h3 className="text-base md:text-lg font-bold">{feature.title}</h3>
-            <p className="text-sm md:text-base text-muted-foreground text-left">{feature.description}</p>
+            <h3 className="text-base font-bold">{feature.title}</h3>
+            <p className="text-sm text-muted-foreground text-left">{feature.description}</p>
           </div>
         ))}
       </div>

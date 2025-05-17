@@ -1,93 +1,110 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Menu } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
+import { motion, AnimatePresence } from "framer-motion"
 
 export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false)
 
-  const closeSheet = () => setIsOpen(false)
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = "unset"
+    }
+    return () => {
+      document.body.style.overflow = "unset"
+    }
+  }, [isOpen])
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen)
+  }
 
   return (
     <div className="md:hidden">
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetTrigger asChild>
-          <Button variant="ghost" size="icon">
-            <Menu className="h-6 w-6" />
-            <span className="sr-only">Toggle navigation menu</span>
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-white">
-          <div className="p-4">
-            <nav className="flex flex-col gap-6 mt-8">
-              <SheetClose asChild>
+      <button
+        onClick={toggleMenu}
+        className="p-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-300 rounded-md"
+        aria-label={isOpen ? "Close menu" : "Open menu"}
+      >
+        {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 bg-white"
+          >
+            <div className="flex justify-end p-4">
+              <button
+                onClick={toggleMenu}
+                className="p-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-300 rounded-md"
+                aria-label="Close menu"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.1, staggerChildren: 0.1 }}
+              className="flex flex-col items-center space-y-8 p-4"
+            >
+              <Link href="/" className="flex items-center space-x-2" onClick={toggleMenu}>
+                <Image src="/CNlogo.png" alt="CareNeighbour Logo" width={40} height={40} />
+                <span className="font-bold text-xl">CareNeighbour</span>
+              </Link>
+
+              <nav className="flex flex-col items-center space-y-6 text-lg w-full">
                 <Link
-                  href="#problem-statement"
-                  className="text-lg font-medium text-gray-700 hover:text-primary transition-colors"
-                  onClick={closeSheet}
+                  href="/#problem-statement"
+                  className="text-gray-700 hover:text-primary w-full text-center py-2"
+                  onClick={toggleMenu}
                 >
                   Our Mission
                 </Link>
-              </SheetClose>
-              <SheetClose asChild>
                 <Link
-                  href="#how-it-works"
-                  className="text-lg font-medium text-gray-700 hover:text-primary transition-colors"
-                  onClick={closeSheet}
+                  href="/#how-it-works"
+                  className="text-gray-700 hover:text-primary w-full text-center py-2"
+                  onClick={toggleMenu}
                 >
                   How It Works
                 </Link>
-              </SheetClose>
-              <SheetClose asChild>
                 <Link
-                  href="#our-approach"
-                  className="text-lg font-medium text-gray-700 hover:text-primary transition-colors"
-                  onClick={closeSheet}
+                  href="/#our-approach"
+                  className="text-gray-700 hover:text-primary w-full text-center py-2"
+                  onClick={toggleMenu}
                 >
                   Our Approach
                 </Link>
-              </SheetClose>
-              <SheetClose asChild>
                 <Link
                   href="/about"
-                  className="text-lg font-medium text-gray-700 hover:text-primary transition-colors"
-                  onClick={closeSheet}
+                  className="text-gray-700 hover:text-primary w-full text-center py-2"
+                  onClick={toggleMenu}
                 >
                   About Us
                 </Link>
-              </SheetClose>
-              <SheetClose asChild>
-                <Button
-                  variant="default"
-                  className="w-full bg-purple-600 hover:bg-purple-700 text-white"
-                  onClick={() => {
-                    document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })
-                    closeSheet()
-                  }}
-                >
-                  Join Waitlist
-                </Button>
-              </SheetClose>
-              <SheetClose asChild>
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => {
-                    window.location.href = "/app-demo"
-                    closeSheet()
-                  }}
-                >
-                  Experience Demo
-                </Button>
-              </SheetClose>
-            </nav>
-          </div>
-        </SheetContent>
-      </Sheet>
+                <Link href="/#waitlist" onClick={toggleMenu} className="w-full">
+                  <Button size="lg" className="w-full">
+                    Join Waitlist
+                  </Button>
+                </Link>
+              </nav>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
