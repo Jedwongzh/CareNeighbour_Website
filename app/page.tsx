@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
@@ -16,6 +16,12 @@ import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carouse
 import { MobileNav } from "@/components/mobile-nav"
 import { joinWaitlist, submitFeedback } from "./actions"
 
+// Import the debug function at the top of the file
+import { debugVideos } from "./debug-videos"
+
+// Import the VideoPlayer component at the top of the file
+import { VideoPlayer } from "@/components/video-player"
+
 export default function LandingPage() {
   const router = useRouter()
   const [waitlistStatus, setWaitlistStatus] = useState<{ success?: boolean; message?: string; error?: string } | null>(
@@ -27,6 +33,11 @@ export default function LandingPage() {
   const [isSubmittingWaitlist, setIsSubmittingWaitlist] = useState(false)
   const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false)
   const [topWaitlistEmail, setTopWaitlistEmail] = useState("")
+
+  // Add this line inside the LandingPage component, near the top after the state declarations
+  useEffect(() => {
+    debugVideos()
+  }, [])
 
   // Refs for scroll animations
   const problemRef = useRef(null)
@@ -610,35 +621,7 @@ export default function LandingPage() {
               </div>
               {/* Video */}
               <div className="flex-shrink-0 w-full md:w-[350px] flex justify-center order-1 md:order-2">
-                <div
-                  style={{
-                    width: "100%",
-                    maxWidth: "350px",
-                    height: "500px",
-                    overflow: "hidden",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderRadius: "2rem",
-                    background: "#fff",
-                  }}
-                >
-                  <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      borderRadius: "2rem",
-                    }}
-                  >
-                    <source src="/videos/Care-request-demo.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
+                <VideoPlayer src="/videos/Care-request-demo.mp4" title="Care Request Demo" />
               </div>
             </motion.section>
 
@@ -652,35 +635,7 @@ export default function LandingPage() {
             >
               {/* Video */}
               <div className="flex-shrink-0 w-full md:w-[350px] flex justify-center">
-                <div
-                  style={{
-                    width: "100%",
-                    maxWidth: "350px",
-                    height: "500px",
-                    overflow: "hidden",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderRadius: "2rem",
-                    background: "#fff",
-                  }}
-                >
-                  <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      borderRadius: "2rem",
-                    }}
-                  >
-                    <source src="/videos/AI-Chat-demo.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
+                <VideoPlayer src="/videos/AI-Chat-demo.mp4" title="AI Chat Demo" />
               </div>
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start">
@@ -714,35 +669,7 @@ export default function LandingPage() {
               </div>
               {/* Video */}
               <div className="flex-shrink-0 w-full md:w-[350px] flex justify-center order-1 md:order-2">
-                <div
-                  style={{
-                    width: "100%",
-                    maxWidth: "350px",
-                    height: "500px",
-                    overflow: "hidden",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderRadius: "2rem",
-                    background: "#fff",
-                  }}
-                >
-                  <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      borderRadius: "2rem",
-                    }}
-                  >
-                    <source src="/videos/Carer-Review-demo.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
+                <VideoPlayer src="/videos/Carer-Review-demo.mp4" title="Carer Review Demo" />
               </div>
             </motion.section>
 
@@ -756,35 +683,7 @@ export default function LandingPage() {
             >
               {/* Video */}
               <div className="flex-shrink-0 w-full md:w-[350px] flex justify-center">
-                <div
-                  style={{
-                    width: "100%",
-                    maxWidth: "350px",
-                    height: "500px",
-                    overflow: "hidden",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderRadius: "2rem",
-                    background: "#fff",
-                  }}
-                >
-                  <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      borderRadius: "2rem",
-                    }}
-                  >
-                    <source src="/videos/Explore-Page-demo.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
+                <VideoPlayer src="/videos/Explore-Page-demo.mp4" title="Explore Page Demo" />
               </div>
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start">
