@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     template: '%s | CareNeighbour'
   },
   description: 'CareNeighbour connects you with verified caregivers who understand your language and culture, making finding the right support effortless.',
-  keywords: ['elderly care', 'caregivers', 'aged care', 'local support', 'Australia', 'Monash', 'senior care'],
+  keywords: ['elderly care', 'caregivers', 'aged care', 'local support', 'Australia', 'Monash', 'senior care','AI in Care'],
   openGraph: {
     type: 'website',
     locale: 'en_AU',
@@ -43,8 +43,12 @@ export const metadata: Metadata = {
     follow: true,
   },
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
+    icon: [
+      {
+        url: '/favicon.png',
+        type: 'image/png',
+      }
+    ],
     apple: '/apple-touch-icon.png',
   }
 }
