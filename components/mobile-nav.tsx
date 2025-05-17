@@ -12,6 +12,12 @@ export function MobileNav() {
 
   const closeSheet = () => setIsOpen(false)
 
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault()
+    document.querySelector(id)?.scrollIntoView({ behavior: "smooth" })
+    closeSheet()
+  }
+
   return (
     <div className="md:hidden">
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -28,7 +34,7 @@ export function MobileNav() {
                 <Link
                   href="#problem-statement"
                   className="text-lg font-medium text-gray-700 hover:text-primary transition-colors"
-                  onClick={closeSheet}
+                  onClick={(e) => handleSmoothScroll(e, "#problem-statement")}
                 >
                   Our Mission
                 </Link>
@@ -37,7 +43,7 @@ export function MobileNav() {
                 <Link
                   href="#how-it-works"
                   className="text-lg font-medium text-gray-700 hover:text-primary transition-colors"
-                  onClick={closeSheet}
+                  onClick={(e) => handleSmoothScroll(e, "#how-it-works")}
                 >
                   How It Works
                 </Link>
@@ -46,7 +52,7 @@ export function MobileNav() {
                 <Link
                   href="#our-approach"
                   className="text-lg font-medium text-gray-700 hover:text-primary transition-colors"
-                  onClick={closeSheet}
+                  onClick={(e) => handleSmoothScroll(e, "#our-approach")}
                 >
                   Our Approach
                 </Link>
@@ -70,18 +76,6 @@ export function MobileNav() {
                   }}
                 >
                   Join Waitlist
-                </Button>
-              </SheetClose>
-              <SheetClose asChild>
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => {
-                    window.location.href = "/app-demo"
-                    closeSheet()
-                  }}
-                >
-                  Experience Demo
                 </Button>
               </SheetClose>
             </nav>

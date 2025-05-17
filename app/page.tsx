@@ -148,94 +148,97 @@ export default function LandingPage() {
   return (
     <div className="flex min-h-[100dvh] flex-col bg-white">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur-sm">
-        <div className="container px-4 md:px-6 flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2">
-            <Image src="/images/logo.png" alt="CareNeighbour Logo" width={36} height={36} />
-            <span className="font-semibold text-lg">CareNeighbour</span>
-          </Link>
+      <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur-sm transition-all duration-300 ease-in-out">
+      <div className="container px-4 md:px-6 flex h-16 items-center justify-between">
+        <Link href="/" className="flex items-center space-x-2 transition-all duration-300 ease-in-out">
+        <Image src="/images/logo.png" alt="CareNeighbour Logo" width={36} height={36} />
+        <span className="font-semibold text-lg transition-colors duration-300 ease-in-out">CareNeighbour</span>
+        </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex gap-6 items-center">
-            <Link
-              href="#problem-statement"
-              className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
-              onClick={e => {
-              e.preventDefault()
-              document.getElementById("problem-statement")?.scrollIntoView({ behavior: "smooth" })
-              }}
-            >
-              Our Mission
-            </Link>
-            <Link
-              href="#how-it-works"
-              className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
-              onClick={e => {
-              e.preventDefault()
-              document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })
-              }}
-            >
-              Our Approach
-            </Link>
-            <Link
-              href="#our-approach"
-              className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
-              onClick={e => {
-              e.preventDefault()
-              document.getElementById("our-approach")?.scrollIntoView({ behavior: "smooth" })
-              }}
-            >
-              How It Works
-            </Link>
-            <Link href="/about" className="text-sm font-medium text-gray-600 hover:text-primary transition-colors">
-              About Us
-            </Link>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })}
-            >
-              Join Waitlist
-            </Button>
-          </nav>
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex gap-6 items-center">
+        <Link
+          href="#problem-statement"
+          className="text-sm font-medium text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
+          onClick={e => {
+          e.preventDefault()
+          document.getElementById("problem-statement")?.scrollIntoView({ behavior: "smooth" })
+          }}
+        >
+          Our Mission
+        </Link>
+        <Link
+          href="#how-it-works"
+          className="text-sm font-medium text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
+          onClick={e => {
+          e.preventDefault()
+          document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })
+          }}
+        >
+          Our Approach
+        </Link>
+        <Link
+          href="#our-approach"
+          className="text-sm font-medium text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
+          onClick={e => {
+          e.preventDefault()
+          document.getElementById("our-approach")?.scrollIntoView({ behavior: "smooth" })
+          }}
+        >
+          How It Works
+        </Link>
+        <Link href="/about" className="text-sm font-medium text-gray-600 hover:text-primary transition-all duration-300 ease-in-out">
+          About Us
+        </Link>
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })}
+          className="transition-all duration-300 ease-in-out hover:scale-105"
+        >
+          Join Waitlist
+        </Button>
+        </nav>
 
-          {/* Mobile Navigation */}
-          <MobileNav />
-        </div>
+        {/* Mobile Navigation */}
+        <MobileNav />
+      </div>
       </header>
 
       <main className="flex-1">
         {/* Hero Section - Apple-inspired with large typography and clean layout */}
         <section className="w-full py-20 md:py-28 lg:py-36 relative overflow-hidden">
-          {/* Subtle Background Gradient */}
-          <div className="absolute inset-0 bg-white z-0"></div>
+            {/* Subtle Background Gradient */}
+            <div className="absolute inset-0 bg-white z-0"></div>
 
-          <div className="container px-4 md:px-6 relative z-10">
+            <div className="container px-4 md:px-6 relative z-10">
             <div className="max-w-5xl mx-auto">
               <div className="space-y-8 md:space-y-10">
-                <div className="flex flex-col md:flex-row md:items-center gap-3">
-                  <motion.h1
-                    className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-gray-900 leading-tight"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    Culturally Considerate Care,{" "}
-                    <span className="bg-gradient-to-r from-purple-700 to-gray-900 text-transparent bg-clip-text">
-                      Simplified.
-                    </span>
-                  </motion.h1>
-
-                  <div className="hidden md:block flex-shrink-0 md:-ml-6">
-                    <Image
-                      src="/images/CN_Figure2.png"
-                      alt="CareNeighbor Guide"
-                      width={220}
-                      height={220}
-                      className="object-contain"
-                    />
-                  </div>
-                </div>
+              <div className="flex flex-col md:flex-row md:items-center gap-3">
+          <div className="flex items-center justify-between w-full">
+            <motion.h1
+              className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-gray-900 leading-tight md:max-w-[70%] max-w-full"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              Culturally Considerate Care,{" "}
+              <span className="bg-gradient-to-r from-purple-700 to-gray-900 text-transparent bg-clip-text">
+                Simplified.
+              </span>
+            </motion.h1>
+            
+            <div className="flex-shrink-0 md:ml-auto md:pl-8 mt-6 md:mt-0">
+              <Image
+                src="/images/CN_Figure2.png"
+                alt="CareNeighbor Guide"
+                width={220}
+                height={220}
+                className="object-contain md:w-[220px] md:h-[220px] w-[100px] h-[100px]"
+              />
+            </div>
+          </div>
+              </div>
 
                 <motion.p
                   className="text-xl md:text-2xl text-gray-600 max-w-3xl"
@@ -246,60 +249,59 @@ export default function LandingPage() {
                   CareNeighbour connects you with verified caregivers who understand your language and culture, making
                   finding the right support effortless.
                 </motion.p>
-
                 {/* CTAs: Experience Demo & Join Waitlist - Apple-style buttons */}
                 <motion.div
                   className="flex flex-col sm:flex-row gap-5 pt-4"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
+                  transition={{ duration: 0.4, delay: 0.2 }}
                 >
                   <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    animate={{ y: [0, -10, 0] }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Number.POSITIVE_INFINITY,
-                      repeatType: "reverse",
-                    }}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  animate={{ y: [0, -5, 0] }}
+                  transition={{
+                  duration: 2,
+                  repeat: Number.POSITIVE_INFINITY,
+                  repeatType: "reverse",
+                  }}
+                  className="w-full sm:w-auto"
                   >
-                    <Button
-                      size="lg"
-                      className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-6 text-lg h-auto"
-                      onClick={() => document.getElementById("our-approach")?.scrollIntoView({ behavior: "smooth" })}
-                    >
-                      <PlayCircle className="mr-2 h-5 w-5" />
-                      How It Works
-                    </Button>
+                  <Button
+                  size="lg"
+                  className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-4 text-lg h-auto w-full sm:w-auto"
+                  onClick={() => document.getElementById("our-approach")?.scrollIntoView({ behavior: "smooth" })}
+                  >
+                  <PlayCircle className="mr-2 h-5 w-5" />
+                  How It Works
+                  </Button>
                   </motion.div>
 
                   <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    animate={{ y: [0, -10, 0] }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Number.POSITIVE_INFINITY,
-                      repeatType: "reverse",
-                      delay: 0.75, // Offset timing for second button
-                    }}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  animate={{ y: [0, -5, 0] }}
+                  transition={{
+                    duration: 2,
+                    repeat: Number.POSITIVE_INFINITY,
+                    repeatType: "reverse",
+                    delay: 0.5,
+                  }}
                   >
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="rounded-full px-8 py-6 text-lg h-auto border-gray-300 hover:bg-gray-50"
-                      onClick={() => document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })}
-                    >
-                      Join Waitlist
-                      <ChevronRight className="ml-1 h-5 w-5" />
-                    </Button>
+                  <Button
+                    size="lg"
+                    className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-4 text-lg h-auto w-full sm:w-auto"
+                    onClick={() => document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })}
+                  >
+                    Join Waitlist
+                    <ChevronRight className="ml-2 h-5 w-5" />
+                  </Button>
                   </motion.div>
                 </motion.div>
+                </div>
               </div>
-            </div>
-          </div>
-        </section>
+              </div>
+            </section>
 
         {/* Problem Statement Section - Apple-inspired with large typography and clean layout */}
         <section id="problem-statement" className="w-full py-20 md:py-28 relative overflow-hidden" ref={problemRef}>
@@ -309,50 +311,59 @@ export default function LandingPage() {
             {/* Text content - takes 60% width on desktop, full width on mobile */}
             <div className="flex flex-col mb-12 md:mb-16 md:max-w mx-auto">
               <div className="flex items-center gap-2 mb-8">
-                <div className="hidden md:block">
-                  <Image
-                    src="/images/CN_Figure1.png"
-                    alt="CareNeighbor Guide"
-                    width={220}
-                    height={220}
-                    className="object-contain"
-                  />
-                </div>
-                <motion.h2
-                  className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                >
-                  Finding the Right Care Shouldn't Be a Struggle
-                </motion.h2>
+          <div className="flex-shrink-0">
+            <Image
+              src="/images/CN_Figure1.png"
+              alt="CareNeighbor Guide"
+              width={220}
+              height={220}
+              className="object-contain md:w-[220px] md:h-[220px] w-[100px] h-[100px]"
+            />
+          </div>
+          <motion.h2
+            className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4 md:max-w-none max-w-[70%]"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            Finding the Right Care Shouldn't Be a Struggle
+          </motion.h2>
               </div>
 
               <motion.div
-                className="space-y-6 text-lg md:text-xl text-gray-600"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+          className="space-y-6 text-lg md:text-xl text-gray-600"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <p>
-                  Every year, thousands of people who don't speak English as their first language struggle to access the
-                  care they need. Language barriers, lack of time, and unfamiliarity with the system leave many feeling
-                  isolated and overlooked. It's not just about translation — it's about dignity, understanding, and
-                  culturally respectful support. Right now, too many are suffering in silence simply because the system
-                  wasn't built for them.
-                </p>
-                <p className="text-gray-800 font-medium">
-                  We believe finding compassionate care that resonates with your cultural background should be simple
-                  and stress-free. <span className="text-purple-700">CareNeighbour is here to make that possible.</span>
-                </p>
+          <p>
+            Every year, thousands of people who don't speak English as their first language struggle to access the
+            care they need. Language barriers, lack of time, and unfamiliarity with the system leave many feeling
+            isolated and overlooked. It's not just about translation — it's about dignity, understanding, and
+            culturally respectful support. Right now, too many are suffering in silence simply because the system
+            wasn't built for them.
+          </p>
+          <p className="text-gray-800 font-medium">
+            We believe finding compassionate care that resonates with your cultural background should be simple
+            and stress-free. <span className="text-purple-700">CareNeighbour is here to make that possible.</span>
+          </p>
               </motion.div>
             </div>
 
-            {/* Images appear at the bottom on all screen sizes */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* First Image */}
+            {/* Image carousel for mobile, grid for desktop */}
+            <div className="block md:hidden">
+              <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          plugins={[plugin.current]}
+          className="w-full"
+              >
+          <CarouselContent>
+            <CarouselItem>
               <motion.div
                 className="rounded-2xl overflow-hidden shadow-xl"
                 initial={{ opacity: 0, y: 20 }}
@@ -361,46 +372,100 @@ export default function LandingPage() {
                 transition={{ duration: 0.6 }}
               >
                 <Image
-                  src="/images/senior-couple.jpg"
-                  alt="Senior couple using technology"
-                  width={500}
-                  height={350}
-                  className="object-cover w-full h-[300px]"
+            src="/images/senior-couple.jpg"
+            alt="Senior couple using technology"
+            width={500}
+            height={350}
+            className="object-cover w-full h-[300px]"
                 />
               </motion.div>
-
-              {/* Second Image */}
+            </CarouselItem>
+            <CarouselItem>
               <motion.div
                 className="rounded-2xl overflow-hidden shadow-xl"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                transition={{ duration: 0.6 }}
               >
                 <Image
-                  src="/images/seniors-cards.jpg"
-                  alt="Seniors playing cards"
-                  width={500}
-                  height={350}
-                  className="object-cover w-full h-[300px]"
+            src="/images/seniors-cards.jpg"
+            alt="Seniors playing cards"
+            width={500}
+            height={350}
+            className="object-cover w-full h-[300px]"
                 />
               </motion.div>
-
-              {/* Third Image */}
+            </CarouselItem>
+            <CarouselItem>
               <motion.div
                 className="rounded-2xl overflow-hidden shadow-xl"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4 }}
+                transition={{ duration: 0.6 }}
               >
                 <Image
-                  src="/images/seniors-social.jpg"
-                  alt="Seniors socializing"
-                  width={500}
-                  height={350}
-                  className="object-cover w-full h-[300px]"
+            src="/images/seniors-social.jpg"
+            alt="Seniors socializing"
+            width={500}
+            height={350}
+            className="object-cover w-full h-[300px]"
                 />
+              </motion.div>
+            </CarouselItem>
+          </CarouselContent>
+              </Carousel>
+            </div>
+
+            {/* Desktop grid */}
+            <div className="hidden md:grid md:grid-cols-3 gap-6">
+              <motion.div
+          className="rounded-2xl overflow-hidden shadow-xl"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+              >
+          <Image
+            src="/images/senior-couple.jpg"
+            alt="Senior couple using technology"
+            width={500}
+            height={350}
+            className="object-cover w-full h-[300px]"
+          />
+              </motion.div>
+
+              <motion.div
+          className="rounded-2xl overflow-hidden shadow-xl"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+              >
+          <Image
+            src="/images/seniors-cards.jpg"
+            alt="Seniors playing cards"
+            width={500}
+            height={350}
+            className="object-cover w-full h-[300px]"
+          />
+              </motion.div>
+
+              <motion.div
+          className="rounded-2xl overflow-hidden shadow-xl"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+              >
+          <Image
+            src="/images/seniors-social.jpg"
+            alt="Seniors socializing"
+            width={500}
+            height={350}
+            className="object-cover w-full h-[300px]"
+          />
               </motion.div>
             </div>
           </div>
@@ -408,21 +473,21 @@ export default function LandingPage() {
 
         {/* Experiences Carousel Section - Continuously sliding */}
         <section id="experiences" className="w-full py-20 md:py-5 bg-white overflow-hidden">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col space-y-4 mb-12 md:mb-16">
+            <div className="container px-4 md:px-6">
+            <div className="flex flex-col space-y-4 mb-12 md:mb-16 max-w-full">
               <motion.div
-                className="space-y-3"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1 }}
+              className="space-y-3 w-full"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
               >
-                <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4">
-                  Shared Experiences, Common Challenges
-                </h2>
-                <p className="max-w-[900px] text-gray-600 text-lg md:text-xl lg:text-2xl text-left">
-                  Hear from families navigating the complexities of caregiving.
-                </p>
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4 w-full">
+                Shared Experiences, Common Challenges
+              </h2>
+              <p className="text-gray-600 text-lg md:text-xl lg:text-2xl text-left w-full">
+                Hear from families navigating the complexities of caregiving.
+              </p>
               </motion.div>
             </div>
 
@@ -534,21 +599,20 @@ export default function LandingPage() {
                 transition={{ duration: 0.6 }}
               >
                 <div className="md:text-left flex-grow">
-                  <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-2">
+                  <div className="flex items-center gap-4 w-full justify-between flex-wrap">
+                  <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4 md:max-w-none max-w-[70%]">
                     Care, Simplified in 3 Steps
                   </h2>
-                  <p className="max-w-[1800px] text-gray-600 text-lg md:text-xl lg:text-2xl text-left md:text-left mt-3">
-                    Our intuitive platform makes finding the perfect culturally-matched caregiver effortless.
-                  </p>
-                </div>
-                <div className="hidden md:block flex-shrink-0 ml-auto">
-                  <Image
+                  <div className="flex-shrink-0 md:order-none md:ml-6">
+                    <Image
                     src="/images/CN_Figure3.png"
                     alt="CareNeighbor Guide"
                     width={220}
                     height={220}
-                    className="object-contain"
-                  />
+                    className="object-contain md:w-[220px] md:h-[220px] w-[100px] h-[100px]"
+                    />
+                  </div>
+                  </div>
                 </div>
               </motion.div>
             </div>
@@ -631,9 +695,6 @@ export default function LandingPage() {
               Compassion
             </span>
           </h2>
-          <p className="max-w-[900px] text-gray-600 text-lg md:text-xl lg:text-2xl text-center">
-            Explore the features designed to make finding and managing care seamless and effective.
-          </p>
           <div className="h-8" />
               </motion.div>
             </div>
