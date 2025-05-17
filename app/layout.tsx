@@ -9,13 +9,28 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "CareNeighbour",
-  description: "Culturally Considerate Care, Simplified.",
-  manifest: "/manifest.json",
-  generator: "v0.dev",
-  icons: {
-    icon: "/images/CNlogo.png",
+  title: 'About CareNeighbour | Connecting Families with Local Caregivers',
+  description: 'Learn about CareNeighbour, a platform founded by Monash University students to connect families with trusted local caregivers for elderly care and support.',
+  openGraph: {
+    title: 'About CareNeighbour | Connecting Families with Local Caregivers',
+    description: 'Learn about CareNeighbour, a platform founded by Monash University students to connect families with trusted local caregivers for elderly care and support.',
+    images: [
+      {
+        url: '/images/Founding-team-image.jpg',
+        width: 800,
+        height: 600,
+        alt: 'CareNeighbour Founding Team',
+      }
+    ],
+    locale: 'en_AU',
+    type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About CareNeighbour | Connecting Families with Local Caregivers',
+    description: 'Learn about CareNeighbour, a platform founded by Monash University students to connect families with trusted local caregivers for elderly care and support.',
+    images: ['/images/Founding-team-image.jpg'],
+  }
 }
 
 export default function RootLayout({
