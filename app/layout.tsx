@@ -9,27 +9,43 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: 'About CareNeighbour | Connecting Families with Local Caregivers',
-  description: 'Learn about CareNeighbour, a platform founded by Monash University students to connect families with trusted local caregivers for elderly care and support.',
+  metadataBase: new URL('https://www.careneighbour.com'), // Update with your actual domain
+  title: {
+    default: 'CareNeighbour | Connecting Families with Trusted Local Caregivers',
+    template: '%s | CareNeighbour'
+  },
+  description: 'CareNeighbour connects you with verified caregivers who understand your language and culture, making finding the right support effortless.',
+  keywords: ['elderly care', 'caregivers', 'aged care', 'local support', 'Australia', 'Monash', 'senior care'],
   openGraph: {
-    title: 'About CareNeighbour | Connecting Families with Local Caregivers',
-    description: 'Learn about CareNeighbour, a platform founded by Monash University students to connect families with trusted local caregivers for elderly care and support.',
+    type: 'website',
+    locale: 'en_AU',
+    siteName: 'CareNeighbour',
+    title: 'CareNeighbour | Trusted Local Caregivers for Elderly Care',
+    description: 'Connect with verified local caregivers who understand your language and culture. Find trusted support for your loved ones.',
     images: [
       {
-        url: '/images/Founding-team-image.jpg',
-        width: 800,
-        height: 600,
-        alt: 'CareNeighbour Founding Team',
+        url: '/images/CN_Figure2.png', // Create a specific image for social sharing
+        width: 1200,
+        height: 630,
+        alt: 'CareNeighbour - Elderly Care Support Platform',
       }
     ],
-    locale: 'en_AU',
-    type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'About CareNeighbour | Connecting Families with Local Caregivers',
-    description: 'Learn about CareNeighbour, a platform founded by Monash University students to connect families with trusted local caregivers for elderly care and support.',
-    images: ['/images/Founding-team-image.jpg'],
+    title: 'CareNeighbour | Trusted Local Caregivers',
+    description: 'Connect with verified local caregivers who understand your language and culture.',
+    site: '@careneighbour', // Add your Twitter handle if available
+    images: ['/images/CN_Figure2.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
   }
 }
 
