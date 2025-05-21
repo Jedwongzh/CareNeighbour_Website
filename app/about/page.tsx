@@ -23,23 +23,23 @@ const aboutPageTranslations = {
     footerCopyright: "CareNeighbour, Inc. All rights reserved.",
   },
   zh: {
-    companyName: "CareNeighbour", // Or "零距" if you prefer to translate the name
+    companyName: "零距", // Or "零距" if you prefer to translate the name
     backToHome: "返回首页",
     back: "返回",
     pageTitle: "关于我们",
     paragraph1:
-      "我们是一群来自莫纳什大学的学生，热衷于解决现实世界的问题——从一个深深影响了我们的问题开始。CareNeighbour 源于我们自身的困境：当我们的祖父母最需要我们时，我们却远在他乡。像许多外籍人士和忙碌的专业人士一样，我们都经历过那种无助感——知道亲人需要照顾，却无法放下一切飞回家。我们知道一定有更好的方法。这就是我们创建 CareNeighbour 的原因，这是一个能在几分钟内将家庭与值得信赖的本地护理人员联系起来的平台。无论是快速探访、陪伴还是紧急援助，我们都能确保帮助近在咫尺。但我们知道仅有技术是不够的——我们需要那些真正了解老年护理的人士的见解。如果您是老年护理、医疗保健或社区支持方面的专家，我们非常希望能听到您的声音。您的反馈和指导可以帮助我们将 CareNeighbour 完善成一个真正能带来改变的产品。",
+      "我们是一支来自莫纳士大学的学生团队,怀抱着解决现实问题的热情。而这一切，始于我们亲身经历的困扰。零距(CareNeighbour)的诞生，源于我们在海外求学、工作时，无法陪伴年迈祖父母的无力感。像许多在外生活的游子和忙碌的职场人士一样，我们深知亲人需要照护却无法立刻赶回身边的痛苦。我们相信，一定有更好的方式。于是，我们打造了零距： 一个能在数分钟内，将家庭与本地值得信赖的照护者连接起来的平台。无论是简单的问候、陪伴，还是紧急协助，我们都致力于让“帮助”触手可及。但我们也深知，单靠技术还不够。我们渴望倾听那些真正了解老年照护的人士的声音。如果您在老年护理、医疗健康或社区支持领域有经验，我们诚挚邀请您与我们联系。您的反馈与建议，将帮助我们不断完善，真正为社会带来改变。如果您有意合作、提供指导，或愿意分享宝贵见解，请随时与我们取得联系。让我们一起努力，创造一个亲人需要照护时，再也不会让人感到无助的未来。",
     paragraph2:
-      "如果您有兴趣合作、提供建议或只是分享您的想法，请联系我们。让我们共同努力，创造一个未来，让任何人在亲人需要照顾时都不会感到无助。",
-    joinWaitlist: "加入等候名单",
-    footerCopyright: "CareNeighbour, Inc. 版权所有。",
+      "如果您有意合作、提供指导，或愿意分享宝贵见解，请随时与我们取得联系。让我们一起努力，创造一个亲人需要照护时，再也不会让人感到无助的未来。",
+    joinWaitlist: "加入候补名单",
+    footerCopyright: "零距 . 版权所有。",
   },
 }
 
 export default function AboutPage() {
   // 2. Add language state
   const { language, setLanguage } = useLanguage();
-  
+
   // Helper to get current translations
   const t = aboutPageTranslations[language as keyof typeof aboutPageTranslations] || aboutPageTranslations.en
 

@@ -32,6 +32,7 @@ const LoadingFallback = () => (
 // 1. Define translations for English and Chinese (Mandarin)
 const pageTranslations = {
   en: {
+    heroLogo: "CareNeighbour",
     heroTitleStart: "Culturally Considerate Care,",
     heroTitleEnd: "Simplified.",
     ourMission: "Our Mission",
@@ -102,6 +103,7 @@ const pageTranslations = {
     footerCopyright: "CareNeighbour, Inc. All rights reserved.",
   },
   zh: { // Mandarin Chinese translations
+    heroLogo: "零距",
     heroTitleStart: "文化关怀，",
     heroTitleEnd: "化繁为简。",
     ourMission: "我们的使命",
@@ -306,7 +308,7 @@ export default function LandingPage() {
       <div className="container px-4 md:px-6 flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center space-x-2 transition-all duration-300 ease-in-out">
         <Image src="/images/logo.png" alt="CareNeighbour Logo" width={36} height={36} />
-        <span className="font-semibold text-lg transition-colors duration-300 ease-in-out">CareNeighbour</span>
+        <span className="font-semibold text-lg transition-colors duration-300 ease-in-out">{t.heroLogo}</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -316,7 +318,7 @@ export default function LandingPage() {
         <Button size="sm" variant={language === "zh" ? "secondary" : "ghost"} onClick={() => setLanguage("zh")} >中文</Button>
         <Link
           href="#problem-statement"
-          className="text-sm font-medium text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
+          className="text-sm text-center font-medium text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
           onClick={e => {
           e.preventDefault()
           document.getElementById("problem-statement")?.scrollIntoView({ behavior: "smooth" })
@@ -326,7 +328,7 @@ export default function LandingPage() {
         </Link>
         <Link
           href="#how-it-works"
-          className="text-sm font-medium text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
+          className="text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
           onClick={e => {
           e.preventDefault()
           document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })
@@ -336,7 +338,7 @@ export default function LandingPage() {
         </Link>
         <Link
           href="#our-approach"
-          className="text-sm font-medium text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
+          className="text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
           onClick={e => {
           e.preventDefault()
           document.getElementById("our-approach")?.scrollIntoView({ behavior: "smooth" })
@@ -344,7 +346,7 @@ export default function LandingPage() {
         >
           {t.howItWorks}
         </Link>
-        <Link href="/about" className="text-sm font-medium text-gray-600 hover:text-primary transition-all duration-300 ease-in-out">
+        <Link href="/about" className="text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out">
           {t.aboutUs}
         </Link>
         <Button
