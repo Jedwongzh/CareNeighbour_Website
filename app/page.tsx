@@ -321,7 +321,7 @@ export default function LandingPage() {
             />
           </div>
           <motion.h2
-            className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4 md:max-w-none max-w-[70%]"
+            className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4 md:max-w-none"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -600,16 +600,16 @@ export default function LandingPage() {
               >
                 <div className="md:text-left flex-grow">
                   <div className="flex items-center gap-4 w-full justify-between flex-wrap">
-                  <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4 md:max-w-none max-w-[70%]">
+                  <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4 max-w-[70%]">
                     Care, Simplified in 3 Steps
                   </h2>
-                  <div className="flex-shrink-0 md:order-none md:ml-6">
+                  <div className="flex-shrink-0 md:order-none">
                     <Image
                     src="/images/CN_Figure3.png"
                     alt="CareNeighbor Guide"
-                    width={220}
+                    width={220} 
                     height={220}
-                    className="object-contain md:w-[220px] md:h-[220px] w-[100px] h-[100px]"
+                    className="object-contain md:w-[220px] md:h-[220px] w-[100px] h-[100px]" 
                     />
                   </div>
                   </div>
@@ -737,10 +737,10 @@ export default function LandingPage() {
               loop
               playsInline
               style={{
-                width: "100%",
+                width: "68%",
                 height: "100%",
                 objectFit: "cover",
-                borderRadius: "2rem",
+                borderRadius: "2.5rem",
               }}
             >
               <source src="videos/Care-request-demo.mp4" type="video/mp4" />
@@ -779,10 +779,10 @@ export default function LandingPage() {
               loop
               playsInline
               style={{
-                width: "100%",
+                width: "68%",
                 height: "100%",
                 objectFit: "cover",
-                borderRadius: "2rem",
+                borderRadius: "2.5rem",
               }}
             >
               <source src="videos/AI-Chat-demo.mp4" type="video/mp4" />
