@@ -5,14 +5,29 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Download } from "lucide-react"
 
+interface WaitlistEntry {
+  email: string
+  timestamp: string
+}
+
+interface FeedbackEntry {
+  email: string
+  feedback: string
+  timestamp: string
+}
+
 export default function AdminPage() {
   // Read waitlist data
   const waitlistPath = path.join(process.cwd(), "data", "waitlist.json")
-  const waitlistData = fs.existsSync(waitlistPath) ? JSON.parse(fs.readFileSync(waitlistPath, "utf8")) : []
+  const waitlistData: WaitlistEntry[] = fs.existsSync(waitlistPath) 
+    ? JSON.parse(fs.readFileSync(waitlistPath, "utf8")) 
+    : []
 
   // Read feedback data
   const feedbackPath = path.join(process.cwd(), "data", "feedback.json")
-  const feedbackData = fs.existsSync(feedbackPath) ? JSON.parse(fs.readFileSync(feedbackPath, "utf8")) : []
+  const feedbackData: FeedbackEntry[] = fs.existsSync(feedbackPath) 
+    ? JSON.parse(fs.readFileSync(feedbackPath, "utf8")) 
+    : []
 
   return (
     <div className="container mx-auto py-10">
@@ -52,7 +67,7 @@ export default function AdminPage() {
                         </td>
                       </tr>
                     ) : (
-                      waitlistData.map((entry, index) => (
+                      waitlistData.map((entry: WaitlistEntry, index: number) => (
                         <tr key={index} className="border-b">
                           <td className="p-2">{entry.email}</td>
                           <td className="p-2">{new Date(entry.timestamp).toLocaleString()}</td>
@@ -82,7 +97,7 @@ export default function AdminPage() {
                 {feedbackData.length === 0 ? (
                   <p className="text-center text-gray-500">No submissions yet</p>
                 ) : (
-                  feedbackData.map((entry, index) => (
+                  feedbackData.map((entry: FeedbackEntry, index: number) => (
                     <div key={index} className="border p-4 rounded-lg">
                       <div className="flex justify-between mb-2">
                         <span className="font-medium">{entry.email}</span>

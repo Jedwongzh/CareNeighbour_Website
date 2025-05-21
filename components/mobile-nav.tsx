@@ -2,19 +2,35 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import Image from "next/image"
 import { Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
 
-export function MobileNav() {
+// Update interface to expect all necessary props
+interface MobileNavProps {
+  translations: {
+    ourMission: string;
+    ourApproach: string;
+    howItWorks: string;
+    aboutUs: string;
+    joinWaitlist: string;
+  };
+  currentLang: string;
+  setLang: (lang: string) => void;
+  availableLangs: { [key: string]: string };
+}
+
+export function MobileNav({ translations, currentLang, setLang, availableLangs }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   const closeSheet = () => setIsOpen(false)
 
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault()
-    document.querySelector(id)?.scrollIntoView({ behavior: "smooth" })
+    const targetElement = document.querySelector(id)
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: "smooth" })
+    }
     closeSheet()
   }
 
@@ -36,7 +52,7 @@ export function MobileNav() {
                   className="text-lg font-medium text-gray-700 hover:text-primary transition-colors"
                   onClick={(e) => handleSmoothScroll(e, "#problem-statement")}
                 >
-                  Our Mission
+                  {translations.ourMission}
                 </Link>
               </SheetClose>
               <SheetClose asChild>
@@ -45,7 +61,7 @@ export function MobileNav() {
                   className="text-lg font-medium text-gray-700 hover:text-primary transition-colors"
                   onClick={(e) => handleSmoothScroll(e, "#how-it-works")}
                 >
-                  How It Works
+                  {translations.howItWorks}
                 </Link>
               </SheetClose>
               <SheetClose asChild>
@@ -54,7 +70,7 @@ export function MobileNav() {
                   className="text-lg font-medium text-gray-700 hover:text-primary transition-colors"
                   onClick={(e) => handleSmoothScroll(e, "#our-approach")}
                 >
-                  Our Approach
+                  {translations.ourApproach}
                 </Link>
               </SheetClose>
               <SheetClose asChild>
@@ -63,19 +79,42 @@ export function MobileNav() {
                   className="text-lg font-medium text-gray-700 hover:text-primary transition-colors"
                   onClick={closeSheet}
                 >
-                  About Us
+                  {translations.aboutUs}
                 </Link>
               </SheetClose>
+              {/* Language Switcher for Mobile */}
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <p className="text-sm font-medium text-gray-500 mb-2">Language</p>
+                <div className="flex gap-2">
+                  {Object.entries(availableLangs).map(([langCode, langName]: [string, string]) => (
+                    <Button
+                      key={langCode}
+                      variant={currentLang === langCode ? "secondary" : "ghost"}
+                      size="sm"
+                      onClick={() => {
+                        setLang(langCode) // This setLang comes from props (ultimately from LanguageContext)
+                        closeSheet()
+                      }}
+                      className="flex-1"
+                    >
+                      {langName}
+                    </Button>
+                  ))}
+                </div>
+              </div>
               <SheetClose asChild>
                 <Button
                   variant="default"
-                  className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+                  className="w-full bg-purple-600 hover:bg-purple-700 text-white mt-6"
                   onClick={() => {
-                    document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })
+                    const waitlistElement = document.getElementById("waitlist")
+                    if (waitlistElement) {
+                      waitlistElement.scrollIntoView({ behavior: "smooth" })
+                    }
                     closeSheet()
                   }}
                 >
-                  Join Waitlist
+                  {translations.joinWaitlist}
                 </Button>
               </SheetClose>
             </nav>

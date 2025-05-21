@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input"
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
 import { MobileNav } from "@/components/mobile-nav"
 import { joinWaitlist, submitFeedback } from "./actions"
+import { useLanguage } from "./contexts/LanguageContext" // Import useLanguage hook
 
 // Lazy load non-critical components
 const FeatureCarousel = lazy(() =>
@@ -28,17 +29,170 @@ const LoadingFallback = () => (
   </div>
 )
 
+// 1. Define translations for English and Chinese (Mandarin)
+const pageTranslations = {
+  en: {
+    heroTitleStart: "Culturally Considerate Care,",
+    heroTitleEnd: "Simplified.",
+    ourMission: "Our Mission",
+    ourApproach: "Our Approach",
+    howItWorks: "How It Works",
+    joinWaitlist: "Join Waitlist",
+    aboutUs: "About Us",
+    // Hero section
+    heroSubtitle: "CareNeighbour connects you with verified caregivers who understand your language and culture, making finding the right support effortless.",
+    heroCtaHowItWorks: "How It Works",
+    heroCtaJoinWaitlist: "Join Waitlist",
+    // Problem Statement Section
+    problemTitle: "Finding the Right Care Shouldn't Be a Struggle",
+    problemParagraph1: "Every year, thousands of people who don't speak English as their first language struggle to access the care they need. Language barriers, lack of time, and unfamiliarity with the system leave many feeling isolated and overlooked. It's not just about translation — it's about dignity, understanding, and culturally respectful support. Right now, too many are suffering in silence simply because the system wasn't built for them.",
+    problemParagraph2Start: "We believe finding compassionate care that resonates with your cultural background should be simple and stress-free.",
+    problemParagraph2End: "CareNeighbour is here to make that possible.",
+    // Experiences Section
+    experiencesTitle: "Shared Experiences, Common Challenges",
+    experiencesSubtitle: "Hear from families navigating the complexities of caregiving.",
+    testimonialMariaName: "Maria, 48",
+    testimonialMariaQuote: "Finding someone who speaks Spanish and understands our traditions for my father was so hard. We needed more than just basic help—we needed someone who could connect with him.",
+    testimonialChenName: "Chen, 41",
+    testimonialChenQuote: "My work hours are unpredictable. Trying to coordinate care for my mother, who prefers speaking Mandarin, felt like a second job.",
+    testimonialAhmedName: "Ahmed, 55",
+    testimonialAhmedQuote: "We needed someone urgently when my wife had surgery. Explaining the specific cultural needs and dietary restrictions quickly was stressful. Finding the right caregiver felt impossible.",
+    testimonialSarahName: "Sarah, 42",
+    testimonialSarahQuote: "Living hours away from my mom needing daily assistance felt impossible. Finding reliable, trustworthy help was a constant worry. I needed someone I could trust completely.",
+    testimonialElenaName: "Elena, 52",
+    testimonialElenaQuote: "When my father began showing signs of dementia, we struggled to find someone who could speak Russian and understand him. The language barrier made his confusion worse.",
+    testimonialRajName: "Raj, 45",
+    testimonialRajQuote: "My parents moved here to help raise our children, but now they need care themselves. Finding someone who respects their vegetarian diet and understands Hindu customs has been incredibly challenging.",
+    // How It Works Section
+    howItWorksTitle: "Care, Simplified in 3 Steps",
+    step1Title: "Define Needs",
+    step1Description: "Tell us about the required care, preferred language, cultural nuances, and location.",
+    step2Title: "Match & Connect",
+    step2Description: "We instantly match you with verified caregivers who meet your specific criteria. Review profiles and connect.",
+    step3Title: "Book & Relax",
+    step3Description: "Schedule care easily, manage payments securely, and gain peace of mind knowing your loved one is in good hands.",
+    // Our Approach Section
+    approachTitlePart1: "When",
+    approachTitleTech: "Technology",
+    approachTitlePart2: "Meets",
+    approachTitleCompassion: "Compassion",
+    feature1Title: "Instant Care Requests",
+    feature1Description: "Simply speak or type your needs and watch as our AI transcribes and processes your requests in real-time.",
+    feature2Title: "Your Personal Care Concierge",
+    feature2Description: "Voice your unique needs through our intelligent AI chat and receive personalized recommendations for nearby, available carers and services within moments.",
+    feature3Title: "Clarity at Your Fingertips",
+    feature3Description: "Instantly access comprehensive carer profiles, neatly summarized on a single page. Save your preferred choices or book with seamless, one-click convenience.",
+    feature4Title: "Explore with Ease",
+    feature4Description: "Effortlessly browse a comprehensive map of all available care services within your chosen regions, putting expert help right on your doorstep.",
+    // Waitlist & Feedback Section
+    waitlistTitle: "Be the First to Know",
+    waitlistSubtitle: "Join our waitlist for early access, priority matching, and exclusive launch updates.",
+    waitlistEmailPlaceholder: "Enter your email",
+    waitlistSubmitButton: "Join Waitlist",
+    waitlistSubmittingButton: "Submitting...",
+    waitlistPrivacy: "We respect your privacy. Unsubscribe anytime.",
+    feedbackTitle: "Share Your Thoughts",
+    feedbackSubtitle: "Have ideas or feedback? Help us shape the future of culturally sensitive caregiving.",
+    feedbackEmailPlaceholder: "Enter your email",
+    feedbackMessagePlaceholder: "Your feedback or ideas...",
+    feedbackSubmitButton: "Send Feedback",
+    feedbackSubmittingButton: "Submitting...",
+    feedbackPrivacy: "Your input is valuable. Responses are saved securely.",
+    // Footer
+    footerCopyright: "CareNeighbour, Inc. All rights reserved.",
+  },
+  zh: { // Mandarin Chinese translations
+    heroTitleStart: "文化关怀，",
+    heroTitleEnd: "化繁为简。",
+    ourMission: "我们的使命",
+    ourApproach: "服务特色",
+    howItWorks: "运作方式",
+    joinWaitlist: "加入等候名单",
+    aboutUs: "关于我们",
+    // Hero section
+    heroSubtitle: "零距 为您连接经过验证、了解您语言和文化的护理员，轻松找到合适的支援。",
+    heroCtaHowItWorks: "运作方式",
+    heroCtaJoinWaitlist: "加入等候名单",
+    // Problem Statement Section
+    problemTitle: "找到合适的照护本该轻松无忧",
+    problemParagraph1: "每年，无数英语非母语的人在寻求照护时感到无助。语言障碍、时间压力，还有对整个系统的陌生感，让他们像是被世界遗忘了一样。这不是简单的翻译问题，而是关于被理解、被尊重、被善待的问题。很多人只是希望有人听懂他们的需求，却不得不在孤独中默默撑着，因为现有的系统并不是为他们设计的。",
+    problemParagraph2Start: "我们相信，寻找符合您文化背景的贴心护理应该简单无忧。",
+    problemParagraph2End: "零距 致力于实现这一目标。",
+    // Experiences Section
+    experiencesTitle: "我们都有共同的困境",
+    experiencesSubtitle: "听听其他家庭在护理过程中的复杂经历。",
+    testimonialMariaName: "玛丽亚，48岁",
+    testimonialMariaQuote: "为我父亲找到一个会说西班牙语并了解我们传统的人太难了。我们需要的不仅仅是基本帮助——我们需要一个能与他沟通的人。",
+    testimonialChenName: "陈先生，41岁",
+    testimonialChenQuote: "我的工作时间很不稳定。为我母亲（她更喜欢说普通话）协调护理感觉就像第二份工作。",
+    testimonialAhmedName: "艾哈迈德，55岁",
+    testimonialAhmedQuote: "我妻子手术时我们急需人手。快速解释特定的文化需求和饮食限制压力很大。找到合适的护理员几乎是不可能的。",
+    testimonialSarahName: "莎拉，42岁",
+    testimonialSarahQuote: "我住在离需要日常照料的母亲几小时远的地方，这感觉几乎不可能。找到可靠、值得信赖的帮助一直让我忧心忡忡。我需要一个我能完全信任的人。",
+    testimonialElenaName: "埃琳娜，52岁",
+    testimonialElenaQuote: "当我父亲开始出现失智症迹象时，我们很难找到一个会说俄语并能理解他的人。语言障碍使他的困惑更加严重。",
+    testimonialRajName: "拉吉，45岁",
+    testimonialRajQuote: "我的父母搬来这里帮忙照顾我们的孩子，但现在他们自己也需要照顾了。找到一个尊重他们素食习惯并了解印度教习俗的人非常具有挑战性。",
+    // How It Works Section
+    howItWorksTitle: "关怀备至，三步到位",
+    step1Title: "明确需求",
+    step1Description: "告诉我们所需的护理服务、偏好语言、文化细节和地点。",
+    step2Title: "匹配连接",
+    step2Description: "我们即时为您匹配符合您特定标准的认证护理员。查看资料并联系。",
+    step3Title: "轻松预订",
+    step3Description: "轻松安排护理，安全管理付款，让您安心无忧，因为您所爱的人得到了妥善照顾。",
+    // Our Approach Section
+    approachTitlePart1: "科技",
+    approachTitleTech: "有情",
+    approachTitlePart2: "温暖",
+    approachTitleCompassion: "同行",
+    feature1Title: "即时护理请求",
+    feature1Description: "只需说出或输入您的需求，我们的人工智能将实时转录和处理您的请求。",
+    feature2Title: "您的私人护理管家",
+    feature2Description: "通过我们的智能AI聊天说出您的独特需求，即可在片刻之间获得附近可用护理员和服务的个性化推荐。",
+    feature3Title: "信息一目了然",
+    feature3Description: "即时访问全面的护理员资料，信息简洁明了地汇总在一页上。保存您的首选或通过无缝的一键操作进行预订。",
+    feature4Title: "轻松探索",
+    feature4Description: "轻松浏览您所选区域内所有可用护理服务的综合地图，让专业帮助近在咫尺。",
+    // Waitlist & Feedback Section
+    waitlistTitle: "抢先体验",
+    waitlistSubtitle: "加入我们的等候名单，获取优先体验、优先匹配和独家发布更新。",
+    waitlistEmailPlaceholder: "输入您的邮箱",
+    waitlistSubmitButton: "加入等候名单",
+    waitlistSubmittingButton: "提交中...",
+    waitlistPrivacy: "我们尊重您的隐私。随时可以取消订阅。",
+    feedbackTitle: "分享您的想法",
+    feedbackSubtitle: "有任何想法或反馈吗？帮助我们塑造文化敏感护理的未来。",
+    feedbackEmailPlaceholder: "输入您的邮箱",
+    feedbackMessagePlaceholder: "您的反馈或想法...",
+    feedbackSubmitButton: "发送反馈",
+    feedbackSubmittingButton: "提交中...",
+    feedbackPrivacy: "您的意见非常宝贵。回复将被安全保存。",
+    // Footer
+    footerCopyright: "CareNeighbour, Inc. 版权所有。",
+  },
+};
+
 export default function LandingPage() {
-  const router = useRouter()
+  const router = useRouter();
   const [waitlistStatus, setWaitlistStatus] = useState<{ success?: boolean; message?: string; error?: string } | null>(
     null,
-  )
+  );
   const [feedbackStatus, setFeedbackStatus] = useState<{ success?: boolean; message?: string; error?: string } | null>(
     null,
-  )
-  const [isSubmittingWaitlist, setIsSubmittingWaitlist] = useState(false)
-  const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false)
-  const [topWaitlistEmail, setTopWaitlistEmail] = useState("")
+  );
+  const [isSubmittingWaitlist, setIsSubmittingWaitlist] = useState(false);
+  const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false);
+  const [topWaitlistEmail, setTopWaitlistEmail] = useState("");
+
+  // 2. Replace local language state with context
+  const { language, setLanguage } = useLanguage();
+
+  // Helper to get current translations
+  const t = pageTranslations[language as keyof typeof pageTranslations] || pageTranslations.en;
+
+  // Define available languages for the switcher (used by MobileNav)
+  const availableLangs = { en: "EN", zh: "中文" };
 
   // Refs for scroll animations
   const problemRef = useRef(null)
@@ -157,6 +311,9 @@ export default function LandingPage() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex gap-6 items-center">
+        {/* 3. Language switcher: English and Chinese */}
+        <Button size="sm" variant={language === "en" ? "secondary" : "ghost"} onClick={() => setLanguage("en")} >EN</Button>
+        <Button size="sm" variant={language === "zh" ? "secondary" : "ghost"} onClick={() => setLanguage("zh")} >中文</Button>
         <Link
           href="#problem-statement"
           className="text-sm font-medium text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
@@ -165,7 +322,7 @@ export default function LandingPage() {
           document.getElementById("problem-statement")?.scrollIntoView({ behavior: "smooth" })
           }}
         >
-          Our Mission
+          {t.ourMission}
         </Link>
         <Link
           href="#how-it-works"
@@ -175,7 +332,7 @@ export default function LandingPage() {
           document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })
           }}
         >
-          Our Approach
+          {t.ourApproach}
         </Link>
         <Link
           href="#our-approach"
@@ -185,10 +342,10 @@ export default function LandingPage() {
           document.getElementById("our-approach")?.scrollIntoView({ behavior: "smooth" })
           }}
         >
-          How It Works
+          {t.howItWorks}
         </Link>
         <Link href="/about" className="text-sm font-medium text-gray-600 hover:text-primary transition-all duration-300 ease-in-out">
-          About Us
+          {t.aboutUs}
         </Link>
         <Button
           size="sm"
@@ -196,12 +353,12 @@ export default function LandingPage() {
           onClick={() => document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })}
           className="transition-all duration-300 ease-in-out hover:scale-105"
         >
-          Join Waitlist
+          {t.joinWaitlist}
         </Button>
         </nav>
 
-        {/* Mobile Navigation */}
-        <MobileNav />
+        {/* Mobile Navigation - You'll need to update MobileNav to include the language switcher too */}
+        <MobileNav translations={t} currentLang={language} setLang={setLanguage} availableLangs={availableLangs} />
       </div>
       </header>
 
@@ -222,9 +379,10 @@ export default function LandingPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              Culturally Considerate Care,{" "}
+              {/* 4. Use translated strings */}
+              {t.heroTitleStart}{" "}
               <span className="bg-gradient-to-r from-purple-700 to-gray-900 text-transparent bg-clip-text">
-                Simplified.
+                {t.heroTitleEnd}
               </span>
             </motion.h1>
             
@@ -246,8 +404,7 @@ export default function LandingPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                  CareNeighbour connects you with verified caregivers who understand your language and culture, making
-                  finding the right support effortless.
+                  {t.heroSubtitle}
                 </motion.p>
                 {/* CTAs: Experience Demo & Join Waitlist - Apple-style buttons */}
                 <motion.div
@@ -273,7 +430,7 @@ export default function LandingPage() {
                   onClick={() => document.getElementById("our-approach")?.scrollIntoView({ behavior: "smooth" })}
                   >
                   <PlayCircle className="mr-2 h-5 w-5" />
-                  How It Works
+                  {t.heroCtaHowItWorks}
                   </Button>
                   </motion.div>
 
@@ -293,7 +450,7 @@ export default function LandingPage() {
                     className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-4 text-lg h-auto w-full sm:w-auto"
                     onClick={() => document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })}
                   >
-                    Join Waitlist
+                    {t.heroCtaJoinWaitlist}
                     <ChevronRight className="ml-2 h-5 w-5" />
                   </Button>
                   </motion.div>
@@ -327,7 +484,7 @@ export default function LandingPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            Finding the Right Care Shouldn't Be a Struggle
+            {t.problemTitle}
           </motion.h2>
               </div>
 
@@ -339,15 +496,10 @@ export default function LandingPage() {
           transition={{ duration: 0.6, delay: 0.2 }}
               >
           <p>
-            Every year, thousands of people who don't speak English as their first language struggle to access the
-            care they need. Language barriers, lack of time, and unfamiliarity with the system leave many feeling
-            isolated and overlooked. It's not just about translation — it's about dignity, understanding, and
-            culturally respectful support. Right now, too many are suffering in silence simply because the system
-            wasn't built for them.
+            {t.problemParagraph1}
           </p>
           <p className="text-gray-800 font-medium">
-            We believe finding compassionate care that resonates with your cultural background should be simple
-            and stress-free. <span className="text-purple-700">CareNeighbour is here to make that possible.</span>
+            {t.problemParagraph2Start} <span className="text-purple-700">{t.problemParagraph2End}</span>
           </p>
               </motion.div>
             </div>
@@ -483,10 +635,10 @@ export default function LandingPage() {
               transition={{ duration: 1 }}
               >
               <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4 w-full">
-                Shared Experiences, Common Challenges
+                {t.experiencesTitle}
               </h2>
               <p className="text-gray-600 text-lg md:text-xl lg:text-2xl text-left w-full">
-                Hear from families navigating the complexities of caregiving.
+                {t.experiencesSubtitle}
               </p>
               </motion.div>
             </div>
@@ -507,11 +659,10 @@ export default function LandingPage() {
                   <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">Maria, 48</p>
+                      <p className="text-sm font-medium">{t.testimonialMariaName}</p>
                     </div>
                     <blockquote className="text-gray-700 justify-left flex-grow">
-                      Finding someone who speaks Spanish and understands our traditions for my father was so hard. We
-                      needed more than just basic help—we needed someone who could connect with him.
+                      {t.testimonialMariaQuote}
                     </blockquote>
                   </div>
                 </CarouselItem>
@@ -520,11 +671,10 @@ export default function LandingPage() {
                   <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">Chen, 41</p>
+                      <p className="text-sm font-medium">{t.testimonialChenName}</p>
                     </div>
                     <blockquote className="text-gray-700 justify-left flex-grow">
-                      My work hours are unpredictable. Trying to coordinate care for my mother, who prefers speaking
-                      Mandarin, felt like a second job.
+                      {t.testimonialChenQuote}
                     </blockquote>
                   </div>
                 </CarouselItem>
@@ -533,11 +683,10 @@ export default function LandingPage() {
                   <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">Ahmed, 55</p>
+                      <p className="text-sm font-medium">{t.testimonialAhmedName}</p>
                     </div>
                     <blockquote className="text-gray-700 justify-left flex-grow">
-                      We needed someone urgently when my wife had surgery. Explaining the specific cultural needs and
-                      dietary restrictions quickly was stressful. Finding the right caregiver felt impossible.
+                      {t.testimonialAhmedQuote}
                     </blockquote>
                   </div>
                 </CarouselItem>
@@ -546,11 +695,10 @@ export default function LandingPage() {
                   <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">Sarah, 42</p>
+                      <p className="text-sm font-medium">{t.testimonialSarahName}</p>
                     </div>
                     <blockquote className="text-gray-700 justify-left flex-grow">
-                      Living hours away from my mom needing daily assistance felt impossible. Finding reliable,
-                      trustworthy help was a constant worry. I needed someone I could trust completely.
+                      {t.testimonialSarahQuote}
                     </blockquote>
                   </div>
                 </CarouselItem>
@@ -559,11 +707,10 @@ export default function LandingPage() {
                   <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">Elena, 52 </p>
+                      <p className="text-sm font-medium">{t.testimonialElenaName} </p>
                     </div>
                     <blockquote className="text-gray-700 justify-left flex-grow">
-                      When my father began showing signs of dementia, we struggled to find someone who could speak
-                      Russian and understand him. The language barrier made his confusion worse.
+                      {t.testimonialElenaQuote}
                     </blockquote>
                   </div>
                 </CarouselItem>
@@ -572,12 +719,10 @@ export default function LandingPage() {
                   <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">Raj, 45</p>
+                      <p className="text-sm font-medium">{t.testimonialRajName}</p>
                     </div>
                     <blockquote className="text-gray-700 justify-left flex-grow">
-                      My parents moved here to help raise our children, but now they need care themselves. Finding
-                      someone who respects their vegetarian diet and understands Hindu customs has been incredibly
-                      challenging.
+                      {t.testimonialRajQuote}
                     </blockquote>
                   </div>
                 </CarouselItem>
@@ -601,7 +746,7 @@ export default function LandingPage() {
                 <div className="md:text-left flex-grow">
                   <div className="flex items-center gap-4 w-full justify-between flex-wrap">
                   <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4 max-w-[70%]">
-                    Care, Simplified in 3 Steps
+                    {t.howItWorksTitle}
                   </h2>
                   <div className="flex-shrink-0 md:order-none">
                     <Image
@@ -629,9 +774,9 @@ export default function LandingPage() {
                 <div className="w-20 h-20 rounded-full bg-purple-100 flex items-center justify-center mb-6">
                   <span className="text-4xl font-bold text-purple-700">1</span>
                 </div>
-                <h3 className="text-2xl font-semibold text-gray-900 mb-4">Define Needs</h3>
+                <h3 className="text-2xl font-semibold text-gray-900 mb-4">{t.step1Title}</h3>
                 <p className="text-gray-600 text-lg">
-                  Tell us about the required care, preferred language, cultural nuances, and location.
+                  {t.step1Description}
                 </p>
               </motion.div>
 
@@ -646,10 +791,9 @@ export default function LandingPage() {
                 <div className="w-20 h-20 rounded-full bg-purple-100 flex items-center justify-center mb-6">
                   <span className="text-4xl font-bold text-purple-700">2</span>
                 </div>
-                <h3 className="text-2xl font-semibold text-gray-900 mb-4">Match & Connect</h3>
+                <h3 className="text-2xl font-semibold text-gray-900 mb-4">{t.step2Title}</h3>
                 <p className="text-gray-600 text-lg">
-                  We instantly match you with verified caregivers who meet your specific criteria. Review profiles and
-                  connect.
+                  {t.step2Description}
                 </p>
               </motion.div>
 
@@ -664,10 +808,9 @@ export default function LandingPage() {
                 <div className="w-20 h-20 rounded-full bg-purple-100 flex items-center justify-center mb-6">
                   <span className="text-4xl font-bold text-purple-700">3</span>
                 </div>
-                <h3 className="text-2xl font-semibold text-gray-900 mb-4">Book & Relax</h3>
+                <h3 className="text-2xl font-semibold text-gray-900 mb-4">{t.step3Title}</h3>
                 <p className="text-gray-600 text-lg">
-                  Schedule care easily, manage payments securely, and gain peace of mind knowing your loved one is in
-                  good hands.
+                  {t.step3Description}
                 </p>
               </motion.div>
             </div>
@@ -686,13 +829,13 @@ export default function LandingPage() {
           transition={{ duration: 0.7 }}
               >
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-gray-900">
-            When{" "}
+            {t.approachTitlePart1}{" "}
             <span className="bg-gradient-to-r from-purple-700 to-gray-900 text-transparent bg-clip-text">
-              Technology
+              {t.approachTitleTech}
             </span>{" "}
-            Meets{" "}
+            {t.approachTitlePart2}{" "}
             <span className="bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
-              Compassion
+              {t.approachTitleCompassion}
             </span>
           </h2>
           <div className="h-8" />
@@ -710,10 +853,10 @@ export default function LandingPage() {
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start order-2 md:order-1">
           <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
-            Instant Care Requests
+            {t.feature1Title}
           </h2>
           <p className="text-lg text-gray-700 justify-left">
-            Simply speak or type your needs and watch as our AI transcribes and processes your requests in real-time.
+            {t.feature1Description}
           </p>
               </div>
               {/* Video */}
@@ -793,10 +936,10 @@ export default function LandingPage() {
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start">
           <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
-            Your Personal Care Concierge
+            {t.feature2Title}
           </h2>
           <p className="text-lg text-gray-700">
-            Voice your unique needs through our intelligent AI chat and receive personalized recommendations for nearby, available carers and services within moments.
+            {t.feature2Description}
           </p>
               </div>
             </motion.section>
@@ -812,10 +955,10 @@ export default function LandingPage() {
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start order-2 md:order-1">
           <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
-            Clarity at Your Fingertips
+            {t.feature3Title}
           </h2>
           <p className="text-lg text-gray-700">
-            Instantly access comprehensive carer profiles, neatly summarized on a single page. Save your preferred choices or book with seamless, one-click convenience.
+            {t.feature3Description}
           </p>
               </div>
               {/* Video */}
@@ -895,10 +1038,10 @@ export default function LandingPage() {
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start">
           <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
-            Explore with Ease
+            {t.feature4Title}
           </h2>
           <p className="text-lg text-gray-700">
-            Effortlessly browse a comprehensive map of all available care services within your chosen regions, putting expert help right on your doorstep.
+            {t.feature4Description}
           </p>
               </div>
             </motion.section>
@@ -918,9 +1061,9 @@ export default function LandingPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6 }}
                 >
-                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">Be the First to Know</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">{t.waitlistTitle}</h2>
                   <p className="text-gray-600 text-lg md:text-xl">
-                  Join our waitlist for early access, priority matching, and exclusive launch updates.
+                  {t.waitlistSubtitle}
                   </p>
                 </motion.div>
 
@@ -935,7 +1078,7 @@ export default function LandingPage() {
                     <Input
                       type="email"
                       name="email"
-                      placeholder="Enter your email"
+                      placeholder={t.waitlistEmailPlaceholder}
                       className="h-14 text-base rounded-xl border-gray-300"
                       required
                       disabled={isSubmittingWaitlist}
@@ -945,7 +1088,7 @@ export default function LandingPage() {
                       className="w-full h-14 text-base rounded-xl bg-purple-600 hover:bg-purple-700 text-white"
                       disabled={isSubmittingWaitlist}
                     >
-                      {isSubmittingWaitlist ? "Submitting..." : "Join Waitlist"}
+                      {isSubmittingWaitlist ? t.waitlistSubmittingButton : t.waitlistSubmitButton}
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </form>
@@ -954,7 +1097,7 @@ export default function LandingPage() {
                       {waitlistStatus.message}
                     </div>
                   )}
-                  <p className="text-xs text-gray-500">We respect your privacy. Unsubscribe anytime.</p>
+                  <p className="text-xs text-gray-500">{t.waitlistPrivacy}</p>
                 </motion.div>
 
                 {/* Demo button */}
@@ -984,9 +1127,9 @@ export default function LandingPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6 }}
                 >
-                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">Share Your Thoughts</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">{t.feedbackTitle}</h2>
                   <p className="text-gray-600 text-lg md:text-xl">
-                    Have ideas or feedback? Help us shape the future of culturally sensitive caregiving.
+                    {t.feedbackSubtitle}
                   </p>
                 </motion.div>
                 <motion.div
@@ -1000,14 +1143,14 @@ export default function LandingPage() {
                     <Input
                       type="email"
                       name="email"
-                      placeholder="Enter your email"
+                      placeholder={t.feedbackEmailPlaceholder}
                       className="h-14 text-base rounded-xl border-gray-300"
                       required
                       disabled={isSubmittingFeedback}
                     />
                     <textarea
                       name="feedback"
-                      placeholder="Your feedback or ideas..."
+                      placeholder={t.feedbackMessagePlaceholder}
                       className="w-full p-4 border rounded-xl min-h-[120px] bg-white border-gray-300 text-base"
                       required
                       disabled={isSubmittingFeedback}
@@ -1018,7 +1161,7 @@ export default function LandingPage() {
                       className="w-full h-14 text-base rounded-xl border-purple-300 text-purple-700 hover:bg-purple-50"
                       disabled={isSubmittingFeedback}
                     >
-                      {isSubmittingFeedback ? "Submitting..." : "Send Feedback"}
+                      {isSubmittingFeedback ? t.feedbackSubmittingButton : t.feedbackSubmitButton}
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </form>
@@ -1027,7 +1170,7 @@ export default function LandingPage() {
                       {feedbackStatus.message}
                     </div>
                   )}
-                  <p className="text-xs text-gray-500">Your input is valuable. Responses are saved securely.</p>
+                  <p className="text-xs text-gray-500">{t.feedbackPrivacy}</p>
                 </motion.div>
               </div>
             </div>
@@ -1040,11 +1183,11 @@ export default function LandingPage() {
         <div className="container px-4 md:px-6 py-8 flex flex-col md:flex-row items-center justify-between text-sm text-gray-500">
           <div className="flex items-center space-x-2 mb-4 md:mb-0">
             <Image src="/images/logo.png" alt="CareNeighbour Logo" width={24} height={24} />
-            <span>&copy; {new Date().getFullYear()} CareNeighbour, Inc. All rights reserved.</span>
+            <span>&copy; {new Date().getFullYear()} {t.footerCopyright}</span>
           </div>
           <div className="flex gap-6">
             <Link href="/about" className="hover:text-primary transition-colors">
-              About Us
+              {t.aboutUs}
             </Link>
           </div>
         </div>
