@@ -5,8 +5,8 @@ import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AuthProvider } from "@/components/auth-provider"
 import "./globals.css"
-import { LanguageProvider } from "./contexts/LanguageContext"; // Adjust path if necessary
-
+import { LanguageProvider } from "./contexts/LanguageContext";
+import { HtmlLangUpdater } from "@/components/HtmlLangUpdater";
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
@@ -15,8 +15,20 @@ export const metadata: Metadata = {
     default: 'CareNeighbour | Connecting Families with Trusted Local Caregivers',
     template: '%s | CareNeighbour'
   },
+  alternates: {
+    languages: {
+      'en': '/',
+      'zh': '/?lang=zh',
+    },
+  },
+  
+  keywords: [
+    'elderly care', 'caregivers', 'aged care', 'local support', 'Australia', 
+    'Monash', 'senior care', 'AI in Care',
+    // Chinese keywords
+    '老人护理', '照顾者', '年长护理', '本地支持', '澳大利亚', '莫纳什', '长者照顾', '人工智能护理'
+  ],
   description: 'CareNeighbour connects you with verified caregivers who understand your language and culture, making finding the right support effortless.',
-  keywords: ['elderly care', 'caregivers', 'aged care', 'local support', 'Australia', 'Monash', 'senior care','AI in Care'],
   openGraph: {
     type: 'website',
     locale: 'en_AU',
@@ -36,7 +48,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'CareNeighbour | Trusted Local Caregivers',
     description: 'Connect with verified local caregivers who understand your language and culture.',
-    site: '@careneighbour', // Add your Twitter handle if available
+    site: '@careneighbour',
     images: ['/images/CN_Figure2.png'],
   },
   robots: {
@@ -65,9 +77,12 @@ export default function RootLayout({
         <AuthProvider>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
             <LanguageProvider>
-              {children}
+              <HtmlLangUpdater />
+              <div className="flex min-h-[100dvh] flex-col bg-white">
+                {children}
+              </div>
+              <Toaster />
             </LanguageProvider>
-            <Toaster />
           </ThemeProvider>
         </AuthProvider>
       </body>
