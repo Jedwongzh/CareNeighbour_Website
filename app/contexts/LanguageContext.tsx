@@ -1,121 +1,130 @@
 "use client"
 
-import { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import { createContext, useState, useContext, ReactNode, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
 interface LanguageContextType {
   language: string;
   setLanguage: (lang: string) => void;
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const defaultLanguageContextValue: LanguageContextType = {
+  language: 'en', // Default for SSR
+  setLanguage: () => {
+    // No-op for SSR or if called before provider is fully initialized
+  },
+};
 
-export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguageState] = useState<string>('en'); // Default language
+const LanguageContext = createContext<LanguageContextType>(defaultLanguageContextValue);
+
+function ClientSideLanguageDetectorInternal({ onLanguageDetermined }: { onLanguageDetermined: (lang: string) => void }) {
   const searchParams = useSearchParams();
-  
-  // Load language from URL params, localStorage, or detect browser language on initial mount
+  const [isClientMounted, setIsClientMounted] = useState(false);
+
   useEffect(() => {
-    // First check URL param
-    const urlLang = searchParams.get('lang');
+    // This effect ensures setIsClientMounted(true) only happens client-side after mount
+    setIsClientMounted(true);
+  }, []);
+
+  useEffect(() => {
+    // This effect contains all client-side detection logic.
+    // It will only run if isClientMounted is true.
+    if (!isClientMounted) {
+      return; // Do nothing if not mounted on the client yet
+    }
+
+    // 1. Check URL parameters first (client-side)
+    const urlLang = searchParams?.get('lang');
     if (urlLang && (urlLang === 'en' || urlLang === 'zh')) {
-      setLanguageState(urlLang);
       localStorage.setItem('selectedLanguage', urlLang);
+      onLanguageDetermined(urlLang);
       return;
     }
-    
-    // Then check localStorage
+
+    // 2. Check localStorage (client-side)
     const storedLanguage = localStorage.getItem('selectedLanguage');
     if (storedLanguage && (storedLanguage === 'en' || storedLanguage === 'zh')) {
-      setLanguageState(storedLanguage);
+      onLanguageDetermined(storedLanguage);
       return;
     }
-    
-    // If no saved preference, detect browser language
-    const detectLanguage = () => {
-      if (typeof navigator !== 'undefined') {
-        // Check navigator.languages first for Chrome
-        const browserLangs = navigator.languages || [navigator.language || (navigator as any).userLanguage];
-        
-        // Loop through browser languages
-        for (const lang of browserLangs) {
-          // Check if the language starts with 'zh'
-          if (lang && typeof lang === 'string' && lang.startsWith('zh')) {
-            return 'zh';
-          }
-        }
-        
-        // Also check the URL for Chinese search terms
-        try {
-          const urlParams = new URLSearchParams(window.location.search);
-          const searchQuery = urlParams.get('q') || urlParams.get('query');
-          
-          // Simple check for Chinese characters in query
-          if (searchQuery && /[\u4E00-\u9FFF]/.test(searchQuery)) {
-            return 'zh';
-          }
-          
-          // Check referrer for Chinese search engines
-          const referrer = document.referrer;
-          if (referrer && (
-            referrer.includes('baidu.com') ||
-            referrer.includes('sogou.com') ||
-            referrer.includes('haosou.com') ||
-            referrer.includes('so.com') ||
-            referrer.includes('sm.cn')
-          )) {
-            return 'zh';
-          }
-        } catch (error) {
-          console.error("Error checking URL parameters:", error);
-        }
-      }
-      
-      return 'en'; // Default to English if nothing else matches
-    };
 
-    const detectedLang = detectLanguage();
-    setLanguageState(detectedLang);
-    localStorage.setItem('selectedLanguage', detectedLang);
-    
-    // Update URL with detected language - safely
+    // 3. Detect browser language or other heuristics (client-side)
+    let detectedLang = 'en'; // Default to English
     try {
-      const url = new URL(window.location.href);
-      url.searchParams.set('lang', detectedLang);
-      window.history.replaceState({}, '', url.toString());
-    } catch (error) {
-      console.error("Error updating URL:", error);
-    }
-    
-  }, [searchParams]);
+      // Explicitly check if running in a browser environment with navigator defined
+      if (typeof window !== 'undefined' && typeof navigator !== 'undefined') {
+        const nav = navigator; // Use a local const for navigator
 
-  const setLanguage = (lang: string) => {
+        // Check navigator.languages (most modern browsers)
+        if (nav.languages && typeof nav.languages.length === 'number') { // Ensure .languages exists and .length is a number
+          for (const lang of nav.languages) {
+            // Ensure lang is a string and toLowerCase is a function before calling it
+            if (lang && typeof lang === 'string' && typeof lang.toLowerCase === 'function' && lang.toLowerCase().startsWith('zh')) {
+              detectedLang = 'zh';
+              break;
+            }
+          }
+        }
+        // Fallback to navigator.language
+        else if (nav.language && typeof nav.language === 'string' && typeof nav.language.toLowerCase === 'function' && nav.language.toLowerCase().startsWith('zh')) {
+          detectedLang = 'zh';
+        }
+        // Fallback for very old browsers (less common, use with caution)
+        // else if ((nav as any).userLanguage && typeof (nav as any).userLanguage === 'string' && typeof (nav as any).userLanguage.toLowerCase === 'function' && (nav as any).userLanguage.toLowerCase().startsWith('zh')) {
+        //   detectedLang = 'zh';
+        // }
+      }
+      // Optionally, check document.referrer (client-side, less reliable)
+      // if (typeof document !== 'undefined' && document.referrer) { ... }
+
+    } catch (error) {
+      console.error('Error during client-side language detection (navigator/document):', error);
+      // Fallback to 'en' on error to ensure stability
+      detectedLang = 'en';
+    }
+
+    localStorage.setItem('selectedLanguage', detectedLang);
+    onLanguageDetermined(detectedLang);
+
+  }, [isClientMounted, searchParams, onLanguageDetermined]);
+
+  return null;
+}
+
+export function LanguageProvider({ children }: { children: ReactNode }) {
+  const [language, setLanguageState] = useState<string>('en'); // SSR default
+
+  const handleLanguageDetermined = useCallback((determinedLang: string) => {
+    setLanguageState(determinedLang);
+  }, []);
+
+  const setLanguage = useCallback((lang: string) => {
     if (lang === 'en' || lang === 'zh') {
-      localStorage.setItem('selectedLanguage', lang);
       setLanguageState(lang);
-      
-      // Update URL when language changes - safely
-      try {
-        const url = new URL(window.location.href);
-        url.searchParams.set('lang', lang);
-        window.history.replaceState({}, '', url.toString());
-      } catch (error) {
-        console.error("Error updating URL:", error);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('selectedLanguage', lang);
+        try {
+          const currentUrl = new URL(window.location.href);
+          currentUrl.searchParams.set('lang', lang);
+          window.history.replaceState({ ...window.history.state, lang }, '', currentUrl.toString());
+        } catch (error) {
+          console.error('Error updating URL:', error);
+        }
       }
     }
-  };
+  }, []);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage }}>
       {children}
+      <Suspense fallback={null}>
+        <ClientSideLanguageDetectorInternal onLanguageDetermined={handleLanguageDetermined} />
+      </Suspense>
     </LanguageContext.Provider>
   );
-};
+}
 
-export const useLanguage = (): LanguageContextType => {
-  const context = useContext(LanguageContext);
-  if (context === undefined) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
-  }
-  return context;
-};
+export function useLanguage() {
+  return useContext(LanguageContext);
+}

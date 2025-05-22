@@ -4,15 +4,14 @@ import { useLanguage } from "@/app/contexts/LanguageContext"
 import { useEffect } from "react"
 
 export function HtmlLangUpdater() {
-  const { language } = useLanguage()
+  const { language } = useLanguage();
   
-  // Update the HTML lang attribute when language changes
+  // Update HTML lang attribute on client-side only
   useEffect(() => {
-    if (language && document.documentElement) {
-      document.documentElement.lang = language;
+    if (document && document.documentElement) {
+      document.documentElement.lang = language || 'en';
     }
-  }, [language])
+  }, [language]);
   
-  // This component doesn't render anything visible
-  return null
+  return null;
 }

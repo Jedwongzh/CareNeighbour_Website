@@ -171,7 +171,7 @@ const pageTranslations = {
     feedbackSubmittingButton: "提交中...",
     feedbackPrivacy: "您的意见对我们来说非常宝贵，所有反馈都会受到严格保护，确保您的隐私安全。",
     // Footer
-    footerCopyright: "CareNeighbour, Inc. 版权所有。",
+    footerCopyright: "零距 . 版权所有。",
   },
 };
 

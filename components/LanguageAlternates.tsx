@@ -11,6 +11,8 @@ export function LanguageAlternates() {
   
   // Use useEffect to dynamically add alternate links to the document head
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     // Remove any existing alternate links first
     document.querySelectorAll('link[rel="alternate"][hreflang]').forEach(el => el.remove());
     
@@ -32,11 +34,6 @@ export function LanguageAlternates() {
     linkDefault.hreflang = 'x-default';
     linkDefault.href = `${baseUrl}${pathname}`;
     document.head.appendChild(linkDefault);
-    
-    // Clean up when component unmounts
-    return () => {
-      document.querySelectorAll('link[rel="alternate"][hrefLang]').forEach(el => el.remove());
-    };
   }, [pathname, language, baseUrl]);
   
   // This component doesn't render anything visible

@@ -542,11 +542,11 @@ const translations = {
 
 // Define icons for background
 const backgroundIcons = [
-  <Pill key="pill" className="h-4 w-4" />,
-  <Users key="users" className="h-4 w-4" />,
-  <Thermometer key="thermometer" className="h-4 w-4" />,
-  <Heart key="heart" className="h-4 w-4" />, // Added Heart
-  <Calendar key="calendar" className="h-4 w-4" />, // Added Calendar
+  { icon: Pill, key: "pill" },
+  { icon: Users, key: "users" },
+  { icon: Thermometer, key: "thermometer" },
+  { icon: Heart, key: "heart" },
+  { icon: Calendar, key: "calendar" },
 ]
 
 export default function AppDemoPage() {
@@ -613,7 +613,9 @@ export default function AppDemoPage() {
       let size: number
       // ~20% chance of showing an icon instead of text
       if (Math.random() < 0.2) {
-        content = backgroundIcons[Math.floor(Math.random() * backgroundIcons.length)]
+        const randomIcon = backgroundIcons[Math.floor(Math.random() * backgroundIcons.length)]
+        const IconComponent = randomIcon.icon
+        content = <IconComponent key={randomIcon.key} className="h-4 w-4" />
         size = Math.random() * 6 + 18 // Slightly larger base size for icons (18-24px)
       } else {
         content = currentBgCommands[Math.floor(Math.random() * currentBgCommands.length)]

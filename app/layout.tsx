@@ -7,6 +7,8 @@ import { AuthProvider } from "@/components/auth-provider"
 import "./globals.css"
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { HtmlLangUpdater } from "@/components/HtmlLangUpdater";
+import { Suspense } from "react";
+
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
