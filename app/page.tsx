@@ -112,7 +112,7 @@ const pageTranslations = {
     joinWaitlist: "加入等候名单",
     aboutUs: "关于我们",
     // Hero section
-    heroSubtitle: "零距 为您连接经过验证、了解您语言和文化的护理员，轻松找到合适的支援。",
+    heroSubtitle: "零距 让您轻松找到认证的照护人员——他们懂您的语言，了解您的文化，为您提供贴心、安心的支持。",
     heroCtaHowItWorks: "运作方式",
     heroCtaJoinWaitlist: "加入等候名单",
     // Problem Statement Section
@@ -122,7 +122,7 @@ const pageTranslations = {
     problemParagraph2End: "零距 致力于实现这一目标。",
     // Experiences Section
     experiencesTitle: "我们都有共同的困境",
-    experiencesSubtitle: "听听其他家庭在护理过程中的复杂经历。",
+    experiencesSubtitle: "聆听那些正在应对照护挑战的家庭分享他们的真实故事与心路历程。",
     testimonialMariaName: "玛丽亚，48岁",
     testimonialMariaQuote: "为我父亲找到一个会说西班牙语并了解我们传统的人太难了。我们需要的不仅仅是基本帮助——我们需要一个能与他沟通的人。",
     testimonialChenName: "陈先生，41岁",
@@ -164,12 +164,12 @@ const pageTranslations = {
     waitlistSubmittingButton: "提交中...",
     waitlistPrivacy: "我们尊重您的隐私。随时可以取消订阅。",
     feedbackTitle: "分享您的想法",
-    feedbackSubtitle: "有任何想法或反馈吗？帮助我们塑造文化敏感护理的未来。",
+    feedbackSubtitle: "有想法或建议吗？欢迎与我们分享，一起共创更符合文化需求的照护服务未来。",
     feedbackEmailPlaceholder: "输入您的邮箱",
     feedbackMessagePlaceholder: "您的反馈或想法...",
     feedbackSubmitButton: "发送反馈",
     feedbackSubmittingButton: "提交中...",
-    feedbackPrivacy: "您的意见非常宝贵。回复将被安全保存。",
+    feedbackPrivacy: "您的意见对我们来说非常宝贵，所有反馈都会受到严格保护，确保您的隐私安全。",
     // Footer
     footerCopyright: "CareNeighbour, Inc. 版权所有。",
   },
