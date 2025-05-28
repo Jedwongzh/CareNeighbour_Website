@@ -47,17 +47,13 @@ function ClientSideLanguageDetectorInternal({ onLanguageDetermined }: { onLangua
     if (storedLanguage && (storedLanguage === 'en' || storedLanguage === 'zh')) {
       onLanguageDetermined(storedLanguage);
       return;
-    }
-
-    // 3. Detect browser language or other heuristics (client-side)
+    }    // 3. Detect browser language or other heuristics (client-side)
     let detectedLang = 'en'; // Default to English
     try {
       // Explicitly check if running in a browser environment with navigator defined
-      if (typeof window !== 'undefined' && typeof navigator !== 'undefined') {
-        const nav = navigator; // Use a local const for navigator
-
-        // Check navigator.languages (most modern browsers)
-        if (nav.languages && typeof nav.languages.length === 'number') { // Ensure .languages exists and .length is a number
+      if (typeof window !== 'undefined' && typeof navigator !== 'undefined' && navigator) {
+        const nav = navigator; // Use a local const for navigator// Check navigator.languages (most modern browsers)
+        if (nav.languages && Array.isArray(nav.languages) && nav.languages.length > 0) { // Ensure .languages is an array with elements
           for (const lang of nav.languages) {
             // Ensure lang is a string and toLowerCase is a function before calling it
             if (lang && typeof lang === 'string' && typeof lang.toLowerCase === 'function' && lang.toLowerCase().startsWith('zh')) {

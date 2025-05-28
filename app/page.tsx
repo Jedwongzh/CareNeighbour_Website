@@ -39,6 +39,8 @@ const pageTranslations = {
     ourApproach: "Our Approach",
     howItWorks: "How It Works",
     joinWaitlist: "Join Waitlist",
+    SourceforCare: "Source for Care",
+    BecomeACarer: "Become a Carer",
     aboutUs: "About Us",
     // Hero section
     heroSubtitle: "CareNeighbour connects you with verified caregivers who understand your language and culture, making finding the right support effortless.",
@@ -72,6 +74,7 @@ const pageTranslations = {
     step2Description: "We instantly match you with verified caregivers who meet your specific criteria. Review profiles and connect.",
     step3Title: "Book & Relax",
     step3Description: "Schedule care easily, manage payments securely, and gain peace of mind knowing your loved one is in good hands.",
+    howitworksButton: "Learn more about our services",
     // Our Approach Section
     approachTitlePart1: "When",
     approachTitleTech: "Technology",
@@ -110,6 +113,8 @@ const pageTranslations = {
     ourApproach: "服务特色",
     howItWorks: "运作方式",
     joinWaitlist: "加入等候名单",
+    SourceforCare: "护理服务",
+    BecomeACarer: "成为护理员",
     aboutUs: "关于我们",
     // Hero section
     heroSubtitle: "零距 让您轻松找到认证的照护人员——他们懂您的语言，了解您的文化，为您提供贴心、安心的支持。",
@@ -143,6 +148,7 @@ const pageTranslations = {
     step2Description: "我们即时为您匹配符合您特定标准的认证护理员。查看资料并联系。",
     step3Title: "轻松预订",
     step3Description: "轻松安排护理，安全管理付款，让您安心无忧，因为您所爱的人得到了妥善照顾。",
+    howitworksButton: "了解更多关于我们的服务",
     // Our Approach Section
     approachTitlePart1: "科技",
     approachTitleTech: "有情",
@@ -313,54 +319,50 @@ export default function LandingPage() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex gap-6 items-center">
-        {/* 3. Language switcher: English and Chinese */}
-        <Button size="sm" variant={language === "en" ? "secondary" : "ghost"} onClick={() => setLanguage("en")} >EN</Button>
-        <Button size="sm" variant={language === "zh" ? "secondary" : "ghost"} onClick={() => setLanguage("zh")} >中文</Button>
-        <Link
-          href="#problem-statement"
-          className="text-sm text-center font-medium text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
-          onClick={e => {
-          e.preventDefault()
-          document.getElementById("problem-statement")?.scrollIntoView({ behavior: "smooth" })
-          }}
-        >
-          {t.ourMission}
-        </Link>
-        <Link
-          href="#how-it-works"
-          className="text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
-          onClick={e => {
-          e.preventDefault()
-          document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })
-          }}
-        >
-          {t.ourApproach}
-        </Link>
-        <Link
-          href="#our-approach"
-          className="text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
-          onClick={e => {
-          e.preventDefault()
-          document.getElementById("our-approach")?.scrollIntoView({ behavior: "smooth" })
-          }}
-        >
-          {t.howItWorks}
-        </Link>
-        <Link href="/about" className="text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out">
-          {t.aboutUs}
-        </Link>
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={() => document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })}
-          className="transition-all duration-300 ease-in-out hover:scale-105"
-        >
-          {t.joinWaitlist}
-        </Button>
+          {/* Language switcher: English and Chinese */}
+          <Button size="sm" variant={language === "en" ? "secondary" : "ghost"} onClick={() => setLanguage("en")} >EN</Button>
+          <Button size="sm" variant={language === "zh" ? "secondary" : "ghost"} onClick={() => setLanguage("zh")} >中文</Button>
+          <Link
+            href="#our-approach"
+            className="text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
+          >
+            {t.howItWorks}
+          </Link>
+          <Link
+            href="/about"
+            className="text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
+          >
+            {t.aboutUs}
+          </Link>
+          <Link
+            href="/services"
+            className="text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
+          >
+            {t.SourceforCare}
+          </Link>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })}
+            className="transition-all duration-300 ease-in-out hover:scale-105"
+          >
+            {t.joinWaitlist}
+          </Button>
         </nav>
 
         {/* Mobile Navigation - You'll need to update MobileNav to include the language switcher too */}
-        <MobileNav translations={t} currentLang={language} setLang={setLanguage} availableLangs={availableLangs} />
+        <MobileNav
+          translations={{
+            mainPage: t.heroLogo,
+            howItWorks: t.howItWorks,
+            aboutUs: t.aboutUs,
+            joinWaitlist: t.joinWaitlist,
+            SourceforCare: t.SourceforCare,
+          }}
+          currentLang={language}
+          setLang={setLanguage}
+          availableLangs={availableLangs}
+        />
       </div>
       </header>
 
@@ -736,87 +738,100 @@ export default function LandingPage() {
         {/* How It Works Section - Apple-inspired with large numbers and clean layout */}
         <section id="how-it-works" className="w-full py-20 md:py-28 bg-white relative" ref={howItWorksRef}>
           {/* CN Figure - Positioned as a guide */}
-          <div className="container px-4 md:px-6">
+            <div className="container px-4 md:px-6">
             <div className="flex flex-col items-left justify-center space-y-4 text-center mb-16 md:mb-24">
               <motion.div
-                className="space-y-3 flex flex-col md:flex-row items-center justify-between w-full"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
+              className="space-y-3 flex flex-col md:flex-row items-center justify-between w-full"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
               >
-                <div className="md:text-left flex-grow">
-                  <div className="flex items-center gap-4 w-full justify-between flex-wrap">
-                  <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4 max-w-[70%]">
-                    {t.howItWorksTitle}
-                  </h2>
-                  <div className="flex-shrink-0 md:order-none">
-                    <Image
-                    src="/images/CN_Figure3.png"
-                    alt="CareNeighbor Guide"
-                    width={220} 
-                    height={220}
-                    className="object-contain md:w-[220px] md:h-[220px] w-[100px] h-[100px]" 
-                    />
-                  </div>
-                  </div>
+              <div className="md:text-left flex-grow">
+                <div className="flex items-center gap-4 w-full justify-between flex-wrap">
+                <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4 max-w-[70%]">
+                {t.howItWorksTitle}
+                </h2>
+                <div className="flex-shrink-0 md:order-none">
+                <Image
+                src="/images/CN_Figure3.png"
+                alt="CareNeighbor Guide"
+                width={220} 
+                height={220}
+                className="object-contain md:w-[220px] md:h-[220px] w-[100px] h-[100px]" 
+                />
                 </div>
+                </div>
+              </div>
               </motion.div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
               {/* Step 1 */}
               <motion.div
-                className="flex flex-col items-center text-center"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
+              className="flex flex-col items-center text-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
               >
-                <div className="w-20 h-20 rounded-full bg-purple-100 flex items-center justify-center mb-6">
-                  <span className="text-4xl font-bold text-purple-700">1</span>
-                </div>
-                <h3 className="text-2xl font-semibold text-gray-900 mb-4">{t.step1Title}</h3>
-                <p className="text-gray-600 text-lg">
-                  {t.step1Description}
-                </p>
+              <div className="w-20 h-20 rounded-full bg-purple-100 flex items-center justify-center mb-6">
+                <span className="text-4xl font-bold text-purple-700">1</span>
+              </div>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-4">{t.step1Title}</h3>
+              <p className="text-gray-600 text-lg">
+                {t.step1Description}
+              </p>
               </motion.div>
 
               {/* Step 2 */}
               <motion.div
-                className="flex flex-col items-center text-center"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex flex-col items-center text-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <div className="w-20 h-20 rounded-full bg-purple-100 flex items-center justify-center mb-6">
-                  <span className="text-4xl font-bold text-purple-700">2</span>
-                </div>
-                <h3 className="text-2xl font-semibold text-gray-900 mb-4">{t.step2Title}</h3>
-                <p className="text-gray-600 text-lg">
-                  {t.step2Description}
-                </p>
+              <div className="w-20 h-20 rounded-full bg-purple-100 flex items-center justify-center mb-6">
+                <span className="text-4xl font-bold text-purple-700">2</span>
+              </div>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-4">{t.step2Title}</h3>
+              <p className="text-gray-600 text-lg">
+                {t.step2Description}
+              </p>
               </motion.div>
 
               {/* Step 3 */}
               <motion.div
-                className="flex flex-col items-center text-center"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4 }}
+              className="flex flex-col items-center text-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
               >
-                <div className="w-20 h-20 rounded-full bg-purple-100 flex items-center justify-center mb-6">
-                  <span className="text-4xl font-bold text-purple-700">3</span>
-                </div>
-                <h3 className="text-2xl font-semibold text-gray-900 mb-4">{t.step3Title}</h3>
-                <p className="text-gray-600 text-lg">
-                  {t.step3Description}
-                </p>
+              <div className="w-20 h-20 rounded-full bg-purple-100 flex items-center justify-center mb-6">
+                <span className="text-4xl font-bold text-purple-700">3</span>
+              </div>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-4">{t.step3Title}</h3>
+              <p className="text-gray-600 text-lg">
+                {t.step3Description}
+              </p>
               </motion.div>
             </div>
-          </div>
+
+            {/* Discover More Button */}
+            <div className="flex justify-center mt-12">
+              <Link href="/services" passHref>
+              <Button
+                size="lg"
+                className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-4 text-lg h-auto"
+              >
+                {t.howitworksButton}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              </Link>
+            </div>
+            </div>
         </section>
 
         {/* Our Approach Section - Apple-inspired with feature carousel */}

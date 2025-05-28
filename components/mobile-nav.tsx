@@ -9,11 +9,11 @@ import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/s
 // Update interface to expect all necessary props
 interface MobileNavProps {
   translations: {
-    ourMission: string;
-    ourApproach: string;
+    mainPage: string;
     howItWorks: string;
     aboutUs: string;
     joinWaitlist: string;
+    SourceforCare: string;
   };
   currentLang: string;
   setLang: (lang: string) => void;
@@ -25,15 +25,6 @@ export function MobileNav({ translations, currentLang, setLang, availableLangs }
 
   const closeSheet = () => setIsOpen(false)
 
-  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault()
-    const targetElement = document.querySelector(id)
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: "smooth" })
-    }
-    closeSheet()
-  }
-
   return (
     <div className="md:hidden">
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -43,34 +34,16 @@ export function MobileNav({ translations, currentLang, setLang, availableLangs }
             <span className="sr-only">Toggle navigation menu</span>
           </Button>
         </SheetTrigger>
-        <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-white">
+        <SheetContent>
           <div className="p-4">
             <nav className="flex flex-col gap-6 mt-8">
               <SheetClose asChild>
                 <Link
-                  href="#problem-statement"
+                  href="/"
                   className="text-lg font-medium text-gray-700 hover:text-primary transition-colors"
-                  onClick={(e) => handleSmoothScroll(e, "#problem-statement")}
+                  onClick={closeSheet}
                 >
-                  {translations.ourMission}
-                </Link>
-              </SheetClose>
-              <SheetClose asChild>
-                <Link
-                  href="#how-it-works"
-                  className="text-lg font-medium text-gray-700 hover:text-primary transition-colors"
-                  onClick={(e) => handleSmoothScroll(e, "#how-it-works")}
-                >
-                  {translations.howItWorks}
-                </Link>
-              </SheetClose>
-              <SheetClose asChild>
-                <Link
-                  href="#our-approach"
-                  className="text-lg font-medium text-gray-700 hover:text-primary transition-colors"
-                  onClick={(e) => handleSmoothScroll(e, "#our-approach")}
-                >
-                  {translations.ourApproach}
+                  {translations.mainPage}
                 </Link>
               </SheetClose>
               <SheetClose asChild>
@@ -82,41 +55,45 @@ export function MobileNav({ translations, currentLang, setLang, availableLangs }
                   {translations.aboutUs}
                 </Link>
               </SheetClose>
-              {/* Language Switcher for Mobile */}
-              <div className="mt-6 pt-6 border-t border-gray-200">
-                <p className="text-sm font-medium text-gray-500 mb-2">Language</p>
-                <div className="flex gap-2">
-                  {Object.entries(availableLangs).map(([langCode, langName]: [string, string]) => (
-                    <Button
-                      key={langCode}
-                      variant={currentLang === langCode ? "secondary" : "ghost"}
-                      size="sm"
-                      onClick={() => {
-                        setLang(langCode) // This setLang comes from props (ultimately from LanguageContext)
-                        closeSheet()
-                      }}
-                      className="flex-1"
-                    >
-                      {langName}
-                    </Button>
-                  ))}
-                </div>
-              </div>
+              <SheetClose asChild>
+                <Link
+                  href="/services"
+                  className="text-lg font-medium text-gray-700 hover:text-primary transition-colors"
+                  onClick={closeSheet}
+                >
+                  {translations.SourceforCare}
+                </Link>
+              </SheetClose>
               <SheetClose asChild>
                 <Button
-                  variant="default"
-                  className="w-full bg-purple-600 hover:bg-purple-700 text-white mt-6"
+                  variant="outline"
+                  className="w-full"
                   onClick={() => {
-                    const waitlistElement = document.getElementById("waitlist")
-                    if (waitlistElement) {
-                      waitlistElement.scrollIntoView({ behavior: "smooth" })
-                    }
                     closeSheet()
+                    document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })
                   }}
                 >
                   {translations.joinWaitlist}
                 </Button>
               </SheetClose>
+              <div className="flex gap-2 mt-4">
+                <Button
+                  size="sm"
+                  variant={currentLang === "en" ? "secondary" : "ghost"}
+                  onClick={() => setLang("en")}
+                  className="flex-1"
+                >
+                  EN
+                </Button>
+                <Button
+                  size="sm"
+                  variant={currentLang === "zh" ? "secondary" : "ghost"}
+                  onClick={() => setLang("zh")}
+                  className="flex-1"
+                >
+                  中文
+                </Button>
+              </div>
             </nav>
           </div>
         </SheetContent>
