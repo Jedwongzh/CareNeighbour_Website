@@ -16,7 +16,7 @@ function ServicesPageContent() {
     en: {
       title: "Our Care Services",
       subtitle: "Comprehensive culturally-sensitive care services designed for you",
-      mainPage: "Main Page",
+      mainPage: "Main",
       fundingOptions: "Funding Options",
       steps: [
         {
@@ -38,7 +38,6 @@ function ServicesPageContent() {
       serviceCategories: [
         {
           title: "Social Support & Domestic Assistance",
-          icon: "🏠",
           image: "/images/seniors-social.jpg",
           description: "Connect with support workers who can accompany you or your loved one to social outings, community events, or personal activities, offering friendly companionship and help along the way.",
           services: [
@@ -101,7 +100,6 @@ function ServicesPageContent() {
         },
         {
           title: "Personal Care Services",
-          icon: "💊",
           image: "/images/senior-couple.jpg",
           description: "Connect with qualified support workers who can assist with showering, dressing, grooming, toileting, and other personal hygiene needs—ensuring comfort, dignity, and independence every day.",
           services: [
@@ -154,7 +152,6 @@ function ServicesPageContent() {
         },
         {
           title: "Professional Nursing",
-          icon: "🏥",
           image: "/images/featureshowcase1.jpg",
           description: "Connect with qualified registered nurses who provide clinical care and health management services in the comfort of your home.",
           services: [
@@ -729,7 +726,7 @@ function ServicesPageContent() {
             }} 
             currentLang={language} 
             setLang={setLanguage} 
-            availableLangs={{ en: "EN", zh: "中文", yue: "粵語" }} 
+            availableLangs={{ en: "EN", zh: "中文"}} 
           />
         </div>
       </header>
@@ -787,7 +784,7 @@ function ServicesPageContent() {
                     {category.services.map((service, serviceIndex) => (
                       <div key={serviceIndex} className="bg-gradient-to-br from-gray-50 to-blue-50 p-4 md:p-6 lg:p-8 rounded-2xl border border-gray-100 hover:border-purple-200 transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1 group">
                         <div className="flex flex-col space-y-3 md:space-y-4">
-                          <div className="text-2xl md:text-3xl lg:text-4xl group-hover:scale-110 transition-transform duration-300">{service.icon}</div>
+                          <div className="text-2xl md:text-3xl lg:text-4xl transition-transform duration-300">{service.icon}</div>
                           <div className="flex-1">
                             <h4 className="text-base md:text-lg lg:text-xl font-semibold mb-2 md:mb-3 text-gray-900 leading-tight">{service.name}</h4>
                             <p className="text-xs md:text-sm lg:text-base text-gray-600 leading-relaxed">{service.description}</p>
@@ -824,7 +821,7 @@ function ServicesPageContent() {
               </button>
               <button 
                 onClick={() => window.location.href = '/#waitlist'}
-                className="bg-white hover:bg-gray-50 text-purple-600 border-2 border-purple-600 hover:border-purple-700 px-8 md:px-10 lg:px-12 py-3 md:py-4 lg:py-5 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-base md:text-lg w-full sm:w-auto"
+                className="bg-white hover:bg-gray-50 text-purple-600 border-2 border-purple-600 hover:border-black-700 px-8 md:px-10 lg:px-12 py-3 md:py-4 lg:py-5 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-base md:text-lg w-full sm:w-auto"
               >
                 {language === 'zh' ? '加入等候名单' : language === 'yue' ? '加入等候名單' : 'Join Waitlist'}
               </button>

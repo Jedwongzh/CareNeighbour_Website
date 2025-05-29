@@ -1,103 +1,105 @@
 "use client"
 
 import { useState } from "react"
-import Link from "next/link"
-import { Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
+import { Menu, X } from "lucide-react"
+import Link from "next/link"
 
-// Update interface to expect all necessary props
 interface MobileNavProps {
   translations: {
-    mainPage: string;
-    howItWorks: string;
-    aboutUs: string;
-    joinWaitlist: string;
-    SourceforCare: string;
-  };
-  currentLang: string;
-  setLang: (lang: string) => void;
-  availableLangs: { [key: string]: string };
+    mainPage: string
+    howItWorks: string
+    aboutUs: string
+    joinWaitlist: string
+    SourceforCare: string
+  }
+  currentLang: string
+  setLang: (lang: string) => void
+  availableLangs: Record<string, string>
+  onJoinWaitlist?: () => void
 }
 
-export function MobileNav({ translations, currentLang, setLang, availableLangs }: MobileNavProps) {
+export function MobileNav({ 
+  translations, 
+  currentLang, 
+  setLang, 
+  availableLangs,
+  onJoinWaitlist 
+}: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false)
 
-  const closeSheet = () => setIsOpen(false)
+  const handleJoinWaitlist = () => {
+    setIsOpen(false)
+    if (onJoinWaitlist) {
+      onJoinWaitlist()
+    } else {
+      window.location.href = '/#waitlist'
+    }
+  }
 
   return (
-    <div className="md:hidden">
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetTrigger asChild>
-          <Button variant="ghost" size="icon">
-            <Menu className="h-6 w-6" />
-            <span className="sr-only">Toggle navigation menu</span>
-          </Button>
-        </SheetTrigger>
-        <SheetContent>
-          <div className="p-4">
-            <nav className="flex flex-col gap-6 mt-8">
-              <SheetClose asChild>
-                <Link
-                  href="/"
-                  className="text-lg font-medium text-gray-700 hover:text-primary transition-colors"
-                  onClick={closeSheet}
-                >
-                  {translations.mainPage}
-                </Link>
-              </SheetClose>
-              <SheetClose asChild>
-                <Link
-                  href="/about"
-                  className="text-lg font-medium text-gray-700 hover:text-primary transition-colors"
-                  onClick={closeSheet}
-                >
-                  {translations.aboutUs}
-                </Link>
-              </SheetClose>
-              <SheetClose asChild>
-                <Link
-                  href="/services"
-                  className="text-lg font-medium text-gray-700 hover:text-primary transition-colors"
-                  onClick={closeSheet}
-                >
-                  {translations.SourceforCare}
-                </Link>
-              </SheetClose>
-              <SheetClose asChild>
+    <div className="lg:hidden">
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => setIsOpen(!isOpen)}
+        className="p-2"
+      >
+        {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+      </Button>
+
+      {isOpen && (
+        <div className="absolute top-16 left-0 right-0 bg-white border-b shadow-lg z-50">
+          <div className="container px-4 py-4 space-y-4">
+            {/* Language switcher */}
+            <div className="flex gap-2 justify-center">
+              {Object.entries(availableLangs).map(([lang, label]) => (
                 <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => {
-                    closeSheet()
-                    document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })
-                  }}
-                >
-                  {translations.joinWaitlist}
-                </Button>
-              </SheetClose>
-              <div className="flex gap-2 mt-4">
-                <Button
+                  key={lang}
                   size="sm"
-                  variant={currentLang === "en" ? "secondary" : "ghost"}
-                  onClick={() => setLang("en")}
-                  className="flex-1"
+                  variant={currentLang === lang ? "secondary" : "ghost"}
+                  onClick={() => setLang(lang)}
                 >
-                  EN
+                  {label}
                 </Button>
-                <Button
-                  size="sm"
-                  variant={currentLang === "zh" ? "secondary" : "ghost"}
-                  onClick={() => setLang("zh")}
-                  className="flex-1"
-                >
-                  中文
-                </Button>
-              </div>
-            </nav>
+              ))}
+            </div>
+
+            {/* Navigation Links */}
+            <div className="space-y-2">
+              <Link
+                href="/"
+                className="block text-center py-2 text-gray-600 hover:text-primary transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                {translations.mainPage}
+              </Link>
+              <Link
+                href="/about"
+                className="block text-center py-2 text-gray-600 hover:text-primary transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                {translations.aboutUs}
+              </Link>
+              <Link
+                href="/services"
+                className="block text-center py-2 text-gray-600 hover:text-primary transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                {translations.SourceforCare}
+              </Link>
+            </div>
+
+            {/* Join Waitlist Button */}
+            <Button
+              className="w-full"
+              onClick={handleJoinWaitlist}
+            >
+              {translations.joinWaitlist}
+            </Button>
           </div>
-        </SheetContent>
-      </Sheet>
+        </div>
+      )}
     </div>
   )
 }
