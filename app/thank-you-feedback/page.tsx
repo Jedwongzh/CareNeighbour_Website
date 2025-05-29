@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { MessageSquare } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { UnifiedFooter } from "@/components/unified-footer"
 
 export default function ThankYouFeedbackPage() {
   return (
@@ -41,18 +42,15 @@ export default function ThankYouFeedbackPage() {
         </div>
       </main>
 
-      {/* Minimal Footer */}
-      <div className="w-full py-6 bg-white border-t">
-        <div className="container px-4 md:px-6 mx-auto text-center">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <MessageSquare className="h-6 w-6 text-primary" />
-            <span className="font-bold text-xl">CareNeighbor</span>
-          </div>
-          <p className="text-sm text-gray-500">
-            &copy; {new Date().getFullYear()} CareNeighbor, Inc. All rights reserved.
-          </p>
-        </div>
-      </div>
+      {/* Unified Footer */}
+      <UnifiedFooter 
+        language="en"
+        translations={{
+          aboutUs: "About Us",
+          mainPage: "Home",
+          footerCopyright: "CareNeighbour"
+        }}
+      />
     </div>
   )
 }

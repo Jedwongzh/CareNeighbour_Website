@@ -36,9 +36,8 @@ export function MobileNav({
       window.location.href = '/#waitlist'
     }
   }
-
   return (
-    <div className="lg:hidden">
+    <div className="md:hidden">
       <Button
         variant="ghost"
         size="sm"

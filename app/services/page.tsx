@@ -2,10 +2,11 @@
 
 import { useLanguage } from "../contexts/LanguageContext"
 import { Suspense } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
+import { UnifiedHeader } from "@/components/unified-header"
+import { UnifiedFooter } from "@/components/unified-footer"
 import { Button } from "@/components/ui/button"
-import { MobileNav } from "@/components/mobile-nav"
+import Link from 'next/link'
+import Image from 'next/image'
 
 // Services Page Content Component
 function ServicesPageContent() {
@@ -184,7 +185,7 @@ function ServicesPageContent() {
         },
         {
           title: "Allied Health Services",
-          icon: "🏃‍♂️",
+          icon: "",
           image: "/images/featureshowcase2.jpg",
           description: "Connect with qualified allied health professionals who provide specialised care to enhance your health and wellbeing.",
           services: [
@@ -254,7 +255,7 @@ function ServicesPageContent() {
       serviceCategories: [
         {
           title: "社會支援和家務協助",
-          icon: "🏠",
+          icon: "",
           image: "/images/seniors-social.jpg",
           description: "與支援工作者聯繫，他們可以陪伴您或您的親人參加社交外出、社區活動或個人活動，提供友好的陪伴和協助。",
           services: [
@@ -317,7 +318,7 @@ function ServicesPageContent() {
         },
         {
           title: "個人護理服務",
-          icon: "💊",
+          icon: "",
           image: "/images/senior-couple.jpg",
           description: "與合格的支援工作者聯繫，他們可以協助洗澡、穿衣、梳理、如廁和其他個人衛生需求—每天確保舒適、尊嚴和獨立。",
           services: [
@@ -370,7 +371,7 @@ function ServicesPageContent() {
         },
         {
           title: "專業護理",
-          icon: "🏥",
+          icon: "",
           image: "/images/featureshowcase1.jpg",
           description: "與合格的註冊護士聯繫，他們在您舒適的家中提供臨床護理和健康管理服務。",
           services: [
@@ -403,7 +404,7 @@ function ServicesPageContent() {
         },
         {
           title: "專職醫療服務",
-          icon: "🏃‍♂️",
+          icon: "",
           image: "/images/featureshowcase2.jpg",
           description: "與合格的專職醫療專業人員聯繫，他們提供專門的護理以增強您的健康和福祉。",
           services: [
@@ -672,64 +673,24 @@ function ServicesPageContent() {
   // Get current language content
   const content = translations[language as keyof typeof translations] || translations.en
 
+  // Main page translations for header/footer
+  const headerTranslations = {
+    heroLogo: language === 'zh' ? '零距' : language === 'yue' ? '零距' : 'CareNeighbour',
+    howItWorks: language === 'zh' ? '如何运作' : language === 'yue' ? '點樣運作' : 'How It Works',
+    aboutUs: language === 'zh' ? '关于我们' : language === 'yue' ? '關於我們' : 'About Us',
+    joinWaitlist: language === 'zh' ? '加入等候名单' : language === 'yue' ? '加入等候名單' : 'Join Waitlist',
+    SourceforCare: language === 'zh' ? '护理服务' : language === 'yue' ? '護理服務' : 'Source for Care',
+    mainPage: content.mainPage
+  }
+
   return (
     <div className="flex min-h-[100dvh] flex-col bg-white">
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur-sm transition-all duration-300 ease-in-out">
-      <div className="container px-4 md:px-6 flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center space-x-2 transition-all duration-300 ease-in-out">
-        <Image src="/images/logo.png" alt="CareNeighbour Logo" width={36} height={36} />
-        <span className="font-semibold text-lg transition-colors duration-300 ease-in-out">{language === 'zh' ? '零距' : language === 'yue' ? '零距' : 'CareNeighbour'}</span>
-        </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex gap-6 items-center">
-            {/* Language switcher */}
-            <Button size="sm" variant={language === "en" ? "secondary" : "ghost"} onClick={() => setLanguage("en")} >EN</Button>
-            <Button size="sm" variant={language === "zh" ? "secondary" : "ghost"} onClick={() => setLanguage("zh")} >中文</Button>
-
-            <Link
-              href="/"
-              className="text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
-            >
-              {content.mainPage}
-            </Link>
-            <Link
-              href="/about"
-              className="text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
-            >
-              {language === 'zh' ? '关于我们' : language === 'yue' ? '關於我們' : 'About Us'}
-            </Link>
-            <Link
-              href="/services"
-              className="text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
-            >
-              {language === 'zh' ? '护理服务' : language === 'yue' ? '護理服務' : 'Source for Care'}
-            </Link>
-            <Button
-              size="sm"
-              onClick={() => window.location.href = '/#waitlist'}
-              className="transition-all duration-300 ease-in-out hover:scale-105"
-            >
-              {language === 'zh' ? '加入等候名单' : language === 'yue' ? '加入等候名單' : 'Join Waitlist'}
-            </Button>
-          </nav>
-
-          {/* Mobile Navigation */}
-          <MobileNav 
-            translations={{
-              mainPage: content.mainPage,
-              howItWorks: language === 'zh' ? '如何運作' : language === 'yue' ? '點樣運作' : 'How It Works',
-              aboutUs: language === 'zh' ? '关于我们' : language === 'yue' ? '關於我們' : 'About Us',
-              joinWaitlist: language === 'zh' ? '加入等候名单' : language === 'yue' ? '加入等候名單' : 'Join Waitlist',
-              SourceforCare: language === 'zh' ? '护理服务' : language === 'yue' ? '護理服務' : 'Source for Care',
-            }} 
-            currentLang={language} 
-            setLang={setLanguage} 
-            availableLangs={{ en: "EN", zh: "中文"}} 
-          />
-        </div>
-      </header>
+      {/* Unified Header */}
+      <UnifiedHeader 
+        language={language}
+        setLanguage={setLanguage}
+        translations={headerTranslations}
+      />
 
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12 lg:py-16">
         {/* Hero Section */}
@@ -826,27 +787,18 @@ function ServicesPageContent() {
                 {language === 'zh' ? '加入等候名单' : language === 'yue' ? '加入等候名單' : 'Join Waitlist'}
               </button>
             </div>
-          </div>
-        </div>
+          </div>        </div>
       </div>
 
-      {/* Footer */}
-      <footer className="border-t bg-gradient-to-r from-purple-50 to-blue-50 mt-16 md:mt-20 lg:mt-24">
-        <div className="container px-4 md:px-6 lg:px-8 py-8 md:py-12 flex flex-col md:flex-row items-center justify-between text-sm md:text-base text-gray-600">
-          <div className="flex items-center space-x-3 mb-4 md:mb-0">
-            <Image src="/images/logo.png" alt="CareNeighbour Logo" width={24} height={24} className="md:w-8 md:h-8" />
-            <span className="font-medium">&copy; {new Date().getFullYear()} {language === 'zh' ? '零距' : language === 'yue' ? '零距' : 'CareNeighbour'}</span>
-          </div>
-          <div className="flex gap-6 md:gap-8">
-            <Link href="/about" className="hover:text-purple-600 transition-colors duration-300 font-medium">
-              {language === 'zh' ? '关于我们' : language === 'yue' ? '關於我們' : 'About Us'}
-            </Link>
-            <Link href="/" className="hover:text-purple-600 transition-colors duration-300 font-medium">
-              {content.mainPage}
-            </Link>
-          </div>
-        </div>
-      </footer>
+      {/* Unified Footer */}
+      <UnifiedFooter 
+        language={language}
+        translations={{
+          aboutUs: language === 'zh' ? '关于我们' : language === 'yue' ? '關於我們' : 'About Us',
+          mainPage: content.mainPage,
+          footerCopyright: language === 'zh' ? '零距' : language === 'yue' ? '零距' : 'CareNeighbour'
+        }}
+      />
     </div>
   )
 }

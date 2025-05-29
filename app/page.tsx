@@ -13,7 +13,8 @@ import Autoplay from "embla-carousel-autoplay"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
-import { MobileNav } from "@/components/mobile-nav"
+import { UnifiedHeader } from "@/components/unified-header"
+import { UnifiedFooter } from "@/components/unified-footer"
 import { joinWaitlist, submitFeedback } from "./actions"
 import { useLanguage } from "./contexts/LanguageContext" // Import useLanguage hook
 
@@ -306,65 +307,21 @@ export default function LandingPage() {
       setIsSubmittingFeedback(false)
     }
   }
-
   return (
     <div className="flex min-h-[100dvh] flex-col bg-white">
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur-sm transition-all duration-300 ease-in-out">
-      <div className="container px-4 md:px-6 flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center space-x-2 transition-all duration-300 ease-in-out">
-        <Image src="/images/logo.png" alt="CareNeighbour Logo" width={36} height={36} />
-        <span className="font-semibold text-lg transition-colors duration-300 ease-in-out">{t.heroLogo}</span>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex gap-6 items-center">
-          {/* Language switcher: English and Chinese */}
-          <Button size="sm" variant={language === "en" ? "secondary" : "ghost"} onClick={() => setLanguage("en")} >EN</Button>
-          <Button size="sm" variant={language === "zh" ? "secondary" : "ghost"} onClick={() => setLanguage("zh")} >中文</Button>
-          <Link
-            href="#our-approach"
-            className="text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
-          >
-            {t.howItWorks}
-          </Link>
-          <Link
-            href="/about"
-            className="text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
-          >
-            {t.aboutUs}
-          </Link>
-          <Link
-            href="/services"
-            className="text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out"
-          >
-            {t.SourceforCare}
-          </Link>
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={() => document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })}
-            className="transition-all duration-300 ease-in-out hover:scale-105"
-          >
-            {t.joinWaitlist}
-          </Button>
-        </nav>
-
-        {/* Mobile Navigation - You'll need to update MobileNav to include the language switcher too */}
-        <MobileNav
-          translations={{
-            mainPage: t.heroLogo,
-            howItWorks: t.howItWorks,
-            aboutUs: t.aboutUs,
-            joinWaitlist: t.joinWaitlist,
-            SourceforCare: t.SourceforCare,
-          }}
-          currentLang={language}
-          setLang={setLanguage}
-          availableLangs={availableLangs}
-        />
-      </div>
-      </header>
+      {/* Unified Header */}
+      <UnifiedHeader 
+        language={language}
+        setLanguage={setLanguage}
+        translations={{
+          heroLogo: t.heroLogo,
+          howItWorks: t.howItWorks,
+          aboutUs: t.aboutUs,
+          joinWaitlist: t.joinWaitlist,
+          SourceforCare: t.SourceforCare,
+          mainPage: t.heroLogo
+        }}
+      />
 
       <main className="flex-1">
         {/* Hero Section - Apple-inspired with large typography and clean layout */}
@@ -1192,23 +1149,17 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
-        </section>
-      </main>
+        </section>      </main>
 
-      {/* Footer */}
-      <footer className="border-t bg-purple-50">
-        <div className="container px-4 md:px-6 py-8 flex flex-col md:flex-row items-center justify-between text-sm text-gray-500">
-          <div className="flex items-center space-x-2 mb-4 md:mb-0">
-            <Image src="/images/logo.png" alt="CareNeighbour Logo" width={24} height={24} />
-            <span>&copy; {new Date().getFullYear()} {t.footerCopyright}</span>
-          </div>
-          <div className="flex gap-6">
-            <Link href="/about" className="hover:text-primary transition-colors">
-              {t.aboutUs}
-            </Link>
-          </div>
-        </div>
-      </footer>
+      {/* Unified Footer */}
+      <UnifiedFooter 
+        language={language}
+        translations={{
+          aboutUs: t.aboutUs,
+          mainPage: t.heroLogo,
+          footerCopyright: t.footerCopyright
+        }}
+      />
     </div>
   )
 }

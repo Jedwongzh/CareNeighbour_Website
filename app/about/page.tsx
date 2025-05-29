@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react"
+import { UnifiedHeader } from "@/components/unified-header"
+import { UnifiedFooter } from "@/components/unified-footer"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowLeft } from "lucide-react"
@@ -39,37 +41,27 @@ const aboutPageTranslations = {
 export default function AboutPage() {
   // 2. Add language state
   const { language, setLanguage } = useLanguage();
-
   // Helper to get current translations
   const t = aboutPageTranslations[language as keyof typeof aboutPageTranslations] || aboutPageTranslations.en
 
+  // Header translations
+  const headerTranslations = {
+    heroLogo: language === 'zh' ? '零距' : 'CareNeighbour',
+    howItWorks: language === 'zh' ? '如何运作' : 'How It Works',
+    aboutUs: language === 'zh' ? '关于我们' : 'About Us',
+    joinWaitlist: language === 'zh' ? '加入等候名单' : 'Join Waitlist',
+    SourceforCare: language === 'zh' ? '护理服务' : 'Source for Care',
+    mainPage: language === 'zh' ? '主页' : 'Home'
+  }
+
   return (
     <div className="flex min-h-[100dvh] flex-col">
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur-sm">
-        <div className="container px-4 md:px-6 flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2">
-            <Image src="/images/logo.png" alt={`${t.companyName} Logo`} width={36} height={36} />
-            <span className="font-semibold text-lg">{t.companyName}</span>
-          </Link>
-          <div className="flex items-center gap-2">
-            {/* 3. Language Switcher */}
-            <Button size="sm" variant={language === "en" ? "secondary" : "ghost"} onClick={() => setLanguage("en")}>
-              EN
-            </Button>
-            <Button size="sm" variant={language === "zh" ? "secondary" : "ghost"} onClick={() => setLanguage("zh")}>
-              中文
-            </Button>
-            <Link href="/">
-              <Button variant="ghost" size="sm" className="flex items-center gap-1">
-                <ArrowLeft className="h-4 w-4" />
-                <span className="hidden sm:inline">{t.backToHome}</span>
-                <span className="sm:hidden">{t.back}</span>
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </header>
+      {/* Unified Header */}
+      <UnifiedHeader 
+        language={language}
+        setLanguage={setLanguage}
+        translations={headerTranslations}
+      />
 
       {/* Main Content */}
       <main className="flex-1">
@@ -108,16 +100,20 @@ export default function AboutPage() {
                     {t.joinWaitlist}
                   </Button>
                 </Link>
-              </div>
-            </div>
+              </div>            </div>
           </div>
         </section>
       </main>
 
-      {/* Minimal copyright notice */}
-      <div className="w-full py-4 text-center text-sm text-gray-500">
-        &copy; {new Date().getFullYear()} {t.footerCopyright}
-      </div>
+      {/* Unified Footer */}
+      <UnifiedFooter 
+        language={language}
+        translations={{
+          aboutUs: language === 'zh' ? '关于我们' : 'About Us',
+          mainPage: language === 'zh' ? '主页' : 'Home',
+          footerCopyright: t.footerCopyright
+        }}
+      />
     </div>
   )
 }
