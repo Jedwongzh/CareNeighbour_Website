@@ -2,12 +2,12 @@
 
 import type React from "react"
 
-import { useState, useRef, lazy, Suspense } from "react"
+import { useState, useRef, lazy, Suspense, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, MessageSquare, PlayCircle, ChevronRight } from "lucide-react"
-import { motion } from "framer-motion"
+import { ArrowRight, MessageSquare, PlayCircle, ChevronRight, Search, Send, Mic, MicOff, ChevronDown } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 import Autoplay from "embla-carousel-autoplay"
 
 import { Button } from "@/components/ui/button"
@@ -30,12 +30,56 @@ const LoadingFallback = () => (
   </div>
 )
 
+// Add TypeScript interface for SpeechRecognition
+interface SpeechRecognitionEvent extends Event {
+  results: SpeechRecognitionResultList;
+  resultIndex: number;
+  interpretation: any;
+}
+
+interface SpeechRecognitionResultList {
+  length: number;
+  item(index: number): SpeechRecognitionResult;
+  [index: number]: SpeechRecognitionResult;
+}
+
+interface SpeechRecognitionResult {
+  isFinal: boolean;
+  length: number;
+  item(index: number): SpeechRecognitionAlternative;
+  [index: number]: SpeechRecognitionAlternative;
+}
+
+interface SpeechRecognitionAlternative {
+  transcript: string;
+  confidence: number;
+}
+
+interface SpeechRecognition extends EventTarget {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  onstart: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onresult: ((this: SpeechRecognition, ev: SpeechRecognitionEvent) => any) | null;
+  onerror: ((this: SpeechRecognition, ev: Event) => any) | null;
+  onend: ((this: SpeechRecognition, ev: Event) => any) | null;
+  start(): void;
+  stop(): void;
+  abort(): void;
+}
+
+declare global {
+  interface Window {
+    webkitSpeechRecognition: new () => SpeechRecognition;
+  }
+}
+
 // 1. Define translations for English and Chinese (Mandarin)
 const pageTranslations = {
   en: {
     heroLogo: "CareNeighbour",
-    heroTitleStart: "Culturally Considerate Care,",
-    heroTitleEnd: "Simplified.",
+    heroTitleStart: "Connect with",
+    heroTitleEnd: "Compatible Carer Instantly",
     ourMission: "Our Mission",
     ourApproach: "Our Approach",
     howItWorks: "How It Works",
@@ -105,11 +149,30 @@ const pageTranslations = {
     feedbackPrivacy: "Your input is valuable. Responses are saved securely.",
     // Footer
     footerCopyright: "CareNeighbour, Inc. All rights reserved.",
+    // Add search-related translations
+    searchPlaceholder: "Describe the care you're looking for...",
+    searchTrySearching: "Try searching for:",
+    searchPresetPrompts: {
+      elderlyCare: "Elderly Care",
+      medicalCare: "Medical Care",
+      culturalCare: "Cultural Care",
+      respiteCare: "Respite Care",
+      dementiaCare: "Dementia Care",
+      homeCare: "Home Care"
+    },
+    searchPresetDescriptions: {
+      elderlyCare: "Find a caregiver for elderly care",
+      medicalCare: "Looking for medical care assistance",
+      culturalCare: "Need culturally sensitive care",
+      respiteCare: "Find temporary care support",
+      dementiaCare: "Looking for dementia care specialist",
+      homeCare: "Need home care services"
+    }
   },
   zh: { // Mandarin Chinese translations
     heroLogo: "零距",
-    heroTitleStart: "文化关怀，",
-    heroTitleEnd: "化繁为简。",
+    heroTitleStart: "立即连接",
+    heroTitleEnd: "合适的护理人员",
     ourMission: "我们的使命",
     ourApproach: "服务特色",
     howItWorks: "运作方式",
@@ -179,8 +242,454 @@ const pageTranslations = {
     feedbackPrivacy: "您的意见对我们来说非常宝贵，所有反馈都会受到严格保护，确保您的隐私安全。",
     // Footer
     footerCopyright: "零距 . 版权所有。",
+    // Add search-related translations
+    searchPlaceholder: "描述您需要的护理服务...",
+    searchTrySearching: "尝试搜索:",
+    searchPresetPrompts: {
+      elderlyCare: "老年护理",
+      medicalCare: "医疗护理",
+      culturalCare: "文化护理",
+      respiteCare: "临时护理",
+      dementiaCare: "失智症护理",
+      homeCare: "居家护理"
+    },
+    searchPresetDescriptions: {
+      elderlyCare: "寻找老年护理人员",
+      medicalCare: "寻找医疗护理协助",
+      culturalCare: "需要文化敏感的护理",
+      respiteCare: "寻找临时护理支持",
+      dementiaCare: "寻找失智症护理专家",
+      homeCare: "需要居家护理服务"
+    }
   },
 };
+
+// Add this component before the LandingPage component
+const CareSearchBar = () => {
+  const [query, setQuery] = useState("")
+  const [isFocused, setIsFocused] = useState(false)
+  const [isListening, setIsListening] = useState(false)
+  const [isRecording, setIsRecording] = useState(false)
+  const [placeholderIndex, setPlaceholderIndex] = useState(0)
+  const recognitionRef = useRef<SpeechRecognition | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const { language } = useLanguage()
+  const t = pageTranslations[language as keyof typeof pageTranslations] || pageTranslations.en
+
+  // Common prompts for cycling placeholder (translation-compatible)
+  const cyclingPrompts = [
+    t.searchPresetDescriptions.elderlyCare,
+    t.searchPresetDescriptions.medicalCare,
+    t.searchPresetDescriptions.culturalCare,
+    t.searchPresetDescriptions.respiteCare,
+    t.searchPresetDescriptions.dementiaCare,
+    t.searchPresetDescriptions.homeCare
+  ]
+
+  // Cycle placeholder every 2.5 seconds
+  useEffect(() => {
+    if (isFocused || query.length > 0) return // Don't cycle if focused or typing
+    const interval = setInterval(() => {
+      setPlaceholderIndex((prev) => (prev + 1) % cyclingPrompts.length)
+    }, 2500)
+    return () => clearInterval(interval)
+  }, [isFocused, query, cyclingPrompts.length])
+
+  const presetPrompts = [
+    {
+      key: 'elderlyCare',
+      icon: '👴',
+      title: t.searchPresetPrompts.elderlyCare,
+      description: t.searchPresetDescriptions.elderlyCare
+    },
+    {
+      key: 'medicalCare',
+      icon: '🏥',
+      title: t.searchPresetPrompts.medicalCare,
+      description: t.searchPresetDescriptions.medicalCare
+    },
+    {
+      key: 'culturalCare',
+      icon: '🌍',
+      title: t.searchPresetPrompts.culturalCare,
+      description: t.searchPresetDescriptions.culturalCare
+    },
+    {
+      key: 'respiteCare',
+      icon: '⏰',
+      title: t.searchPresetPrompts.respiteCare,
+      description: t.searchPresetDescriptions.respiteCare
+    },
+    {
+      key: 'dementiaCare',
+      icon: '🧠',
+      title: t.searchPresetPrompts.dementiaCare,
+      description: t.searchPresetDescriptions.dementiaCare
+    },
+    {
+      key: 'homeCare',
+      icon: '🏠',
+      title: t.searchPresetPrompts.homeCare,
+      description: t.searchPresetDescriptions.homeCare
+    }
+  ]
+
+  const startListening = () => {
+    if (!('webkitSpeechRecognition' in window)) {
+      alert('Speech recognition is not supported in your browser. Please use Chrome or Edge.')
+      return
+    }
+
+    const SpeechRecognition = window.webkitSpeechRecognition
+    recognitionRef.current = new SpeechRecognition()
+    recognitionRef.current.continuous = true
+    recognitionRef.current.interimResults = true
+
+    recognitionRef.current.onstart = () => {
+      setIsRecording(true)
+    }
+
+    recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
+      const transcript = Array.from(event.results)
+        .map((result) => result[0])
+        .map((result) => result.transcript)
+        .join('')
+      
+      setQuery(transcript)
+    }
+
+    recognitionRef.current.onerror = (event: Event) => {
+      console.error('Speech recognition error:', event)
+      setIsRecording(false)
+    }
+
+    recognitionRef.current.onend = () => {
+      setIsRecording(false)
+    }
+
+    recognitionRef.current.start()
+  }
+
+  const stopListening = () => {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop()
+      setIsRecording(false)
+    }
+  }
+
+  const toggleListening = () => {
+    if (isRecording) {
+      stopListening()
+    } else {
+      startListening()
+    }
+  }
+
+  return (
+    <div className="w-full max-w-3xl mx-auto">
+      <div className="relative">
+        <motion.div
+          className="absolute inset-0 rounded-full"
+          animate={{
+            background: [
+              "linear-gradient(45deg, rgba(147, 51, 234, 0.1) 0%, rgba(147, 51, 234, 0.2) 50%, rgba(147, 51, 234, 0.1) 100%)",
+              "linear-gradient(90deg, rgba(147, 51, 234, 0.1) 0%, rgba(147, 51, 234, 0.2) 50%, rgba(147, 51, 234, 0.1) 100%)",
+              "linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, rgba(147, 51, 234, 0.2) 50%, rgba(147, 51, 234, 0.1) 100%)",
+              "linear-gradient(180deg, rgba(147, 51, 234, 0.1) 0%, rgba(147, 51, 234, 0.2) 50%, rgba(147, 51, 234, 0.1) 100%)",
+              "linear-gradient(225deg, rgba(147, 51, 234, 0.1) 0%, rgba(147, 51, 234, 0.2) 50%, rgba(147, 51, 234, 0.1) 100%)",
+              "linear-gradient(270deg, rgba(147, 51, 234, 0.1) 0%, rgba(147, 51, 234, 0.2) 50%, rgba(147, 51, 234, 0.1) 100%)",
+              "linear-gradient(315deg, rgba(147, 51, 234, 0.1) 0%, rgba(147, 51, 234, 0.2) 50%, rgba(147, 51, 234, 0.1) 100%)",
+              "linear-gradient(360deg, rgba(147, 51, 234, 0.1) 0%, rgba(147, 51, 234, 0.2) 50%, rgba(147, 51, 234, 0.1) 100%)",
+            ],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "linear",
+            repeatType: "loop"
+          }}
+        />
+        <motion.div 
+          className="relative flex items-center"
+          animate={{
+            height: query.length > 100 ? "auto" : "4rem",
+            minHeight: "4rem",
+            maxHeight: "12rem"
+          }}
+          transition={{
+            duration: 0.3,
+            ease: "easeInOut"
+          }}
+        >
+          <Input
+            ref={inputRef}
+            type="text"
+            placeholder={cyclingPrompts[placeholderIndex]}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setTimeout(() => setIsFocused(false), 200)}
+            className="relative pl-6 pr-24 py-8 text-xl rounded-full border-2 border-purple-200 focus:border-purple-500 focus:ring-purple-500 shadow-lg bg-white whitespace-pre-wrap break-words overflow-y-auto"
+            style={{ 
+              height: '100%',
+              minHeight: '4rem',
+              maxHeight: '12rem'
+            }}
+          />
+          <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-2">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={toggleListening}
+              className={`p-2 rounded-full ${isRecording ? 'bg-red-100' : 'bg-purple-100'} hover:bg-purple-200 transition-colors`}
+            >
+              {isRecording ? (
+                <MicOff className="w-6 h-6 text-red-600" />
+              ) : (
+                <Mic className="w-6 h-6 text-purple-600" />
+              )}
+            </motion.button>
+            <AnimatePresence mode="popLayout">
+              {query.length > 0 ? (
+                <motion.div
+                  key="send"
+                  initial={{ y: -20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: 20, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Send className="w-7 h-7 text-purple-600" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="search"
+                  initial={{ y: -20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: 20, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Search className="w-7 h-7 text-purple-600" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Preset Prompt Buttons */}
+      <motion.div 
+        className="mt-4 flex flex-wrap gap-2 justify-center"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        {presetPrompts.map((prompt) => (
+          <motion.button
+            key={prompt.key}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setQuery(prompt.description)}
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-purple-50 hover:bg-purple-100 text-purple-700 transition-colors"
+          >
+            <span className="text-xl">{prompt.icon}</span>
+            <span className="text-sm font-medium">{prompt.title}</span>
+          </motion.button>
+        ))}
+      </motion.div>
+
+      {/* How It Works scroll button (now below search bar) */}
+      <div className="flex flex-col items-center mt-2">
+        <button
+          onClick={() => {
+            const el = document.getElementById('how-it-works');
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+          className="focus:outline-none text-purple-700 text-lg font-semibold flex flex-col items-center bg-transparent border-none p-0 hover:text-purple-900"
+          style={{ background: 'none', border: 'none' }}
+        >
+          How It Works
+          <span>
+            <ChevronDown className="animate-bounce mt-1 w-7 h-7 text-purple-700" />
+          </span>
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// Add this component before the LandingPage component
+const CareTypeCards = () => {
+  const carouselPlugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: false }))
+  const careTypes = [
+    {
+      title: "Elderly Care",
+      description: "Professional caregivers for daily assistance, companionship, and medical support",
+      image: "/images/agecareimg.jpg",
+      examples: [
+        "Daily living assistance",
+        "Medication management",
+        "Companionship",
+        "Mobility support"
+      ]
+    },
+    {
+      title: "Specialized Medical Care",
+      description: "Skilled nurses and caregivers for specific medical conditions",
+      image: "/images/SpecialisedCare.jpg",
+      examples: [
+        "Dementia care",
+        "Post-surgery recovery",
+        "Chronic condition management",
+        "Palliative care"
+      ]
+    },
+    {
+      title: "Cultural Care",
+      description: "Caregivers who understand and respect cultural traditions",
+      image: "/images/Culturalcareimg.jpg",
+      examples: [
+        "Language-specific care",
+        "Cultural dietary needs",
+        "Religious practices",
+        "Traditional healing methods"
+      ]
+    },
+    {
+      title: "Respite Care",
+      description: "Temporary care to give family caregivers a break",
+      image: "/images/RespiteCareimg.jpg",
+      examples: [
+        "Short-term relief",
+        "Emergency backup",
+        "Holiday coverage",
+        "Regular breaks"
+      ]
+    }
+  ]
+
+  return (
+    <div className="w-full py-12 bg-white">
+      <div className="container px-4 md:px-6">
+        {/* Mobile Carousel */}
+        <div className="md:hidden">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            plugins={[carouselPlugin.current]}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4">
+              {careTypes.map((type, index) => (
+                <CarouselItem key={index} className="pl-4 basis-full">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow h-full flex flex-col overflow-hidden"
+                  >
+                    <div className="w-full h-40">
+                      <Image src={type.image} alt={type.title} width={400} height={220} className="object-cover w-full h-full" />
+                    </div>
+                    <div className="flex-1 flex flex-col p-6">
+                      <h3 className="text-xl font-semibold mb-2">{type.title}</h3>
+                      <p className="text-gray-600 mb-4">{type.description}</p>
+                    </div>
+                  </motion.div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </div>
+
+        {/* Desktop Grid */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {careTypes.map((type, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow flex flex-col overflow-hidden"
+            >
+              <div className="w-full h-40">
+                <Image src={type.image} alt={type.title} width={400} height={220} className="object-cover w-full h-full" />
+              </div>
+              <div className="flex-1 flex flex-col p-6">
+                <h3 className="text-xl font-semibold mb-2">{type.title}</h3>
+                <p className="text-gray-600 mb-4">{type.description}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+        
+        {/* Learn More button */}
+        <motion.div 
+          className="flex justify-center mt-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+        >
+          <Link href="/services" passHref>
+            <Button
+              size="lg"
+              className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-4 text-lg h-auto"
+            >
+              Learn More About Our Care Services
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
+        </motion.div>
+      </div>
+    </div>
+  )
+}
+
+// How It Works step images
+const howItWorksImages = [
+  "/images/step1.jpg", // Replace with your actual images
+  "/images/step2.jpg",
+  "/images/step3.jpg"
+]
+
+// Add StepBlock component after CareTypeCards
+const StepBlock = ({ idx, title, description, image, setActiveStep, isMobile }: { idx: number, title: string, description: string, image: string, setActiveStep: (idx: number) => void, isMobile?: boolean }) => {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const observer = new window.IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setActiveStep(idx)
+      },
+      { threshold: 0.5 }
+    )
+    if (ref.current) observer.observe(ref.current)
+    return () => { if (ref.current) observer.unobserve(ref.current) }
+  }, [idx, setActiveStep])
+
+  return (
+    <div ref={ref} className="flex flex-col items-center md:items-start w-full">
+      {isMobile && (
+        <div className="w-full mb-4">
+          <img src={image} alt={title} className="w-full h-48 object-cover rounded-2xl shadow-lg" />
+        </div>
+      )}
+      <div className="w-full">
+        <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
+          <span className="text-2xl font-bold text-purple-700">{idx + 1}</span>
+        </div>
+        <h3 className="text-2xl font-semibold text-gray-900 mb-2">{title}</h3>
+        <p className="text-gray-600 text-lg">{description}</p>
+      </div>
+    </div>
+  )
+}
 
 export default function LandingPage() {
   const router = useRouter();
@@ -193,6 +702,10 @@ export default function LandingPage() {
   const [isSubmittingWaitlist, setIsSubmittingWaitlist] = useState(false);
   const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false);
   const [topWaitlistEmail, setTopWaitlistEmail] = useState("");
+  const [activeStep, setActiveStep] = useState(0);
+  const totalSteps = 3;
+  const howItWorksRef = useRef<HTMLDivElement>(null);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // 2. Replace local language state with context
   const { language, setLanguage } = useLanguage();
@@ -206,13 +719,18 @@ export default function LandingPage() {
   // Refs for scroll animations
   const problemRef = useRef(null)
   const approachRef = useRef(null)
-  const howItWorksRef = useRef(null)
+  const howItWorksScrollRef = useRef<HTMLDivElement>(null);
 
   // Ref for autoplay plugin
   const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: false }))
 
   // Testimonial carousel autoplay
   const testimonialPlugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: false }))
+
+  // Handler for next/prev navigation
+  const goToStep = (idx: number) => {
+    if (idx >= 0 && idx < totalSteps) setActiveStep(idx);
+  };
 
   const handleWaitlistSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -307,6 +825,26 @@ export default function LandingPage() {
       setIsSubmittingFeedback(false)
     }
   }
+
+  // Intersection Observer for step tracking
+  useEffect(() => {
+    const observer = new window.IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const idx = Number(entry.target.getAttribute('data-idx'));
+            setActiveStep(idx);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+    stepRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="flex min-h-[100dvh] flex-col bg-white">
       {/* Unified Header */}
@@ -324,9 +862,8 @@ export default function LandingPage() {
       />
 
       <main className="flex-1">
-        {/* Hero Section - Apple-inspired with large typography and clean layout */}
-        <section className="w-full py-20 md:py-28 lg:py-36 relative overflow-hidden">
-            {/* Subtle Background Gradient */}
+        {/* Hero Section */}
+        <section className="w-full py-10 md:py-20 lg:py-16 relative overflow-hidden">
             <div className="absolute inset-0 bg-white z-0"></div>
 
             <div className="container px-4 md:px-6 relative z-10">
@@ -340,7 +877,6 @@ export default function LandingPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              {/* 4. Use translated strings */}
               {t.heroTitleStart}{" "}
               <span className="bg-gradient-to-r from-purple-700 to-gray-900 text-transparent bg-clip-text">
                 {t.heroTitleEnd}
@@ -367,61 +903,85 @@ export default function LandingPage() {
                 >
                   {t.heroSubtitle}
                 </motion.p>
-                {/* CTAs: Experience Demo & Join Waitlist - Apple-style buttons */}
+
+                {/* Search Bar */}
                 <motion.div
-                  className="flex flex-col sm:flex-row gap-5 pt-4"
+                  className="pt-4"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.2 }}
                 >
-                  <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  animate={{ y: [0, -5, 0] }}
-                  transition={{
-                  duration: 2,
-                  repeat: Number.POSITIVE_INFINITY,
-                  repeatType: "reverse",
-                  }}
-                  className="w-full sm:w-auto"
-                  >
-                  <Button
-                  size="lg"
-                  className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-4 text-lg h-auto w-full sm:w-auto"
-                  onClick={() => document.getElementById("our-approach")?.scrollIntoView({ behavior: "smooth" })}
-                  >
-                  <PlayCircle className="mr-2 h-5 w-5" />
-                  {t.heroCtaHowItWorks}
-                  </Button>
-                  </motion.div>
-
-                  <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  animate={{ y: [0, -5, 0] }}
-                  transition={{
-                    duration: 2,
-                    repeat: Number.POSITIVE_INFINITY,
-                    repeatType: "reverse",
-                    delay: 0.5,
-                  }}
-                  >
-                  <Button
-                    size="lg"
-                    className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-4 text-lg h-auto w-full sm:w-auto"
-                    onClick={() => document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })}
-                  >
-                    {t.heroCtaJoinWaitlist}
-                    <ChevronRight className="ml-2 h-5 w-5" />
-                  </Button>
-                  </motion.div>
+                  <CareSearchBar />
                 </motion.div>
-                </div>
               </div>
-              </div>
-            </section>
+            </div>
+          </div>
+        </section>
 
-        {/* Problem Statement Section - Apple-inspired with large typography and clean layout */}
+        {/* CareTypeCards now comes right after Hero */}
+        <CareTypeCards />
+
+        {/* How It Works Section now comes after CareTypeCards */}
+        <section className="w-full py-6 bg-white">
+          <div className="container px-4 md:px-6">
+            <motion.h2
+              className="text-4xl md:text-6xl font-bold tracking-tight text-center bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              {t.howItWorksTitle}
+            </motion.h2>
+          </div>
+        </section>
+        <section
+          id="how-it-works"
+          ref={howItWorksRef}
+          className="flex flex-col md:flex-row"
+        >
+          {/* Fixed image area (desktop only) */}
+          <div className="w-full md:w4/5 md:sticky md:top-0 md:h-screen flex items-center justify-center relative">
+            {howItWorksImages.map((img, idx) => (
+              <img
+          key={img}
+          src={img}
+          alt={`Step ${idx + 1}`}
+          className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 max-w-[900px] w-full max-h-[70vh] object-contain transition-opacity duration-500 ${activeStep === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+          style={{
+            pointerEvents: activeStep === idx ? "auto" : "none",
+            transition: "opacity 0.5s",
+          }}
+              />
+            ))}
+          </div>
+          {/* Step content */}
+          <div className="w-full md:w-1/2 md:ml-auto">
+            {[0, 1, 2].map((idx) => (
+              <div
+          key={idx}
+          ref={el => stepRefs.current[idx] = el}
+          data-idx={idx}
+          className="lg:min-h-screen h-[45rem] flex items-center overflow-hidden"
+          style={{ scrollMarginTop: 100 }}
+              >
+          {/* On mobile, show image above */}
+          <div className="block md:hidden w-full mb-4">
+            <img src={howItWorksImages[idx]} alt={(t as any)[`step${idx + 1}Title`]} className="w-full h-48 object-cover rounded-2xl shadow-lg" />
+          </div>
+          <div className="px-4 md:px-8 w-full">
+            <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
+              <span className="text-2xl font-bold text-purple-700">{idx + 1}</span>
+            </div>
+            <h3 className="text-2xl font-semibold text-gray-900 mb-2">{(t as any)[`step${idx + 1}Title`]}</h3>
+            <p className="text-gray-600 text-lg">{(t as any)[`step${idx + 1}Description`]}</p>
+          </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Problem Statement Section */}
         <section id="problem-statement" className="w-full py-20 md:py-28 relative overflow-hidden" ref={problemRef}>
           <div className="absolute inset-0 bg-gradient-to-b from-white to-gray-50 z-0"></div>
 
@@ -584,7 +1144,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Experiences Carousel Section - Continuously sliding */}
+        {/* Experiences Section */}
         <section id="experiences" className="w-full py-20 md:py-5 bg-white overflow-hidden">
             <div className="container px-4 md:px-6">
             <div className="flex flex-col space-y-4 mb-12 md:mb-16 max-w-full">
@@ -689,105 +1249,6 @@ export default function LandingPage() {
                 </CarouselItem>
               </CarouselContent>
             </Carousel>
-          </div>
-        </section>
-
-        {/* How It Works Section - Apple-inspired with large numbers and clean layout */}
-        <section id="how-it-works" className="w-full py-20 md:py-28 bg-white relative" ref={howItWorksRef}>
-          {/* CN Figure - Positioned as a guide */}
-            <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-left justify-center space-y-4 text-center mb-16 md:mb-24">
-              <motion.div
-              className="space-y-3 flex flex-col md:flex-row items-center justify-between w-full"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              >
-              <div className="md:text-left flex-grow">
-                <div className="flex items-center gap-4 w-full justify-between flex-wrap">
-                <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4 max-w-[70%]">
-                {t.howItWorksTitle}
-                </h2>
-                <div className="flex-shrink-0 md:order-none">
-                <Image
-                src="/images/CN_Figure3.png"
-                alt="CareNeighbor Guide"
-                width={220} 
-                height={220}
-                className="object-contain md:w-[220px] md:h-[220px] w-[100px] h-[100px]" 
-                />
-                </div>
-                </div>
-              </div>
-              </motion.div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
-              {/* Step 1 */}
-              <motion.div
-              className="flex flex-col items-center text-center"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              >
-              <div className="w-20 h-20 rounded-full bg-purple-100 flex items-center justify-center mb-6">
-                <span className="text-4xl font-bold text-purple-700">1</span>
-              </div>
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">{t.step1Title}</h3>
-              <p className="text-gray-600 text-lg">
-                {t.step1Description}
-              </p>
-              </motion.div>
-
-              {/* Step 2 */}
-              <motion.div
-              className="flex flex-col items-center text-center"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              >
-              <div className="w-20 h-20 rounded-full bg-purple-100 flex items-center justify-center mb-6">
-                <span className="text-4xl font-bold text-purple-700">2</span>
-              </div>
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">{t.step2Title}</h3>
-              <p className="text-gray-600 text-lg">
-                {t.step2Description}
-              </p>
-              </motion.div>
-
-              {/* Step 3 */}
-              <motion.div
-              className="flex flex-col items-center text-center"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              >
-              <div className="w-20 h-20 rounded-full bg-purple-100 flex items-center justify-center mb-6">
-                <span className="text-4xl font-bold text-purple-700">3</span>
-              </div>
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">{t.step3Title}</h3>
-              <p className="text-gray-600 text-lg">
-                {t.step3Description}
-              </p>
-              </motion.div>
-            </div>
-
-            {/* Discover More Button */}
-            <div className="flex justify-center mt-12">
-              <Link href="/services" passHref>
-              <Button
-                size="lg"
-                className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-4 text-lg h-auto"
-              >
-                {t.howitworksButton}
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              </Link>
-            </div>
             </div>
         </section>
 
