@@ -913,7 +913,7 @@ const CareTypeCards = () => {
   const careTypes = t.careTypes;
 
   return (
-    <div className="w-full py-12 bg-white">
+    <div className="w-full py-12">
       <div className="container px-4 md:px-6">
         {/* Mobile Carousel */}
         <div className="md:hidden">
@@ -1189,8 +1189,22 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="flex min-h-[100dvh] flex-col bg-white">
-      {/* Unified Header */}
+    <div className="flex min-h-[400dvh] flex-col">
+      {/* Static Gradient Background */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "400vh",
+            zIndex: -1,
+            pointerEvents: "none",
+            background: "linear-gradient(180deg, #fff 0%, #a78bfa 60%, #000 100%)"
+          }}
+        />
+        {/* Unified Header */}
       <UnifiedHeader 
         language={language}
         setLanguage={setLanguage}
@@ -1207,7 +1221,7 @@ export default function LandingPage() {
       <main className="flex-1">
         {/* Hero Section */}
         <section className="w-full py-10 md:py-20 lg:py-16 relative overflow-hidden">
-            <div className="absolute inset-0 bg-white z-0"></div>
+            <div className="absolute inset-0 z-0"></div>
 
             <div className="container px-4 md:px-6 relative z-10">
             <div className="max-w-5xl mx-auto">
@@ -1269,7 +1283,7 @@ export default function LandingPage() {
           id="how-it-works"
           ref={howItWorksRef}
           style={{ scrollMarginTop: '5rem' }}
-          className="w-full py-6 bg-white">
+          className="w-full py-6">
           <div className="container px-4 md:px-6">
             <motion.h2
               className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4"
@@ -1303,23 +1317,33 @@ export default function LandingPage() {
               </div>
             ))}
             </div>
-          {/* Desktop: sticky image + scrollable steps */}
-          <div className="hidden md:flex md:w-4/5 items-start justify-center relative">
+            {/* Desktop: sticky image + scrollable steps */}
+            <div className="hidden md:flex md:w-4/5 items-start justify-center relative">
             <div
-              className="sticky top-0 w-full h-[50vh] flex items-center justify-center bg-white z-20 md:static md:h-screen md:sticky"
+              className="sticky top-0 w-[800px] h-[50vh] flex items-center justify-center z-20 md:static md:h-screen md:sticky "
               style={{ pointerEvents: "none" }}
             >
+              <div
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[450px] rounded-2xl bg-white shadow-lg"
+                style={{
+                  zIndex: 1,
+                  pointerEvents: "none",
+                  borderRadius: "1rem",
+                }}
+              />
               {howItWorksImages.map((img, idx) => (
-          <img
-            key={img}
-            src={img}
-            alt={`Step ${idx + 1}`}
-            className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full object-contain transition-opacity duration-500 ${activeStep === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-            style={{
-              pointerEvents: "none",
-              transition: "opacity 0.5s",
-            }}
-          />
+                <img
+                  key={img}
+                  src={img}
+                  alt={`Step ${idx + 1}`}
+                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] h-full object-contain transition-opacity duration-500 rounded-2xl ${activeStep === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'} `}
+                  style={{
+                    pointerEvents: "none",
+                    transition: "opacity 0.5s",
+                    paddingLeft: "1%",
+                    paddingRight: "1%",
+                  }}
+                />
               ))}
             </div>
           </div>
@@ -1346,9 +1370,7 @@ export default function LandingPage() {
 
         {/* Problem Statement Section */}
         <section id="problem-statement" className="w-full py-10 md:py-28 relative overflow-hidden" ref={problemRef}>
-          <div className="absolute inset-0 bg-gradient-to-b from-white to-gray-50 z-0"></div>
-
-          <div className="container px-4 md:px-6 relative z-10">
+          <div className="container px-6 md:px-12 relative z-10">
             {/* Text content - takes 60% width on desktop, full width on mobile */}
             <div className="flex flex-col mb-12 md:mb-16 md:max-w mx-auto">
               <div className="flex items-center gap-2 mb-8">
@@ -1508,8 +1530,8 @@ export default function LandingPage() {
         </section>
 
         {/* Experiences Section */}
-        <section id="experiences" className="w-full py-20 md:py-5 bg-white overflow-hidden">
-            <div className="container px-4 md:px-6">
+        <section id="experiences" className="w-full py-20 md:py-5 overflow-hidden">
+            <div className="container px-6 md:px-12">
             <div className="flex flex-col space-y-4 mb-12 md:mb-16 max-w-full">
               <motion.div
               className="space-y-3 w-full"
@@ -1616,7 +1638,7 @@ export default function LandingPage() {
         </section>
 
         {/* Our Approach Section - Apple-inspired with feature carousel */}
-        <section id="our-approach" className="w-full py-20 md:py-28 bg-white" ref={approachRef}>
+        <section id="our-approach" className="w-full py-20 md:py-28" ref={approachRef}>
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8 md:mb-0">
               <motion.div
