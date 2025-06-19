@@ -13,6 +13,7 @@ import Autoplay from "embla-carousel-autoplay"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 import { UnifiedHeader } from "@/components/unified-header"
 import { UnifiedFooter } from "@/components/unified-footer"
 import { joinWaitlist, submitFeedback } from "./actions"
@@ -114,11 +115,11 @@ const pageTranslations = {
     // How It Works Section
     howItWorksTitle: "Care, Simplified in 3 Steps",
     step1Title: "Define Needs",
-    step1Description: "Tell us about the required care, preferred language, cultural nuances, and location.",
+    step1Description: "Simply voice or text your care requirements, preferred language, cultural preferences, and location—we make it that easy",
     step2Title: "Match & Connect",
-    step2Description: "We instantly match you with verified caregivers who meet your specific criteria. Review profiles and connect.",
+    step2Description: "We instantly connect you with verified caregivers who perfectly match your criteria. Chat with our AI care concierge for any questions or additional needs",
     step3Title: "Book & Relax",
-    step3Description: "Schedule care easily, manage payments securely, and gain peace of mind knowing your loved one is in good hands.",
+    step3Description: "Review your matched caregivers, schedule care effortlessly, manage payments securely, and enjoy peace of mind knowing your loved one is in exceptional hands",
     howitworksButton: "Learn more about our services",
     // Our Approach Section
     approachTitlePart1: "When",
@@ -167,7 +168,65 @@ const pageTranslations = {
       respiteCare: "Find temporary care support",
       dementiaCare: "Looking for dementia care specialist",
       homeCare: "Need home care services"
-    }
+    },
+    // Care Request Popup translations
+    careRequestPopup: {
+      title: "Care Request Coming Soon!",
+      description: "We're launching our care request feature in September 2025. Enter your email to receive free care request credits when we launch.",
+      emailPlaceholder: "Enter your email address",
+      submitButton: "Get Free Credits",
+      submittingButton: "Submitting...",
+      privacy: "We respect your privacy. Unsubscribe anytime.",
+      success: "Thank you! You'll receive free care request credits when we launch.",
+      error: "Please provide a valid email address.",
+      yourRequest: "Your Care Request:"
+    },
+    careTypes: [
+      {
+        title: "Elderly Care",
+        description: "Professional caregivers for daily assistance, companionship, and medical support",
+        image: "/images/agecareimg.jpg",
+        examples: [
+          "Daily living assistance",
+          "Medication management",
+          "Companionship",
+          "Mobility support"
+        ]
+      },
+      {
+        title: "Specialized Medical Care",
+        description: "Skilled nurses and caregivers for specific medical conditions",
+        image: "/images/SpecialisedCare.jpg",
+        examples: [
+          "Dementia care",
+          "Post-surgery recovery",
+          "Chronic condition management",
+          "Palliative care"
+        ]
+      },
+      {
+        title: "Cultural Care",
+        description: "Caregivers who understand and respect cultural traditions",
+        image: "/images/Culturalcareimg.jpg",
+        examples: [
+          "Language-specific care",
+          "Cultural dietary needs",
+          "Religious practices",
+          "Traditional healing methods"
+        ]
+      },
+      {
+        title: "Respite Care",
+        description: "Temporary care to give family caregivers a break",
+        image: "/images/RespiteCareimg.jpg",
+        examples: [
+          "Short-term relief",
+          "Emergency backup",
+          "Holiday coverage",
+          "Regular breaks"
+        ]
+      }
+    ],
   },
   zh: { // Mandarin Chinese translations
     heroLogo: "零距",
@@ -207,11 +266,11 @@ const pageTranslations = {
     // How It Works Section
     howItWorksTitle: "关怀备至，三步到位",
     step1Title: "明确需求",
-    step1Description: "告诉我们所需的护理服务、偏好语言、文化细节和地点。",
+    step1Description: "简单地说出或输入您的护理要求、偏好语言、文化偏好和位置——我们让一切变得如此简单",
     step2Title: "匹配连接",
-    step2Description: "我们即时为您匹配符合您特定标准的认证护理员。查看资料并联系。",
+    step2Description: "我们即时为您连接完全符合您标准的认证护理员。如有疑问或额外需求，可与我们的AI护理管家聊天。",
     step3Title: "轻松预订",
-    step3Description: "轻松安排护理，安全管理付款，让您安心无忧，因为您所爱的人得到了妥善照顾。",
+    step3Description: "查看您的匹配护理员，轻松安排护理，安全管理付款，享受安心，因为您的亲人得到了卓越的照顾。",
     howitworksButton: "了解更多关于我们的服务",
     // Our Approach Section
     approachTitlePart1: "科技",
@@ -244,23 +303,232 @@ const pageTranslations = {
     footerCopyright: "零距 . 版权所有。",
     // Add search-related translations
     searchPlaceholder: "描述您需要的护理服务...",
-    searchTrySearching: "尝试搜索:",
+    searchTrySearching: "嘗試搜索:",
     searchPresetPrompts: {
       elderlyCare: "老年护理",
-      medicalCare: "医疗护理",
-      culturalCare: "文化护理",
-      respiteCare: "临时护理",
-      dementiaCare: "失智症护理",
-      homeCare: "居家护理"
+      medicalCare: "醫療護理",
+      culturalCare: "文化護理",
+      respiteCare: "臨時護理",
+      dementiaCare: "失智症護理",
+      homeCare: "居家護理"
     },
     searchPresetDescriptions: {
-      elderlyCare: "寻找老年护理人员",
-      medicalCare: "寻找医疗护理协助",
-      culturalCare: "需要文化敏感的护理",
-      respiteCare: "寻找临时护理支持",
-      dementiaCare: "寻找失智症护理专家",
-      homeCare: "需要居家护理服务"
-    }
+      elderlyCare: "尋找老年護理人員",
+      medicalCare: "尋找醫療護理協助",
+      culturalCare: "需要文化敏感的護理",
+      respiteCare: "尋找臨時護理支持",
+      dementiaCare: "尋找失智症護理專家",
+      homeCare: "需要居家護理服務"
+    },
+    // Care Request Popup translations
+    careRequestPopup: {
+      title: "護理請求即將推出！",
+      description: "我們將於2025年9月推出護理請求功能。請輸入您的郵箱，以便在我們推出時獲得免費護理請求積分。",
+      emailPlaceholder: "輸入您的郵箱",
+      submitButton: "獲取免費積分",
+      submittingButton: "提交中...",
+      privacy: "我們尊重您的隱私。隨時可以取消訂閱。",
+      success: "謝謝！在我們推出時，您將獲得免費護理請求積分。",
+      error: "請提供有效的郵箱地址。",
+      yourRequest: "您的護理請求:"
+    },
+    careTypes: [
+      {
+        title: "老年护理",
+        description: "专业护理员为日常生活、陪伴和医疗支持提供帮助",
+        image: "/images/agecareimg.jpg",
+        examples: [
+          "日常生活协助",
+          "药物管理",
+          "陪伴关怀",
+          "行动支持"
+        ]
+      },
+      {
+        title: "专业医疗护理",
+        description: "针对特定医疗状况的专业护士和护理员",
+        image: "/images/SpecialisedCare.jpg",
+        examples: [
+          "失智症护理",
+          "术后康复",
+          "慢性病管理",
+          "缓和医疗"
+        ]
+      },
+      {
+        title: "文化护理",
+        description: "了解并尊重文化传统的护理员",
+        image: "/images/Culturalcareimg.jpg",
+        examples: [
+          "语言专属护理",
+          "文化饮食需求",
+          "宗教习俗",
+          "传统疗法"
+        ]
+      },
+      {
+        title: "临时护理",
+        description: "为家庭护理者提供临时休息的护理服务",
+        image: "/images/RespiteCareimg.jpg",
+        examples: [
+          "短期照护",
+          "紧急支援",
+          "假期替班",
+          "定期休息"
+        ]
+      }
+    ],
+  },
+  yue: { // Cantonese translations
+    heroLogo: "零距",
+    heroTitleStart: "立即連接",
+    heroTitleEnd: "合適的護理人員",
+    ourMission: "我們的使命",
+    ourApproach: "服務特色",
+    howItWorks: "運作方式",
+    joinWaitlist: "加入等候名單",
+    SourceforCare: "護理服務",
+    BecomeACarer: "成為護理員",
+    aboutUs: "關於我們",
+    // Hero section
+    heroSubtitle: "零距 讓您輕鬆找到認證的照護人員——他們懂您的語言，了解您的文化，為您提供貼心、安心的支持。",
+    heroCtaHowItWorks: "運作方式",
+    heroCtaJoinWaitlist: "加入等候名單",
+    // Problem Statement Section
+    problemTitle: "找到合適的照護本該輕鬆無憂",
+    problemParagraph1: "每年，無數英語非母語的人在尋求照護時感到無助。語言障礙、時間壓力，還有對整個系統的陌生感，讓他們像是被世界遺忘了一樣。這不是簡單的翻譯問題，而是關於被理解、被尊重、被善待的問題。很多人只是希望有人聽懂他們的需求，卻不得不在孤獨中默默撐著，因為現有的系統並不是為他們設計的。",
+    problemParagraph2Start: "我們相信，尋找符合您文化背景的貼心護理應該簡單無憂。",
+    problemParagraph2End: "零距 致力於實現這一目標。",
+    // Experiences Section
+    experiencesTitle: "我們都有共同的困境",
+    experiencesSubtitle: "聆聽那些正在應對照護挑戰的家庭分享他們的真實故事與心路歷程。",
+    testimonialMariaName: "瑪麗亞，48歲",
+    testimonialMariaQuote: "為我父親找到一個會說西班牙語並了解我們傳統的人太難了。我們需要的不僅僅是基本幫助——我們需要一個能與他溝通的人。",
+    testimonialChenName: "陳先生，41歲",
+    testimonialChenQuote: "我的工作時間很不穩定。為我母親（她更喜歡說普通話）協調護理感覺就像第二份工作。",
+    testimonialAhmedName: "艾哈邁德，55歲",
+    testimonialAhmedQuote: "我妻子手術時我們急需人手。快速解釋特定的文化需求和飲食限制壓力很大。找到合適的護理員幾乎是不可能的。",
+    testimonialSarahName: "莎拉，42歲",
+    testimonialSarahQuote: "我住在離需要日常照料的母親幾小時遠的地方，這感覺幾乎不可能。找到可靠、值得信賴的幫助一直讓我憂心忡忡。我需要一個我能完全信任的人。",
+    testimonialElenaName: "埃琳娜，52歲",
+    testimonialElenaQuote: "當我父親開始出現失智症跡象時，我們很難找到一個會說俄語並能理解他的人。語言障礙使他的困惑更加嚴重。",
+    testimonialRajName: "拉吉，45歲",
+    testimonialRajQuote: "我的父母搬來這裡幫忙照顧我們的孩子，但現在他們自己也需要照顧了。找到一個尊重他們素食習慣並了解印度教習俗的人非常具有挑戰性。",
+    // How It Works Section
+    howItWorksTitle: "關懷備至，三步到位",
+    step1Title: "明確需求",
+    step1Description: "簡單講出或者打字你嘅護理要求、偏好語言、文化偏好同位置——我哋令一切變得咁簡單",
+    step2Title: "匹配連接",
+    step2Description: "我哋即時為你連接完全符合你標準嘅認證護理員。如有疑問或額外需求，可同我哋嘅AI護理管家傾計。",
+    step3Title: "輕鬆預訂",
+    step3Description: "查看你嘅配對護理員，輕鬆安排護理，安全管理付款，享受安心，因為你嘅親人得到卓越嘅照顧。",
+    howitworksButton: "了解更多關於我們的服務",
+    // Our Approach Section
+    approachTitlePart1: "科技",
+    approachTitleTech: "有情",
+    approachTitlePart2: "溫暖",
+    approachTitleCompassion: "同行",
+    feature1Title: "即時護理請求",
+    feature1Description: "只需說出或輸入您的需求，我們的人工智能將實時轉錄和處理您的請求。",
+    feature2Title: "您的私人護理管家",
+    feature2Description: "通過我們的智能AI聊天說出您的獨特需求，即可在片刻之間獲得附近可用護理員和服務的個性化推薦。",
+    feature3Title: "信息一目了然",
+    feature3Description: "即時訪問全面的護理員資料，信息簡潔明了地匯總在一頁上。保存您的首選或通過無縫的一鍵操作進行預訂。",
+    feature4Title: "輕鬆探索",
+    feature4Description: "輕鬆瀏覽您所選區域內所有可用護理服務的綜合地圖，讓專業幫助近在咫尺。",
+    // Waitlist & Feedback Section
+    waitlistTitle: "搶先體驗",
+    waitlistSubtitle: "加入我們的等候名單，獲取優先體驗、優先匹配和獨家發布更新。",
+    waitlistEmailPlaceholder: "輸入您的郵箱",
+    waitlistSubmitButton: "加入等候名單",
+    waitlistSubmittingButton: "提交中...",
+    waitlistPrivacy: "我們尊重您的隱私。隨時可以取消訂閱。",
+    feedbackTitle: "分享您的想法",
+    feedbackSubtitle: "有想法或建議嗎？歡迎與我們分享，一起共創更符合文化需求的照護服務未來。",
+    feedbackEmailPlaceholder: "輸入您的郵箱",
+    feedbackMessagePlaceholder: "您的反饋或想法...",
+    feedbackSubmitButton: "發送反饋",
+    feedbackSubmittingButton: "提交中...",
+    feedbackPrivacy: "您的意見對我們來說非常寶貴，所有反饋都會受到嚴格保護，確保您的隱私安全。",
+    // Footer
+    footerCopyright: "零距 . 版權所有。",
+    // Add search-related translations
+    searchPlaceholder: "描述您需要的護理服務...",
+    searchTrySearching: "嘗試搜索:",
+    searchPresetPrompts: {
+      elderlyCare: "老年護理",
+      medicalCare: "醫療護理",
+      culturalCare: "文化護理",
+      respiteCare: "臨時護理",
+      dementiaCare: "失智症護理",
+      homeCare: "居家護理"
+    },
+    searchPresetDescriptions: {
+      elderlyCare: "尋找老年護理人員",
+      medicalCare: "尋找醫療護理協助",
+      culturalCare: "需要文化敏感的護理",
+      respiteCare: "尋找臨時護理支持",
+      dementiaCare: "尋找失智症護理專家",
+      homeCare: "需要居家護理服務"
+    },
+    // Care Request Popup translations
+    careRequestPopup: {
+      title: "護理請求即將推出！",
+      description: "我們將於2025年9月推出護理請求功能。請輸入您的郵箱，以便在我們推出時獲得免費護理請求積分。",
+      emailPlaceholder: "輸入您的郵箱",
+      submitButton: "獲取免費積分",
+      submittingButton: "提交中...",
+      privacy: "我們尊重您的隱私。隨時可以取消訂閱。",
+      success: "謝謝！在我們推出時，您將獲得免費護理請求積分。",
+      error: "請提供有效的郵箱地址。",
+      yourRequest: "您的護理請求:"
+    },
+    careTypes: [
+      {
+        title: "長者護理",
+        description: "專業護理員為日常生活、陪伴及醫療支援提供協助",
+        image: "/images/agecareimg.jpg",
+        examples: [
+          "日常生活協助",
+          "藥物管理",
+          "陪伴關懷",
+          "行動支援"
+        ]
+      },
+      {
+        title: "專科醫療護理",
+        description: "針對特定醫療狀況的專業護士及護理員",
+        image: "/images/SpecialisedCare.jpg",
+        examples: [
+          "認知障礙護理",
+          "手術後康復",
+          "慢性病管理",
+          "紓緩治療"
+        ]
+      },
+      {
+        title: "文化護理",
+        description: "了解並尊重文化傳統的護理員",
+        image: "/images/Culturalcareimg.jpg",
+        examples: [
+          "語言專屬護理",
+          "文化飲食需求",
+          "宗教習俗",
+          "傳統療法"
+        ]
+      },
+      {
+        title: "臨時護理",
+        description: "為家庭護理者提供臨時休息的護理服務",
+        image: "/images/RespiteCareimg.jpg",
+        examples: [
+          "短期照顧",
+          "緊急支援",
+          "假期替班",
+          "定期休息"
+        ]
+      }
+    ],
   },
 };
 
@@ -271,6 +539,10 @@ const CareSearchBar = () => {
   const [isListening, setIsListening] = useState(false)
   const [isRecording, setIsRecording] = useState(false)
   const [placeholderIndex, setPlaceholderIndex] = useState(0)
+  const [showCareRequestPopup, setShowCareRequestPopup] = useState(false)
+  const [careRequestEmail, setCareRequestEmail] = useState("")
+  const [isSubmittingCareRequest, setIsSubmittingCareRequest] = useState(false)
+  const [careRequestStatus, setCareRequestStatus] = useState<{ success?: boolean; message?: string; error?: string } | null>(null)
   const recognitionRef = useRef<SpeechRecognition | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const { language } = useLanguage()
@@ -385,6 +657,61 @@ const CareSearchBar = () => {
     }
   }
 
+  const handleCareRequestSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (!careRequestEmail || !careRequestEmail.includes("@")) {
+      setCareRequestStatus({
+        success: false,
+        message: t.careRequestPopup.error,
+      })
+      return
+    }
+
+    setIsSubmittingCareRequest(true)
+    setCareRequestStatus(null)
+
+    try {
+      const formData = new FormData()
+      formData.append("email", careRequestEmail)
+      formData.append("type", "care_request")
+      formData.append("response", query) // Add the user's typed response
+
+      console.log("Submitting care request form...")
+      const result = await joinWaitlist(formData)
+      console.log("Care request submission result:", result)
+
+      if (result.success) {
+        setCareRequestStatus({
+          success: true,
+          message: t.careRequestPopup.success,
+        })
+        setCareRequestEmail("")
+        setQuery("") // Clear the search query after successful submission
+        setTimeout(() => {
+          setShowCareRequestPopup(false)
+          setCareRequestStatus(null)
+        }, 3000)
+      } else {
+        setCareRequestStatus(result)
+      }
+    } catch (error) {
+      console.error("Error submitting care request form:", error)
+      setCareRequestStatus({
+        success: false,
+        message: "An error occurred. Please try again later.",
+        error: error instanceof Error ? error.message : String(error),
+      })
+    } finally {
+      setIsSubmittingCareRequest(false)
+    }
+  }
+
+  const handleSendClick = () => {
+    if (query.trim().length > 0) {
+      setShowCareRequestPopup(true)
+    }
+  }
+
   return (
     <div className="w-full max-w-3xl mx-auto">
       <div className="relative">
@@ -429,7 +756,7 @@ const CareSearchBar = () => {
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setTimeout(() => setIsFocused(false), 200)}
-            className="relative pl-6 pr-24 py-8 text-xl rounded-full border-2 border-purple-200 focus:border-purple-500 focus:ring-purple-500 shadow-lg bg-white whitespace-pre-wrap break-words overflow-y-auto"
+            className="flex h-10 w-full px-3 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-base md:text-xl relative pl-6 pr-24 py-8 rounded-full border-2 border-purple-200 focus:border-purple-500 focus:ring-purple-500 shadow-lg bg-white whitespace-pre-wrap break-words overflow-y-auto"
             style={{ 
               height: '100%',
               minHeight: '4rem',
@@ -458,7 +785,12 @@ const CareSearchBar = () => {
                   exit={{ y: 20, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Send className="w-7 h-7 text-purple-600" />
+                  <button
+                    onClick={handleSendClick}
+                    className="cursor-pointer hover:scale-110 transition-transform"
+                  >
+                    <Send className="w-7 h-7 text-purple-600" />
+                  </button>
                 </motion.div>
               ) : (
                 <motion.div
@@ -489,9 +821,9 @@ const CareSearchBar = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setQuery(prompt.description)}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-purple-50 hover:bg-purple-100 text-purple-700 transition-colors"
+            className="flex items-center gap-2 px-4 py-1 md:px-4 md:py-2 rounded-full bg-purple-50 hover:bg-purple-100 text-purple-700 transition-colors text-xs md:text-sm"
           >
-            <span className="text-xl">{prompt.icon}</span>
+            <span className="text-lg md:text-xl">{prompt.icon}</span>
             <span className="text-sm font-medium">{prompt.title}</span>
           </motion.button>
         ))}
@@ -509,12 +841,66 @@ const CareSearchBar = () => {
           className="focus:outline-none text-purple-700 text-lg font-semibold flex flex-col items-center bg-transparent border-none p-0 hover:text-purple-900"
           style={{ background: 'none', border: 'none' }}
         >
-          How It Works
+          {t.howItWorks}
           <span>
             <ChevronDown className="animate-bounce mt-1 w-7 h-7 text-purple-700" />
           </span>
         </button>
       </div>
+
+      {/* Care Request Popup */}
+      <Dialog open={showCareRequestPopup} onOpenChange={setShowCareRequestPopup}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold text-gray-900">
+              {t.careRequestPopup.title}
+            </DialogTitle>
+            <DialogDescription className="text-gray-600 mt-2">
+              {t.careRequestPopup.description}
+            </DialogDescription>
+          </DialogHeader>
+          
+          {/* Show the user's care request */}
+          {query && (
+            <div className="bg-purple-50 rounded-lg p-4 mb-4">
+              <h4 className="font-semibold text-purple-800 mb-2">{t.careRequestPopup.yourRequest}</h4>
+              <p className="text-gray-700 text-sm italic">"{query}"</p>
+            </div>
+          )}
+          
+          <form onSubmit={handleCareRequestSubmit} className="space-y-4">
+            <Input
+              type="email"
+              placeholder={t.careRequestPopup.emailPlaceholder}
+              value={careRequestEmail}
+              onChange={(e) => setCareRequestEmail(e.target.value)}
+              className="h-12 text-base"
+              required
+              disabled={isSubmittingCareRequest}
+            />
+            
+            {careRequestStatus && (
+              <div className={`text-sm ${careRequestStatus.success ? "text-green-600" : "text-red-600"}`}>
+                {careRequestStatus.message}
+              </div>
+            )}
+            
+            <DialogFooter className="flex flex-col space-y-2">
+              <Button
+                type="submit"
+                className="w-full h-12 text-base bg-purple-600 hover:bg-purple-700 text-white"
+                disabled={isSubmittingCareRequest}
+              >
+                {isSubmittingCareRequest ? t.careRequestPopup.submittingButton : t.careRequestPopup.submitButton}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              <p className="text-xs text-gray-500 text-center">
+                {t.careRequestPopup.privacy}
+              </p>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
@@ -522,52 +908,9 @@ const CareSearchBar = () => {
 // Add this component before the LandingPage component
 const CareTypeCards = () => {
   const carouselPlugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: false }))
-  const careTypes = [
-    {
-      title: "Elderly Care",
-      description: "Professional caregivers for daily assistance, companionship, and medical support",
-      image: "/images/agecareimg.jpg",
-      examples: [
-        "Daily living assistance",
-        "Medication management",
-        "Companionship",
-        "Mobility support"
-      ]
-    },
-    {
-      title: "Specialized Medical Care",
-      description: "Skilled nurses and caregivers for specific medical conditions",
-      image: "/images/SpecialisedCare.jpg",
-      examples: [
-        "Dementia care",
-        "Post-surgery recovery",
-        "Chronic condition management",
-        "Palliative care"
-      ]
-    },
-    {
-      title: "Cultural Care",
-      description: "Caregivers who understand and respect cultural traditions",
-      image: "/images/Culturalcareimg.jpg",
-      examples: [
-        "Language-specific care",
-        "Cultural dietary needs",
-        "Religious practices",
-        "Traditional healing methods"
-      ]
-    },
-    {
-      title: "Respite Care",
-      description: "Temporary care to give family caregivers a break",
-      image: "/images/RespiteCareimg.jpg",
-      examples: [
-        "Short-term relief",
-        "Emergency backup",
-        "Holiday coverage",
-        "Regular breaks"
-      ]
-    }
-  ]
+  const { language } = useLanguage();
+  const t = pageTranslations[language as keyof typeof pageTranslations] || pageTranslations.en;
+  const careTypes = t.careTypes;
 
   return (
     <div className="w-full py-12 bg-white">
@@ -641,7 +984,7 @@ const CareTypeCards = () => {
               size="lg"
               className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-4 text-lg h-auto"
             >
-              Learn More About Our Care Services
+              {t.howitworksButton}
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
@@ -922,10 +1265,14 @@ export default function LandingPage() {
         <CareTypeCards />
 
         {/* How It Works Section now comes after CareTypeCards */}
-        <section className="w-full py-6 bg-white">
+        <section 
+          id="how-it-works"
+          ref={howItWorksRef}
+          style={{ scrollMarginTop: '5rem' }}
+          className="w-full py-6 bg-white">
           <div className="container px-4 md:px-6">
             <motion.h2
-              className="text-4xl md:text-6xl font-bold tracking-tight text-center bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4"
+              className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -936,39 +1283,55 @@ export default function LandingPage() {
           </div>
         </section>
         <section
-          id="how-it-works"
-          ref={howItWorksRef}
           className="flex flex-col md:flex-row"
         >
-          {/* Fixed image area (desktop only) */}
-          <div className="w-full md:w4/5 md:sticky md:top-0 md:h-screen flex items-center justify-center relative">
-            {howItWorksImages.map((img, idx) => (
-              <img
-          key={img}
-          src={img}
-          alt={`Step ${idx + 1}`}
-          className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 max-w-[900px] w-full max-h-[70vh] object-contain transition-opacity duration-500 ${activeStep === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-          style={{
-            pointerEvents: activeStep === idx ? "auto" : "none",
-            transition: "opacity 0.5s",
-          }}
-              />
+            {/* Mobile: stacked image + text for each step */}
+            <div className="block md:hidden w-full px-4">
+            {[0, 1, 2].map((idx) => (
+              <div key={idx} className="mb-16">
+              <div className="w-full mb-8">
+                <img
+                src={howItWorksImages[idx]}
+                alt={`Step ${idx + 1}`}
+                className="w-full h-full object-cover rounded-2xl shadow-lg"
+                />
+              </div>
+              <div className="px-1">
+                <h3 className="text-2xl font-semibold text-gray-900 mb-2 text-left">{(t as any)[`step${idx + 1}Title`]}</h3>
+                <p className="text-gray-600 text-lg">{(t as any)[`step${idx + 1}Description`]}</p>
+              </div>
+              </div>
             ))}
+            </div>
+          {/* Desktop: sticky image + scrollable steps */}
+          <div className="hidden md:flex md:w-4/5 items-start justify-center relative">
+            <div
+              className="sticky top-0 w-full h-[50vh] flex items-center justify-center bg-white z-20 md:static md:h-screen md:sticky"
+              style={{ pointerEvents: "none" }}
+            >
+              {howItWorksImages.map((img, idx) => (
+          <img
+            key={img}
+            src={img}
+            alt={`Step ${idx + 1}`}
+            className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full object-contain transition-opacity duration-500 ${activeStep === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+            style={{
+              pointerEvents: "none",
+              transition: "opacity 0.5s",
+            }}
+          />
+              ))}
+            </div>
           </div>
-          {/* Step content */}
-          <div className="w-full md:w-1/2 md:ml-auto">
+          <div className="hidden md:block w-1/2 md:ml-auto">
             {[0, 1, 2].map((idx) => (
               <div
           key={idx}
-          ref={el => stepRefs.current[idx] = el}
+          ref={(el) => { stepRefs.current[idx] = el }}
           data-idx={idx}
-          className="lg:min-h-screen h-[45rem] flex items-center overflow-hidden"
+          className="min-h-[60vh] md:min-h-screen flex items-center overflow-hidden"
           style={{ scrollMarginTop: 100 }}
               >
-          {/* On mobile, show image above */}
-          <div className="block md:hidden w-full mb-4">
-            <img src={howItWorksImages[idx]} alt={(t as any)[`step${idx + 1}Title`]} className="w-full h-48 object-cover rounded-2xl shadow-lg" />
-          </div>
           <div className="px-4 md:px-8 w-full">
             <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
               <span className="text-2xl font-bold text-purple-700">{idx + 1}</span>
@@ -982,7 +1345,7 @@ export default function LandingPage() {
         </section>
 
         {/* Problem Statement Section */}
-        <section id="problem-statement" className="w-full py-20 md:py-28 relative overflow-hidden" ref={problemRef}>
+        <section id="problem-statement" className="w-full py-10 md:py-28 relative overflow-hidden" ref={problemRef}>
           <div className="absolute inset-0 bg-gradient-to-b from-white to-gray-50 z-0"></div>
 
           <div className="container px-4 md:px-6 relative z-10">
@@ -1417,10 +1780,10 @@ export default function LandingPage() {
               loop
               playsInline
               style={{
-                width: "100%",
+                width: "68%",
                 height: "100%",
                 objectFit: "cover",
-                borderRadius: "2rem",
+                borderRadius: "2.5rem",
               }}
             >
               <source src="videos/Carer-Review-demo.mp4" type="video/mp4" />
@@ -1459,10 +1822,10 @@ export default function LandingPage() {
               loop
               playsInline
               style={{
-                width: "100%",
+                width: "68%",
                 height: "100%",
                 objectFit: "cover",
-                borderRadius: "2rem",
+                borderRadius: "2.5rem",
               }}
             >
               <source src="videos/Explore-Page-demo.mp4" type="video/mp4" />

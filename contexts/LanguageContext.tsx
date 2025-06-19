@@ -129,6 +129,7 @@ const translations = {
 const availableLangs = {
   en: "English",
   zh: "中文",
+  yue: "粵語",
   vi: "Tiếng Việt",
   es: "Español",
   fr: "Français",

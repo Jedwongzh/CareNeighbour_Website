@@ -1,0 +1,15 @@
+/* ...existing styles... */
+
+#how-it-works .step:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 767.98px) {
+    #how-it-works .row > .col-md-6:first-child {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 56px; /* Aligns it under the fixed navbar */
+        z-index: 1020; /* Ensures it's above content but below the navbar */
+        background-color: white; /* Prevents text from showing through */
+    }
+}

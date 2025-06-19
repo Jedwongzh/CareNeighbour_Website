@@ -52,6 +52,8 @@ async function getGoogleSheetsClient() {
 // Define Zod schemas for validation
 const WaitlistSchema = z.object({
   email: z.string().email({ message: "Invalid email address." }),
+  type: z.string().optional(),
+  response: z.string().optional(),
 });
 
 const FeedbackSchema = z.object({
@@ -63,6 +65,8 @@ const FeedbackSchema = z.object({
 export async function joinWaitlist(formData: FormData) {
   const validatedFields = WaitlistSchema.safeParse({
     email: formData.get("email"),
+    type: formData.get("type"),
+    response: formData.get("response"),
   });
 
   if (!validatedFields.success) {
@@ -73,29 +77,39 @@ export async function joinWaitlist(formData: FormData) {
     };
   }
 
-  const { email } = validatedFields.data;
+  const { email, type, response } = validatedFields.data;
   const timestamp = new Date().toISOString();
 
   try {
     const sheets = await getGoogleSheetsClient();
 
-    // Ensure sheets are organized (optional, could be done separately)
-    // If you call your organize endpoint from here, use the absolute URL
-    // const organizeUrl = `${getBaseUrl()}/api/organize-sheets`;
-    // await fetch(organizeUrl); // Example call
+    // Determine the range and values based on the type
+    let range: string;
+    let values: any[];
+
+    if (type === "care_request") {
+      // For care requests, save email, response, and timestamp
+      range = "Waitlist!A:C";
+      values = [[email, response || "", timestamp]];
+    } else {
+      // For regular waitlist, save email and timestamp
+      range = "Waitlist!A:B";
+      values = [[email, timestamp]];
+    }
 
     // Append directly to the sheet
     await sheets.spreadsheets.values.append({
       spreadsheetId: GOOGLE_SHEET_ID,
-      range: "Waitlist!A:B", // Target specific sheet
+      range: range,
       valueInputOption: "USER_ENTERED",
       requestBody: {
-        values: [[email, timestamp]],
+        values: values,
       },
     });
 
-    console.log("Successfully added to Waitlist sheet:", email);
+    console.log("Successfully added to Waitlist sheet:", email, type);
     revalidatePath("/"); // Revalidate the page if needed
+    
     // Redirect on success
     return { success: true, message: "Successfully joined waitlist!", redirectUrl: "/thank-you/waitlist" };
 
