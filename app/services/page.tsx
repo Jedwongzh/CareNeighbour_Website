@@ -684,7 +684,7 @@ function ServicesPageContent() {
   }
 
   return (
-    <div className="flex min-h-[100dvh] flex-col bg-white">
+    <div className="flex min-h-[100dvh] flex-col">
       {/* Unified Header */}
       <UnifiedHeader 
         language={language}
@@ -695,60 +695,46 @@ function ServicesPageContent() {
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12 lg:py-16">
         {/* Hero Section */}
         <div className="text-center mb-12 md:mb-16 lg:mb-20">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 md:mb-8 lg:mb-12 bg-gradient-to-r from-purple-600 via-blue-600 to-purple-800 text-transparent bg-clip-text leading-tight">
-            {language === 'zh' ? '我们的全面护理服务' : language === 'yue' ? '我哋嘅全面護理服務' : 'Our Comprehensive Care Services'}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 md:mb-8 lg:mb-12 title-shadow">
+            <span className="gradient-text-fill">
+              {language === 'zh' ? '我们的全面护理服务' : language === 'yue' ? '我哋嘅全面護理服務' : 'Our Comprehensive Care Services'}
+            </span>
           </h1>
-          <p className="text-lg md:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl lg:text-2xl text-black max-w-4xl mx-auto leading-relaxed">
             {content.subtitle}
           </p>
         </div>
 
-        {/* How It Works Section */}
-        <div className="mb-16 md:mb-20 lg:mb-24">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-8 md:mb-12 lg:mb-16 text-gray-900">
-            {language === 'zh' ? '如何运作' : language === 'yue' ? '點樣運作' : 'How It Works'}
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
-            {content.steps.map((step, index) => (
-              <div key={index} className="bg-white rounded-2xl shadow-lg p-6 md:p-8 lg:p-10 text-center hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-purple-200 transform hover:-translate-y-2">
-                <div className="text-4xl md:text-5xl lg:text-6xl mb-4 md:mb-6">{step.icon}</div>
-                <div className="text-sm md:text-base text-purple-600 font-semibold mb-3 md:mb-4 tracking-wide">STEP {index + 1}</div>
-                <h3 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-4 md:mb-6 text-gray-900 leading-tight">{step.title}</h3>
-                <p className="text-sm md:text-base lg:text-lg text-gray-600 leading-relaxed">{step.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Services Section */}
         <div className="mb-16 md:mb-20 lg:mb-24">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-8 md:mb-12 lg:mb-16 text-gray-900">
-            {language === 'zh' ? '护理服务类别' : language === 'yue' ? '護理服務類別' : 'Care Service Categories'}
-          </h2>
           <div className="space-y-12 md:space-y-16 lg:space-y-20">
             {content.serviceCategories.map((category, index) => (
-              <div key={index} className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500">
+              <div key={index} className="glassmorphism rounded-3xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500">
                 {/* Category Header */}
-                <div className="p-6 md:p-8 lg:p-12 bg-gradient-to-br from-purple-50 to-blue-50">
-                  <div className="text-center md:text-left">
+                <div className="p-6 md:p-8 lg:p-12">
+                  <div className="text-center md:text-center">
                     <div className="flex items-center justify-center md:justify-start gap-4 mb-4 md:mb-6">
                       <span className="text-3xl md:text-4xl lg:text-5xl">{category.icon}</span>
-                      <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 text-transparent bg-clip-text">{category.title}</h3>
+                      <h3 className="text-2xl md:text-3xl lg:text-4xl w-full font-bold title-shadow">
+                        <span className="gradient-text-fill">{category.title}</span>
+                      </h3>
                     </div>
-                    <p className="text-base md:text-lg lg:text-xl text-gray-700 max-w-4xl leading-relaxed">{category.description}</p>
+                    <p className="text-base md:text-lg lg:text-xl text-black w-full leading-relaxed">{category.description}</p>
                   </div>
                 </div>
 
                 {/* Services Grid */}
-                <div className="p-6 md:p-8 lg:p-12 bg-white">
+                <div className="p-6 md:p-8 lg:p-12">
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
                     {category.services.map((service, serviceIndex) => (
-                      <div key={serviceIndex} className="bg-gradient-to-br from-gray-50 to-blue-50 p-4 md:p-6 lg:p-8 rounded-2xl border border-gray-100 hover:border-purple-200 transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1 group">
+                      <div key={serviceIndex} className="glassmorphism p-4 md:p-6 lg:p-8 rounded-2xl border border-gray-100 hover:border-purple-200 transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1 group">
                         <div className="flex flex-col space-y-3 md:space-y-4">
                           <div className="text-2xl md:text-3xl lg:text-4xl transition-transform duration-300">{service.icon}</div>
                           <div className="flex-1">
-                            <h4 className="text-base md:text-lg lg:text-xl font-semibold mb-2 md:mb-3 text-gray-900 leading-tight">{service.name}</h4>
-                            <p className="text-xs md:text-sm lg:text-base text-gray-600 leading-relaxed">{service.description}</p>
+                            <h4 className="text-base md:text-lg lg:text-xl font-semibold mb-2 md:mb-3 title-shadow">
+                              <span className="gradient-text-fill">{service.name}</span>
+                            </h4>
+                            <p className="text-xs md:text-sm lg:text-base text-black leading-relaxed">{service.description}</p>
                           </div>
                         </div>
                       </div>
@@ -762,11 +748,13 @@ function ServicesPageContent() {
 
         {/* Call to Action */}
         <div className="text-center">
-          <div className="bg-gradient-to-br from-purple-50 via-blue-50 to-purple-100 rounded-3xl shadow-2xl p-8 md:p-12 lg:p-16 border border-purple-100 max-w-4xl mx-auto">
-            <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 md:mb-6 lg:mb-8">
-              {language === 'zh' ? '準備開始了嗎？' : language === 'yue' ? '準備開始了嗎？' : 'Ready to Get Started?'}
+          <div className="glassmorphism rounded-3xl p-8 md:p-12 lg:p-16 border max-w-4xl mx-auto">
+            <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold title-shadow mb-4 md:mb-6 lg:mb-8">
+              <span className="gradient-text-fill">
+                {language === 'zh' ? '準備開始了嗎？' : language === 'yue' ? '準備開始了嗎？' : 'Ready to Get Started?'}
+              </span>
             </h3>
-            <p className="text-base md:text-lg lg:text-xl text-gray-700 mb-6 md:mb-8 lg:mb-10 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base md:text-lg lg:text-xl text-black mb-6 md:mb-8 lg:mb-10 max-w-3xl mx-auto leading-relaxed">
               {language === 'zh' 
                 ? '立即聯繫我們，了解我們如何為您提供文化敏感的護理服務。我們的專業團隊隨時為您服務。'
                 : language === 'yue'
@@ -777,17 +765,19 @@ function ServicesPageContent() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button
                 onClick={() => window.location.href = '/#waitlist'} 
-                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 lg:py-5 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-xl text-base md:text-lg w-full sm:w-auto">
+                className="glassmorphism text-black border-2 border-purple-600 hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-600 hover:text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 lg:py-5 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-xl text-base md:text-lg w-full sm:w-auto"
+              >
                 {language === 'zh' ? '聯繫我們' : language === 'yue' ? '聯繫我們' : 'Contact Us'}
               </button>
               <button 
                 onClick={() => window.location.href = '/#waitlist'}
-                className="bg-white hover:bg-gray-50 text-purple-600 border-2 border-purple-600 hover:border-black-700 px-8 md:px-10 lg:px-12 py-3 md:py-4 lg:py-5 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-base md:text-lg w-full sm:w-auto"
+                className="glassmorphism text-black border-2 border-purple-600 hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-600 hover:text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 lg:py-5 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-base md:text-lg w-full sm:w-auto"
               >
                 {language === 'zh' ? '加入等候名单' : language === 'yue' ? '加入等候名單' : 'Join Waitlist'}
               </button>
             </div>
-          </div>        </div>
+            </div>
+          </div>        
       </div>
 
       {/* Unified Footer */}

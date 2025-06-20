@@ -48,44 +48,44 @@ export function MobileNav({
       </Button>
 
       {isOpen && (
-        <div className="absolute top-16 left-0 right-0 bg-white border-b shadow-lg z-50">
+        <div className="absolute top-16 left-0 right-0 bg-white/90 backdrop-blur-md border-b shadow-lg z-50">
           <div className="container px-4 py-4 space-y-4">
             {/* Language switcher */}
             <div className="flex gap-2 justify-center">
               {Object.entries(availableLangs).map(([lang, label]) => (
-                <Button
-                  key={lang}
-                  size="sm"
-                  variant={currentLang === lang ? "secondary" : "ghost"}
-                  onClick={() => setLang(lang)}
-                >
-                  {label}
-                </Button>
+          <Button
+            key={lang}
+            size="sm"
+            variant={currentLang === lang ? "secondary" : "ghost"}
+            onClick={() => setLang(lang)}
+          >
+            {label}
+          </Button>
               ))}
             </div>
 
             {/* Navigation Links */}
             <div className="space-y-2">
               <Link
-                href="/"
-                className="block text-center py-2 text-gray-600 hover:text-primary transition-colors"
-                onClick={() => setIsOpen(false)}
+          href="/"
+          className="block text-center py-2 text-gray hover:text-primary transition-colors"
+          onClick={() => setIsOpen(false)}
               >
-                {translations.mainPage}
+          {translations.mainPage}
               </Link>
               <Link
-                href="/about"
-                className="block text-center py-2 text-gray-600 hover:text-primary transition-colors"
-                onClick={() => setIsOpen(false)}
+          href="/about"
+          className="block text-center py-2 text-gray hover:text-primary transition-colors"
+          onClick={() => setIsOpen(false)}
               >
-                {translations.aboutUs}
+          {translations.aboutUs}
               </Link>
               <Link
-                href="/services"
-                className="block text-center py-2 text-gray-600 hover:text-primary transition-colors"
-                onClick={() => setIsOpen(false)}
+          href="/services"
+          className="block text-center py-2 text-gray hover:text-primary transition-colors"
+          onClick={() => setIsOpen(false)}
               >
-                {translations.SourceforCare}
+          {translations.SourceforCare}
               </Link>
             </div>
 

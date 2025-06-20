@@ -8,6 +8,7 @@ import "./globals.css"
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { HtmlLangUpdater } from "@/components/HtmlLangUpdater";
 import { Suspense } from "react";
+import GradientBackground from "@/components/GradientBackground";
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -80,7 +81,8 @@ export default function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
             <LanguageProvider>
               <HtmlLangUpdater />
-              <div className="flex min-h-[100dvh] flex-col bg-white">
+              <div className="flex min-h-[100dvh] flex-col">
+              <GradientBackground />
                 {children}
               </div>
               <Toaster />

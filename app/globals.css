@@ -74,3 +74,37 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* From https://css.glass */
+.dark-3d-title {
+  color: #e5e7eb; /* text-gray-200 */
+  text-shadow:
+    1px 1px 1px #0a0a0a,
+    2px 2px 1px #0a0a0a,
+    3px 3px 1px #0a0a0a,
+    4px 4px 1px #0a0a0a,
+    5px 5px 6px rgba(0, 0, 0, 0.6);
+}
+
+.glassmorphism {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.title-shadow {
+  /* This color is for the shadow text */
+  color: #000;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.gradient-text-fill {
+  background-image: linear-gradient(to top right, #8e159c,#190f8d, #000000);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}

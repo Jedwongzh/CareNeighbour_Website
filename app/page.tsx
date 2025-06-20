@@ -776,32 +776,32 @@ const CareSearchBar = () => {
                 <Mic className="w-6 h-6 text-purple-600" />
               )}
             </motion.button>
-            <AnimatePresence mode="popLayout">
+            <AnimatePresence mode="wait">
               {query.length > 0 ? (
-                <motion.div
-                  key="send"
-                  initial={{ y: -20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: 20, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
+              <motion.div
+                key="send"
+                initial={{ y: 40, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 40, opacity: 0 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+              >
+                <button
+                onClick={handleSendClick}
+                className="cursor-pointer hover:scale-110 transition-transform"
                 >
-                  <button
-                    onClick={handleSendClick}
-                    className="cursor-pointer hover:scale-110 transition-transform"
-                  >
-                    <Send className="w-7 h-7 text-purple-600" />
-                  </button>
-                </motion.div>
+                <Send className="w-7 h-7 text-purple-600" />
+                </button>
+              </motion.div>
               ) : (
-                <motion.div
-                  key="search"
-                  initial={{ y: -20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: 20, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Search className="w-7 h-7 text-purple-600" />
-                </motion.div>
+              <motion.div
+                key="search"
+                initial={{ y: 40, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 40, opacity: 0 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+              >
+                <Search className="w-7 h-7 text-purple-600" />
+              </motion.div>
               )}
             </AnimatePresence>
           </div>
@@ -821,7 +821,7 @@ const CareSearchBar = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setQuery(prompt.description)}
-            className="flex items-center gap-2 px-4 py-1 md:px-4 md:py-2 rounded-full bg-purple-50 hover:bg-purple-100 text-purple-700 transition-colors text-xs md:text-sm"
+            className="flex items-center gap-2 px-4 py-1 md:px-4 md:py-2 rounded-full backdrop-blur-md bg-gray-200/10 bg-clip-padding text-gray transition-colors text-xs md:text-sm"
           >
             <span className="text-lg md:text-xl">{prompt.icon}</span>
             <span className="text-sm font-medium">{prompt.title}</span>
@@ -838,7 +838,7 @@ const CareSearchBar = () => {
               el.scrollIntoView({ behavior: 'smooth' });
             }
           }}
-          className="focus:outline-none text-purple-700 text-lg font-semibold flex flex-col items-center bg-transparent border-none p-0 hover:text-purple-900"
+          className="focus:outline-none text-gray text-lg font-semibold flex flex-col items-center bg-transparent border-none p-0 hover:text-purple-900"
           style={{ background: 'none', border: 'none' }}
         >
           {t.howItWorks}
@@ -862,9 +862,14 @@ const CareSearchBar = () => {
           
           {/* Show the user's care request */}
           {query && (
-            <div className="bg-purple-50 rounded-lg p-4 mb-4">
-              <h4 className="font-semibold text-purple-800 mb-2">{t.careRequestPopup.yourRequest}</h4>
-              <p className="text-gray-700 text-sm italic">"{query}"</p>
+            <div className="relative mb-4">
+              <div
+                className="absolute -inset-2 rounded-lg bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-sky-600 via-indigo-600 to-rose-600 opacity-50 blur-2xl"
+              ></div>
+              <div className="relative rounded-lg p-4 backdrop-blur-md bg-gray-200/10 bg-clip-padding">
+                <h4 className="font-semibold text-purple-800 mb-2">{t.careRequestPopup.yourRequest}</h4>
+                <p className="text-gray-700 text-sm italic">"{query}"</p>
+              </div>
             </div>
           )}
           
@@ -933,7 +938,7 @@ const CareTypeCards = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow h-full flex flex-col overflow-hidden"
+                    className="rounded-xl shadow-lg hover:shadow-xl transition-shadow h-full flex flex-col overflow-hidden backdrop-blur-md bg-gray-200/10 bg-clip-padding"
                   >
                     <div className="w-full h-40">
                       <Image src={type.image} alt={type.title} width={400} height={220} className="object-cover w-full h-full" />
@@ -958,7 +963,7 @@ const CareTypeCards = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow flex flex-col overflow-hidden"
+              className="rounded-xl shadow-lg hover:shadow-xl transition-shadow flex flex-col overflow-hidden backdrop-blur-md bg-gray-200/10 bg-clip-padding"
             >
               <div className="w-full h-40">
                 <Image src={type.image} alt={type.title} width={400} height={220} className="object-cover w-full h-full" />
@@ -982,7 +987,15 @@ const CareTypeCards = () => {
           <Link href="/services" passHref>
             <Button
               size="lg"
-              className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-8 py-4 text-lg h-auto"
+              className="bg-purple-600 hover:bg-purple-700 text-gray rounded-full px-8 py-4 text-lg h-auto transition-transform duration-200 hover:scale-105"
+              style={{
+              background: 'rgba(255,255,255,0)',
+              borderRadius: '16px',
+              boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
+              backdropFilter: 'blur(9px)',
+              WebkitBackdropFilter: 'blur(9px)',
+              border: '1px solid rgba(255,255,255,0.38)'
+              }}
             >
               {t.howitworksButton}
               <ArrowRight className="ml-2 h-5 w-5" />
@@ -1032,6 +1045,137 @@ const StepBlock = ({ idx, title, description, image, setActiveStep, isMobile }: 
       </div>
     </div>
   )
+}
+
+// Add this component at the top of the main page, just inside the main wrapper div
+function GradientBackground() {
+  return (
+    <>
+      <div className="gradient-bg">
+        <svg>
+          <filter id="goo"><feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur"/><feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo"/><feBlend in="SourceGraphic" in2="goo" /></filter>
+        </svg>
+        <div className="gradients-container">
+          <div className="g1" />
+          <div className="g2" />
+          <div className="g3" />
+          <div className="g4" />
+          <div className="g5" />
+        </div>
+      </div>
+      <style jsx global>{`
+        :root {
+          --color-bg1: rgb(229, 217, 242);   /* dimmer purple */
+          --color-bg2: rgb(165, 148, 249);   /* dimmer blue */
+          --color1: 148, 171, 249;          /* dimmer blue */
+          --color2:165, 148, 249;         /* dimmer magenta */
+          --color3:148, 244, 249;          /* dimmer cyan */
+          --color4: 236, 118, 140;          /* dimmer red */
+          --color5: 238, 243, 105;           /* dimmer yellow */
+          --color-interactive: 251, 253, 255; /* dimmer interactive */
+          --circle-size: 80%;
+          --blending: hard-light;
+        }
+        .gradient-bg {
+          width: 100vw;
+          height: 100vh;
+          position: fixed;
+          overflow: hidden;
+          background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
+          top: 0;
+          left: 0;
+          z-index: -1;
+        }
+        .gradient-bg svg {
+          position: fixed;
+          top:0;
+          left:0;
+          width: 0;
+          height: 0;
+        }
+        .gradients-container {
+          filter: url(#goo) blur(40px);
+          width: 100vw;
+          height: 100vh;
+        }
+        .g1 {
+          position: absolute;
+          background: radial-gradient(circle at center, rgba(var(--color1), 0.4) 0, rgba(var(--color1), 0) 50%) no-repeat;
+          mix-blend-mode: var(--blending);
+          width: var(--circle-size);
+          height: var(--circle-size);
+          top: calc(50% - var(--circle-size) / 2);
+          left: calc(50% - var(--circle-size) / 2);
+          transform-origin: center center;
+          animation: moveVertical 30s ease infinite;
+          opacity: 1;
+        }
+        .g2 {
+          position: absolute;
+          background: radial-gradient(circle at center, rgba(var(--color2), 0.4) 0, rgba(var(--color2), 0) 50%) no-repeat;
+          mix-blend-mode: var(--blending);
+          width: var(--circle-size);
+          height: var(--circle-size);
+          top: calc(50% - var(--circle-size) / 2);
+          left: calc(50% - var(--circle-size) / 2);
+          transform-origin: calc(50% - 400px);
+          animation: moveInCircle 20s reverse infinite;
+          opacity: 1;
+        }
+        .g3 {
+          position: absolute;
+          background: radial-gradient(circle at center, rgba(var(--color3), 0.4) 0, rgba(var(--color3), 0) 50%) no-repeat;
+          mix-blend-mode: var(--blending);
+          width: var(--circle-size);
+          height: var(--circle-size);
+          top: calc(50% - var(--circle-size) / 2 + 200px);
+          left: calc(50% - var(--circle-size) / 2 - 500px);
+          transform-origin: calc(50% + 400px);
+          animation: moveInCircle 40s linear infinite;
+          opacity: 1;
+        }
+        .g4 {
+          position: absolute;
+          background: radial-gradient(circle at center, rgba(var(--color4), 0.3) 0, rgba(var(--color4), 0) 50%) no-repeat;
+          mix-blend-mode: var(--blending);
+          width: var(--circle-size);
+          height: var(--circle-size);
+          top: calc(50% - var(--circle-size) / 2);
+          left: calc(50% - var(--circle-size) / 2);
+          transform-origin: calc(50% - 200px);
+          animation: moveHorizontal 40s ease infinite;
+          opacity: 0.7;
+        }
+        .g5 {
+          position: absolute;
+          background: radial-gradient(circle at center, rgba(var(--color5), 0.3) 0, rgba(var(--color5), 0) 50%) no-repeat;
+          mix-blend-mode: var(--blending);
+          width: calc(var(--circle-size) * 2);
+          height: calc(var(--circle-size) * 2);
+          top: calc(50% - var(--circle-size));
+          left: calc(50% - var(--circle-size));
+          transform-origin: calc(50% - 800px) calc(50% + 200px);
+          animation: moveInCircle 20s ease infinite;
+          opacity: 1;
+        }
+        @keyframes moveInCircle {
+          0% { transform: rotate(0deg); }
+          50% { transform: rotate(180deg); }
+          100% { transform: rotate(360deg); }
+        }
+        @keyframes moveVertical {
+          0% { transform: translateY(-50%); }
+          50% { transform: translateY(50%); }
+          100% { transform: translateY(-50%); }
+        }
+        @keyframes moveHorizontal {
+          0% { transform: translateX(-50%) translateY(-10%); }
+          50% { transform: translateX(50%) translateY(10%); }
+          100% { transform: translateX(-50%) translateY(-10%); }
+        }
+      `}</style>
+    </>
+  );
 }
 
 export default function LandingPage() {
@@ -1189,22 +1333,9 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="flex min-h-[400dvh] flex-col">
-      {/* Static Gradient Background */}
-        <div
-          aria-hidden="true"
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "400vh",
-            zIndex: -1,
-            pointerEvents: "none",
-            background: "linear-gradient(180deg, #fff 0%, #a78bfa 60%, #000 100%)"
-          }}
-        />
-        {/* Unified Header */}
+    <div className="flex min-h-screen flex-col">
+      <GradientBackground />
+      {/* Unified Header */}
       <UnifiedHeader 
         language={language}
         setLanguage={setLanguage}
@@ -1227,29 +1358,19 @@ export default function LandingPage() {
             <div className="max-w-5xl mx-auto">
               <div className="space-y-8 md:space-y-10">
               <div className="flex flex-col md:flex-row md:items-center gap-3">
-          <div className="flex items-center justify-between w-full">
+            <div className="flex items-center justify-between w-full">
             <motion.h1
-              className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-gray-900 leading-tight md:max-w-[70%] max-w-full"
+              className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight leading-tight md:max-w-[70%] max-w-full title-shadow"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              {t.heroTitleStart}{" "}
-              <span className="bg-gradient-to-r from-purple-700 to-gray-900 text-transparent bg-clip-text">
+              <span className="gradient-text-fill">
+                {t.heroTitleStart}{" "}
                 {t.heroTitleEnd}
               </span>
             </motion.h1>
-            
-            <div className="flex-shrink-0 md:ml-auto md:pl-8 mt-6 md:mt-0">
-              <Image
-                src="/images/CN_Figure2.png"
-                alt="CareNeighbor Guide"
-                width={220}
-                height={220}
-                className="object-contain md:w-[220px] md:h-[220px] w-[100px] h-[100px]"
-              />
             </div>
-          </div>
               </div>
 
                 <motion.p
@@ -1286,13 +1407,13 @@ export default function LandingPage() {
           className="w-full py-6">
           <div className="container px-4 md:px-6">
             <motion.h2
-              className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4"
+              className="text-4xl md:text-6xl font-bold tracking-tight text-center pb-4 title-shadow"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              {t.howItWorksTitle}
+              <span className="gradient-text-fill">{t.howItWorksTitle}</span>
             </motion.h2>
           </div>
         </section>
@@ -1311,7 +1432,9 @@ export default function LandingPage() {
                 />
               </div>
               <div className="px-1">
-                <h3 className="text-2xl font-semibold text-gray-900 mb-2 text-left">{(t as any)[`step${idx + 1}Title`]}</h3>
+                <h3 className="text-2xl font-semibold mb-2 text-left title-shadow">
+                  <span className="gradient-text-fill">{(t as any)[`step${idx + 1}Title`]}</span>
+                </h3>
                 <p className="text-gray-600 text-lg">{(t as any)[`step${idx + 1}Description`]}</p>
               </div>
               </div>
@@ -1320,7 +1443,7 @@ export default function LandingPage() {
             {/* Desktop: sticky image + scrollable steps */}
             <div className="hidden md:flex md:w-4/5 items-start justify-center relative">
             <div
-              className="sticky top-0 w-[800px] h-[50vh] flex items-center justify-center z-20 md:static md:h-screen md:sticky "
+              className="sticky top-0 w-[700px] h-[50vh] flex items-center justify-center z-20 md:static md:h-screen md:sticky "
               style={{ pointerEvents: "none" }}
             >
               <div
@@ -1331,21 +1454,21 @@ export default function LandingPage() {
                   borderRadius: "1rem",
                 }}
               />
-              {howItWorksImages.map((img, idx) => (
-                <img
-                  key={img}
-                  src={img}
-                  alt={`Step ${idx + 1}`}
+            {howItWorksImages.map((img, idx) => (
+              <img
+          key={img}
+          src={img}
+          alt={`Step ${idx + 1}`}
                   className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] h-full object-contain transition-opacity duration-500 rounded-2xl ${activeStep === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'} `}
-                  style={{
+          style={{
                     pointerEvents: "none",
-                    transition: "opacity 0.5s",
+            transition: "opacity 0.5s",
                     paddingLeft: "1%",
                     paddingRight: "1%",
-                  }}
-                />
-              ))}
-            </div>
+          }}
+              />
+            ))}
+          </div>
           </div>
           <div className="hidden md:block w-1/2 md:ml-auto">
             {[0, 1, 2].map((idx) => (
@@ -1360,7 +1483,9 @@ export default function LandingPage() {
             <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
               <span className="text-2xl font-bold text-purple-700">{idx + 1}</span>
             </div>
-            <h3 className="text-2xl font-semibold text-gray-900 mb-2">{(t as any)[`step${idx + 1}Title`]}</h3>
+            <h3 className="text-2xl font-semibold mb-2 text-left title-shadow">
+              <span className="gradient-text-fill">{(t as any)[`step${idx + 1}Title`]}</span>
+            </h3>
             <p className="text-gray-600 text-lg">{(t as any)[`step${idx + 1}Description`]}</p>
           </div>
               </div>
@@ -1384,13 +1509,13 @@ export default function LandingPage() {
             />
           </div>
           <motion.h2
-            className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4 md:max-w-none"
+            className="text-4xl md:text-6xl font-bold tracking-tight text-left pb-4 md:max-w-none title-shadow"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            {t.problemTitle}
+            <span className="gradient-text-fill">{t.problemTitle}</span>
           </motion.h2>
               </div>
 
@@ -1531,21 +1656,21 @@ export default function LandingPage() {
 
         {/* Experiences Section */}
         <section id="experiences" className="w-full py-20 md:py-5 overflow-hidden">
-            <div className="container px-6 md:px-12">
+          <div className="container px-6 md:px-12">
             <div className="flex flex-col space-y-4 mb-12 md:mb-16 max-w-full">
               <motion.div
-              className="space-y-3 w-full"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1 }}
+                className="space-y-3 w-full"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
               >
-              <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-left bg-gradient-to-r from-gray-800 to-purple-600 text-transparent bg-clip-text pb-4 w-full">
-                {t.experiencesTitle}
-              </h2>
-              <p className="text-gray-600 text-lg md:text-xl lg:text-2xl text-left w-full">
-                {t.experiencesSubtitle}
-              </p>
+                <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-center pb-4 w-full title-shadow" style={{ color: "#000" }}>
+                  <span className="gradient-text-fill">{t.experiencesTitle}</span>
+                </h2>
+                <p className="text-lg md:text-xl lg:text-2xl text-center w-full" style={{ color: "#000" }}>
+                  {t.experiencesSubtitle}
+                </p>
               </motion.div>
             </div>
 
@@ -1562,79 +1687,139 @@ export default function LandingPage() {
               <CarouselContent className="-ml-4">
                 {/* Item 1 */}
                 <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
-                  <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
+                  <div
+                    className="p-8 rounded-2xl h-full flex flex-col overflow-hidden"
+                    style={{
+                      background: 'rgba(255,255,255,0)',
+                      borderRadius: '16px',
+                      boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
+                      backdropFilter: 'blur(9px)',
+                      WebkitBackdropFilter: 'blur(9px)',
+                      border: '1px solid rgba(255,255,255,0.38)'
+                    }}
+                  >
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">{t.testimonialMariaName}</p>
+                      <p className="text-sm font-medium" style={{ color: "#000", fontWeight: "bold" }}>{t.testimonialMariaName}</p>
                     </div>
-                    <blockquote className="text-gray-700 justify-left flex-grow">
+                    <blockquote className="justify-left flex-grow" style={{ color: "#000" }}>
                       {t.testimonialMariaQuote}
                     </blockquote>
                   </div>
                 </CarouselItem>
                 {/* Item 2 */}
                 <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
-                  <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
+                  <div
+                    className="p-8 rounded-2xl h-full flex flex-col overflow-hidden"
+                    style={{
+                      background: 'rgba(255,255,255,0)',
+                      borderRadius: '16px',
+                      boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
+                      backdropFilter: 'blur(9px)',
+                      WebkitBackdropFilter: 'blur(9px)',
+                      border: '1px solid rgba(255,255,255,0.38)'
+                    }}
+                  >
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">{t.testimonialChenName}</p>
+                      <p className="text-sm font-medium" style={{ color: "#000", fontWeight: "bold" }}>{t.testimonialChenName}</p>
                     </div>
-                    <blockquote className="text-gray-700 justify-left flex-grow">
+                    <blockquote className="justify-left flex-grow" style={{ color: "#000" }}>
                       {t.testimonialChenQuote}
                     </blockquote>
                   </div>
                 </CarouselItem>
                 {/* Item 3 */}
                 <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
-                  <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
+                  <div
+                    className="p-8 rounded-2xl h-full flex flex-col overflow-hidden"
+                    style={{
+                      background: 'rgba(255,255,255,0)',
+                      borderRadius: '16px',
+                      boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
+                      backdropFilter: 'blur(9px)',
+                      WebkitBackdropFilter: 'blur(9px)',
+                      border: '1px solid rgba(255,255,255,0.38)'
+                    }}
+                  >
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">{t.testimonialAhmedName}</p>
+                      <p className="text-sm font-medium" style={{ color: "#000", fontWeight: "bold" }}>{t.testimonialAhmedName}</p>
                     </div>
-                    <blockquote className="text-gray-700 justify-left flex-grow">
+                    <blockquote className="justify-left flex-grow" style={{ color: "#000" }}>
                       {t.testimonialAhmedQuote}
                     </blockquote>
                   </div>
                 </CarouselItem>
                 {/* Item 4 */}
                 <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
-                  <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
+                  <div
+                    className="p-8 rounded-2xl h-full flex flex-col overflow-hidden"
+                    style={{
+                      background: 'rgba(255,255,255,0)',
+                      borderRadius: '16px',
+                      boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
+                      backdropFilter: 'blur(9px)',
+                      WebkitBackdropFilter: 'blur(9px)',
+                      border: '1px solid rgba(255,255,255,0.38)'
+                    }}
+                  >
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">{t.testimonialSarahName}</p>
+                      <p className="text-sm font-medium" style={{ color: "#000", fontWeight: "bold" }}>{t.testimonialSarahName}</p>
                     </div>
-                    <blockquote className="text-gray-700 justify-left flex-grow">
+                    <blockquote className="justify-left flex-grow" style={{ color: "#000" }}>
                       {t.testimonialSarahQuote}
                     </blockquote>
                   </div>
                 </CarouselItem>
                 {/* Item 5 */}
                 <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
-                  <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
+                  <div
+                    className="p-8 rounded-2xl h-full flex flex-col overflow-hidden"
+                    style={{
+                      background: 'rgba(255,255,255,0)',
+                      borderRadius: '16px',
+                      boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
+                      backdropFilter: 'blur(9px)',
+                      WebkitBackdropFilter: 'blur(9px)',
+                      border: '1px solid rgba(255,255,255,0.38)'
+                    }}
+                  >
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">{t.testimonialElenaName} </p>
+                      <p className="text-sm font-medium" style={{ color: "#000", fontWeight: "bold" }}>{t.testimonialElenaName} </p>
                     </div>
-                    <blockquote className="text-gray-700 justify-left flex-grow">
+                    <blockquote className="justify-left flex-grow" style={{ color: "#000" }}>
                       {t.testimonialElenaQuote}
                     </blockquote>
                   </div>
                 </CarouselItem>
                 {/* Item 6 */}
                 <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
-                  <div className="p-8 bg-white rounded-2xl border border-gray-100 shadow-lg h-full flex flex-col">
+                  <div
+                    className="p-8 rounded-2xl h-full flex flex-col overflow-hidden"
+                    style={{
+                      background: 'rgba(255,255,255,0)',
+                      borderRadius: '16px',
+                      boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
+                      backdropFilter: 'blur(9px)',
+                      WebkitBackdropFilter: 'blur(9px)',
+                      border: '1px solid rgba(255,255,255,0.38)'
+                    }}
+                  >
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium">{t.testimonialRajName}</p>
+                      <p className="text-sm font-medium" style={{ color: "#000", fontWeight: "bold" }}>{t.testimonialRajName}</p>
                     </div>
-                    <blockquote className="text-gray-700 justify-left flex-grow">
+                    <blockquote className="justify-left flex-grow" style={{ color: "#000" }}>
                       {t.testimonialRajQuote}
                     </blockquote>
                   </div>
                 </CarouselItem>
               </CarouselContent>
             </Carousel>
-            </div>
+          </div>
         </section>
 
         {/* Our Approach Section - Apple-inspired with feature carousel */}
@@ -1648,13 +1833,11 @@ export default function LandingPage() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7 }}
               >
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-gray-900">
-            {t.approachTitlePart1}{" "}
-            <span className="bg-gradient-to-r from-purple-700 to-gray-900 text-transparent bg-clip-text">
-              {t.approachTitleTech}
-            </span>{" "}
-            {t.approachTitlePart2}{" "}
-            <span className="bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight title-shadow">
+            <span className="gradient-text-fill">
+              {t.approachTitlePart1}{" "}
+              {t.approachTitleTech}{" "}
+              {t.approachTitlePart2}{" "}
               {t.approachTitleCompassion}
             </span>
           </h2>
@@ -1672,8 +1855,8 @@ export default function LandingPage() {
             >
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start order-2 md:order-1">
-          <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
-            {t.feature1Title}
+          <h2 className="text-2xl font-semibold mb-3 title-shadow">
+            <span className="gradient-text-fill">{t.feature1Title}</span>
           </h2>
           <p className="text-lg text-gray-700 justify-left">
             {t.feature1Description}
@@ -1691,19 +1874,37 @@ export default function LandingPage() {
               alignItems: "center",
               justifyContent: "center",
               borderRadius: "2rem",
-              background: "#fff",
+              background: 'rgba(255,255,255,0)',
+              boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
+              backdropFilter: 'blur(9px)',
+              WebkitBackdropFilter: 'blur(9px)',
+              border: '1px solid rgba(255,255,255,0.38)',
+              position: 'relative'
             }}
           >
+            <div
+              style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 1,
+          pointerEvents: "none",
+          borderRadius: "2.5rem",
+          boxShadow: "0 0 40px 20px rgba(147,51,234,0.18)",
+          filter: "blur(16px)",
+              }}
+            />
             <video
               autoPlay
               muted
               loop
               playsInline
               style={{
-                width: "68%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: "2.5rem",
+          width: "68%",
+          height: "100%",
+          objectFit: "cover",
+          borderRadius: "2.5rem",
+          position: "relative",
+          zIndex: 2,
               }}
             >
               <source src="videos/Care-request-demo.mp4" type="video/mp4" />
@@ -1733,19 +1934,37 @@ export default function LandingPage() {
               alignItems: "center",
               justifyContent: "center",
               borderRadius: "2rem",
-              background: "#fff",
+              background: 'rgba(255,255,255,0)',
+              boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
+              backdropFilter: 'blur(9px)',
+              WebkitBackdropFilter: 'blur(9px)',
+              border: '1px solid rgba(255,255,255,0.38)',
+              position: 'relative'
             }}
           >
+            <div
+              style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 1,
+          pointerEvents: "none",
+          borderRadius: "2.5rem",
+          boxShadow: "0 0 40px 20px rgba(147,51,234,0.18)",
+          filter: "blur(16px)",
+              }}
+            />
             <video
               autoPlay
               muted
               loop
               playsInline
               style={{
-                width: "68%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: "2.5rem",
+          width: "68%",
+          height: "100%",
+          objectFit: "cover",
+          borderRadius: "2.5rem",
+          position: "relative",
+          zIndex: 2,
               }}
             >
               <source src="videos/AI-Chat-demo.mp4" type="video/mp4" />
@@ -1755,8 +1974,8 @@ export default function LandingPage() {
               </div>
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start">
-          <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
-            {t.feature2Title}
+          <h2 className="text-2xl font-semibold mb-3 title-shadow">
+            <span className="gradient-text-fill">{t.feature2Title}</span>
           </h2>
           <p className="text-lg text-gray-700">
             {t.feature2Description}
@@ -1774,8 +1993,8 @@ export default function LandingPage() {
             >
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start order-2 md:order-1">
-          <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
-            {t.feature3Title}
+          <h2 className="text-2xl font-semibold mb-3 title-shadow">
+            <span className="gradient-text-fill">{t.feature3Title}</span>
           </h2>
           <p className="text-lg text-gray-700">
             {t.feature3Description}
@@ -1793,19 +2012,37 @@ export default function LandingPage() {
               alignItems: "center",
               justifyContent: "center",
               borderRadius: "2rem",
-              background: "#fff",
+              background: 'rgba(255,255,255,0)',
+              boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
+              backdropFilter: 'blur(9px)',
+              WebkitBackdropFilter: 'blur(9px)',
+              border: '1px solid rgba(255,255,255,0.38)',
+              position: 'relative'
             }}
           >
+            <div
+              style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 1,
+          pointerEvents: "none",
+          borderRadius: "2.5rem",
+          boxShadow: "0 0 40px 20px rgba(147,51,234,0.18)",
+          filter: "blur(16px)",
+              }}
+            />
             <video
               autoPlay
               muted
               loop
               playsInline
               style={{
-                width: "68%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: "2.5rem",
+          width: "68%",
+          height: "100%",
+          objectFit: "cover",
+          borderRadius: "2.5rem",
+          position: "relative",
+          zIndex: 2,
               }}
             >
               <source src="videos/Carer-Review-demo.mp4" type="video/mp4" />
@@ -1835,19 +2072,37 @@ export default function LandingPage() {
               alignItems: "center",
               justifyContent: "center",
               borderRadius: "2rem",
-              background: "#fff",
+              background: 'rgba(255,255,255,0)',
+              boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
+              backdropFilter: 'blur(9px)',
+              WebkitBackdropFilter: 'blur(9px)',
+              border: '1px solid rgba(255,255,255,0.38)',
+              position: 'relative'
             }}
           >
+            <div
+              style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 1,
+          pointerEvents: "none",
+          borderRadius: "2.5rem",
+          boxShadow: "0 0 40px 20px rgba(147,51,234,0.18)",
+          filter: "blur(16px)",
+              }}
+            />
             <video
               autoPlay
               muted
               loop
               playsInline
               style={{
-                width: "68%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: "2.5rem",
+          width: "68%",
+          height: "100%",
+          objectFit: "cover",
+          borderRadius: "2.5rem",
+          position: "relative",
+          zIndex: 2,
               }}
             >
               <source src="videos/Explore-Page-demo.mp4" type="video/mp4" />
@@ -1857,8 +2112,8 @@ export default function LandingPage() {
               </div>
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start">
-          <h2 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-purple-600 to-gray-800 text-transparent bg-clip-text">
-            {t.feature4Title}
+          <h2 className="text-2xl font-semibold mb-3 title-shadow">
+            <span className="gradient-text-fill">{t.feature4Title}</span>
           </h2>
           <p className="text-lg text-gray-700">
             {t.feature4Description}
@@ -1869,129 +2124,140 @@ export default function LandingPage() {
         </section>
 
         {/* Early Access Signup & Feedback - Apple-inspired with clean forms */}
-        <section id="waitlist" className="w-full py-20 md:py-18 bg-purple-100">
+        <section id="waitlist" className="w-full py-20 md:py-18" style={{
+          background: 'rgba(255,255,255,0)',
+          borderRadius: '0px',
+          boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
+          backdropFilter: 'blur(9px)',
+          WebkitBackdropFilter: 'blur(9px)',
+          border: '1px solid rgba(255,255,255,0.38)'
+        }}>
           <div className="container px-4 md:px-6">
             <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
-                {/* Waitlist Column */}
-                <div className="flex flex-col justify-start space-y-6 self-start">
-                <motion.div
-                  className="space-y-3"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">{t.waitlistTitle}</h2>
-                  <p className="text-gray-600 text-lg md:text-xl">
-                  {t.waitlistSubtitle}
-                  </p>
-                </motion.div>
+          {/* Waitlist Column */}
+          <div className="flex flex-col justify-start space-y-6 self-start">
+          <motion.div
+            className="space-y-3"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight title-shadow">
+              <span className="gradient-text-fill">{t.waitlistTitle}</span>
+            </h2>
+            <p className="text-gray-600 text-lg md:text-xl">
+            {t.waitlistSubtitle}
+            </p>
+          </motion.div>
 
-                <motion.div
-                  className="w-full max-w-md space-y-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                >
-                  <form onSubmit={handleWaitlistSubmit} className="space-y-4">
-                    <Input
-                      type="email"
-                      name="email"
-                      placeholder={t.waitlistEmailPlaceholder}
-                      className="h-14 text-base rounded-xl border-gray-300"
-                      required
-                      disabled={isSubmittingWaitlist}
-                    />
-                    <Button
-                      type="submit"
-                      className="w-full h-14 text-base rounded-xl bg-purple-600 hover:bg-purple-700 text-white"
-                      disabled={isSubmittingWaitlist}
-                    >
-                      {isSubmittingWaitlist ? t.waitlistSubmittingButton : t.waitlistSubmitButton}
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </form>
-                  {waitlistStatus && (
-                    <div className={`mt-2 text-sm ${waitlistStatus.success ? "text-green-600" : "text-red-600"}`}>
-                      {waitlistStatus.message}
-                    </div>
-                  )}
-                  <p className="text-xs text-gray-500">{t.waitlistPrivacy}</p>
-                </motion.div>
+          <motion.div
+            className="w-full max-w-md space-y-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <form onSubmit={handleWaitlistSubmit} className="space-y-4">
+              <Input
+                type="email"
+                name="email"
+                placeholder={t.waitlistEmailPlaceholder}
+                className="h-14 text-base rounded-xl border-gray-300"
+                required
+                disabled={isSubmittingWaitlist}
+              />
+              <Button
+                type="submit"
+                className="w-full h-14 text-base rounded-xl bg-purple-600 hover:bg-purple-700 text-white"
+                disabled={isSubmittingWaitlist}
+              >
+                {isSubmittingWaitlist ? t.waitlistSubmittingButton : t.waitlistSubmitButton}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </form>
+            {waitlistStatus && (
+              <div className={`mt-2 text-sm ${waitlistStatus.success ? "text-green-600" : "text-red-600"}`}>
+                {waitlistStatus.message}
+              </div>
+            )}
+            <p className="text-xs text-gray-500">{t.waitlistPrivacy}</p>
+          </motion.div>
 
-                {/* Demo button */}
-                <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="mt-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{
-                    duration: 0.6,
-                    delay: 0.4,
-                    hover: { type: "spring", stiffness: 400, damping: 17 },
-                    tap: { type: "spring", stiffness: 400, damping: 17 },
-                  }}
-                >
-                </motion.div>
+          {/* Demo button */}
+          <motion.div
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            className="mt-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 0.6,
+              delay: 0.4,
+              hover: { type: "spring", stiffness: 400, damping: 17 },
+              tap: { type: "spring", stiffness: 400, damping: 17 },
+            }}
+          >
+          </motion.div>
               </div>
 
               {/* Feedback Column with Image */}
               <div className="flex flex-col space-y-6">
-                <motion.div
-                  className="space-y-3"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">{t.feedbackTitle}</h2>
-                  <p className="text-gray-600 text-lg md:text-xl">
-                    {t.feedbackSubtitle}
-                  </p>
-                </motion.div>
-                <motion.div
-                  className="w-full space-y-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                >
-                  <form onSubmit={handleFeedbackSubmit} className="space-y-4">
-                    <Input
-                      type="email"
-                      name="email"
-                      placeholder={t.feedbackEmailPlaceholder}
-                      className="h-14 text-base rounded-xl border-gray-300"
-                      required
-                      disabled={isSubmittingFeedback}
-                    />
-                    <textarea
-                      name="feedback"
-                      placeholder={t.feedbackMessagePlaceholder}
-                      className="w-full p-4 border rounded-xl min-h-[120px] bg-white border-gray-300 text-base"
-                      required
-                      disabled={isSubmittingFeedback}
-                    />
-                    <Button
-                      type="submit"
-                      variant="outline"
-                      className="w-full h-14 text-base rounded-xl border-purple-300 text-purple-700 hover:bg-purple-50"
-                      disabled={isSubmittingFeedback}
-                    >
-                      {isSubmittingFeedback ? t.feedbackSubmittingButton : t.feedbackSubmitButton}
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </form>
-                  {feedbackStatus && (
-                    <div className={`mt-2 text-sm ${feedbackStatus.success ? "text-green-600" : "text-red-600"}`}>
-                      {feedbackStatus.message}
-                    </div>
-                  )}
-                  <p className="text-xs text-gray-500">{t.feedbackPrivacy}</p>
-                </motion.div>
+          <motion.div
+            className="space-y-3"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight title-shadow">
+              <span className="gradient-text-fill">{t.feedbackTitle}</span>
+            </h2>
+            <p className="text-gray-600 text-lg md:text-xl">
+              {t.feedbackSubtitle}
+            </p>
+          </motion.div>
+          <motion.div
+            className="w-full space-y-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <form onSubmit={handleFeedbackSubmit} className="space-y-4">
+              <Input
+                type="email"
+                name="email"
+                placeholder={t.feedbackEmailPlaceholder}
+                className="h-14 text-base rounded-xl border-gray-300"
+                required
+                disabled={isSubmittingFeedback}
+              />
+              <textarea
+                name="feedback"
+                placeholder={t.feedbackMessagePlaceholder}
+                className="w-full p-4 border rounded-xl min-h-[120px] bg-white border-gray-300 text-base"
+                required
+                disabled={isSubmittingFeedback}
+              />
+              <Button
+                type="submit"
+                variant="outline"
+                className="w-full h-14 text-base rounded-xl border-purple-300 text-purple-700 hover:bg-purple-50"
+                disabled={isSubmittingFeedback}
+              >
+                {isSubmittingFeedback ? t.feedbackSubmittingButton : t.feedbackSubmitButton}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </form>
+            {feedbackStatus && (
+              <div className={`mt-2 text-sm ${feedbackStatus.success ? "text-green-600" : "text-red-600"}`}>
+                {feedbackStatus.message}
+              </div>
+            )}
+            <p className="text-xs text-gray-500">{t.feedbackPrivacy}</p>
+          </motion.div>
               </div>
             </div>
           </div>

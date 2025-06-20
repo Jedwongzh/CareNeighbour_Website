@@ -32,7 +32,7 @@ const aboutPageTranslations = {
     paragraph1:
       "我们是一支来自莫纳士大学的学生团队,怀抱着解决现实问题的热情。而这一切，始于我们亲身经历的困扰。零距(CareNeighbour)的诞生，源于我们在海外求学、工作时，无法陪伴年迈祖父母的无力感。像许多在外生活的游子和忙碌的职场人士一样，我们深知亲人需要照护却无法立刻赶回身边的痛苦。我们相信，一定有更好的方式。于是，我们打造了零距： 一个能在数分钟内，将家庭与本地值得信赖的照护者连接起来的平台。无论是简单的问候、陪伴，还是紧急协助，我们都致力于让“帮助”触手可及。但我们也深知，单靠技术还不够。我们渴望倾听那些真正了解老年照护的人士的声音。如果您在老年护理、医疗健康或社区支持领域有经验，我们诚挚邀请您与我们联系。您的反馈与建议，将帮助我们不断完善，真正为社会带来改变。如果您有意合作、提供指导，或愿意分享宝贵见解，请随时与我们取得联系。让我们一起努力，创造一个亲人需要照护时，再也不会让人感到无助的未来。",
     paragraph2:
-      "如果您有意合作、提供指导，或愿意分享宝贵见解，请随时与我们取得联系。让我们一起努力，创造一个亲人需要照护时，再也不会让人感到无助的未来。",
+      "如果您有意合作、提供指导，或愿意分s享宝贵见解，请随时与我们取得联系。让我们一起努力，创造一个亲人需要照护时，再也不会让人感到无助的未来。",
     joinWaitlist: "加入候补名单",
     footerCopyright: "零距 . 版权所有。",
   },
@@ -65,20 +65,22 @@ export default function AboutPage() {
 
       {/* Main Content */}
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
+        <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8 md:mb-12">
               <div className="space-y-2">
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter">{t.pageTitle}</h1>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter title-shadow">
+                  <span className="gradient-text-fill">{t.pageTitle}</span>
+                </h1>
               </div>
             </div>
 
             {/* Founding Team Image */}
             <div className="w-full flex justify-center mt-8">
-              <div className="max-w-4xl w-full overflow-hidden rounded-3xl shadow-lg border border-gray-200 bg-white">
+              <div className="max-w-4xl w-full overflow-hidden rounded-3xl">
                 <Image
                   src="/images/Founding-team-image.jpg"
-                  alt="Founding Team" // Consider if this alt text needs translation
+                  alt="Founding Team"
                   width={800}
                   height={150}
                   className="w-full h-auto object-cover rounded-3xl"
@@ -88,7 +90,7 @@ export default function AboutPage() {
             </div>
 
             <div className="my-12" />
-            <div className="max-w-4xl mx-auto prose prose-sm md:prose-base lg:prose-lg text-center md:text-justify">
+            <div className="max-w-4xl mx-auto prose prose-sm md:prose-base lg:prose-lg text-center md:text-justify text-black">
               <p>{t.paragraph1}</p>
 
               <div className="my-8" />
@@ -96,7 +98,7 @@ export default function AboutPage() {
 
               <div className="mt-8 flex justify-center">
                 <Link href="/#waitlist">
-                  <Button size="lg" className="font-medium">
+                  <Button size="lg" className="font-medium glassmorphism text-gray">
                     {t.joinWaitlist}
                   </Button>
                 </Link>

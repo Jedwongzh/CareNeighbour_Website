@@ -15,7 +15,17 @@ interface UnifiedFooterProps {
 
 export function UnifiedFooter({ language, translations }: UnifiedFooterProps) {
   return (
-    <footer className="border-t bg-purple-50">
+    <footer 
+      className="border-t bg-purple-50"
+      style={{
+          background: 'rgba(255,255,255,0)',
+          borderRadius: '0px',
+          boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
+          backdropFilter: 'blur(9px)',
+          WebkitBackdropFilter: 'blur(9px)',
+          border: '1px solid rgba(255,255,255,0.38)'
+        }}
+      >
       <div className="container px-4 md:px-6 py-8 flex flex-col md:flex-row items-center justify-between text-sm text-gray-500">
         <div className="flex items-center space-x-2 mb-4 md:mb-0">
           <Image src="/images/logo.png" alt="CareNeighbour Logo" width={24} height={24} />
