@@ -1010,9 +1010,9 @@ const CareTypeCards = () => {
 
 // How It Works step images
 const howItWorksImages = [
-  "/images/step1.jpg", // Replace with your actual images
-  "/images/step2.jpg",
-  "/images/step3.jpg"
+  "/images/Step1.jpg", // Replace with your actual images
+  "/images/Step2.jpg",
+  "/images/Step3.jpg"
 ]
 
 // Add StepBlock component after CareTypeCards
