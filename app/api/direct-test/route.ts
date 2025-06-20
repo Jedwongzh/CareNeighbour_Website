@@ -30,9 +30,13 @@ export async function GET() {
     formattedKey = formattedKey.replace(/\\n/g, "\n")
 
     // Create JWT client
-    const jwtClient = new google.auth.JWT(clientEmail, null, formattedKey, [
-      "https://www.googleapis.com/auth/spreadsheets",
-    ])
+    const jwtClient = new google.auth.JWT({
+      email: clientEmail,
+      key: formattedKey,
+      scopes: [
+        "https://www.googleapis.com/auth/spreadsheets",
+      ],
+    })
 
     // Authorize the client
     await jwtClient.authorize()

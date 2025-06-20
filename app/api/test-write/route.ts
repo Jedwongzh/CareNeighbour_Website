@@ -25,12 +25,18 @@ export async function GET() {
     })
   } catch (error) {
     console.error("Error in test-write:", error)
+    let message = "Unknown error"
+    let stack = undefined
+    if (error instanceof Error) {
+      message = error.message
+      stack = error.stack
+    }
     return NextResponse.json(
       {
         success: false,
         message: "Write test failed",
-        error: error.message,
-        stack: error.stack,
+        error: message,
+        stack: stack,
       },
       { status: 500 },
     )

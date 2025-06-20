@@ -69,7 +69,7 @@ export async function GET() {
     })
 
     const client = await auth.getClient()
-    const sheets = google.sheets({ version: "v4", auth: client })
+    const sheets = google.sheets({ version: "v4", auth: client as any })
 
     // Get spreadsheet info
     const spreadsheet = await sheets.spreadsheets.get({

@@ -7,6 +7,6 @@ export const metadata = {
   },
 }
 
-export default function ThankYouLayout({ children }) {
+export default function ThankYouLayout({ children }: { children: React.ReactNode }) {
   return <div className="flex min-h-[100dvh] flex-col">{children}</div>
 }

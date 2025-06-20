@@ -24,12 +24,12 @@ export async function GET(request: NextRequest) {
 
     if (type === "waitlist") {
       csv = "Email,Timestamp\n"
-      data.forEach((entry) => {
+      ;(data as Array<{ email: string; timestamp: string }>).forEach((entry) => {
         csv += `"${entry.email}","${entry.timestamp}"\n`
       })
     } else {
       csv = "Email,Feedback,Timestamp\n"
-      data.forEach((entry) => {
+      ;(data as Array<{ email: string; feedback: string; timestamp: string }>).forEach((entry) => {
         csv += `"${entry.email}","${entry.feedback.replace(/"/g, '""')}","${entry.timestamp}"\n`
       })
     }
