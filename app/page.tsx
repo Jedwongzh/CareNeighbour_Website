@@ -18,6 +18,7 @@ import { UnifiedHeader } from "@/components/unified-header"
 import { UnifiedFooter } from "@/components/unified-footer"
 import { joinWaitlist, submitFeedback } from "./actions"
 import { useLanguage } from "./contexts/LanguageContext" // Import useLanguage hook
+import VerticalCarousel from "@/components/VerticalCarousel"
 
 // Lazy load non-critical components
 const FeatureCarousel = lazy(() =>
@@ -1351,30 +1352,33 @@ export default function LandingPage() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-10 md:py-20 lg:py-16 relative overflow-hidden">
+        <section className="w-full py-10 md:py-20 lg:py-16 relative overflow-hidden flex flex-col items-center justify-center">
             <div className="absolute inset-0 z-0"></div>
 
-            <div className="container px-4 md:px-6 relative z-10">
-            <div className="max-w-5xl mx-auto">
-              <div className="space-y-8 md:space-y-10">
-              <div className="flex flex-col md:flex-row md:items-center gap-3">
-            <div className="flex items-center justify-between w-full">
-            <motion.h1
-              className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight leading-tight md:max-w-[70%] max-w-full title-shadow"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <span className="gradient-text-fill">
-                {t.heroTitleStart}{" "}
-                {t.heroTitleEnd}
-              </span>
-            </motion.h1>
+            <div className="container px-4 md:px-6 relative z-10 flex flex-col items-center justify-center">
+              <div className="max-w-5xl mx-auto flex flex-col items-center justify-center">
+          <div className="space-y-8 md:space-y-10 flex flex-col items-center justify-center">
+            <div className="flex flex-col md:flex-row md:items-center gap-8 items-center justify-center">
+              {/* Left column: Hero title (4/5) */}
+              <div className="flex items-center justify-center w-full">
+                <motion.h1
+            className="text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight leading-tight w-full text-center title-shadow"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+                >
+            <span className="gradient-text-fill">
+              {t.heroTitleStart}{" "}
+              {t.heroTitleEnd}
+            </span>
+                </motion.h1>
+              </div>
             </div>
+          </div>
               </div>
 
                 <motion.p
-                  className="text-xl md:text-2xl text-gray-600 max-w-3xl"
+                  className="text-xl md:text-2xl text-gray max-w-3xl px-2 py-4 text-center mx-auto"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
@@ -1392,8 +1396,6 @@ export default function LandingPage() {
                   <CareSearchBar />
                 </motion.div>
               </div>
-            </div>
-          </div>
         </section>
 
         {/* CareTypeCards now comes right after Hero */}
@@ -1441,55 +1443,56 @@ export default function LandingPage() {
             ))}
             </div>
             {/* Desktop: sticky image + scrollable steps */}
-            <div className="hidden md:flex md:w-4/5 items-start justify-center relative">
-            <div
-              className="sticky top-0 w-[700px] h-[50vh] flex items-center justify-center z-20 md:static md:h-screen md:sticky "
-              style={{ pointerEvents: "none" }}
-            >
+              <div className="hidden md:flex md:w-4/5 items-start justify-center relative">
               <div
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[450px] rounded-2xl bg-white shadow-lg"
-                style={{
-                  zIndex: 1,
-                  pointerEvents: "none",
-                  borderRadius: "1rem",
-                }}
-              />
-            {howItWorksImages.map((img, idx) => (
-              <img
-          key={img}
-          src={img}
-          alt={`Step ${idx + 1}`}
-                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] h-full object-contain transition-opacity duration-500 rounded-2xl ${activeStep === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'} `}
-          style={{
-                    pointerEvents: "none",
-            transition: "opacity 0.5s",
-                    paddingLeft: "1%",
-                    paddingRight: "1%",
-          }}
-              />
-            ))}
-          </div>
-          </div>
-          <div className="hidden md:block w-1/2 md:ml-auto">
-            {[0, 1, 2].map((idx) => (
-              <div
-          key={idx}
-          ref={(el) => { stepRefs.current[idx] = el }}
-          data-idx={idx}
-          className="min-h-[60vh] md:min-h-screen flex items-center overflow-hidden"
-          style={{ scrollMarginTop: 100 }}
+                className="sticky top-0 w-[700px] h-[50vh] flex items-center justify-center z-20 md:static md:h-screen md:sticky "
+                style={{ pointerEvents: "none" }}
               >
-          <div className="px-4 md:px-8 w-full">
-            <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
-              <span className="text-2xl font-bold text-purple-700">{idx + 1}</span>
+                <div
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[450px] rounded-2xl bg-white shadow-lg"
+                  style={{
+                    zIndex: 1,
+                    pointerEvents: "none",
+                    borderRadius: "1rem",
+                  }}
+                >
+              {howItWorksImages.map((img, idx) => (
+                <img
+            key={img}
+            src={img}
+            alt={`Step ${idx + 1}`}
+                    className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] h-full object-contain transition-opacity duration-500 rounded-2xl ${activeStep === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'} `}
+            style={{
+                      pointerEvents: "none",
+              transition: "opacity 0.5s",
+                      paddingLeft: "1%",
+                      paddingRight: "1%",
+            }}
+                />
+              ))}
             </div>
-            <h3 className="text-2xl font-semibold mb-2 text-left title-shadow">
-              <span className="gradient-text-fill">{(t as any)[`step${idx + 1}Title`]}</span>
-            </h3>
-            <p className="text-gray-600 text-lg">{(t as any)[`step${idx + 1}Description`]}</p>
-          </div>
+            </div>
+            <div className="hidden md:block w-1/2 md:ml-auto">
+              {[0, 1, 2].map((idx) => (
+                <div
+            key={idx}
+            ref={(el) => { stepRefs.current[idx] = el }}
+            data-idx={idx}
+            className="min-h-[60vh] md:min-h-screen flex items-center overflow-hidden"
+            style={{ scrollMarginTop: 100 }}
+                >
+            <div className="px-4 md:px-8 w-full">
+              <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
+                <span className="text-2xl font-bold text-purple-700">{idx + 1}</span>
               </div>
-            ))}
+              <h3 className="text-2xl font-semibold mb-2 text-left title-shadow">
+                <span className="gradient-text-fill">{(t as any)[`step${idx + 1}Title`]}</span>
+              </h3>
+              <p className="text-gray-600 text-lg">{(t as any)[`step${idx + 1}Description`]}</p>
+            </div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
