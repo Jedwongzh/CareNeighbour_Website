@@ -26,12 +26,14 @@ export const metadata: Metadata = {
   },
   
   keywords: [
+    'CareNeighbour', 'Care a neighbour', 'Care neighbour', 'Care for neighbour', 'neighbour care', 'care for a neighbour',
     'elderly care', 'caregivers', 'aged care', 'local support', 'Australia', 
     'Monash', 'senior care', 'AI in Care',
     // Chinese keywords
+    '零距', '邻里关怀', '邻居关怀', '关怀邻居',
     '老人护理', '照顾者', '年长护理', '本地支持', '澳大利亚', '莫纳什', '长者照顾', '人工智能护理'
   ],
-  description: 'CareNeighbour connects you with verified caregivers who understand your language and culture, making finding the right support effortless.',
+  description: 'CareNeighbour connects you with verified caregivers who understand your language and culture, making finding the right support effortless. Find local care for a neighbour or family member.',
   openGraph: {
     type: 'website',
     locale: 'en_AU',
@@ -77,6 +79,37 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Organization",
+                  "name": "CareNeighbour",
+                  "url": "https://www.careneighbour.com",
+                  "logo": "https://www.careneighbour.com/images/CNlogo.png",
+                  "sameAs": [],
+                  "contactPoint": {
+                    "@type": "ContactPoint",
+                    "contactType": "Customer Service",
+                    "email": "info@careneighbour.com"
+                  }
+                },
+                {
+                  "@type": "WebSite",
+                  "url": "https://www.careneighbour.com/",
+                  "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://www.careneighbour.com/?q={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                  }
+                }
+              ]
+            })
+          }}
+        />
         <AuthProvider>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
             <LanguageProvider>

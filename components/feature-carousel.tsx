@@ -6,7 +6,7 @@ import { useState } from "react"
 import Image from "next/image"
 import { Check, ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useMobile } from "@/hooks/use-mobile"
+import { useMobile } from "@/components/ui/use-mobile"
 
 type FeatureSet = {
   image: string

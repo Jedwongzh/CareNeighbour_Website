@@ -1378,7 +1378,7 @@ export default function LandingPage() {
               </div>
 
                 <motion.p
-                  className="text-xl md:text-2xl text-gray max-w-3xl px-2 py-4 text-center mx-auto"
+                  className="text-lg md:text-2xl text max-w-3xl px-2 py-4 text-center mx-auto"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
@@ -1428,13 +1428,16 @@ export default function LandingPage() {
             {[0, 1, 2].map((idx) => (
               <div key={idx} className="mb-16">
               <div className="w-full mb-8">
-                <img
+                <Image
                 src={howItWorksImages[idx]}
                 alt={`Step ${idx + 1}`}
+                width={800}
+                height={600}
                 className="w-full h-full object-cover rounded-2xl shadow-lg"
+                sizes="100vw"
                 />
               </div>
-              <div className="px-1">
+              <div className="px-1 text-center">
                 <h3 className="text-2xl font-semibold mb-2 text-black">{(t as any)[`step${idx + 1}Title`]}</h3>
                 <p className="text-gray-600 text-lg">{(t as any)[`step${idx + 1}Description`]}</p>
               </div>
@@ -1513,6 +1516,8 @@ export default function LandingPage() {
               width={220}
               height={220}
               className="object-contain md:w-[220px] md:h-[220px] w-[100px] h-[100px]"
+              sizes="(max-width: 768px) 100px, 220px"
+              priority
             />
           </div>
           <motion.h2
@@ -1527,7 +1532,7 @@ export default function LandingPage() {
               </div>
 
               <motion.div
-          className="space-y-6 text-lg md:text-xl text-gray-600"
+          className="space-y-6 text-lg md:text-xl text-gray-800 text-center-justified md:text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -1567,6 +1572,7 @@ export default function LandingPage() {
             width={500}
             height={350}
             className="object-cover w-full h-[300px]"
+            sizes="100vw"
                 />
               </motion.div>
             </CarouselItem>
@@ -1584,6 +1590,7 @@ export default function LandingPage() {
             width={500}
             height={350}
             className="object-cover w-full h-[300px]"
+            sizes="100vw"
                 />
               </motion.div>
             </CarouselItem>
@@ -1601,6 +1608,7 @@ export default function LandingPage() {
             width={500}
             height={350}
             className="object-cover w-full h-[300px]"
+            sizes="100vw"
                 />
               </motion.div>
             </CarouselItem>
@@ -1623,6 +1631,7 @@ export default function LandingPage() {
             width={500}
             height={350}
             className="object-cover w-full h-[300px]"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
               </motion.div>
 
@@ -1639,6 +1648,7 @@ export default function LandingPage() {
             width={500}
             height={350}
             className="object-cover w-full h-[300px]"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
               </motion.div>
 
@@ -1655,6 +1665,7 @@ export default function LandingPage() {
             width={500}
             height={350}
             className="object-cover w-full h-[300px]"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
               </motion.div>
             </div>
@@ -2144,7 +2155,7 @@ export default function LandingPage() {
           {/* Waitlist Column */}
           <div className="flex flex-col justify-start space-y-6 self-start">
           <motion.div
-            className="space-y-3"
+            className="space-y-3 text-center lg:text-left"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -2188,7 +2199,7 @@ export default function LandingPage() {
                 {waitlistStatus.message}
               </div>
             )}
-            <p className="text-xs text-gray-500">{t.waitlistPrivacy}</p>
+            <p className="text-xs text-gray-500 text-center">{t.waitlistPrivacy}</p>
           </motion.div>
 
           {/* Demo button */}
@@ -2212,7 +2223,7 @@ export default function LandingPage() {
               {/* Feedback Column with Image */}
               <div className="flex flex-col space-y-6">
           <motion.div
-            className="space-y-3"
+            className="space-y-3 text-center lg:text-left"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -2263,7 +2274,7 @@ export default function LandingPage() {
                 {feedbackStatus.message}
               </div>
             )}
-            <p className="text-xs text-gray-500">{t.feedbackPrivacy}</p>
+            <p className="text-xs text-gray-500 text-center">{t.feedbackPrivacy}</p>
           </motion.div>
               </div>
             </div>
