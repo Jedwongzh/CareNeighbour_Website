@@ -1407,7 +1407,7 @@ export default function LandingPage() {
           ref={howItWorksRef}
           style={{ scrollMarginTop: '5rem' }}
           className="w-full py-6">
-          <div className="container px-4 md:px-6">
+          <div className="container px-4 md:px-6 mx-auto">
             <motion.h2
               className="text-4xl md:text-6xl font-bold tracking-tight text-center pb-4 title-shadow"
               initial={{ opacity: 0, y: 20 }}
@@ -1419,8 +1419,9 @@ export default function LandingPage() {
             </motion.h2>
           </div>
         </section>
+        
         <section
-          className="flex flex-col md:flex-row"
+          className="flex flex-col md:flex-row items-center justify-center max-w-7xl mx-auto px-4"
         >
             {/* Mobile: stacked image + text for each step */}
             <div className="block md:hidden w-full px-4">
@@ -1443,7 +1444,7 @@ export default function LandingPage() {
             ))}
             </div>
             {/* Desktop: sticky image + scrollable steps */}
-              <div className="hidden md:flex md:w-4/5 items-start justify-center relative">
+            <div className="hidden md:flex md:w-4/5 items-start justify-center relative">
               <div
                 className="sticky top-0 w-[700px] h-[50vh] flex items-center justify-center z-20 md:static md:h-screen md:sticky "
                 style={{ pointerEvents: "none" }}
@@ -1470,30 +1471,31 @@ export default function LandingPage() {
             }}
                 />
               ))}
-            </div>
-            </div>
-            <div className="hidden md:block w-1/2 md:ml-auto">
-              {[0, 1, 2].map((idx) => (
-                <div
-            key={idx}
-            ref={(el) => { stepRefs.current[idx] = el }}
-            data-idx={idx}
-            className="min-h-[60vh] md:min-h-screen flex items-center overflow-hidden"
-            style={{ scrollMarginTop: 100 }}
-                >
-            <div className="px-4 md:px-8 w-full">
-              <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
-                <span className="text-2xl font-bold text-purple-700">{idx + 1}</span>
-              </div>
-              <h3 className="text-2xl font-semibold mb-2 text-left title-shadow">
-                <span className="gradient-text-fill">{(t as any)[`step${idx + 1}Title`]}</span>
-              </h3>
-              <p className="text-gray-600 text-lg">{(t as any)[`step${idx + 1}Description`]}</p>
-            </div>
                 </div>
-              ))}
+              </div>
+              
+              <div className="hidden md:block w-1/2 md:ml-auto">
+            {[0, 1, 2].map((idx) => (
+              <div
+          key={idx}
+          ref={(el) => { stepRefs.current[idx] = el }}
+          data-idx={idx}
+          className="min-h-[60vh] md:min-h-screen flex items-center overflow-hidden"
+          style={{ scrollMarginTop: 100 }}
+              >
+          <div className="px-4 md:px-8 w-full">
+            <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
+              <span className="text-2xl font-bold text-purple-700">{idx + 1}</span>
             </div>
+            <h3 className="text-2xl font-semibold mb-2 text-left title-shadow">
+              <span className="gradient-text-fill">{(t as any)[`step${idx + 1}Title`]}</span>
+            </h3>
+            <p className="text-gray-600 text-lg">{(t as any)[`step${idx + 1}Description`]}</p>
           </div>
+              </div>
+            ))}
+              </div>
+            </div>
         </section>
 
         {/* Problem Statement Section */}
