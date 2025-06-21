@@ -715,7 +715,7 @@ function ServicesPageContent() {
                   <div className="text-center md:text-center">
                     <div className="flex items-center justify-center md:justify-start gap-4 mb-4 md:mb-6">
                       <span className="text-3xl md:text-4xl lg:text-5xl">{category.icon}</span>
-                      <h3 className="text-2xl md:text-3xl lg:text-4xl w-full font-bold title-shadow">
+                      <h3 className="text-2xl md:text-3xl lg:text-4xl w-full font-bold title-shadow text-black">
                         <span className="gradient-text-fill">{category.title}</span>
                       </h3>
                     </div>
@@ -749,7 +749,7 @@ function ServicesPageContent() {
         {/* Call to Action */}
         <div className="text-center">
           <div className="glassmorphism rounded-3xl p-8 md:p-12 lg:p-16 border max-w-4xl mx-auto">
-            <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold title-shadow mb-4 md:mb-6 lg:mb-8">
+            <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold title-shadow mb-4 md:mb-6 lg:mb-8 text-black">
               <span className="gradient-text-fill">
                 {language === 'zh' ? '準備開始了嗎？' : language === 'yue' ? '準備開始了嗎？' : 'Ready to Get Started?'}
               </span>

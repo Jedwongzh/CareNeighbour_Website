@@ -1029,7 +1029,7 @@ export default function AppDemoPage() {
           >
             <Card className="bg-white/90 backdrop-blur-sm shadow-lg border-slate-200/70 mb-6 overflow-hidden">
               <CardContent className="pt-6 pb-6">
-                <h3 className="text-lg font-semibold text-slate-800 mb-4">{t.aiSummary}</h3>
+                <h3 className="text-lg font-semibold text-black mb-4">{t.aiSummary}</h3>
 
                 {/* Purple-themed detail box */}
                 <div className="bg-purple-50/50 rounded-lg p-4 mb-6 border border-purple-100">
@@ -1092,7 +1092,7 @@ export default function AppDemoPage() {
             transition={{ duration: 0.5 }}
           >
             <div className="text-center mb-5">
-              <h3 className="text-xl font-semibold text-slate-800">{t.caregiverFound}</h3>
+              <h3 className="text-xl font-semibold text-black">{t.caregiverFound}</h3>
               <p className="text-sm text-slate-500 mt-1">{t.swipeInstructions}</p>
             </div>
 
@@ -1284,7 +1284,7 @@ export default function AppDemoPage() {
               return (
                 <Card className="bg-white/90 backdrop-blur-sm shadow-lg border-slate-200/70 mb-6 overflow-hidden">
                   <CardContent className="pt-6 pb-6">
-                    <h3 className="text-lg font-semibold text-slate-800 mb-4 text-center">{t.trackingTitle}</h3>
+                    <h3 className="text-lg font-semibold text-black mb-4 text-center">{t.trackingTitle}</h3>
 
                     {/* Map Visualization */}
                     <div className="relative w-full h-64 bg-slate-200 rounded-lg mb-6 overflow-hidden border border-slate-300">

@@ -571,37 +571,37 @@ const CareSearchBar = () => {
   const presetPrompts = [
     {
       key: 'elderlyCare',
-      icon: '👴',
+      icon: '➕',
       title: t.searchPresetPrompts.elderlyCare,
       description: t.searchPresetDescriptions.elderlyCare
     },
     {
       key: 'medicalCare',
-      icon: '🏥',
+      icon: '➕',
       title: t.searchPresetPrompts.medicalCare,
       description: t.searchPresetDescriptions.medicalCare
     },
     {
       key: 'culturalCare',
-      icon: '🌍',
+      icon: '➕',
       title: t.searchPresetPrompts.culturalCare,
       description: t.searchPresetDescriptions.culturalCare
     },
     {
       key: 'respiteCare',
-      icon: '⏰',
+      icon: '➕',
       title: t.searchPresetPrompts.respiteCare,
       description: t.searchPresetDescriptions.respiteCare
     },
     {
       key: 'dementiaCare',
-      icon: '🧠',
+      icon: '➕',
       title: t.searchPresetPrompts.dementiaCare,
       description: t.searchPresetDescriptions.dementiaCare
     },
     {
       key: 'homeCare',
-      icon: '🏠',
+      icon: '➕',
       title: t.searchPresetPrompts.homeCare,
       description: t.searchPresetDescriptions.homeCare
     }
@@ -945,7 +945,7 @@ const CareTypeCards = () => {
                       <Image src={type.image} alt={type.title} width={400} height={220} className="object-cover w-full h-full" />
                     </div>
                     <div className="flex-1 flex flex-col p-6">
-                      <h3 className="text-xl font-semibold mb-2">{type.title}</h3>
+                      <h3 className="text-xl font-semibold mb-2 text-black">{type.title}</h3>
                       <p className="text-gray-600 mb-4">{type.description}</p>
                     </div>
                   </motion.div>
@@ -970,7 +970,7 @@ const CareTypeCards = () => {
                 <Image src={type.image} alt={type.title} width={400} height={220} className="object-cover w-full h-full" />
               </div>
               <div className="flex-1 flex flex-col p-6">
-                <h3 className="text-xl font-semibold mb-2">{type.title}</h3>
+                <h3 className="text-xl font-semibold mb-2 text-black">{type.title}</h3>
                 <p className="text-gray-600 mb-4">{type.description}</p>
               </div>
             </motion.div>
@@ -1421,7 +1421,7 @@ export default function LandingPage() {
         </section>
         
         <section
-          className="flex flex-col md:flex-row items-center justify-center max-w-7xl mx-auto px-4"
+          className="flex flex-col md:flex-row items-center justify-center w-full px-4"
         >
             {/* Mobile: stacked image + text for each step */}
             <div className="block md:hidden w-full px-4">
@@ -1435,9 +1435,7 @@ export default function LandingPage() {
                 />
               </div>
               <div className="px-1">
-                <h3 className="text-2xl font-semibold mb-2 text-left title-shadow">
-                  <span className="gradient-text-fill">{(t as any)[`step${idx + 1}Title`]}</span>
-                </h3>
+                <h3 className="text-2xl font-semibold mb-2 text-black">{(t as any)[`step${idx + 1}Title`]}</h3>
                 <p className="text-gray-600 text-lg">{(t as any)[`step${idx + 1}Description`]}</p>
               </div>
               </div>
@@ -1450,27 +1448,33 @@ export default function LandingPage() {
                 style={{ pointerEvents: "none" }}
               >
                 <div
-                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[450px] rounded-2xl bg-white shadow-lg"
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[400px] rounded-2xl shadow-lg"
                   style={{
-                    zIndex: 1,
-                    pointerEvents: "none",
-                    borderRadius: "1rem",
+                  zIndex: 1,
+                  pointerEvents: "none",
+                  borderRadius: "1rem",
+                  background: "rgba(255,255,255,0.18)",
+                  boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.18)",
+                  backdropFilter: "blur(16px)",
+                  WebkitBackdropFilter: "blur(16px)",
+                  border: "1px solid rgba(255,255,255,0.28)",
                   }}
                 >
-              {howItWorksImages.map((img, idx) => (
+                {howItWorksImages.map((img, idx) => (
                 <img
-            key={img}
-            src={img}
-            alt={`Step ${idx + 1}`}
-                    className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] h-full object-contain transition-opacity duration-500 rounded-2xl ${activeStep === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'} `}
-            style={{
-                      pointerEvents: "none",
-              transition: "opacity 0.5s",
-                      paddingLeft: "1%",
-                      paddingRight: "1%",
-            }}
+                key={img}
+                src={img}
+                alt={`Step ${idx + 1}`}
+                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] h-full object-contain transition-opacity duration-500 rounded-2xl ${activeStep === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                style={{
+                  pointerEvents: "none",
+                  transition: "opacity 0.5s",
+                  paddingLeft: "1%",
+                  paddingRight: "1%",
+                  borderRadius: "1.5rem", // Add border radius here
+                }}
                 />
-              ))}
+                ))}
                 </div>
               </div>
               
@@ -1487,9 +1491,7 @@ export default function LandingPage() {
             <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
               <span className="text-2xl font-bold text-purple-700">{idx + 1}</span>
             </div>
-            <h3 className="text-2xl font-semibold mb-2 text-left title-shadow">
-              <span className="gradient-text-fill">{(t as any)[`step${idx + 1}Title`]}</span>
-            </h3>
+            <h3 className="text-2xl font-semibold mb-2 text-black">{(t as any)[`step${idx + 1}Title`]}</h3>
             <p className="text-gray-600 text-lg">{(t as any)[`step${idx + 1}Description`]}</p>
           </div>
               </div>

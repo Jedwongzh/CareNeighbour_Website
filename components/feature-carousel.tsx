@@ -206,7 +206,7 @@ export function FeatureCarousel() {
             <div className="flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full bg-primary/10">
               <Check className="h-4 w-4 md:h-5 md:w-5 text-primary" />
             </div>
-            <h3 className="text-base md:text-lg font-bold">{feature.title}</h3>
+            <h3 className="text-base md:text-lg font-bold text-black">{feature.title}</h3>
             <p className="text-sm md:text-base text-muted-foreground text-left">{feature.description}</p>
           </div>
         ))}
