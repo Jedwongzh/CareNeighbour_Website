@@ -208,7 +208,7 @@ const pageTranslations = {
       {
         title: "Cultural Care",
         description: "Caregivers who understand and respect cultural traditions",
-        image: "/images/Culturalcareimg.jpg",
+        image: "/images/CulturalCareimg.jpg",
         examples: [
           "Language-specific care",
           "Cultural dietary needs",
@@ -359,7 +359,7 @@ const pageTranslations = {
       {
         title: "文化护理",
         description: "了解并尊重文化传统的护理员",
-        image: "/images/Culturalcareimg.jpg",
+        image: "/images/CulturalCareimg.jpg",
         examples: [
           "语言专属护理",
           "文化饮食需求",
@@ -510,7 +510,7 @@ const pageTranslations = {
       {
         title: "文化護理",
         description: "了解並尊重文化傳統的護理員",
-        image: "/images/Culturalcareimg.jpg",
+        image: "/images/CulturalCareimg.jpg",
         examples: [
           "語言專屬護理",
           "文化飲食需求",
