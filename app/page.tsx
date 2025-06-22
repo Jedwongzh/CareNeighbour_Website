@@ -2213,8 +2213,6 @@ export default function LandingPage() {
             transition={{
               duration: 0.6,
               delay: 0.4,
-              hover: { type: "spring", stiffness: 400, damping: 17 },
-              tap: { type: "spring", stiffness: 400, damping: 17 },
             }}
           >
           </motion.div>
