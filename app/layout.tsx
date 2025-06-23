@@ -78,6 +78,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/images/CN_Figure2.png" type="image/png" />
+      </head>
       <body className={inter.className}>
         <script
           type="application/ld+json"
