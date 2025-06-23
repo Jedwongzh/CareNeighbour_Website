@@ -1431,8 +1431,9 @@ export default function LandingPage() {
                 <Image
                 src={howItWorksImages[idx]}
                 alt={`Step ${idx + 1}`}
-                width={800}
-                height={600}
+                width={3840}
+                height={2160}
+                quality={100}
                 className="w-full h-full object-cover rounded-2xl shadow-lg"
                 sizes="100vw"
                 />
@@ -1464,10 +1465,14 @@ export default function LandingPage() {
                   }}
                 >
                 {howItWorksImages.map((img, idx) => (
-                <img
+                <Image
                 key={img}
                 src={img}
                 alt={`Step ${idx + 1}`}
+                width={3840}
+                height={2160}
+                quality={90}
+                sizes="(min-width: 768px) 665px"
                   className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] h-full object-contain transition-opacity duration-500 rounded-2xl ${activeStep === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
                 style={{
                   pointerEvents: "none",
@@ -1509,19 +1514,8 @@ export default function LandingPage() {
             {/* Text content - takes 60% width on desktop, full width on mobile */}
             <div className="flex flex-col mb-12 md:mb-16 md:max-w mx-auto">
               <div className="flex items-center gap-2 mb-8">
-          <div className="flex-shrink-0">
-            <Image
-              src="/images/CN_Figure1.png"
-              alt="CareNeighbor Guide"
-              width={220}
-              height={220}
-              className="object-contain md:w-[220px] md:h-[220px] w-[100px] h-[100px]"
-              sizes="(max-width: 768px) 100px, 220px"
-              priority
-            />
-          </div>
           <motion.h2
-            className="text-4xl md:text-6xl font-bold tracking-tight text-left pb-4 md:max-w-none title-shadow"
+            className="text-4xl md:text-6xl w-full font-bold tracking-tight text-center pb-4 md:max-w-none title-shadow"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -1704,9 +1698,9 @@ export default function LandingPage() {
             >
               <CarouselContent className="-ml-4">
                 {/* Item 1 */}
-                <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
+                <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3 flex">
                   <div
-                    className="p-8 rounded-2xl h-full flex flex-col overflow-hidden"
+                    className="p-8 rounded-2xl h-full flex flex-col overflow-hidden w-full"
                     style={{
                       background: 'rgba(255,255,255,0)',
                       borderRadius: '16px',
@@ -1726,9 +1720,9 @@ export default function LandingPage() {
                   </div>
                 </CarouselItem>
                 {/* Item 2 */}
-                <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
+                <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3 flex">
                   <div
-                    className="p-8 rounded-2xl h-full flex flex-col overflow-hidden"
+                    className="p-8 rounded-2xl h-full flex flex-col overflow-hidden w-full"
                     style={{
                       background: 'rgba(255,255,255,0)',
                       borderRadius: '16px',
@@ -1748,9 +1742,9 @@ export default function LandingPage() {
                   </div>
                 </CarouselItem>
                 {/* Item 3 */}
-                <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
+                <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3 flex">
                   <div
-                    className="p-8 rounded-2xl h-full flex flex-col overflow-hidden"
+                    className="p-8 rounded-2xl h-full flex flex-col overflow-hidden w-full"
                     style={{
                       background: 'rgba(255,255,255,0)',
                       borderRadius: '16px',
@@ -1770,9 +1764,9 @@ export default function LandingPage() {
                   </div>
                 </CarouselItem>
                 {/* Item 4 */}
-                <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
+                <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3 flex">
                   <div
-                    className="p-8 rounded-2xl h-full flex flex-col overflow-hidden"
+                    className="p-8 rounded-2xl h-full flex flex-col overflow-hidden w-full"
                     style={{
                       background: 'rgba(255,255,255,0)',
                       borderRadius: '16px',
@@ -1792,9 +1786,9 @@ export default function LandingPage() {
                   </div>
                 </CarouselItem>
                 {/* Item 5 */}
-                <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
+                <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3 flex">
                   <div
-                    className="p-8 rounded-2xl h-full flex flex-col overflow-hidden"
+                    className="p-8 rounded-2xl h-full flex flex-col overflow-hidden w-full"
                     style={{
                       background: 'rgba(255,255,255,0)',
                       borderRadius: '16px',
@@ -1814,9 +1808,9 @@ export default function LandingPage() {
                   </div>
                 </CarouselItem>
                 {/* Item 6 */}
-                <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3">
+                <CarouselItem className="pl-4 md:basis-1/3 lg:basis-1/3 flex">
                   <div
-                    className="p-8 rounded-2xl h-full flex flex-col overflow-hidden"
+                    className="p-8 rounded-2xl h-full flex flex-col overflow-hidden w-full"
                     style={{
                       background: 'rgba(255,255,255,0)',
                       borderRadius: '16px',
@@ -1876,7 +1870,7 @@ export default function LandingPage() {
           <h2 className="text-2xl font-semibold mb-3 title-shadow">
             <span className="gradient-text-fill">{t.feature1Title}</span>
           </h2>
-          <p className="text-lg text-gray-700 justify-left">
+          <p className="text-lg text-gray-700 justify-left min-h-[120px]">
             {t.feature1Description}
           </p>
               </div>
@@ -1995,7 +1989,7 @@ export default function LandingPage() {
           <h2 className="text-2xl font-semibold mb-3 title-shadow">
             <span className="gradient-text-fill">{t.feature2Title}</span>
           </h2>
-          <p className="text-lg text-gray-700">
+          <p className="text-lg text-gray-700 min-h-[120px]">
             {t.feature2Description}
           </p>
               </div>
@@ -2014,7 +2008,7 @@ export default function LandingPage() {
           <h2 className="text-2xl font-semibold mb-3 title-shadow">
             <span className="gradient-text-fill">{t.feature3Title}</span>
           </h2>
-          <p className="text-lg text-gray-700">
+          <p className="text-lg text-gray-700 min-h-[120px]">
             {t.feature3Description}
           </p>
               </div>
@@ -2133,7 +2127,7 @@ export default function LandingPage() {
           <h2 className="text-2xl font-semibold mb-3 title-shadow">
             <span className="gradient-text-fill">{t.feature4Title}</span>
           </h2>
-          <p className="text-lg text-gray-700">
+          <p className="text-lg text-gray-700 min-h-[120px]">
             {t.feature4Description}
           </p>
               </div>
