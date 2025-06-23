@@ -7,6 +7,7 @@ import { UnifiedFooter } from "@/components/unified-footer"
 import { Button } from "@/components/ui/button"
 import Link from 'next/link'
 import Image from 'next/image'
+import Head from "next/head"
 
 // Services Page Content Component
 function ServicesPageContent() {
@@ -684,100 +685,111 @@ function ServicesPageContent() {
   }
 
   return (
-    <div className="flex min-h-[100dvh] flex-col">
-      {/* Unified Header */}
-      <UnifiedHeader 
-        language={language}
-        setLanguage={setLanguage}
-        translations={headerTranslations}
-      />
+    <>
+      <Head>
+        <title>Care Services | AI-Powered Instant Care Sourcing | CareNeighbour</title>
+        <meta name="description" content="Explore CareNeighbour's AI-powered instant care sourcing platform. Discover comprehensive, culturally-sensitive care services and get matched instantly with trusted caregivers." />
+        <meta name="keywords" content="CareNeighbour, Care Neighbour, AI-powered care, instant care, care sourcing platform, new care platform, trusted caregivers, services, NDIS, aged care, allied health, nursing, support" />
+        <meta property="og:title" content="Care Services | AI-Powered Instant Care Sourcing | CareNeighbour" />
+        <meta property="og:description" content="Explore CareNeighbour's AI-powered instant care sourcing platform. Discover comprehensive, culturally-sensitive care services and get matched instantly with trusted caregivers." />
+        <meta property="og:image" content="/images/CN_Figure2.png" />
+        <meta name="robots" content="index, follow" />
+      </Head>
+      <div className="flex min-h-[100dvh] flex-col">
+        {/* Unified Header */}
+        <UnifiedHeader 
+          language={language}
+          setLanguage={setLanguage}
+          translations={headerTranslations}
+        />
 
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12 lg:py-16">
-        {/* Hero Section */}
-        <div className="text-center mb-12 md:mb-16 lg:mb-20">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 md:mb-8 lg:mb-12 title-shadow">
-            <span className="gradient-text-fill">
-              {language === 'zh' ? '我们的全面护理服务' : language === 'yue' ? '我哋嘅全面護理服務' : 'Our Comprehensive Care Services'}
-            </span>
-          </h1>
-          <p className="text-lg md:text-xl lg:text-2xl text-black max-w-4xl mx-auto leading-relaxed">
-            {content.subtitle}
-          </p>
-        </div>
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12 lg:py-16">
+          {/* Hero Section */}
+          <div className="text-center mb-12 md:mb-16 lg:mb-20">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 md:mb-8 lg:mb-12 title-shadow">
+              <span className="gradient-text-fill">
+                {language === 'zh' ? '我们的全面护理服务' : language === 'yue' ? '我哋嘅全面護理服務' : 'Our Comprehensive Care Services'}
+              </span>
+            </h1>
+            <p className="text-lg md:text-xl lg:text-2xl text-black max-w-4xl mx-auto leading-relaxed">
+              {content.subtitle}
+            </p>
+          </div>
 
-        {/* Services Section */}
-        <div className="mb-16 md:mb-20 lg:mb-24">
-          <div className="space-y-12 md:space-y-16 lg:space-y-20">
-            {content.serviceCategories.map((category, index) => (
-              <div key={index} className="glassmorphism rounded-3xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500">
-                {/* Category Header */}
-                <div className="p-6 md:p-8 lg:p-12">
-                  <div className="text-center md:text-center">
-                    <div className="flex items-center justify-center md:justify-start gap-4 mb-4 md:mb-6">
-                      <span className="text-3xl md:text-4xl lg:text-5xl">{category.icon}</span>
-                      <h3 className="text-2xl md:text-3xl lg:text-4xl w-full font-bold title-shadow text-black">
-                        <span className="gradient-text-fill">{category.title}</span>
-                      </h3>
+          {/* Services Section */}
+          <div className="mb-16 md:mb-20 lg:mb-24">
+            <div className="space-y-12 md:space-y-16 lg:space-y-20">
+              {content.serviceCategories.map((category, index) => (
+                <div key={index} className="glassmorphism rounded-3xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500">
+                  {/* Category Header */}
+                  <div className="p-6 md:p-8 lg:p-12">
+                    <div className="text-center md:text-center">
+                      <div className="flex items-center justify-center md:justify-start gap-4 mb-4 md:mb-6">
+                        <span className="text-3xl md:text-4xl lg:text-5xl">{category.icon}</span>
+                        <h3 className="text-2xl md:text-3xl lg:text-4xl w-full font-bold title-shadow text-black">
+                          <span className="gradient-text-fill">{category.title}</span>
+                        </h3>
+                      </div>
+                      <p className="text-base md:text-lg lg:text-xl text-black w-full leading-relaxed">{category.description}</p>
                     </div>
-                    <p className="text-base md:text-lg lg:text-xl text-black w-full leading-relaxed">{category.description}</p>
                   </div>
-                </div>
 
-                {/* Services Grid */}
-                <div className="p-6 md:p-8 lg:p-12">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
-                    {category.services.map((service, serviceIndex) => (
-                      <div key={serviceIndex} className="glassmorphism p-4 md:p-6 lg:p-8 rounded-2xl border border-gray-100 hover:border-purple-200 transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1 group">
-                        <div className="flex flex-col space-y-3 md:space-y-4">
-                          <div className="text-2xl md:text-3xl lg:text-4xl transition-transform duration-300">{service.icon}</div>
-                          <div className="flex-1">
-                            <h4 className="text-base md:text-lg lg:text-xl font-semibold mb-2 md:mb-3 title-shadow">
-                              <span className="gradient-text-fill">{service.name}</span>
-                            </h4>
-                            <p className="text-xs md:text-sm lg:text-base text-black leading-relaxed">{service.description}</p>
+                  {/* Services Grid */}
+                  <div className="p-6 md:p-8 lg:p-12">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+                      {category.services.map((service, serviceIndex) => (
+                        <div key={serviceIndex} className="glassmorphism p-4 md:p-6 lg:p-8 rounded-2xl border border-gray-100 hover:border-purple-200 transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1 group">
+                          <div className="flex flex-col space-y-3 md:space-y-4">
+                            <div className="text-2xl md:text-3xl lg:text-4xl transition-transform duration-300">{service.icon}</div>
+                            <div className="flex-1">
+                              <h4 className="text-base md:text-lg lg:text-xl font-semibold mb-2 md:mb-3 title-shadow">
+                                <span className="gradient-text-fill">{service.name}</span>
+                              </h4>
+                              <p className="text-xs md:text-sm lg:text-base text-black leading-relaxed">{service.description}</p>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Call to Action */}
+          <div className="text-center">
+            <div className="glassmorphism rounded-3xl p-8 md:p-12 lg:p-16 border max-w-4xl mx-auto">
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold title-shadow mb-4 md:mb-6 lg:mb-8 text-black">
+                <span className="gradient-text-fill">
+                  {language === 'zh' ? '準備開始了嗎？' : language === 'yue' ? '準備開始了嗎？' : 'Ready to Get Started?'}
+                </span>
+              </h3>
+              <p className="text-base md:text-lg lg:text-xl text-black mb-6 md:mb-8 lg:mb-10 max-w-3xl mx-auto leading-relaxed">
+                {language === 'zh' 
+                  ? '立即聯繫我們，了解我們如何為您提供文化敏感的護理服務。我們的專業團隊隨時為您服務。'
+                  : language === 'yue'
+                  ? '立即聯繫我們，了解我們如何為您提供文化敏感的護理服務。我們的專業團隊隨時為您服務。'
+                  : 'Contact us today to learn how we can provide culturally-sensitive care services for you. Our professional team is ready to serve you.'
+                }
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button
+                  onClick={() => window.location.href = '/#waitlist'} 
+                  className="glassmorphism text-black border-2 border-purple-600 hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-600 hover:text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 lg:py-5 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-xl text-base md:text-lg w-full sm:w-auto"
+                >
+                  {language === 'zh' ? '聯繫我們' : language === 'yue' ? '聯繫我們' : 'Contact Us'}
+                </button>
+                <button 
+                  onClick={() => window.location.href = '/#waitlist'}
+                  className="glassmorphism text-black border-2 border-purple-600 hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-600 hover:text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 lg:py-5 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-base md:text-lg w-full sm:w-auto"
+                >
+                  {language === 'zh' ? '加入等候名单' : language === 'yue' ? '加入等候名單' : 'Join Waitlist'}
+                </button>
               </div>
-            ))}
+            </div>
           </div>
         </div>
-
-        {/* Call to Action */}
-        <div className="text-center">
-          <div className="glassmorphism rounded-3xl p-8 md:p-12 lg:p-16 border max-w-4xl mx-auto">
-            <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold title-shadow mb-4 md:mb-6 lg:mb-8 text-black">
-              <span className="gradient-text-fill">
-                {language === 'zh' ? '準備開始了嗎？' : language === 'yue' ? '準備開始了嗎？' : 'Ready to Get Started?'}
-              </span>
-            </h3>
-            <p className="text-base md:text-lg lg:text-xl text-black mb-6 md:mb-8 lg:mb-10 max-w-3xl mx-auto leading-relaxed">
-              {language === 'zh' 
-                ? '立即聯繫我們，了解我們如何為您提供文化敏感的護理服務。我們的專業團隊隨時為您服務。'
-                : language === 'yue'
-                ? '立即聯繫我們，了解我們如何為您提供文化敏感的護理服務。我們的專業團隊隨時為您服務。'
-                : 'Contact us today to learn how we can provide culturally-sensitive care services for you. Our professional team is ready to serve you.'
-              }
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button
-                onClick={() => window.location.href = '/#waitlist'} 
-                className="glassmorphism text-black border-2 border-purple-600 hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-600 hover:text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 lg:py-5 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-xl text-base md:text-lg w-full sm:w-auto"
-              >
-                {language === 'zh' ? '聯繫我們' : language === 'yue' ? '聯繫我們' : 'Contact Us'}
-              </button>
-              <button 
-                onClick={() => window.location.href = '/#waitlist'}
-                className="glassmorphism text-black border-2 border-purple-600 hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-600 hover:text-white px-8 md:px-10 lg:px-12 py-3 md:py-4 lg:py-5 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-base md:text-lg w-full sm:w-auto"
-              >
-                {language === 'zh' ? '加入等候名单' : language === 'yue' ? '加入等候名單' : 'Join Waitlist'}
-              </button>
-            </div>
-            </div>
-          </div>        
       </div>
 
       {/* Unified Footer */}
@@ -786,25 +798,24 @@ function ServicesPageContent() {
         translations={{
           aboutUs: language === 'zh' ? '关于我们' : language === 'yue' ? '關於我們' : 'About Us',
           mainPage: content.mainPage,
-          footerCopyright: language === 'zh' ? '零距' : language === 'yue' ? '零距' : 'CareNeighbour'
+          footerCopyright: language === 'zh' ? '零距 . 版权所有。' : language === 'yue' ? '零距 . 版權所有。' : 'CareNeighbour, Inc. All rights reserved.'
         }}
       />
-    </div>
-  )
+    </>
+  );
 }
 
-// Main component with Suspense wrapper
 export default function ServicesPage() {
+  const { language } = useLanguage();
+  const translations = {
+    aboutUs: language === 'zh' ? '关于我们' : language === 'yue' ? '關於我們' : 'About Us',
+    mainPage: language === 'zh' ? '主页' : language === 'yue' ? '主頁' : 'Home',
+    footerCopyright: language === 'zh' ? '零距 . 版权所有。' : language === 'yue' ? '零距 . 版權所有。' : 'CareNeighbour, Inc. All rights reserved.'
+  };
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center px-4">
-          <div className="animate-spin rounded-full h-16 w-16 md:h-32 md:w-32 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 text-sm md:text-base">Loading services...</p>
-        </div>
-      </div>
-    }>
+    <Suspense>
       <ServicesPageContent />
+      <UnifiedFooter language={language} translations={translations} />
     </Suspense>
-  )
+  );
 }

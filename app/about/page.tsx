@@ -8,6 +8,7 @@ import Image from "next/image"
 import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "../contexts/LanguageContext" // Import useLanguage hook
+import Head from "next/head"
 
 
 // 1. Define translations for the About page
@@ -56,6 +57,15 @@ export default function AboutPage() {
 
   return (
     <div className="flex min-h-[100dvh] flex-col">
+      <Head>
+        <title>About CareNeighbour | AI-Powered Instant Care Sourcing Platform</title>
+        <meta name="description" content="Learn about CareNeighbour, the new AI-powered instant care sourcing platform. Meet the team and discover our mission to make care accessible instantly for everyone." />
+        <meta name="keywords" content="CareNeighbour, Care Neighbour, AI-powered care, instant care, care sourcing platform, new care platform, Monash, trusted caregivers, about, team, mission" />
+        <meta property="og:title" content="About CareNeighbour | AI-Powered Instant Care Sourcing Platform" />
+        <meta property="og:description" content="Learn about CareNeighbour, the new AI-powered instant care sourcing platform. Meet the team and discover our mission to make care accessible instantly for everyone." />
+        <meta property="og:image" content="/images/CN_Figure2.png" />
+        <meta name="robots" content="index, follow" />
+      </Head>
       {/* Unified Header */}
       <UnifiedHeader 
         language={language}
@@ -65,13 +75,14 @@ export default function AboutPage() {
 
       {/* Main Content */}
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32">
+        <section id="about" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8 md:mb-12">
               <div className="space-y-2">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter title-shadow">
-                  <span className="gradient-text-fill">{t.pageTitle}</span>
+                  <span className="gradient-text-fill">{t.pageTitle} – Meet the Team Behind the AI-Powered Instant Care Platform</span>
                 </h1>
+                <p className="text-center text-purple-700 font-semibold text-base md:text-lg mt-2 mb-4">CareNeighbour is a new, AI-powered care sourcing platform that connects you instantly with trusted caregivers. Learn more about our mission and team.</p>
               </div>
             </div>
 
@@ -80,7 +91,7 @@ export default function AboutPage() {
               <div className="max-w-4xl w-full overflow-hidden rounded-3xl">
                 <Image
                   src="/images/Founding-team-image.jpg"
-                  alt="Founding Team"
+                  alt="Founding Team of CareNeighbour – AI-powered instant care platform"
                   width={800}
                   height={150}
                   className="w-full h-auto object-cover rounded-3xl"

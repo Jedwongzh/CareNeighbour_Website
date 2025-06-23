@@ -1352,7 +1352,7 @@ export default function LandingPage() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-10 md:py-20 lg:py-16 relative overflow-hidden flex flex-col items-center justify-center">
+        <section id="hero" className="w-full py-10 md:py-20 lg:py-16 relative overflow-hidden flex flex-col items-center justify-center">
             <div className="absolute inset-0 z-0"></div>
 
             <div className="container px-4 md:px-6 relative z-10 flex flex-col items-center justify-center">
@@ -1368,8 +1368,7 @@ export default function LandingPage() {
             transition={{ duration: 0.6 }}
                 >
             <span className="gradient-text-fill">
-              {t.heroTitleStart}{" "}
-              {t.heroTitleEnd}
+              {t.heroTitleStart} {t.heroTitleEnd}
             </span>
                 </motion.h1>
               </div>
@@ -1385,6 +1384,7 @@ export default function LandingPage() {
                 >
                   {t.heroSubtitle}
                 </motion.p>
+                <p className="text-center text-purple-700 font-semibold text-base md:text-lg mt-2 mb-4">CareNeighbour is a new, AI-powered instant care sourcing platform. Get matched with trusted caregivers in seconds.</p>
 
                 {/* Search Bar */}
                 <motion.div
@@ -1415,8 +1415,9 @@ export default function LandingPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <span className="gradient-text-fill">{t.howItWorksTitle}</span>
+              <span className="gradient-text-fill">{t.howItWorksTitle} – AI-Powered Instant Care Matching</span>
             </motion.h2>
+            <p className="text-center text-purple-700 font-semibold text-base md:text-lg mb-4">Find care instantly with our AI-powered matching platform. Get support in seconds, tailored to your needs.</p>
           </div>
         </section>
         
@@ -1430,7 +1431,7 @@ export default function LandingPage() {
               <div className="w-full mb-8">
                 <Image
                 src={howItWorksImages[idx]}
-                alt={`Step ${idx + 1}`}
+                alt={`Step ${idx + 1} - CareNeighbour AI-powered instant care platform`}
                 width={3840}
                 height={2160}
                 quality={100}
@@ -1468,7 +1469,7 @@ export default function LandingPage() {
                 <Image
                 key={img}
                 src={img}
-                alt={`Step ${idx + 1}`}
+                alt={`Step ${idx + 1} - CareNeighbour AI-powered instant care platform`}
                 width={3840}
                 height={2160}
                 quality={90}
@@ -1521,9 +1522,10 @@ export default function LandingPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="gradient-text-fill">{t.problemTitle}</span>
+            <span className="gradient-text-fill">{t.problemTitle} – Why AI-Powered Instant Care Matters</span>
           </motion.h2>
               </div>
+              <p className="text-center text-purple-700 font-semibold text-base md:text-lg mb-4">CareNeighbour solves the struggle of finding care by using AI to match you instantly with trusted, culturally sensitive caregivers.</p>
 
               <motion.div
           className="space-y-6 text-lg md:text-xl text-gray-800 text-center-justified md:text-center"
@@ -1678,11 +1680,9 @@ export default function LandingPage() {
                 transition={{ duration: 1 }}
               >
                 <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-center pb-4 w-full title-shadow" style={{ color: "#000" }}>
-                  <span className="gradient-text-fill">{t.experiencesTitle}</span>
+                  <span className="gradient-text-fill">{t.experiencesTitle} – Real Stories, Real Results</span>
                 </h2>
-                <p className="text-lg md:text-xl lg:text-2xl text-center w-full" style={{ color: "#000" }}>
-                  {t.experiencesSubtitle}
-                </p>
+                <p className="text-lg md:text-xl lg:text-2xl text-center w-full text-purple-700 font-semibold">Hear how CareNeighbour's AI-powered platform delivers instant, trusted care for families like yours.</p>
               </motion.div>
             </div>
 
@@ -1847,12 +1847,10 @@ export default function LandingPage() {
               >
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight title-shadow">
             <span className="gradient-text-fill">
-              {t.approachTitlePart1}{" "}
-              {t.approachTitleTech}{" "}
-              {t.approachTitlePart2}{" "}
-              {t.approachTitleCompassion}
+              {t.approachTitlePart1} {t.approachTitleTech} {t.approachTitlePart2} {t.approachTitleCompassion} – How AI Makes Care Instant
             </span>
           </h2>
+          <p className="text-center text-purple-700 font-semibold text-base md:text-lg mb-4">Our AI-driven approach means you get matched with the right care, instantly and effortlessly.</p>
           <div className="h-8" />
               </motion.div>
             </div>
@@ -2156,11 +2154,9 @@ export default function LandingPage() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight title-shadow">
-              <span className="gradient-text-fill">{t.waitlistTitle}</span>
+              <span className="gradient-text-fill">{t.waitlistTitle} – Get Early Access to AI-Powered Care</span>
             </h2>
-            <p className="text-gray-600 text-lg md:text-xl">
-            {t.waitlistSubtitle}
-            </p>
+            <p className="text-purple-700 font-semibold text-base md:text-lg">Be the first to experience instant, AI-powered care matching. Join our waitlist today!</p>
           </motion.div>
 
           <motion.div
@@ -2222,11 +2218,9 @@ export default function LandingPage() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight title-shadow">
-              <span className="gradient-text-fill">{t.feedbackTitle}</span>
+              <span className="gradient-text-fill">{t.feedbackTitle} – Help Shape the Future of AI Care</span>
             </h2>
-            <p className="text-gray-600 text-lg md:text-xl">
-              {t.feedbackSubtitle}
-            </p>
+            <p className="text-purple-700 font-semibold text-base md:text-lg">Share your ideas and feedback to make CareNeighbour the best instant care platform for everyone.</p>
           </motion.div>
           <motion.div
             className="w-full space-y-4"

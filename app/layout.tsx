@@ -15,7 +15,7 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.careneighbour.com'), // Update with your actual domain
   title: {
-    default: 'CareNeighbour | Connecting Families with Trusted Local Caregivers',
+    default: 'CareNeighbour | AI-Powered Instant Care Sourcing Platform',
     template: '%s | CareNeighbour'
   },
   alternates: {
@@ -26,33 +26,33 @@ export const metadata: Metadata = {
   },
   
   keywords: [
-    'CareNeighbour', 'Care a neighbour', 'Care neighbour', 'Care for neighbour', 'neighbour care', 'care for a neighbour',
-    'elderly care', 'caregivers', 'aged care', 'local support', 'Australia', 
-    'Monash', 'senior care', 'AI in Care',
+    'CareNeighbour', 'Care Neighbour', 'Care a neighbour', 'Care neighbour', 'Care for neighbour', 'neighbour care', 'care for a neighbour',
+    'elderly care', 'caregivers', 'aged care', 'local support', 'Australia', 'Monash', 'senior care', 'AI in Care',
+    'AI-powered care', 'instant care', 'on-demand care', 'find care now', 'new care sourcing platform', 'AI care platform', 'AI caregiver', 'AI matching', 'culturally sensitive care', 'multilingual care',
     // Chinese keywords
     '零距', '邻里关怀', '邻居关怀', '关怀邻居',
     '老人护理', '照顾者', '年长护理', '本地支持', '澳大利亚', '莫纳什', '长者照顾', '人工智能护理'
   ],
-  description: 'CareNeighbour connects you with verified caregivers who understand your language and culture, making finding the right support effortless. Find local care for a neighbour or family member.',
+  description: 'CareNeighbour is a new, AI-powered care sourcing platform that instantly connects you with trusted, local caregivers. Find care for your neighbour or family member in seconds, with instant matching and multilingual support.',
   openGraph: {
     type: 'website',
     locale: 'en_AU',
     siteName: 'CareNeighbour',
-    title: 'CareNeighbour | Trusted Local Caregivers for Elderly Care',
-    description: 'Connect with verified local caregivers who understand your language and culture. Find trusted support for your loved ones.',
+    title: 'CareNeighbour | AI-Powered Instant Care Sourcing Platform',
+    description: 'Discover CareNeighbour, the new AI-powered platform for instant care matching. Find trusted, local caregivers in seconds.',
     images: [
       {
         url: '/images/CN_Figure2.png', // Create a specific image for social sharing
         width: 1200,
         height: 630,
-        alt: 'CareNeighbour - Elderly Care Support Platform',
+        alt: 'CareNeighbour - AI-Powered Instant Care Sourcing Platform',
       }
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CareNeighbour | Trusted Local Caregivers',
-    description: 'Connect with verified local caregivers who understand your language and culture.',
+    title: 'CareNeighbour | AI-Powered Instant Care Sourcing',
+    description: 'Find care instantly with CareNeighbour, the new AI-powered care sourcing platform.',
     site: '@careneighbour',
     images: ['/images/CN_Figure2.png'],
   },
@@ -95,7 +95,8 @@ export default function RootLayout({
                     "@type": "ContactPoint",
                     "contactType": "Customer Service",
                     "email": "info@careneighbour.com"
-                  }
+                  },
+                  "description": "CareNeighbour is a new, AI-powered care sourcing platform for instant, trusted care matching."
                 },
                 {
                   "@type": "WebSite",
@@ -104,7 +105,26 @@ export default function RootLayout({
                     "@type": "SearchAction",
                     "target": "https://www.careneighbour.com/?q={search_term_string}",
                     "query-input": "required name=search_term_string"
-                  }
+                  },
+                  "about": "AI-powered instant care sourcing platform."
+                },
+                {
+                  "@type": "WebPage",
+                  "name": "CareNeighbour Home",
+                  "url": "https://www.careneighbour.com/",
+                  "description": "CareNeighbour is a new, AI-powered care sourcing platform for instant, trusted care matching.",
+                  "isPartOf": { "@id": "https://www.careneighbour.com/" }
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  "name": ["How It Works", "Our Approach", "Care Services", "Join Waitlist", "About Us"],
+                  "url": [
+                    "https://www.careneighbour.com/#how-it-works",
+                    "https://www.careneighbour.com/#our-approach",
+                    "https://www.careneighbour.com/services",
+                    "https://www.careneighbour.com/#waitlist",
+                    "https://www.careneighbour.com/about"
+                  ]
                 }
               ]
             })
