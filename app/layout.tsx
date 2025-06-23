@@ -63,7 +63,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: '/favicon.png',
+        url: '/CN_Figure2.png',
         type: 'image/png',
       }
     ],
@@ -79,7 +79,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/images/CN_Figure2.png" type="image/png" />
+        <link rel="icon" href="/images/CN_Figure2.png" type="image/png" sizes="64x64" />
+        <link rel="icon" href="/images/CN_Figure2.png" type="image/png" sizes="32x32" />
+        <link rel="apple-touch-icon" href="/images/CN_Figure2.png" sizes="180x180" />
       </head>
       <body className={inter.className}>
         <script
@@ -92,12 +94,12 @@ export default function RootLayout({
                   "@type": "Organization",
                   "name": "CareNeighbour",
                   "url": "https://www.careneighbour.com",
-                  "logo": "https://www.careneighbour.com/images/CNlogo.png",
+                  "logo": "https://www.careneighbour.com/images/CN_Figure2.png",
                   "sameAs": [],
                   "contactPoint": {
                     "@type": "ContactPoint",
                     "contactType": "Customer Service",
-                    "email": "info@careneighbour.com"
+                    "email": "careneighbour.team@gmail.com"
                   },
                   "description": "CareNeighbour is a new, AI-powered care sourcing platform for instant, trusted care matching."
                 },

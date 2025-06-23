@@ -1536,7 +1536,7 @@ export default function LandingPage() {
               <p className="sr-only">CareNeighbour solves the struggle of finding care by using AI to match you instantly with trusted, culturally sensitive caregivers.</p>
 
               <motion.div
-          className="space-y-6 text-lg md:text-xl text-gray-800 text-center-justified md:text-center"
+          className="space-y-6 text-lg md:text-xl text-gray-800 text-center md:text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

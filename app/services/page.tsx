@@ -789,16 +789,6 @@ function ServicesPageContent() {
           </div>
         </div>
       </div>
-
-      {/* Unified Footer */}
-      <UnifiedFooter 
-        language={language}
-        translations={{
-          aboutUs: language === 'zh' ? '关于我们' : language === 'yue' ? '關於我們' : 'About Us',
-          mainPage: content.mainPage,
-          footerCopyright: language === 'zh' ? '零距 . 版权所有。' : language === 'yue' ? '零距 . 版權所有。' : 'CareNeighbour, Inc. All rights reserved.'
-        }}
-      />
     </>
   );
 }

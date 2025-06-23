@@ -80,9 +80,9 @@ export default function AboutPage() {
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8 md:mb-12">
               <div className="space-y-2">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter title-shadow">
-                  <span className="gradient-text-fill">{t.pageTitle} – Meet the Team Behind the AI-Powered Instant Care Platform</span>
+                  <span className="gradient-text-fill">{t.pageTitle}</span>
                 </h1>
-                <p className="text-center text-purple-700 font-semibold text-base md:text-lg mt-2 mb-4">CareNeighbour is a new, AI-powered care sourcing platform that connects you instantly with trusted caregivers. Learn more about our mission and team.</p>
+                <p className="sr-only">CareNeighbour is a new, AI-powered care sourcing platform that connects you instantly with trusted caregivers. Learn more about our mission and team.</p>
               </div>
             </div>
 
