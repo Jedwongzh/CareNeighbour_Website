@@ -1179,6 +1179,14 @@ function GradientBackground() {
   );
 }
 
+// Add ClientOnly component for client-side-only rendering
+function ClientOnly({ children }: { children: React.ReactNode }) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+  return <>{children}</>;
+}
+
 export default function LandingPage() {
   const router = useRouter();
   const [waitlistStatus, setWaitlistStatus] = useState<{ success?: boolean; message?: string; error?: string } | null>(
@@ -1384,7 +1392,7 @@ export default function LandingPage() {
                 >
                   {t.heroSubtitle}
                 </motion.p>
-                <p className="text-center text-purple-700 font-semibold text-base md:text-lg mt-2 mb-4">CareNeighbour is a new, AI-powered instant care sourcing platform. Get matched with trusted caregivers in seconds.</p>
+                <p className="sr-only">CareNeighbour is a new, AI-powered instant care sourcing platform. Get matched with trusted caregivers in seconds.</p>
 
                 {/* Search Bar */}
                 <motion.div
@@ -1415,9 +1423,9 @@ export default function LandingPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <span className="gradient-text-fill">{t.howItWorksTitle} – AI-Powered Instant Care Matching</span>
+              <span className="gradient-text-fill">{t.howItWorksTitle}</span>
             </motion.h2>
-            <p className="text-center text-purple-700 font-semibold text-base md:text-lg mb-4">Find care instantly with our AI-powered matching platform. Get support in seconds, tailored to your needs.</p>
+            <p className="sr-only">Find care instantly with our AI-powered matching platform. Get support in seconds, tailored to your needs.</p>
           </div>
         </section>
         
@@ -1522,10 +1530,10 @@ export default function LandingPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="gradient-text-fill">{t.problemTitle} – Why AI-Powered Instant Care Matters</span>
+            <span className="gradient-text-fill">{t.problemTitle}</span>
           </motion.h2>
               </div>
-              <p className="text-center text-purple-700 font-semibold text-base md:text-lg mb-4">CareNeighbour solves the struggle of finding care by using AI to match you instantly with trusted, culturally sensitive caregivers.</p>
+              <p className="sr-only">CareNeighbour solves the struggle of finding care by using AI to match you instantly with trusted, culturally sensitive caregivers.</p>
 
               <motion.div
           className="space-y-6 text-lg md:text-xl text-gray-800 text-center-justified md:text-center"
@@ -1680,9 +1688,9 @@ export default function LandingPage() {
                 transition={{ duration: 1 }}
               >
                 <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-center pb-4 w-full title-shadow" style={{ color: "#000" }}>
-                  <span className="gradient-text-fill">{t.experiencesTitle} – Real Stories, Real Results</span>
+                  <span className="gradient-text-fill">{t.experiencesTitle}</span>
                 </h2>
-                <p className="text-lg md:text-xl lg:text-2xl text-center w-full text-purple-700 font-semibold">Hear how CareNeighbour's AI-powered platform delivers instant, trusted care for families like yours.</p>
+                <p className="sr-only">Hear how CareNeighbour's AI-powered platform delivers instant, trusted care for families like yours.</p>
               </motion.div>
             </div>
 
@@ -1846,11 +1854,9 @@ export default function LandingPage() {
           transition={{ duration: 0.7 }}
               >
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight title-shadow">
-            <span className="gradient-text-fill">
-              {t.approachTitlePart1} {t.approachTitleTech} {t.approachTitlePart2} {t.approachTitleCompassion} – How AI Makes Care Instant
-            </span>
+            <span className="gradient-text-fill">{t.approachTitlePart1} {t.approachTitleTech} {t.approachTitlePart2} {t.approachTitleCompassion}</span>
           </h2>
-          <p className="text-center text-purple-700 font-semibold text-base md:text-lg mb-4">Our AI-driven approach means you get matched with the right care, instantly and effortlessly.</p>
+          <p className="sr-only">Our AI-driven approach means you get matched with the right care, instantly and effortlessly.</p>
           <div className="h-8" />
               </motion.div>
             </div>
@@ -1903,23 +1909,25 @@ export default function LandingPage() {
           filter: "blur(16px)",
               }}
             />
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{
-          width: "68%",
-          height: "100%",
-          objectFit: "cover",
-          borderRadius: "2.5rem",
-          position: "relative",
-          zIndex: 2,
-              }}
-            >
-              <source src="videos/Care-request-demo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            <ClientOnly>
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                style={{
+                  width: "68%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "2.5rem",
+                  position: "relative",
+                  zIndex: 2,
+                }}
+              >
+                <source src="videos/Care-request-demo.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </ClientOnly>
           </div>
               </div>
             </motion.section>
@@ -1963,23 +1971,25 @@ export default function LandingPage() {
           filter: "blur(16px)",
               }}
             />
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{
-          width: "68%",
-          height: "100%",
-          objectFit: "cover",
-          borderRadius: "2.5rem",
-          position: "relative",
-          zIndex: 2,
-              }}
-            >
-              <source src="videos/AI-Chat-demo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            <ClientOnly>
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                style={{
+                  width: "68%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "2.5rem",
+                  position: "relative",
+                  zIndex: 2,
+                }}
+              >
+                <source src="videos/AI-Chat-demo.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </ClientOnly>
           </div>
               </div>
               {/* Text */}
@@ -2041,23 +2051,25 @@ export default function LandingPage() {
           filter: "blur(16px)",
               }}
             />
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{
-          width: "68%",
-          height: "100%",
-          objectFit: "cover",
-          borderRadius: "2.5rem",
-          position: "relative",
-          zIndex: 2,
-              }}
-            >
-              <source src="videos/Carer-Review-demo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            <ClientOnly>
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                style={{
+                  width: "68%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "2.5rem",
+                  position: "relative",
+                  zIndex: 2,
+                }}
+              >
+                <source src="videos/Carer-Review-demo.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </ClientOnly>
           </div>
               </div>
             </motion.section>
@@ -2101,23 +2113,25 @@ export default function LandingPage() {
           filter: "blur(16px)",
               }}
             />
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{
-          width: "68%",
-          height: "100%",
-          objectFit: "cover",
-          borderRadius: "2.5rem",
-          position: "relative",
-          zIndex: 2,
-              }}
-            >
-              <source src="videos/Explore-Page-demo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            <ClientOnly>
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                style={{
+                  width: "68%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "2.5rem",
+                  position: "relative",
+                  zIndex: 2,
+                }}
+              >
+                <source src="videos/Explore-Page-demo.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </ClientOnly>
           </div>
               </div>
               {/* Text */}
@@ -2154,9 +2168,9 @@ export default function LandingPage() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight title-shadow">
-              <span className="gradient-text-fill">{t.waitlistTitle} – Get Early Access to AI-Powered Care</span>
+              <span className="gradient-text-fill">{t.waitlistTitle}</span>
             </h2>
-            <p className="text-purple-700 font-semibold text-base md:text-lg">Be the first to experience instant, AI-powered care matching. Join our waitlist today!</p>
+            <p className="text-gray-700 text-base md:text-lg">{t.waitlistSubtitle}</p>
           </motion.div>
 
           <motion.div
@@ -2218,9 +2232,9 @@ export default function LandingPage() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight title-shadow">
-              <span className="gradient-text-fill">{t.feedbackTitle} – Help Shape the Future of AI Care</span>
+              <span className="gradient-text-fill">{t.feedbackTitle}</span>
             </h2>
-            <p className="text-purple-700 font-semibold text-base md:text-lg">Share your ideas and feedback to make CareNeighbour the best instant care platform for everyone.</p>
+            <p className="text-gray-700 text-base md:text-lg">{t.feedbackSubtitle}</p>
           </motion.div>
           <motion.div
             className="w-full space-y-4"

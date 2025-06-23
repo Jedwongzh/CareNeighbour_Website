@@ -711,9 +711,7 @@ function ServicesPageContent() {
                 {language === 'zh' ? '我们的全面护理服务' : language === 'yue' ? '我哋嘅全面護理服務' : 'Our Comprehensive Care Services'}
               </span>
             </h1>
-            <p className="text-lg md:text-xl lg:text-2xl text-black max-w-4xl mx-auto leading-relaxed">
-              {content.subtitle}
-            </p>
+            <p className="sr-only">{content.subtitle}</p>
           </div>
 
           {/* Services Section */}
