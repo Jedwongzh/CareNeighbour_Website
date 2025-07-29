@@ -89,6 +89,12 @@ export function UnifiedHeader({ language, setLanguage, translations }: UnifiedHe
             {translations.SourceforCare}
           </Link>
           <Link
+            href="/become-a-carer"
+            className={`text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out ${pathname === "/become-a-carer" ? glassClass : ""}`}
+          >
+            Become a Carer
+          </Link>
+          <Link
             href="/onboarding"
             className={`text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out ${pathname === "/onboarding" ? glassClass : ""}`}
           >
