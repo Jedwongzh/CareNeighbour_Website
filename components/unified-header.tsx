@@ -88,6 +88,12 @@ export function UnifiedHeader({ language, setLanguage, translations }: UnifiedHe
           >
             {translations.SourceforCare}
           </Link>
+          <Link
+            href="/onboarding"
+            className={`text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out ${pathname === "/onboarding" ? glassClass : ""}`}
+          >
+            Onboarding
+          </Link>
           <Button
             size="sm"
             variant="ghost"
