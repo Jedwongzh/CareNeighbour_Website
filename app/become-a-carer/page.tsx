@@ -154,125 +154,169 @@ const BecomeACarerPage = () => {
   const currentContent = content[language as keyof typeof content];
 
   return (
-    <div style={{ backgroundColor: '#F0F8FF', fontFamily: 'Poppins, sans-serif', padding: '2rem' }}>
-      <div style={{ maxWidth: '900px', margin: '0 auto', backgroundColor: 'white', padding: '2rem', borderRadius: '8px' }}>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
-          <button onClick={() => setLanguage('en')} style={{ marginRight: '0.5rem', padding: '0.5rem 1rem', border: '1px solid #4B0082', borderRadius: '4px', backgroundColor: language === 'en' ? '#4B0082' : 'white', color: language === 'en' ? 'white' : '#4B0082' }}>English</button>
-          <button onClick={() => setLanguage('zh')} style={{ padding: '0.5rem 1rem', border: '1px solid #4B0082', borderRadius: '4px', backgroundColor: language === 'zh' ? '#4B0082' : 'white', color: language === 'zh' ? 'white' : '#4B0082' }}>中文</button>
+    <div className="bg-gray-50 text-gray-800 font-sans">
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-right mb-4">
+          <button
+            onClick={() => setLanguage('en')}
+            className={`px-4 py-2 rounded-md ${language === 'en' ? 'bg-purple-600 text-white' : 'bg-gray-200'}`}
+          >
+            English
+          </button>
+          <button
+            onClick={() => setLanguage('zh')}
+            className={`ml-2 px-4 py-2 rounded-md ${language === 'zh' ? 'bg-purple-600 text-white' : 'bg-gray-200'}`}
+          >
+            中文
+          </button>
         </div>
 
-        <h1 style={{ textAlign: 'center', color: '#4B0082', fontSize: '2.5rem', marginBottom: '1rem' }}>{currentContent.title}</h1>
-        <p style={{ textAlign: 'center', marginBottom: '2rem', fontSize: '1.1rem' }}>{currentContent.subtitle}</p>
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-purple-800 mb-4">{currentContent.title}</h1>
+          <p className="text-lg max-w-3xl mx-auto">{currentContent.subtitle}</p>
           <Link href="/onboarding">
-            <button style={{ padding: '0.75rem 1.5rem', backgroundColor: '#4B0082', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '1.1rem' }}>{currentContent.getStarted}</button>
+            <button className="mt-6 px-8 py-3 bg-purple-600 text-white font-semibold rounded-lg shadow-md hover:bg-purple-700 transition-colors">
+              {currentContent.getStarted}
+            </button>
           </Link>
         </div>
 
-        <div style={{ marginBottom: '2rem' }}>
-          <Image src="/images/become-a-carer.png" alt="Become a Carer" width={900} height={300} style={{ borderRadius: '8px', marginBottom: '2rem' }} />
-          <h2 style={{ color: '#4B0082', fontSize: '2rem', marginBottom: '1rem' }}>{currentContent.section1Title}</h2>
-          <p style={{ marginBottom: '1rem' }}>{currentContent.section1P1}</p>
-          <p style={{ marginBottom: '1rem' }}>{currentContent.section1P2}</p>
-          <p>{currentContent.section1P3}</p>
-        </div>
-
-        <div style={{ marginBottom: '2rem' }}>
-          <h2 style={{ color: '#4B0082', fontSize: '2rem', marginBottom: '1rem' }}>{currentContent.section2Title}</h2>
-          <p style={{ marginBottom: '1.5rem' }}>{currentContent.section2P1}</p>
-          <div style={{ display: 'flex', gap: '2rem' }}>
-            <div style={{ flex: 1 }}>
-              <h3 style={{ color: '#4B0082', fontSize: '1.5rem', marginBottom: '1rem' }}>{currentContent.youCan}</h3>
-              <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem' }}>
-                {currentContent.youCanPoints.map((point, index) => <li key={index} style={{ marginBottom: '0.5rem' }}>{point}</li>)}
-              </ul>
-            </div>
-            <div style={{ flex: 1 }}>
-              <h3 style={{ color: '#4B0082', fontSize: '1.5rem', marginBottom: '1rem' }}>{currentContent.youNeed}</h3>
-              <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem' }}>
-                {currentContent.youNeedPoints.map((point, index) => <li key={index} style={{ marginBottom: '0.5rem' }}>{point}</li>)}
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div style={{ marginBottom: '2rem' }}>
-          <h2 style={{ color: '#4B0082', fontSize: '2rem', marginBottom: '1rem' }}>{currentContent.section3Title}</h2>
-          <p style={{ marginBottom: '1.5rem' }}>{currentContent.section3P1}</p>
-          <div style={{ marginBottom: '1.5rem' }}>
-            <h3 style={{ color: '#4B0082', fontSize: '1.5rem', marginBottom: '1rem' }}>{currentContent.qualifiedTitle}</h3>
-            <p style={{ marginBottom: '1rem' }}>{currentContent.qualifiedP1}</p>
-            <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', marginBottom: '1rem' }}>
-              {currentContent.qualifiedPoints.map((point, index) => <li key={index} style={{ marginBottom: '0.5rem' }}>{point}</li>)}
-            </ul>
-            <p>{currentContent.qualifiedP2}</p>
-          </div>
-          <div style={{ marginBottom: '1.5rem' }}>
-            <h3 style={{ color: '#4B0082', fontSize: '1.5rem', marginBottom: '1rem' }}>{currentContent.notQualifiedTitle}</h3>
-            <p>{currentContent.notQualifiedP1}</p>
+        <div className="grid md:grid-cols-2 gap-8 items-center mb-12">
+          <div>
+            <h2 className="text-3xl font-bold text-purple-800 mb-4">{currentContent.section1Title}</h2>
+            <p className="mb-4">{currentContent.section1P1}</p>
+            <p className="mb-4">{currentContent.section1P2}</p>
+            <p>{currentContent.section1P3}</p>
           </div>
           <div>
-            <h3 style={{ color: '#4B0082', fontSize: '1.5rem', marginBottom: '1rem' }}>{currentContent.enhanceSkillsTitle}</h3>
-            <p>{currentContent.enhanceSkillsP1}</p>
+            <Image
+              src="/images/become-a-carer.png"
+              alt="Caregiver assisting an elderly person"
+              width={500}
+              height={350}
+              className="rounded-lg shadow-lg"
+            />
           </div>
         </div>
 
-        <div style={{ backgroundColor: '#E6E6FA', padding: '2rem', borderRadius: '8px', textAlign: 'center', marginBottom: '2rem' }}>
-          <h2 style={{ color: '#4B0082', fontSize: '2rem', marginBottom: '1rem' }}>{currentContent.ctaTitle}</h2>
+        <div className="bg-white p-8 rounded-lg shadow-lg mb-12">
+          <h2 className="text-3xl font-bold text-purple-800 mb-4 text-center">{currentContent.section2Title}</h2>
+          <p className="text-center mb-8">{currentContent.section2P1}</p>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-2xl font-semibold text-purple-700 mb-4">{currentContent.youCan}</h3>
+              <ul className="list-disc list-inside space-y-2">
+                {currentContent.youCanPoints.map((point, index) => (
+                  <li key={index}>{point}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-2xl font-semibold text-purple-700 mb-4">{currentContent.youNeed}</h3>
+              <ul className="list-disc list-inside space-y-2">
+                {currentContent.youNeedPoints.map((point, index) => (
+                  <li key={index}>{point}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-12">
+          <h2 className="text-3xl font-bold text-purple-800 mb-4 text-center">{currentContent.section3Title}</h2>
+          <p className="text-center mb-8">{currentContent.section3P1}</p>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-2xl font-semibold text-purple-700 mb-4">{currentContent.qualifiedTitle}</h3>
+              <p className="mb-4">{currentContent.qualifiedP1}</p>
+              <ul className="list-disc list-inside space-y-2 mb-4">
+                {currentContent.qualifiedPoints.map((point, index) => (
+                  <li key={index}>{point}</li>
+                ))}
+              </ul>
+              <p>{currentContent.qualifiedP2}</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-2xl font-semibold text-purple-700 mb-4">{currentContent.notQualifiedTitle}</h3>
+              <p>{currentContent.notQualifiedP1}</p>
+              <h3 className="text-2xl font-semibold text-purple-700 mt-8 mb-4">{currentContent.enhanceSkillsTitle}</h3>
+              <p>{currentContent.enhanceSkillsP1}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-purple-100 p-8 rounded-lg shadow-lg text-center mb-12">
+          <h2 className="text-3xl font-bold text-purple-800 mb-4">{currentContent.ctaTitle}</h2>
           <Link href="/onboarding">
-            <button style={{ padding: '0.75rem 1.5rem', backgroundColor: '#4B0082', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '1.1rem' }}>{currentContent.getStarted}</button>
+            <button className="mt-4 px-8 py-3 bg-purple-600 text-white font-semibold rounded-lg shadow-md hover:bg-purple-700 transition-colors">
+              {currentContent.getStarted}
+            </button>
           </Link>
         </div>
 
-        <div style={{ marginBottom: '2rem' }}>
-          <h2 style={{ color: '#4B0082', fontSize: '2rem', marginBottom: '1rem' }}>{currentContent.section4Title}</h2>
-          <p style={{ marginBottom: '1.5rem' }}>{currentContent.section4P1}</p>
-          <div style={{ marginBottom: '1.5rem' }}>
-            <h3 style={{ color: '#4B0082', fontSize: '1.5rem', marginBottom: '1rem' }}>{currentContent.mandatoryAll}</h3>
-            <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem' }}>
-              {currentContent.mandatoryAllPoints.map((point, index) => <li key={index} style={{ marginBottom: '0.5rem' }}>{point}</li>)}
-            </ul>
-          </div>
-          <div style={{ marginBottom: '1.5rem' }}>
-            <h3 style={{ color: '#4B0082', fontSize: '1.5rem', marginBottom: '1rem' }}>{currentContent.mandatoryTasAct}</h3>
-            <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem' }}>
-              {currentContent.mandatoryTasActPoints.map((point, index) => <li key={index} style={{ marginBottom: '0.5rem' }}>{point}</li>)}
-            </ul>
-          </div>
-          <div style={{ marginBottom: '1.5rem' }}>
-            <h3 style={{ color: '#4B0082', fontSize: '1.5rem', marginBottom: '1rem' }}>{currentContent.ifYouWantToProvide}</h3>
-            <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem' }}>
-              <li style={{ marginBottom: '0.5rem' }}>{currentContent.nursing}</li>
-              <li style={{ marginBottom: '0.5rem' }}>{currentContent.alliedHealth}</li>
-              <li style={{ marginBottom: '0.5rem' }}>{currentContent.personalCare}</li>
-            </ul>
-          </div>
-          <div style={{ marginBottom: '1.5rem' }}>
-            <h3 style={{ color: '#4B0082', fontSize: '1.5rem', marginBottom: '1rem' }}>{currentContent.ifWorkingWithChildren}</h3>
-            <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem' }}>
-              <li style={{ marginBottom: '0.5rem' }}>{currentContent.childrenCheck}</li>
-            </ul>
-          </div>
-          <div>
-            <h3 style={{ color: '#4B0082', fontSize: '1.5rem', marginBottom: '1rem' }}>{currentContent.ifProvidingTransport}</h3>
-            <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem' }}>
-              <li style={{ marginBottom: '0.5rem' }}>{currentContent.driverLicence}</li>
-            </ul>
+        <div className="bg-white p-8 rounded-lg shadow-lg">
+          <h2 className="text-3xl font-bold text-purple-800 mb-4 text-center">{currentContent.section4Title}</h2>
+          <p className="text-center mb-8">{currentContent.section4P1}</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div>
+              <h3 className="text-2xl font-semibold text-purple-700 mb-4">{currentContent.mandatoryAll}</h3>
+              <ul className="list-disc list-inside space-y-2">
+                {currentContent.mandatoryAllPoints.map((point, index) => (
+                  <li key={index}>{point}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-2xl font-semibold text-purple-700 mb-4">{currentContent.mandatoryTasAct}</h3>
+              <ul className="list-disc list-inside space-y-2">
+                {currentContent.mandatoryTasActPoints.map((point, index) => (
+                  <li key={index}>{point}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-2xl font-semibold text-purple-700 mb-4">{currentContent.ifYouWantToProvide}</h3>
+              <ul className="list-disc list-inside space-y-2">
+                <li>{currentContent.nursing}</li>
+                <li>{currentContent.alliedHealth}</li>
+                <li>{currentContent.personalCare}</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-2xl font-semibold text-purple-700 mb-4">{currentContent.ifWorkingWithChildren}</h3>
+              <ul className="list-disc list-inside space-y-2">
+                <li>{currentContent.childrenCheck}</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-2xl font-semibold text-purple-700 mb-4">{currentContent.ifProvidingTransport}</h3>
+              <ul className="list-disc list-inside space-y-2">
+                <li>{currentContent.driverLicence}</li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        <div style={{ backgroundColor: '#F0F8FF', padding: '2rem', borderRadius: '8px', textAlign: 'center', marginBottom: '2rem' }}>
-          <h2 style={{ color: '#4B0082', fontSize: '2rem', marginBottom: '1rem' }}>{currentContent.readyTitle}</h2>
-          <p style={{ marginBottom: '1.5rem' }}>{currentContent.readyP1}</p>
+        <div className="bg-purple-100 p-8 rounded-lg shadow-lg text-center mt-12">
+          <h2 className="text-3xl font-bold text-purple-800 mb-4">{currentContent.readyTitle}</h2>
+          <p className="mb-6">{currentContent.readyP1}</p>
           <Link href="/onboarding">
-            <button style={{ padding: '0.75rem 1.5rem', backgroundColor: '#4B0082', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '1.1rem' }}>{currentContent.getStarted}</button>
+            <button className="px-8 py-3 bg-purple-600 text-white font-semibold rounded-lg shadow-md hover:bg-purple-700 transition-colors">
+              {currentContent.getStarted}
+            </button>
           </Link>
         </div>
 
-        <div>
-          <h2 style={{ color: '#4B0082', fontSize: '2rem', marginBottom: '1rem' }}>{currentContent.learnMoreTitle}</h2>
-          <ul style={{ listStyleType: 'none', padding: 0 }}>
-            {currentContent.learnMoreLinks.map((link, index) => <li key={index} style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#4B0082', textDecoration: 'underline' }}>{link}</a></li>)}
+        <div className="mt-12 text-center">
+          <h2 className="text-2xl font-bold text-purple-800 mb-4">{currentContent.learnMoreTitle}</h2>
+          <ul className="space-y-2">
+            {currentContent.learnMoreLinks.map((link, index) => (
+              <li key={index}>
+                <a href="#" className="text-purple-600 hover:underline">
+                  {link}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
