@@ -6,10 +6,22 @@ import { UnifiedHeader } from '@/components/unified-header';
 import { LanguageProvider, useLanguage } from '@/app/contexts/LanguageContext';
 
 const BecomeACarerPageContent = () => {
-  const { language, setLanguage, translations } = useLanguage();
+  const { language, setLanguage } = useLanguage();
 
   const content = {
     en: {
+      // HEader and footer translations
+      heroLogo: "CareNeighbour",
+      heroTitleStart: "Connect with",
+      heroTitleEnd: "Compatible Carer Instantly",
+      ourMission: "Our Mission",
+      ourApproach: "Our Approach",
+      howItWorks: "How It Works",
+      joinWaitlist: "Join Waitlist",
+      SourceforCare: "Source for Care",
+      BecomeACarer: "Become a Carer",
+      aboutUs: "About Us",
+
       title: 'Provide independent support work on CareNeighbour',
       subtitle: 'Support workers make a huge difference in people’s lives. It’s a role filled with purpose, which means it also comes with a lot of responsibility. Learn what independent support work means for you.',
       getStarted: 'Get Started',
@@ -81,6 +93,18 @@ const BecomeACarerPageContent = () => {
       ],
     },
     zh: {
+
+      heroLogo: "零距",
+      heroTitleStart: "立即连接",
+      heroTitleEnd: "合适的护理人员",
+      ourMission: "我们的使命",
+      ourApproach: "服务特色",
+      howItWorks: "运作方式",
+      joinWaitlist: "加入等候名单",
+      SourceforCare: "护理服务",
+      BecomeACarer: "成为护理员",
+      aboutUs: "关于我们",
+
       title: '在 CareNeighbour 上提供独立支持工作',
       subtitle: '支持工作者在人们的生活中发挥着巨大的作用。这是一个充满使命感的角色，但同时也伴随着巨大的责任。了解独立支持工作对您意味着什么。',
       getStarted: '开始',
@@ -156,11 +180,20 @@ const BecomeACarerPageContent = () => {
   const currentContent = content[language as keyof typeof content];
 
   return (
-    <div className="bg-gradient-to-r from-purple-200 via-purple-100 to-white text-gray-800 font-sans">
-        <UnifiedHeader
-          language={language}
-          setLanguage={setLanguage}
-          translations={translations}
+    <div className="text-gray-800 font-sans">
+        <UnifiedHeader 
+                language={language}
+                setLanguage={setLanguage}
+                translations={{
+                  heroLogo: currentContent.heroLogo,
+                  howItWorks: currentContent.howItWorks,
+                  aboutUs: currentContent.aboutUs,
+                  joinWaitlist: currentContent.joinWaitlist,
+                  SourceforCare: currentContent.SourceforCare,
+                  mainPage: currentContent.heroLogo,
+                  BecomeACarer: currentContent.BecomeACarer
+                }}
+          
         />
       <div className="container mx-auto px-4 py-8">
 
@@ -174,16 +207,16 @@ const BecomeACarerPageContent = () => {
           </Link>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 items-center mb-12">
-          <div>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-12">
+          <div className="md:pr-16 md:text-left text-center">
             <h2 className="text-3xl font-bold text-purple-800 mb-4">{currentContent.section1Title}</h2>
             <p className="mb-4">{currentContent.section1P1}</p>
             <p className="mb-4">{currentContent.section1P2}</p>
             <p>{currentContent.section1P3}</p>
           </div>
-          <div>
+          <div className="flex justify-center">
             <Image
-              src="/images/become-a-carer.png"
+              src="/images/CaregiverImage.jpg"
               alt="Caregiver assisting an elderly person"
               width={500}
               height={350}

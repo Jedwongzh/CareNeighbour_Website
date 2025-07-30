@@ -45,7 +45,8 @@ export default function FeedbackThankYouPage() {
           aboutUs: "About Us",
           joinWaitlist: "Join Waitlist",
           SourceforCare: "Services",
-          mainPage: "Home"
+          mainPage: "Home",
+          BecomeACarer: "Become a Carer"
         }}
       />
 

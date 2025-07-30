@@ -52,7 +52,8 @@ export default function AboutPage() {
     aboutUs: language === 'zh' ? '关于我们' : 'About Us',
     joinWaitlist: language === 'zh' ? '加入等候名单' : 'Join Waitlist',
     SourceforCare: language === 'zh' ? '护理服务' : 'Source for Care',
-    mainPage: language === 'zh' ? '主页' : 'Home'
+    mainPage: language === 'zh' ? '主页' : 'Home',
+    BecomeACarer: language === 'zh' ? '成为护理员' : 'Become a Carer'
   }
 
   return (

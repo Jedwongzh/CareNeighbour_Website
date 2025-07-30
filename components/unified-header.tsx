@@ -16,6 +16,7 @@ interface UnifiedHeaderProps {
     joinWaitlist: string
     SourceforCare: string
     mainPage?: string
+    BecomeACarer?: string
   }
 }
 
@@ -88,12 +89,14 @@ export function UnifiedHeader({ language, setLanguage, translations }: UnifiedHe
           >
             {translations.SourceforCare}
           </Link>
-          <Link
-            href="/become-a-carer"
-            className={`text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out ${pathname === "/become-a-carer" ? glassClass : ""}`}
-          >
-            Become a Carer
-          </Link>
+          {translations.BecomeACarer && (
+            <Link
+              href="/become-a-carer"
+              className={`text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out ${pathname === "/become-a-carer" ? glassClass : ""}`}
+            >
+              {translations.BecomeACarer}
+            </Link>
+          )}
           <Button
             size="sm"
             variant="ghost"
@@ -118,6 +121,7 @@ export function UnifiedHeader({ language, setLanguage, translations }: UnifiedHe
             aboutUs: translations.aboutUs,
             joinWaitlist: translations.joinWaitlist,
             SourceforCare: translations.SourceforCare,
+            BecomeACarer: translations.BecomeACarer || (language === 'zh' ? '成为护理员' : 'Become a Carer')
           }}
           currentLang={language}
           setLang={setLanguage}

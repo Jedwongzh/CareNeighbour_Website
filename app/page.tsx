@@ -89,6 +89,7 @@ const pageTranslations = {
     SourceforCare: "Source for Care",
     BecomeACarer: "Become a Carer",
     aboutUs: "About Us",
+
     // Hero section
     heroSubtitle: "CareNeighbour connects you with verified caregivers who understand your language and culture, making finding the right support effortless.",
     heroCtaHowItWorks: "How It Works",
@@ -240,6 +241,7 @@ const pageTranslations = {
     SourceforCare: "护理服务",
     BecomeACarer: "成为护理员",
     aboutUs: "关于我们",
+    
     // Hero section
     heroSubtitle: "零距 让您轻松找到认证的照护人员——他们懂您的语言，了解您的文化，为您提供贴心、安心的支持。",
     heroCtaHowItWorks: "运作方式",
@@ -1354,7 +1356,8 @@ export default function LandingPage() {
           aboutUs: t.aboutUs,
           joinWaitlist: t.joinWaitlist,
           SourceforCare: t.SourceforCare,
-          mainPage: t.heroLogo
+          mainPage: t.heroLogo,
+          BecomeACarer: t.BecomeACarer,
         }}
       />
 
