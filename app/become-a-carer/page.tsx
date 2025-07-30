@@ -2,9 +2,11 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { UnifiedHeader } from '@/components/unified-header';
+import { LanguageProvider, useLanguage } from '@/app/contexts/LanguageContext';
 
-const BecomeACarerPage = () => {
-  const [language, setLanguage] = useState('en');
+const BecomeACarerPageContent = () => {
+  const { language, setLanguage, translations } = useLanguage();
 
   const content = {
     en: {
@@ -154,22 +156,13 @@ const BecomeACarerPage = () => {
   const currentContent = content[language as keyof typeof content];
 
   return (
-    <div className="bg-gray-50 text-gray-800 font-sans">
+    <div className="bg-gradient-to-r from-purple-200 via-purple-100 to-white text-gray-800 font-sans">
+        <UnifiedHeader
+          language={language}
+          setLanguage={setLanguage}
+          translations={translations}
+        />
       <div className="container mx-auto px-4 py-8">
-        <div className="text-right mb-4">
-          <button
-            onClick={() => setLanguage('en')}
-            className={`px-4 py-2 rounded-md ${language === 'en' ? 'bg-purple-600 text-white' : 'bg-gray-200'}`}
-          >
-            English
-          </button>
-          <button
-            onClick={() => setLanguage('zh')}
-            className={`ml-2 px-4 py-2 rounded-md ${language === 'zh' ? 'bg-purple-600 text-white' : 'bg-gray-200'}`}
-          >
-            中文
-          </button>
-        </div>
 
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-purple-800 mb-4">{currentContent.title}</h1>
@@ -323,5 +316,11 @@ const BecomeACarerPage = () => {
     </div>
   );
 };
+
+const BecomeACarerPage = () => (
+  <LanguageProvider>
+    <BecomeACarerPageContent />
+  </LanguageProvider>
+);
 
 export default BecomeACarerPage;

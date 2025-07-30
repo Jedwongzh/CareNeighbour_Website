@@ -1,9 +1,11 @@
 "use client";
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { UnifiedHeader } from '@/components/unified-header';
+import { LanguageProvider, useLanguage } from '@/app/contexts/LanguageContext';
 
-const OnboardingPage = () => {
-  const [language, setLanguage] = useState('en');
+const OnboardingPageContent = () => {
+  const { language, setLanguage, translations } = useLanguage();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -89,13 +91,14 @@ const OnboardingPage = () => {
   const currentContent = content[language as keyof typeof content];
 
   return (
-    <div style={{ backgroundColor: '#E6E6FA', fontFamily: 'Poppins, sans-serif', padding: '2rem' }}>
+    <div className="bg-gradient-to-r from-purple-200 via-purple-100 to-white" style={{ fontFamily: 'Poppins, sans-serif', padding: '2rem' }}>
+      <UnifiedHeader
+        language={language}
+        setLanguage={setLanguage}
+        translations={translations}
+      />
       <div style={{ maxWidth: '800px', margin: '0 auto', backgroundColor: 'white', padding: '2rem', borderRadius: '8px', display: 'flex', gap: '2rem' }}>
         <div style={{ flex: 1 }}>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
-            <button onClick={() => setLanguage('en')} style={{ marginRight: '0.5rem', padding: '0.5rem 1rem', border: '1px solid #4B0082', borderRadius: '4px', backgroundColor: language === 'en' ? '#4B0082' : 'white', color: language === 'en' ? 'white' : '#4B0082' }}>English</button>
-            <button onClick={() => setLanguage('zh')} style={{ padding: '0.5rem 1rem', border: '1px solid #4B0082', borderRadius: '4px', backgroundColor: language === 'zh' ? '#4B0082' : 'white', color: language === 'zh' ? 'white' : '#4B0082' }}>中文</button>
-          </div>
           <h1 style={{ textAlign: 'center', color: '#4B0082' }}>{currentContent.title}</h1>
           <p style={{ textAlign: 'center', marginBottom: '2rem' }}>{currentContent.subtitle}</p>
           <form onSubmit={handleSubmit}>
@@ -140,5 +143,11 @@ const OnboardingPage = () => {
     </div>
   );
 };
+
+const OnboardingPage = () => (
+  <LanguageProvider>
+    <OnboardingPageContent />
+  </LanguageProvider>
+);
 
 export default OnboardingPage;
