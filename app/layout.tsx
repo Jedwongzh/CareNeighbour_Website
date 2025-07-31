@@ -8,9 +8,21 @@ import "./globals.css"
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { HtmlLangUpdater } from "@/components/HtmlLangUpdater";
 import { Suspense } from "react";
-import GradientBackground from "@/components/GradientBackground";
+import dynamic from "next/dynamic";
 
-const inter = Inter({ subsets: ["latin"] })
+// Optimize font loading
+const inter = Inter({ 
+  subsets: ["latin"],
+  display: 'swap',
+  preload: true,
+  variable: '--font-inter'
+})
+
+// Lazy load GradientBackground for better performance
+const GradientBackground = dynamic(() => import("@/components/GradientBackground"), {
+  ssr: false, // Client-side only for performance
+  loading: () => <div className="fixed inset-0 bg-gradient-to-br from-purple-50 to-violet-100 -z-10" />
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.careneighbour.com'), // Update with your actual domain
@@ -26,12 +38,17 @@ export const metadata: Metadata = {
   },
   
   keywords: [
-    'CareNeighbour', 'Care Neighbour', 'Care a neighbour', 'Care neighbour', 'Care for neighbour', 'neighbour care', 'care for a neighbour',
-    'elderly care', 'caregivers', 'aged care', 'local support', 'Australia', 'Monash', 'senior care', 'AI in Care',
-    'AI-powered care', 'instant care', 'on-demand care', 'find care now', 'new care sourcing platform', 'AI care platform', 'AI caregiver', 'AI matching', 'culturally sensitive care', 'multilingual care',
+    // Primary English keywords
+    'CareNeighbour', 'Care Neighbour', 'care platform', 'AI care', 'instant care matching',
+    'caregivers Australia', 'elderly care', 'aged care', 'senior care', 'home care',
+    'local caregivers', 'trusted care', 'on-demand care', 'care services',
+    // Location-specific
+    'care Melbourne', 'care Sydney', 'care Brisbane', 'care Perth', 'care Adelaide',
+    'Australian care platform', 'Monash care research',
+    // Technology keywords
+    'AI-powered care', 'instant care', 'care matching', 'multilingual care',
     // Chinese keywords
-    '零距', '邻里关怀', '邻居关怀', '关怀邻居',
-    '老人护理', '照顾者', '年长护理', '本地支持', '澳大利亚', '莫纳什', '长者照顾', '人工智能护理'
+    '零距', '邻里关怀', '澳洲护理', '人工智能护理', '即时护理', '长者照顾'
   ],
   description: 'CareNeighbour is a new, AI-powered care sourcing platform that instantly connects you with trusted, local caregivers. Find care for your neighbour or family member in seconds, with instant matching and multilingual support.',
   openGraph: {
@@ -83,64 +100,36 @@ export default function RootLayout({
         <link rel="icon" href="/images/CN_Figure2.png" type="image/png" sizes="32x32" />
         <link rel="apple-touch-icon" href="/images/CN_Figure2.png" sizes="180x180" />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.variable} font-sans antialiased`}>
+        {/* Optimized JSON-LD with essential data only */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@graph": [
-                {
-                  "@type": "Organization",
-                  "name": "CareNeighbour",
-                  "url": "https://www.careneighbour.com",
-                  "logo": "https://www.careneighbour.com/images/CN_Figure2.png",
-                  "sameAs": [],
-                  "contactPoint": {
-                    "@type": "ContactPoint",
-                    "contactType": "Customer Service",
-                    "email": "careneighbour.team@gmail.com"
-                  },
-                  "description": "CareNeighbour is a new, AI-powered care sourcing platform for instant, trusted care matching."
-                },
-                {
-                  "@type": "WebSite",
-                  "url": "https://www.careneighbour.com/",
-                  "potentialAction": {
-                    "@type": "SearchAction",
-                    "target": "https://www.careneighbour.com/?q={search_term_string}",
-                    "query-input": "required name=search_term_string"
-                  },
-                  "about": "AI-powered instant care sourcing platform."
-                },
-                {
-                  "@type": "WebPage",
-                  "name": "CareNeighbour Home",
-                  "url": "https://www.careneighbour.com/",
-                  "description": "CareNeighbour is a new, AI-powered care sourcing platform for instant, trusted care matching.",
-                  "isPartOf": { "@id": "https://www.careneighbour.com/" }
-                },
-                {
-                  "@type": "SiteNavigationElement",
-                  "name": ["How It Works", "Our Approach", "Care Services", "Join Waitlist", "About Us"],
-                  "url": [
-                    "https://www.careneighbour.com/#how-it-works",
-                    "https://www.careneighbour.com/#our-approach",
-                    "https://www.careneighbour.com/services",
-                    "https://www.careneighbour.com/#waitlist",
-                    "https://www.careneighbour.com/about"
-                  ]
-                }
-              ]
+              "@type": "Organization",
+              "name": "CareNeighbour",
+              "url": "https://www.careneighbour.com",
+              "logo": "https://www.careneighbour.com/images/CN_Figure2.png",
+              "description": "AI-powered instant care sourcing platform for trusted, local care matching.",
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "Customer Service",
+                "email": "careneighbour.team@gmail.com"
+              }
             })
           }}
         />
         <AuthProvider>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
             <LanguageProvider>
-              <HtmlLangUpdater />
-              <div className="flex min-h-[100dvh] flex-col">
-              <GradientBackground />
+              <Suspense fallback={null}>
+                <HtmlLangUpdater />
+              </Suspense>
+              <div className="flex min-h-[100dvh] flex-col relative">
+                <Suspense fallback={<div className="fixed inset-0 bg-gradient-to-br from-purple-50 to-violet-100 -z-10" />}>
+                  <GradientBackground />
+                </Suspense>
                 {children}
               </div>
               <Toaster />
