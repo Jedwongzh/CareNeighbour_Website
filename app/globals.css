@@ -34,14 +34,14 @@
 
     --radius: 0.75rem;
 
-    --color-bg1: rgb(229, 217, 242);
-    --color-bg2: rgb(165, 148, 249);
-    --color1: 148, 171, 249;
-    --color2:165, 148, 249;
-    --color3:148, 244, 249;
-    --color4: 236, 118, 140;
-    --color5: 238, 243, 105;
-    --color-interactive: 251, 253, 255;
+    --color-bg1: rgb(229, 217, 242);   
+    --color-bg2: rgba(255, 255, 255, 1);   
+    --color1: 148, 171, 249;          /* dimmer blue */
+    --color2:165, 148, 249;         /* dimmer magenta */
+    --color3:148, 244, 249;          /* dimmer cyan */
+    --color4: 236, 118, 140;          /* dimmer red */
+    --color5: 238, 243, 105;           /* dimmer yellow */
+    --color-interactive: 251, 253, 255; /* dimmer interactive */
     --circle-size: 80%;
     --blending: hard-light;
   }

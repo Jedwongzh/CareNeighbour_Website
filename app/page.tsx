@@ -1066,8 +1066,8 @@ function GradientBackground() {
       </div>
       <style jsx global>{`
         :root {
-          --color-bg1: rgb(229, 217, 242);   /* dimmer purple */
-          --color-bg2: rgb(165, 148, 249);   /* dimmer blue */
+          --color-bg1: rgb(229, 217, 242);   
+          --color-bg2: rgba(255, 255, 255, 1);   
           --color1: 148, 171, 249;          /* dimmer blue */
           --color2:165, 148, 249;         /* dimmer magenta */
           --color3:148, 244, 249;          /* dimmer cyan */
