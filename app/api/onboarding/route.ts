@@ -30,13 +30,19 @@ export async function POST(request: Request) {
       firstName, 
       lastName, 
       email, 
-      phone, 
-      abn, 
-      address, 
-      experience, 
-      qualifications, 
-      availability 
+      phone
     } = body;
+
+    // Validate required fields
+    if (!firstName || !lastName || !email || !phone) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "All fields are required",
+        },
+        { status: 400 }
+      );
+    }
 
     // Format the private key properly
     const formattedPrivateKey = formatPrivateKey(GOOGLE_PRIVATE_KEY);
@@ -54,7 +60,7 @@ export async function POST(request: Request) {
     const sheets = google.sheets({ version: "v4", auth: client as any });
 
     const sheetName = "Onboarding";
-    const range = `${sheetName}!A:J`;
+    const range = `${sheetName}!A:E`;
 
     // Check if the sheet exists
     const spreadsheet = await sheets.spreadsheets.get({
@@ -84,7 +90,7 @@ export async function POST(request: Request) {
       // Add headers to the new sheet
       await sheets.spreadsheets.values.update({
         spreadsheetId: GOOGLE_SHEET_ID,
-        range: `${sheetName}!A1:J1`,
+        range: `${sheetName}!A1:E1`,
         valueInputOption: "RAW",
         requestBody: {
           values: [
@@ -93,11 +99,6 @@ export async function POST(request: Request) {
               "Last Name",
               "Email",
               "Phone Number",
-              "ABN",
-              "Address",
-              "Experience",
-              "Qualifications",
-              "Availability",
               "Timestamp",
             ],
           ],
@@ -117,11 +118,6 @@ export async function POST(request: Request) {
             lastName,
             email,
             phone,
-            abn,
-            address,
-            experience || '',
-            qualifications || '',
-            availability,
             new Date().toISOString(),
           ],
         ],
@@ -131,6 +127,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       message: "User data added to the sheet successfully",
+      redirectUrl: "/thank-you/onboarding"
     });
   } catch (error) {
     console.error("Error adding user to sheet:", error);
