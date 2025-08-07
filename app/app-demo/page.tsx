@@ -847,9 +847,8 @@ export default function AppDemoPage() {
   }
 
   return (
-    // Using global gradient background
-    <div className="min-h-screen relative overflow-hidden font-sans"
->
+    // ** Aesthetic Change: Light Purple Theme Gradient **
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-fuchsia-50 to-violet-100 relative overflow-hidden font-sans">
       {/* ** Aesthetic Change: Floating items background - subtle ** */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         {floatingItems.map((item) => (

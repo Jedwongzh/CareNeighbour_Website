@@ -49,8 +49,7 @@ export default function FeedbackThankYouPage() {
         }}
       />
 
-      <main className="flex-1 flex items-center justify-center"
->
+      <main className="flex-1 flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50">
         <div className="container px-4 md:px-6 py-16 md:py-24">
           <div className="max-w-2xl mx-auto text-center space-y-8">
             <div className="flex justify-center">
