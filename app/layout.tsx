@@ -20,7 +20,6 @@ const inter = Inter({
 
 // Lazy load GradientBackground for better performance
 const GradientBackground = dynamic(() => import("@/components/GradientBackground"), {
-  ssr: false, // Client-side only for performance
   loading: () => <div className="fixed inset-0 bg-gradient-to-br from-purple-50 to-violet-100 -z-10" />
 });
 
@@ -139,4 +138,5 @@ export default function RootLayout({
       </body>
     </html>
   )
+}
 }
