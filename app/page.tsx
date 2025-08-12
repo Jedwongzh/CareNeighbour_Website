@@ -811,7 +811,7 @@ const CareSearchBar = () => {
 
       {/* Preset Prompt Buttons */}
       <motion.div 
-        className="mt-4 flex flex-wrap gap-2 justify-center"
+        className="mt-5 flex flex-wrap gap-3 justify-center px-2"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
@@ -822,10 +822,10 @@ const CareSearchBar = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setQuery(prompt.description)}
-            className="flex items-center gap-2 px-4 py-1 md:px-4 md:py-2 rounded-full backdrop-blur-md bg-gray-200/10 bg-clip-padding text-gray transition-colors text-xs md:text-sm"
+            className="flex items-center gap-2.5 px-5 py-3 md:px-6 md:py-3 rounded-full backdrop-blur-md bg-gray-100 bg-clip-padding text-gray transition-colors text-base md:text-lg"
           >
-            <span className="text-lg md:text-xl">{prompt.icon}</span>
-            <span className="text-sm font-medium">{prompt.title}</span>
+            <span className="text-xl md:text-2xl">{prompt.icon}</span>
+            <span className="text-base font-medium">{prompt.title}</span>
           </motion.button>
         ))}
       </motion.div>
@@ -1360,50 +1360,108 @@ export default function LandingPage() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section id="hero" className="w-full py-10 md:py-20 lg:py-16 relative overflow-hidden flex flex-col items-center justify-center">
-            <div className="absolute inset-0 z-0"></div>
+        <section id="hero" className="relative py-0 px-4 md:px-6 min-h-[90vh] flex items-center justify-center">
+          <div className="container mx-auto max-w-7xl relative h-[90vh]">
+            {/* Background Images */}
+            <div className="absolute inset-0 overflow-hidden">
+          {/* Left Image - Top Left */}
+          <motion.div 
+          className="absolute left-20 top-20 w-72 h-96 overflow-hidden rounded-2xl shadow-2xl"
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1, delay: 0.3 }}
+          >
+          <img 
+            src="https://careneighbour.my.canva.site/_assets/media/9430f0c7baa2a133c4fb84917d601ef8.jpg" 
+            alt="Carer" 
+            className="w-full h-full object-cover"
+          />
+          </motion.div>
 
-            <div className="container px-4 md:px-6 relative z-10 flex flex-col items-center justify-center">
-              <div className="max-w-5xl mx-auto flex flex-col items-center justify-center">
-          <div className="space-y-8 md:space-y-10 flex flex-col items-center justify-center">
-            <div className="flex flex-col md:flex-row md:items-center gap-8 items-center justify-center">
-              {/* Left column: Hero title (4/5) */}
-              <div className="flex items-center justify-center w-full">
-                <motion.h1
-            className="text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight leading-tight w-full text-center title-shadow"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-                >
-            <span className="gradient-text-fill">
-              {t.heroTitleStart} {t.heroTitleEnd}
-            </span>
-                </motion.h1>
-              </div>
+          {/* Right Image - Bottom Right */}
+          <motion.div 
+          className="absolute right-20 bottom-20 w-72 h-96 overflow-hidden rounded-2xl shadow-2xl"
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          >
+          <img 
+            src="https://careneighbour.my.canva.site/_assets/media/0c0b73ba778e047274f588bcffbd3b60.jpg" 
+            alt="Care recipient" 
+            className="w-full h-full object-cover"
+          />
+          </motion.div>
+
+          {/* Decorative Elements */}
+          <motion.div 
+          className="absolute left-1 top-1 w-[350px] h-[350px]"
+          initial={{ x: -200, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 1, delay: 0.8 }}
+          >
+          <img 
+            src="https://careneighbour.my.canva.site/_assets/media/c98db77c96ad2963a69c04e453b98af5.png" 
+            alt="Decorative element" 
+            className="w-full h-full object-contain transform rotate-[45deg]"
+          />
+          </motion.div>
+
+          <motion.div 
+          className="absolute right-1 bottom-1 w-[350px] h-[350px]"
+          initial={{ x: 200, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 1, delay: 1 }}
+          >
+          <img 
+            src="https://careneighbour.my.canva.site/_assets/media/c98db77c96ad2963a69c04e453b98af5.png" 
+            alt="Decorative element" 
+            className="w-full h-full object-contain transform rotate-[225deg]"
+          />
+          </motion.div>
+            </div>
+
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center space-y-8 relative z-10 h-full">
+              {/* Main Title */}
+              <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="space-y-4 flex flex-col items-center justify-center"
+              >
+              <h1 className="text-4xl md:text-7xl font-bold text-white leading-tight tracking-tight drop-shadow-2xl">
+          <motion.span 
+          className="block drop-shadow-lg"
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          style={{ textShadow: '2px 4px 8px rgba(0, 0, 0, 0.7)' }}
+          >
+          {language === 'en' ? 'Find a carer who' : language === 'zh' ? '找到会说你' : '尋找會說你'}
+          </motion.span>
+          <motion.span 
+          className="block drop-shadow-lg"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          style={{ textShadow: '2px 4px 8px rgba(0, 0, 0, 0.7)' }}
+          >
+          {language === 'en' ? 'speaks your language' : language === 'zh' ? '语言的护理员' : '語言的護理員'}
+          </motion.span>
+              </h1>
+              </motion.div>
+
+              {/* Search Bar */}
+              <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
+          className="max-w-3xl mx-auto drop-shadow-2xl"
+          style={{ filter: 'drop-shadow(0 10px 25px rgba(0, 0, 0, 0.3))' }}
+              >
+          <CareSearchBar />
+              </motion.div>
             </div>
           </div>
-              </div>
-
-                <motion.p
-                  className="text-lg md:text-2xl text max-w-3xl px-2 py-4 text-center mx-auto"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                >
-                  {t.heroSubtitle}
-                </motion.p>
-                <p className="sr-only">CareNeighbour is a new, AI-powered instant care sourcing platform. Get matched with trusted caregivers in seconds.</p>
-
-                {/* Search Bar */}
-                <motion.div
-                  className="pt-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.2 }}
-                >
-                  <CareSearchBar />
-                </motion.div>
-              </div>
         </section>
 
         {/* CareTypeCards now comes right after Hero */}
