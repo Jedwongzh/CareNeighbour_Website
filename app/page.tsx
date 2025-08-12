@@ -811,7 +811,7 @@ const CareSearchBar = () => {
 
       {/* Preset Prompt Buttons */}
       <motion.div 
-        className="mt-4 flex flex-wrap gap-2 justify-center px-2"
+        className="mt-4 flex flex-wrap gap-2 justify-center"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
@@ -822,10 +822,10 @@ const CareSearchBar = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setQuery(prompt.description)}
-            className="flex items-center gap-1.5 px-3 py-2 md:px-4 md:py-2.5 rounded-full backdrop-blur-md bg-gray-100 bg-clip-padding text-gray transition-colors text-sm md:text-base"
+            className="flex items-center gap-2 px-4 py-1 md:px-4 md:py-2 rounded-full backdrop-blur-md bg-gray-100 bg-clip-padding text-gray transition-colors text-xs md:text-sm"
           >
-            <span className="text-base md:text-lg">{prompt.icon}</span>
-            <span className="text-sm font-medium truncate max-w-[100px] sm:max-w-none">{prompt.title}</span>
+            <span className="text-lg md:text-xl">{prompt.icon}</span>
+            <span className="text-sm font-medium">{prompt.title}</span>
           </motion.button>
         ))}
       </motion.div>
@@ -839,7 +839,7 @@ const CareSearchBar = () => {
               el.scrollIntoView({ behavior: 'smooth' });
             }
           }}
-          className="focus:outline-none text-gray text-lg font-semibold flex flex-col items-center bg-transparent border-none p-0 hover:text-purple-900"
+          className="focus:outline-none text-white text-lg font-semibold flex flex-col items-center bg-transparent border-none p-0 hover:text-purple-900"
           style={{ background: 'none', border: 'none' }}
         >
           {t.howItWorks}
