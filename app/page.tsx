@@ -548,6 +548,7 @@ const CareSearchBar = () => {
   const inputRef = useRef<HTMLInputElement>(null)
   const { language } = useLanguage()
   const t = pageTranslations[language as keyof typeof pageTranslations] || pageTranslations.en
+  const router = useRouter()
 
   // Common prompts for cycling placeholder (translation-compatible)
   const cyclingPrompts = [
@@ -709,7 +710,7 @@ const CareSearchBar = () => {
 
   const handleSendClick = () => {
     if (query.trim().length > 0) {
-      setShowCareRequestPopup(true)
+      router.push(`/chat?query=${encodeURIComponent(query)}`)
     }
   }
 
