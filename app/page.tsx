@@ -16,9 +16,33 @@ import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carouse
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 import { UnifiedHeader } from "@/components/unified-header"
 import { UnifiedFooter } from "@/components/unified-footer"
-import { joinWaitlist, submitFeedback } from "./actions"
 import { useLanguage } from "./contexts/LanguageContext" // Import useLanguage hook
 import VerticalCarousel from "@/components/VerticalCarousel"
+
+// Client-side replacements for server actions (for static export)
+const joinWaitlist = async (formData: FormData) => {
+  // Simulate API call for static export
+  return new Promise<{success: boolean, message: string}>((resolve) => {
+    setTimeout(() => {
+      resolve({
+        success: true,
+        message: "Thank you! You'll receive free care request credits when we launch."
+      });
+    }, 1000);
+  });
+};
+
+const submitFeedback = async (formData: FormData) => {
+  // Simulate API call for static export
+  return new Promise<{success: boolean, message: string}>((resolve) => {
+    setTimeout(() => {
+      resolve({
+        success: true,
+        message: "Thank you for your feedback! We'll use it to improve our service."
+      });
+    }, 1000);
+  });
+};
 
 // Lazy load non-critical components
 const FeatureCarousel = lazy(() =>
@@ -180,7 +204,12 @@ const pageTranslations = {
       privacy: "We respect your privacy. Unsubscribe anytime.",
       success: "Thank you! You'll receive free care request credits when we launch.",
       error: "Please provide a valid email address.",
-      yourRequest: "Your Care Request:"
+      yourRequest: "Your Care Request:",
+      earlyAccessLabel: "Early Access Code (optional)",
+      earlyAccessPlaceholder: "Enter your early access code",
+      validateCodeButton: "Validate Code",
+      accessChatButton: "Access Chat Page",
+      invalidCodeError: "Invalid code. Please try again or contact support."
     },
     careTypes: [
       {
@@ -331,7 +360,12 @@ const pageTranslations = {
       privacy: "我們尊重您的隱私。隨時可以取消訂閱。",
       success: "謝謝！在我們推出時，您將獲得免費護理請求積分。",
       error: "請提供有效的郵箱地址。",
-      yourRequest: "您的護理請求:"
+      yourRequest: "您的護理請求:",
+      earlyAccessLabel: "早期訪問代碼（可選）",
+      earlyAccessPlaceholder: "輸入您的早期訪問代碼",
+      validateCodeButton: "驗證代碼",
+      accessChatButton: "訪問聊天頁面",
+      invalidCodeError: "無效代碼。請重試或聯繫支持。"
     },
     careTypes: [
       {
@@ -472,18 +506,6 @@ const pageTranslations = {
       dementiaCare: "尋找失智症護理專家",
       homeCare: "需要居家護理服務"
     },
-    // Care Request Popup translations
-    careRequestPopup: {
-      title: "護理請求即將推出！",
-      description: "我們將於2025年9月推出護理請求功能。請輸入您的郵箱，以便在我們推出時獲得免費護理請求積分。",
-      emailPlaceholder: "輸入您的郵箱",
-      submitButton: "獲取免費積分",
-      submittingButton: "提交中...",
-      privacy: "我們尊重您的隱私。隨時可以取消訂閱。",
-      success: "謝謝！在我們推出時，您將獲得免費護理請求積分。",
-      error: "請提供有效的郵箱地址。",
-      yourRequest: "您的護理請求:"
-    },
     careTypes: [
       {
         title: "長者護理",
@@ -530,6 +552,23 @@ const pageTranslations = {
         ]
       }
     ],
+    // Care Request Popup translations
+    careRequestPopup: {
+      title: "護理請求即將推出！",
+      description: "我哋將於2025年9月推出護理請求功能。請輸入您嘅郵箱，以便喺我哋推出時獲得免費護理請求積分。",
+      emailPlaceholder: "輸入您嘅郵箱",
+      submitButton: "獲取免費積分",
+      submittingButton: "提交緊...",
+      privacy: "我哋尊重您嘅隱私。隨時可以取消訂閱。",
+      success: "多謝！喺我哋推出時，您將獲得免費護理請求積分。",
+      error: "請提供有效嘅郵箱地址。",
+      yourRequest: "您嘅護理請求:",
+      earlyAccessLabel: "早期訪問代碼（可選）",
+      earlyAccessPlaceholder: "輸入您嘅早期訪問代碼",
+      validateCodeButton: "驗證代碼",
+      accessChatButton: "訪問聊天頁面",
+      invalidCodeError: "無效代碼。請重試或聯繫支援。"
+    }
   },
 };
 
@@ -544,11 +583,13 @@ const CareSearchBar = () => {
   const [careRequestEmail, setCareRequestEmail] = useState("")
   const [isSubmittingCareRequest, setIsSubmittingCareRequest] = useState(false)
   const [careRequestStatus, setCareRequestStatus] = useState<{ success?: boolean; message?: string; error?: string } | null>(null)
+  const [earlyAccessCode, setEarlyAccessCode] = useState("");
+  const [isCodeValid, setIsCodeValid] = useState(false);
+  const [codeError, setCodeError] = useState("");
   const recognitionRef = useRef<SpeechRecognition | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const { language } = useLanguage()
   const t = pageTranslations[language as keyof typeof pageTranslations] || pageTranslations.en
-  const router = useRouter()
 
   // Common prompts for cycling placeholder (translation-compatible)
   const cyclingPrompts = [
@@ -710,7 +751,7 @@ const CareSearchBar = () => {
 
   const handleSendClick = () => {
     if (query.trim().length > 0) {
-      router.push(`/chat?query=${encodeURIComponent(query)}`)
+      setShowCareRequestPopup(true)
     }
   }
 
@@ -885,6 +926,50 @@ const CareSearchBar = () => {
               required
               disabled={isSubmittingCareRequest}
             />
+            {/* Early Access Code Section */}
+            <div className="space-y-2">
+              <label htmlFor="early-access-code" className="block text-sm font-medium text-gray-700">{t.careRequestPopup.earlyAccessLabel}</label>
+              <Input
+                id="early-access-code"
+                type="text"
+                placeholder={t.careRequestPopup.earlyAccessPlaceholder}
+                value={earlyAccessCode}
+                onChange={e => {
+                  setEarlyAccessCode(e.target.value);
+                  setIsCodeValid(false);
+                  setCodeError("");
+                }}
+                className="h-12 text-base"
+                disabled={isSubmittingCareRequest}
+              />
+              {codeError && <div className="text-sm text-red-600">{codeError}</div>}
+              {isCodeValid && (
+                <a
+                  href={`/chat?query=${encodeURIComponent(query)}`}
+                  className="block w-full mt-2 bg-green-600 hover:bg-green-700 text-white text-center py-3 rounded-lg font-semibold transition"
+                >
+                  {t.careRequestPopup.accessChatButton}
+                </a>
+              )}
+              {!isCodeValid && earlyAccessCode && (
+                <Button
+                  type="button"
+                  className="w-full h-10 text-base bg-blue-600 hover:bg-blue-700 text-white mt-2"
+                  onClick={() => {
+                    if (earlyAccessCode.trim().toUpperCase() === "EARLYACCESS2024") {
+                      setIsCodeValid(true);
+                      setCodeError("");
+                    } else {
+                      setIsCodeValid(false);
+                      setCodeError(t.careRequestPopup.invalidCodeError);
+                    }
+                  }}
+                  disabled={isSubmittingCareRequest}
+                >
+                  {t.careRequestPopup.validateCodeButton}
+                </Button>
+              )}
+            </div>
             
             {careRequestStatus && (
               <div className={`text-sm ${careRequestStatus.success ? "text-green-600" : "text-red-600"}`}>
@@ -1240,12 +1325,8 @@ export default function LandingPage() {
       const result = await joinWaitlist(formData)
       console.log("Waitlist submission result:", result)
 
-      if (result.success && result.redirectUrl) {
-        router.push(result.redirectUrl)
-      } else {
-        setWaitlistStatus(result)
-        setIsSubmittingWaitlist(false)
-      }
+      setWaitlistStatus(result)
+      setIsSubmittingWaitlist(false)
     } catch (error) {
       console.error("Error submitting waitlist form:", error)
       setWaitlistStatus({
@@ -1278,12 +1359,8 @@ export default function LandingPage() {
       const result = await joinWaitlist(formData)
       console.log("Top waitlist submission result:", result)
 
-      if (result.success && result.redirectUrl) {
-        router.push(result.redirectUrl)
-      } else {
-        setWaitlistStatus(result)
-        setIsSubmittingWaitlist(false)
-      }
+      setWaitlistStatus(result)
+      setIsSubmittingWaitlist(false)
     } catch (error) {
       console.error("Error submitting top waitlist form:", error)
       setWaitlistStatus({
@@ -1306,12 +1383,8 @@ export default function LandingPage() {
       const result = await submitFeedback(formData)
       console.log("Feedback submission result:", result)
 
-      if (result.success && result.redirectUrl) {
-        router.push(result.redirectUrl)
-      } else {
-        setFeedbackStatus(result)
-        setIsSubmittingFeedback(false)
-      }
+      setFeedbackStatus(result)
+      setIsSubmittingFeedback(false)
     } catch (error) {
       console.error("Error submitting feedback form:", error)
       setFeedbackStatus({
