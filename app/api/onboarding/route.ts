@@ -25,6 +25,14 @@ function formatPrivateKey(key: string): string {
 
 export async function POST(request: Request) {
   try {
+    // Check if we're missing credentials (but allow runtime execution)
+    if (!GOOGLE_CLIENT_EMAIL || !GOOGLE_PRIVATE_KEY || !GOOGLE_SHEET_ID) {
+      return NextResponse.json({ 
+        success: false, 
+        message: "Missing Google Sheets credentials - please configure environment variables" 
+      }, { status: 500 })
+    }
+
     const body = await request.json();
     const { 
       firstName, 

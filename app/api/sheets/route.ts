@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { google } from "googleapis"
+import { shouldSkipGoogleSheets } from "@/lib/build-detection"
 
 // Get environment variables
 const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY || ""
@@ -25,6 +26,11 @@ function formatPrivateKey(key: string): string {
 
 async function getAuthSheets() {
   try {
+    // Check if we should skip Google Sheets during build or when credentials are missing
+    if (shouldSkipGoogleSheets()) {
+      throw new Error("Google Sheets API not available during build time")
+    }
+
     // Log environment variable status (without exposing sensitive data)
     console.log("Google Sheets API credentials status:", {
       hasPrivateKey: !!GOOGLE_PRIVATE_KEY && GOOGLE_PRIVATE_KEY.length > 0,
@@ -123,6 +129,14 @@ async function ensureSheets(sheets: any) {
 
 export async function POST(request: Request) {
   try {
+    // Check if we should skip Google Sheets during build or when credentials are missing  
+    if (shouldSkipGoogleSheets()) {
+      return NextResponse.json({ 
+        success: false, 
+        message: "Google Sheets API not available during build time - this will work in production with proper credentials" 
+      }, { status: 200 }) // Return 200 to prevent build errors
+    }
+
     const body = await request.json()
     const { type, email, feedback = "" } = body
 

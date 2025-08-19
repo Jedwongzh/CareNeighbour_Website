@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { google } from "googleapis"
+import { shouldSkipGoogleSheets } from "@/lib/build-detection"
 
 // Get environment variables
 const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY || ""
@@ -25,6 +26,32 @@ function formatPrivateKey(key: string): string {
 
 export async function GET() {
   try {
+    // Check if we should skip Google Sheets during build or when credentials are missing
+    if (shouldSkipGoogleSheets()) {
+      console.log('Google Sheets API credentials status:', {
+        hasPrivateKey: !!GOOGLE_PRIVATE_KEY,
+        hasClientEmail: !!GOOGLE_CLIENT_EMAIL,
+        hasSheetId: !!GOOGLE_SHEET_ID,
+        privateKeyLength: GOOGLE_PRIVATE_KEY.length
+      })
+      
+      return NextResponse.json({ 
+        error: "Google Sheets API not available during build or missing credentials",
+        hasPrivateKey: !!GOOGLE_PRIVATE_KEY,
+        hasClientEmail: !!GOOGLE_CLIENT_EMAIL,
+        hasSheetId: !!GOOGLE_SHEET_ID,
+        privateKeyLength: GOOGLE_PRIVATE_KEY.length
+      }, { status: 200 }) // Return 200 to prevent build errors
+    }
+
+    // Debug log for credential status
+    console.log('Google Sheets API credentials status:', {
+      hasPrivateKey: !!GOOGLE_PRIVATE_KEY,
+      hasClientEmail: !!GOOGLE_CLIENT_EMAIL,
+      hasSheetId: !!GOOGLE_SHEET_ID,
+      privateKeyLength: GOOGLE_PRIVATE_KEY.length
+    })
+
     // Format the private key properly
     const formattedPrivateKey = formatPrivateKey(GOOGLE_PRIVATE_KEY)
 
