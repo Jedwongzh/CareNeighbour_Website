@@ -692,7 +692,7 @@ function ServicesPageContent() {
         <meta name="keywords" content="CareNeighbour, Care Neighbour, AI-powered care, instant care, care sourcing platform, new care platform, trusted caregivers, services, NDIS, aged care, allied health, nursing, support" />
         <meta property="og:title" content="Care Services | AI-Powered Instant Care Sourcing | CareNeighbour" />
         <meta property="og:description" content="Explore CareNeighbour's AI-powered instant care sourcing platform. Discover comprehensive, culturally-sensitive care services and get matched instantly with trusted caregivers." />
-        <meta property="og:image" content="/images/CN_Figure2.png" />
+        <meta property="og:image" content="/CN_Brandmark_Black.png" />
         <meta name="robots" content="index, follow" />
       </Head>
       <div className="flex min-h-[100dvh] flex-col">

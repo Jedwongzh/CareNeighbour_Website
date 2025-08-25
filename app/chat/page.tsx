@@ -387,7 +387,7 @@ function ChatPageContent() {
                     </div>
                   ) : (
                     <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-full flex items-center justify-center border-2 border-purple-200">
-                      <Image src="/images/Logo-no-bck.png" alt="CareNeighbour" width={24} height={24} className="rounded-full" />
+                      <Image src="/CN_Brandmark_Black.png" alt="CareNeighbour" width={24} height={24} className="rounded-full" />
                     </div>
                   )}
                 </div>
@@ -417,7 +417,7 @@ function ChatPageContent() {
             >
               <div className="text-center">
                 <div className="w-16 h-16 mx-auto mb-4 bg-purple-100 rounded-full flex items-center justify-center">
-                  <Image src="/images/Logo-no-bck.png" alt="CareNeighbour" width={32} height={32} />
+                  <Image src="/CN_Brandmark_Black.png" alt="CareNeighbour" width={32} height={32} />
                 </div>
                 <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
                   Continue Your Care Journey

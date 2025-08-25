@@ -88,7 +88,7 @@ export default function ChatInterface({ careSummary }: { careSummary: string }) 
               >
                 {message.sender === "bot" && (
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src="/placeholder-logo.svg" alt="Bot" />
+                    <AvatarImage src="/CN_Brandmark_Black.png" alt="Bot" />
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
                 )}
