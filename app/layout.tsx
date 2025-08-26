@@ -1,4 +1,5 @@
 import type React from "react"
+import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from "next";
 import { Inter } from "next/font/google"
 import { Toaster } from "@/components/ui/toaster"
@@ -11,7 +12,7 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 
 // Optimize font loading
-const inter = Inter({ 
+const inter = Inter({
   subsets: ["latin"],
   display: 'swap',
   preload: true,
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
       'zh': '/?lang=zh',
     },
   },
-  
+
   keywords: [
     // Primary English keywords
     'CareNeighbour', 'Care Neighbour', 'care platform', 'AI care', 'instant care matching',
@@ -113,6 +114,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
       </head>
+      <GoogleAnalytics gaId={process.env.GA4_ID} />
       <body className={`${inter.variable} font-sans antialiased`}>
         {/* Optimized JSON-LD with essential data only */}
         <script
