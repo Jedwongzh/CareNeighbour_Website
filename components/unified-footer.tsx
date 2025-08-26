@@ -28,7 +28,7 @@ export function UnifiedFooter({ language, translations }: UnifiedFooterProps) {
       >
       <div className="container px-4 md:px-6 py-8 flex flex-col md:flex-row items-center justify-between text-sm text-gray-500">
         <div className="flex items-center space-x-2 mb-4 md:mb-0">
-          <Image src="/images/CN_Figure2.png" alt="CareNeighbour Logo" width={24} height={24} />
+          <Image src="/CN_Brandmark_Black.png" alt="CareNeighbour Logo" width={24} height={24} />
           <span>
             &copy; {new Date().getFullYear()}{" "}
             {translations.footerCopyright || (language === 'zh' ? '零距' : language === 'yue' ? '零距' : 'CareNeighbour')}

@@ -39,7 +39,7 @@ export function UnifiedHeader({ language, setLanguage, translations }: UnifiedHe
     >
       <div className="container px-4 md:px-6 flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center space-x-2 transition-all duration-300 ease-in-out">
-          <Image src="/images/CN_Figure2.png" alt="CareNeighbour Logo" width={36} height={36} />
+          <Image src="/CN_Brandmark_Black.png" alt="CareNeighbour Logo" width={25} height={25} />
           <span className="font-semibold text-lg transition-colors duration-300 ease-in-out">
             {language === 'zh' ? '零距' : language === 'yue' ? '零距' : 'CareNeighbour'}
           </span>

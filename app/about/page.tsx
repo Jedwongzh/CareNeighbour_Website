@@ -63,7 +63,7 @@ export default function AboutPage() {
         <meta name="keywords" content="CareNeighbour, Care Neighbour, AI-powered care, instant care, care sourcing platform, new care platform, Monash, trusted caregivers, about, team, mission" />
         <meta property="og:title" content="About CareNeighbour | AI-Powered Instant Care Sourcing Platform" />
         <meta property="og:description" content="Learn about CareNeighbour, the new AI-powered instant care sourcing platform. Meet the team and discover our mission to make care accessible instantly for everyone." />
-        <meta property="og:image" content="/images/CN_Figure2.png" />
+        <meta property="og:image" content="/CN_Brandmark_Black.png" />
         <meta name="robots" content="index, follow" />
       </Head>
       {/* Unified Header */}

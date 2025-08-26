@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     description: 'Discover CareNeighbour, the new AI-powered platform for instant care matching. Find trusted, local caregivers in seconds.',
     images: [
       {
-        url: '/images/CN_Figure2.png', // Create a specific image for social sharing
+        url: '/CN_Brandmark_Black.png', // Create a specific image for social sharing
         width: 1200,
         height: 630,
         alt: 'CareNeighbour - AI-Powered Instant Care Sourcing Platform',
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
     title: 'CareNeighbour | AI-Powered Instant Care Sourcing',
     description: 'Find care instantly with CareNeighbour, the new AI-powered care sourcing platform.',
     site: '@careneighbour',
-    images: ['/images/CN_Figure2.png'],
+    images: ['/CN_Brandmark_Black.png'],
   },
   robots: {
     index: true,
@@ -123,7 +123,7 @@ export default function RootLayout({
               "@type": "Organization",
               "name": "CareNeighbour",
               "url": "https://www.careneighbour.com",
-              "logo": "https://www.careneighbour.com/images/CN_Figure2.png",
+              "logo": "https://www.careneighbour.com/CN_Brandmark_Black.png",
               "description": "AI-powered instant care sourcing platform for trusted, local care matching.",
               "contactPoint": {
                 "@type": "ContactPoint",
