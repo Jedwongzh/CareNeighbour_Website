@@ -1295,7 +1295,7 @@ export default function LandingPage() {
     try {
       const formData = new FormData(e.target as HTMLFormElement)
       console.log("Submitting waitlist form...")
-      const result = await joinWaitlist(formData.get("email"))
+      const result = await joinWaitlist(formData.get("email") as string)
       console.log("Waitlist submission result:", result)
 
       setWaitlistStatus({"success": result.status===200})
@@ -1352,7 +1352,7 @@ export default function LandingPage() {
     try {
       const formData = new FormData(e.target as HTMLFormElement)
       console.log("Submitting feedback form...")
-      const result = await submitFeedback(formData.get("email"), formData.get("feedback"))
+      const result = await submitFeedback(formData.get("email") as string, formData.get("feedback") as string)
       console.log("Feedback submission result:", result)
 
       setFeedbackStatus({
