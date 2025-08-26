@@ -19,31 +19,6 @@ import { UnifiedFooter } from "@/components/unified-footer"
 import { useLanguage } from "./contexts/LanguageContext" // Import useLanguage hook
 import VerticalCarousel from "@/components/VerticalCarousel"
 
-// Client-side replacements for server actions (for static export)
-const joinWaitlist = async (formData: FormData) => {
-  // Simulate API call for static export
-  return new Promise<{success: boolean, message: string}>((resolve) => {
-    setTimeout(() => {
-      resolve({
-        success: true,
-        message: "Thank you! You'll receive free care request credits when we launch."
-      });
-    }, 1000);
-  });
-};
-
-const submitFeedback = async (formData: FormData) => {
-  // Simulate API call for static export
-  return new Promise<{success: boolean, message: string}>((resolve) => {
-    setTimeout(() => {
-      resolve({
-        success: true,
-        message: "Thank you for your feedback! We'll use it to improve our service."
-      });
-    }, 1000);
-  });
-};
-
 // Lazy load non-critical components
 const FeatureCarousel = lazy(() =>
   import("@/components/feature-carousel").then((mod) => ({ default: mod.FeatureCarousel })),
@@ -714,16 +689,11 @@ const CareSearchBar = () => {
     setCareRequestStatus(null)
 
     try {
-      const formData = new FormData()
-      formData.append("email", careRequestEmail)
-      formData.append("type", "care_request")
-      formData.append("response", query) // Add the user's typed response
-
       console.log("Submitting care request form...")
-      const result = await joinWaitlist(formData)
+      const result = await sendCareRequest(careRequestEmail, query)
       console.log("Care request submission result:", result)
 
-      if (result.success) {
+      if (result.status === 200) {
         setCareRequestStatus({
           success: true,
           message: t.careRequestPopup.success,
@@ -735,7 +705,10 @@ const CareSearchBar = () => {
           setCareRequestStatus(null)
         }, 3000)
       } else {
-        setCareRequestStatus(result)
+        setCareRequestStatus({
+          success: false,
+          message: t.careRequestPopup.error,
+        })
       }
     } catch (error) {
       console.error("Error submitting care request form:", error)
@@ -1322,10 +1295,10 @@ export default function LandingPage() {
     try {
       const formData = new FormData(e.target as HTMLFormElement)
       console.log("Submitting waitlist form...")
-      const result = await joinWaitlist(formData)
+      const result = await joinWaitlist(formData.get("email"))
       console.log("Waitlist submission result:", result)
 
-      setWaitlistStatus(result)
+      setWaitlistStatus({"success": result.status===200})
       setIsSubmittingWaitlist(false)
     } catch (error) {
       console.error("Error submitting waitlist form:", error)
@@ -1352,14 +1325,13 @@ export default function LandingPage() {
     setWaitlistStatus(null)
 
     try {
-      const formData = new FormData()
-      formData.append("email", topWaitlistEmail)
-
       console.log("Submitting top waitlist form...")
-      const result = await joinWaitlist(formData)
+      const result = await joinWaitlist(topWaitlistEmail)
       console.log("Top waitlist submission result:", result)
 
-      setWaitlistStatus(result)
+      setWaitlistStatus({
+        success: result.status===200
+      })
       setIsSubmittingWaitlist(false)
     } catch (error) {
       console.error("Error submitting top waitlist form:", error)
@@ -1380,10 +1352,12 @@ export default function LandingPage() {
     try {
       const formData = new FormData(e.target as HTMLFormElement)
       console.log("Submitting feedback form...")
-      const result = await submitFeedback(formData)
+      const result = await submitFeedback(formData.get("email"), formData.get("feedback"))
       console.log("Feedback submission result:", result)
 
-      setFeedbackStatus(result)
+      setFeedbackStatus({
+        success: result.status===200
+      })
       setIsSubmittingFeedback(false)
     } catch (error) {
       console.error("Error submitting feedback form:", error)
@@ -2424,4 +2398,45 @@ export default function LandingPage() {
       />
     </div>
   )
+}
+
+const joinWaitlist = (email:string) => {
+  return fetch("/api/sheets", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: email,
+      type: "waitlist",
+    }),
+  })
+}
+
+const submitFeedback = (email:string, feedback:string) => {
+  return fetch("/api/sheets", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: email,
+      feedback: feedback,
+      type: "feedback",
+    }),
+  })
+}
+
+const sendCareRequest = (email:string, request:string) => {
+  return fetch("/api/sheets", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: email,
+      request: request,
+      type: "care-request",
+    }),
+  })
 }
