@@ -2,7 +2,7 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv {
       // Google Analytics
-      GA4_ID: string;
+      NEXT_PUBLIC_GA4_ID: string;
       
       // Google Sheets API
       GOOGLE_PRIVATE_KEY: string;
