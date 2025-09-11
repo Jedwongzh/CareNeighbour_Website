@@ -725,7 +725,7 @@ function ServicesPageContent() {
                           <div className="flex flex-col space-y-3 md:space-y-4">
                             <div className="text-2xl md:text-3xl lg:text-4xl transition-transform duration-300">{service.icon}</div>
                             <div className="flex-1">
-                              <h4 className="text-base md:text-lg lg:text-xl font-semibold mb-2 md:mb-3 title-shadow">
+                              <h4 className="text-base md:text-lg lg:text-xl font-semibold mb-2 md:mb-3">
                                 <span className="gradient-text-fill">{service.name}</span>
                               </h4>
                               <p className="text-xs md:text-sm lg:text-base text-black leading-relaxed">{service.description}</p>

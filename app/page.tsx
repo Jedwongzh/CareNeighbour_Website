@@ -1836,7 +1836,7 @@ export default function LandingPage() {
             >
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start order-2 md:order-1">
-                <h2 className="text-2xl font-semibold mb-3 title-shadow">
+                <h2 className="text-2xl font-semibold mb-3">
                   <span className="gradient-text-fill">{t.feature1Title}</span>
                 </h2>
                 <p className="text-lg text-gray-700 justify-left min-h-[120px]">
@@ -1959,7 +1959,7 @@ export default function LandingPage() {
               </div>
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start">
-                <h2 className="text-2xl font-semibold mb-3 title-shadow">
+                <h2 className="text-2xl font-semibold mb-3">
                   <span className="gradient-text-fill">{t.feature2Title}</span>
                 </h2>
                 <p className="text-lg text-gray-700 min-h-[120px]">
@@ -1978,7 +1978,7 @@ export default function LandingPage() {
             >
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start order-2 md:order-1">
-                <h2 className="text-2xl font-semibold mb-3 title-shadow">
+                <h2 className="text-2xl font-semibold mb-3">
                   <span className="gradient-text-fill">{t.feature3Title}</span>
                 </h2>
                 <p className="text-lg text-gray-700 min-h-[120px]">
@@ -2101,7 +2101,7 @@ export default function LandingPage() {
               </div>
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start">
-                <h2 className="text-2xl font-semibold mb-3 title-shadow">
+                <h2 className="text-2xl font-semibold mb-3">
                   <span className="gradient-text-fill">{t.feature4Title}</span>
                 </h2>
                 <p className="text-lg text-gray-700 min-h-[120px]">
