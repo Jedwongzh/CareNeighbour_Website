@@ -680,6 +680,7 @@ function ServicesPageContent() {
     howItWorks: language === 'zh' ? '如何运作' : language === 'yue' ? '點樣運作' : 'How It Works',
     aboutUs: language === 'zh' ? '关于我们' : language === 'yue' ? '關於我們' : 'About Us',
     joinWaitlist: language === 'zh' ? '加入等候名单' : language === 'yue' ? '加入等候名單' : 'Join Waitlist',
+    becomeACarer: language === 'zh' ? '成为护理员' : language === 'yue' ? '成為護理員' : 'Become a Carer',
     SourceforCare: language === 'zh' ? '护理服务' : language === 'yue' ? '護理服務' : 'Source for Care',
     mainPage: content.mainPage
   }

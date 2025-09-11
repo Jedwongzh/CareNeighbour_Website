@@ -12,6 +12,7 @@ interface MobileNavProps {
     aboutUs: string
     joinWaitlist: string
     SourceforCare: string
+    becomeACarer?: string
   }
   currentLang: string
   setLang: (lang: string) => void
@@ -89,13 +90,17 @@ export function MobileNav({
               </Link>
             </div>
 
-            {/* Join Waitlist Button */}
-            <Button
-              className="w-full"
-              onClick={handleJoinWaitlist}
+            {/* Sign Up Button */}
+            <Link
+              href="/signup"
+              onClick={() => setIsOpen(false)}
             >
-              {translations.joinWaitlist}
-            </Button>
+              <Button
+                className="w-full bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white"
+              >
+                {translations.becomeACarer || 'Become a Carer'}
+              </Button>
+            </Link>
           </div>
         </div>
       )}

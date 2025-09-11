@@ -16,6 +16,7 @@ interface UnifiedHeaderProps {
     joinWaitlist: string
     SourceforCare: string
     mainPage?: string
+    becomeACarer?: string
   }
 }
 
@@ -88,20 +89,17 @@ export function UnifiedHeader({ language, setLanguage, translations }: UnifiedHe
           >
             {translations.SourceforCare}
           </Link>
-          <Button
-            size="sm"
-            variant="ghost"
-            onClick={() => {
-              if (typeof window !== 'undefined' && window.location.pathname === '/') {
-          document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })
-              } else {
-          window.location.href = '/#waitlist'
-              }
-            }}
-            className={`text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out bg-transparent`}
+          <Link
+            href="/signup"
+            className="text-sm font-medium text-center"
           >
-            {translations.joinWaitlist}
-          </Button>
+            <Button
+              size="sm"
+              className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white font-medium transition-all duration-300 ease-in-out hover:scale-105"
+            >
+              {translations.becomeACarer || 'Become a Carer'}
+            </Button>
+          </Link>
         </nav>
 
         {/* Mobile Navigation */}
@@ -112,6 +110,7 @@ export function UnifiedHeader({ language, setLanguage, translations }: UnifiedHe
             aboutUs: translations.aboutUs,
             joinWaitlist: translations.joinWaitlist,
             SourceforCare: translations.SourceforCare,
+            becomeACarer: translations.becomeACarer || 'Become a Carer',
           }}
           currentLang={language}
           setLang={setLanguage}

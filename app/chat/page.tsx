@@ -14,6 +14,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { UnifiedHeader } from "@/components/unified-header"
 import { UnifiedFooter } from "@/components/unified-footer"
 import { useLanguage } from "@/app/contexts/LanguageContext"
+import { getHeaderTranslations } from "@/lib/header-translations"
 
 interface CarerRecommendation {
   id: string
@@ -1222,20 +1223,16 @@ function ChatPageContent() {
 
 export default function ChatPage() {
   const { language, setLanguage } = useLanguage()
-
-  const t = {
-    heroLogo: "CareNeighbour",
-    howItWorks: "How It Works",
-    aboutUs: "About Us",
-    joinWaitlist: "Join Waitlist",
-    SourceforCare: "Source for Care",
-    mainPage: "CareNeighbour",
-    footerCopyright: "CareNeighbour, Inc. All rights reserved.",
-  }
+  const headerTranslations = getHeaderTranslations(language, "Chat")
 
   return (
     <div className="min-h-screen relative">
       <GradientBackground />
+      <UnifiedHeader 
+        language={language}
+        setLanguage={setLanguage}
+        translations={headerTranslations}
+      />
       <Suspense fallback={
         <div className="flex items-center justify-center h-screen">
           <div className="flex items-center space-x-3">

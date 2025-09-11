@@ -1,0 +1,3 @@
+<!-- Placeholder for English QR Code -->
+<!-- This should be replaced with the actual English carer community QR code -->
+<!-- Image should be qr_carer_eng.png -->

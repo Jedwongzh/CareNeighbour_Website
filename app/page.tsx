@@ -85,6 +85,7 @@ const pageTranslations = {
     ourApproach: "Our Approach",
     howItWorks: "How It Works",
     joinWaitlist: "Join Waitlist",
+    becomeACarer: "Become a Carer",
     SourceforCare: "Source for Care",
     BecomeACarer: "Become a Carer",
     aboutUs: "About Us",
@@ -241,6 +242,7 @@ const pageTranslations = {
     ourApproach: "服务特色",
     howItWorks: "运作方式",
     joinWaitlist: "加入等候名单",
+    becomeACarer: "成为护理员",
     SourceforCare: "护理服务",
     BecomeACarer: "成为护理员",
     aboutUs: "关于我们",
@@ -397,6 +399,7 @@ const pageTranslations = {
     ourApproach: "服務特色",
     howItWorks: "運作方式",
     joinWaitlist: "加入等候名單",
+    becomeACarer: "成為護理員",
     SourceforCare: "護理服務",
     BecomeACarer: "成為護理員",
     aboutUs: "關於我們",
@@ -1401,6 +1404,7 @@ export default function LandingPage() {
           howItWorks: t.howItWorks,
           aboutUs: t.aboutUs,
           joinWaitlist: t.joinWaitlist,
+          becomeACarer: t.becomeACarer,
           SourceforCare: t.SourceforCare,
           mainPage: t.heroLogo
         }}
