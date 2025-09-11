@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { useLanguage } from "@/app/contexts/LanguageContext"
 import { LanguageAlternates } from "@/components/LanguageAlternates"
-import { UnifiedHeader } from "@/components/unified-header"
 import { UnifiedFooter } from "@/components/unified-footer"
 
 // Define translations
@@ -34,22 +33,9 @@ export default function FeedbackThankYouPage() {
   return (
     <div className="flex min-h-[100dvh] flex-col">
       <LanguageAlternates />
-      
-      {/* Unified Header */}
-      <UnifiedHeader 
-        language={language}
-        setLanguage={setLanguage}
-        translations={{
-          heroLogo: t.bottomHeader,
-          howItWorks: "How It Works",
-          aboutUs: "About Us",
-          joinWaitlist: "Join Waitlist",
-          SourceforCare: "Services",
-          mainPage: "Home"
-        }}
-      />
+      {/* Global header rendered via app/layout.tsx */}
 
-      <main className="flex-1 flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50">
+      <main className="flex-1 flex items-center justify-center">
         <div className="container px-4 md:px-6 py-16 md:py-24">
           <div className="max-w-2xl mx-auto text-center space-y-8">
             <div className="flex justify-center">

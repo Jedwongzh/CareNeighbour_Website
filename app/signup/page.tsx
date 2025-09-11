@@ -4,7 +4,6 @@ import React, { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { UnifiedHeader } from "@/components/unified-header"
 import { UnifiedFooter } from "@/components/unified-footer"
 import { useLanguage } from "../contexts/LanguageContext"
 import { Toaster } from "@/components/ui/toaster"
@@ -144,11 +143,7 @@ export default function SignupPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <UnifiedHeader 
-        language={language} 
-        setLanguage={setLanguage} 
-        translations={t}
-      />
+      {/* Global header rendered via app/layout.tsx */}
       
       <main className="flex-1 container mx-auto px-4 py-8 flex items-center justify-center">
         <Card className="w-full max-w-md mx-auto backdrop-blur-sm bg-white/90 shadow-xl">

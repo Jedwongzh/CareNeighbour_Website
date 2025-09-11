@@ -2,10 +2,8 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { UnifiedHeader } from '@/components/unified-header';
 import { UnifiedFooter } from '@/components/unified-footer';
-import { LanguageProvider, useLanguage } from '@/app/contexts/LanguageContext';
-import GradientBackground from '@/components/GradientBackground';
+import { useLanguage } from '@/app/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight, Heart, Users, Clock, Briefcase } from 'lucide-react';
@@ -135,15 +133,6 @@ const WhyJoinPageContent = () => {
   };
 
   const currentContent = content[language as keyof typeof content];
-  const headerTranslations = {
-    heroLogo: currentContent.heroLogo,
-    howItWorks: currentContent.howItWorks,
-    aboutUs: currentContent.aboutUs,
-    joinWaitlist: currentContent.joinWaitlist,
-    SourceforCare: currentContent.SourceforCare,
-    mainPage: currentContent.heroLogo,
-    BecomeACarer: currentContent.BecomeACarer,
-  };
   const footerTranslations = {
     aboutUs: currentContent.aboutUs,
     mainPage: currentContent.heroLogo,
@@ -151,13 +140,8 @@ const WhyJoinPageContent = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-gray-50 text-gray-800">
-      <GradientBackground />
-      <UnifiedHeader
-        language={language}
-        setLanguage={setLanguage}
-        translations={headerTranslations}
-      />
+    <div className="flex min-h-screen flex-col text-gray-800">
+      {/* Global header rendered via app/layout.tsx */}
       <main className="flex-1">
         {/* Hero Section */}
         <section className="relative text-center py-20 md:py-32 px-4 overflow-hidden">
@@ -253,10 +237,4 @@ const WhyJoinPageContent = () => {
   );
 };
 
-const WhyJoinPage = () => (
-  <LanguageProvider>
-    <WhyJoinPageContent />
-  </LanguageProvider>
-);
-
-export default WhyJoinPage;
+export default WhyJoinPageContent;
