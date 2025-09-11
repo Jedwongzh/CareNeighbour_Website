@@ -10,6 +10,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import { HtmlLangUpdater } from "@/components/HtmlLangUpdater";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
+import { GlobalHeader } from "@/components/global-header";
 
 // Optimize font loading
 const inter = Inter({
@@ -108,7 +109,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.png" type="image/png" sizes="64x64" />
         <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
@@ -145,6 +146,7 @@ export default function RootLayout({
                 <Suspense fallback={<div className="fixed inset-0 bg-gradient-to-br from-purple-50 to-violet-100 -z-10" />}>
                   <GradientBackground />
                 </Suspense>
+                <GlobalHeader />
                 {children}
               </div>
               <Toaster />
@@ -155,4 +157,3 @@ export default function RootLayout({
     </html>
   )
 }
-

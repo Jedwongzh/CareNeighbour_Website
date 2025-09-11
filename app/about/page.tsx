@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { UnifiedHeader } from "@/components/unified-header"
 import { UnifiedFooter } from "@/components/unified-footer"
 import Link from "next/link"
 import Image from "next/image"
@@ -45,15 +44,6 @@ export default function AboutPage() {
   // Helper to get current translations
   const t = aboutPageTranslations[language as keyof typeof aboutPageTranslations] || aboutPageTranslations.en
 
-  // Header translations
-  const headerTranslations = {
-    heroLogo: language === 'zh' ? '零距' : 'CareNeighbour',
-    howItWorks: language === 'zh' ? '如何运作' : 'How It Works',
-    aboutUs: language === 'zh' ? '关于我们' : 'About Us',
-    joinWaitlist: language === 'zh' ? '加入等候名单' : 'Join Waitlist',
-    SourceforCare: language === 'zh' ? '护理服务' : 'Source for Care',
-    mainPage: language === 'zh' ? '主页' : 'Home'
-  }
 
   return (
     <div className="flex min-h-[100dvh] flex-col">
@@ -66,12 +56,7 @@ export default function AboutPage() {
         <meta property="og:image" content="/CN_Brandmark_Black.png" />
         <meta name="robots" content="index, follow" />
       </Head>
-      {/* Unified Header */}
-      <UnifiedHeader 
-        language={language}
-        setLanguage={setLanguage}
-        translations={headerTranslations}
-      />
+      {/* Global header rendered via app/layout.tsx */}
 
       {/* Main Content */}
       <main className="flex-1">

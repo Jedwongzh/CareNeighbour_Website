@@ -2,7 +2,6 @@
 
 import { useLanguage } from "../contexts/LanguageContext"
 import { Suspense } from 'react'
-import { UnifiedHeader } from "@/components/unified-header"
 import { UnifiedFooter } from "@/components/unified-footer"
 import { Button } from "@/components/ui/button"
 import Link from 'next/link'
@@ -674,16 +673,6 @@ function ServicesPageContent() {
   // Get current language content
   const content = translations[language as keyof typeof translations] || translations.en
 
-  // Main page translations for header/footer
-  const headerTranslations = {
-    heroLogo: language === 'zh' ? '零距' : language === 'yue' ? '零距' : 'CareNeighbour',
-    howItWorks: language === 'zh' ? '如何运作' : language === 'yue' ? '點樣運作' : 'How It Works',
-    aboutUs: language === 'zh' ? '关于我们' : language === 'yue' ? '關於我們' : 'About Us',
-    joinWaitlist: language === 'zh' ? '加入等候名单' : language === 'yue' ? '加入等候名單' : 'Join Waitlist',
-    becomeACarer: language === 'zh' ? '成为护理员' : language === 'yue' ? '成為護理員' : 'Become a Carer',
-    SourceforCare: language === 'zh' ? '护理服务' : language === 'yue' ? '護理服務' : 'Source for Care',
-    mainPage: content.mainPage
-  }
 
   return (
     <>
@@ -697,12 +686,7 @@ function ServicesPageContent() {
         <meta name="robots" content="index, follow" />
       </Head>
       <div className="flex min-h-[100dvh] flex-col">
-        {/* Unified Header */}
-        <UnifiedHeader 
-          language={language}
-          setLanguage={setLanguage}
-          translations={headerTranslations}
-        />
+        {/* Global header rendered via app/layout.tsx */}
 
         <div className="container mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12 lg:py-16">
           {/* Hero Section */}
@@ -741,7 +725,7 @@ function ServicesPageContent() {
                           <div className="flex flex-col space-y-3 md:space-y-4">
                             <div className="text-2xl md:text-3xl lg:text-4xl transition-transform duration-300">{service.icon}</div>
                             <div className="flex-1">
-                              <h4 className="text-base md:text-lg lg:text-xl font-semibold mb-2 md:mb-3 title-shadow">
+                              <h4 className="text-base md:text-lg lg:text-xl font-semibold mb-2 md:mb-3">
                                 <span className="gradient-text-fill">{service.name}</span>
                               </h4>
                               <p className="text-xs md:text-sm lg:text-base text-black leading-relaxed">{service.description}</p>

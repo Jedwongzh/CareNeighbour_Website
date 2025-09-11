@@ -9,6 +9,7 @@ interface UnifiedFooterProps {
     heroLogo?: string
     aboutUs: string
     mainPage?: string
+    privacy?: string
     footerCopyright?: string
   }
 }
@@ -37,6 +38,9 @@ export function UnifiedFooter({ language, translations }: UnifiedFooterProps) {
         <div className="flex gap-6">
           <Link href="/about" className="hover:text-primary transition-colors">
             {translations.aboutUs}
+          </Link>
+          <Link href="/legal/privacy" className="hover:text-primary transition-colors">
+            {translations.privacy || (language === 'zh' ? '隐私政策' : 'Privacy Policy')}
           </Link>
         </div>
       </div>
