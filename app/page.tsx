@@ -1889,7 +1889,7 @@ export default function LandingPage() {
                         zIndex: 2,
                       }}
                     >
-                      <source src="videos/Care-request-demo.mp4" type="video/mp4" />
+                      <source src="/videos/Care-request-demo.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                   </ClientOnly>
@@ -1951,7 +1951,7 @@ export default function LandingPage() {
                         zIndex: 2,
                       }}
                     >
-                      <source src="videos/AI-Chat-demo.mp4" type="video/mp4" />
+                      <source src="/videos/AI-Chat-demo.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                   </ClientOnly>
@@ -2031,7 +2031,7 @@ export default function LandingPage() {
                         zIndex: 2,
                       }}
                     >
-                      <source src="videos/Carer-Review-demo.mp4" type="video/mp4" />
+                      <source src="/videos/Carer-Review-demo.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                   </ClientOnly>
@@ -2093,7 +2093,7 @@ export default function LandingPage() {
                         zIndex: 2,
                       }}
                     >
-                      <source src="videos/Explore-Page-demo.mp4" type="video/mp4" />
+                      <source src="/videos/Explore-Page-demo.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                   </ClientOnly>

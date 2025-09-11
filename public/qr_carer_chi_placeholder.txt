@@ -1,3 +1,0 @@
-<!-- Placeholder for Chinese QR Code -->
-<!-- This should be replaced with the actual Chinese carer community QR code -->
-<!-- Image should be qr_carer_chi.png -->
