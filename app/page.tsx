@@ -644,7 +644,7 @@ const CareSearchBar = () => {
         .map((result) => result[0])
         .map((result) => result.transcript)
         .join('')
-      
+
       setQuery(transcript)
     }
 
@@ -752,7 +752,7 @@ const CareSearchBar = () => {
             repeatType: "loop"
           }}
         />
-        <motion.div 
+        <motion.div
           className="relative flex items-center"
           animate={{
             height: query.length > 100 ? "auto" : "4rem",
@@ -773,7 +773,7 @@ const CareSearchBar = () => {
             onFocus={() => setIsFocused(true)}
             onBlur={() => setTimeout(() => setIsFocused(false), 200)}
             className="flex h-10 w-full px-3 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-base md:text-xl relative pl-6 pr-24 py-8 rounded-full border-2 border-purple-200 focus:border-purple-500 focus:ring-purple-500 shadow-lg bg-white whitespace-pre-wrap break-words overflow-y-auto"
-            style={{ 
+            style={{
               height: '100%',
               minHeight: '4rem',
               maxHeight: '12rem'
@@ -794,30 +794,30 @@ const CareSearchBar = () => {
             </motion.button>
             <AnimatePresence mode="wait">
               {query.length > 0 ? (
-              <motion.div
-                key="send"
-                initial={{ y: 40, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: 40, opacity: 0 }}
-                transition={{ duration: 0.25, ease: "easeOut" }}
-              >
-                <button
-                onClick={handleSendClick}
-                className="cursor-pointer hover:scale-110 transition-transform"
+                <motion.div
+                  key="send"
+                  initial={{ y: 40, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: 40, opacity: 0 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
                 >
-                <Send className="w-7 h-7 text-purple-600" />
-                </button>
-              </motion.div>
+                  <button
+                    onClick={handleSendClick}
+                    className="cursor-pointer hover:scale-110 transition-transform"
+                  >
+                    <Send className="w-7 h-7 text-purple-600" />
+                  </button>
+                </motion.div>
               ) : (
-              <motion.div
-                key="search"
-                initial={{ y: 40, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: 40, opacity: 0 }}
-                transition={{ duration: 0.25, ease: "easeOut" }}
-              >
-                <Search className="w-7 h-7 text-purple-600" />
-              </motion.div>
+                <motion.div
+                  key="search"
+                  initial={{ y: 40, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: 40, opacity: 0 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                >
+                  <Search className="w-7 h-7 text-purple-600" />
+                </motion.div>
               )}
             </AnimatePresence>
           </div>
@@ -825,7 +825,7 @@ const CareSearchBar = () => {
       </div>
 
       {/* Preset Prompt Buttons */}
-      <motion.div 
+      <motion.div
         className="mt-4 flex flex-wrap gap-2 justify-center"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -875,7 +875,7 @@ const CareSearchBar = () => {
               {t.careRequestPopup.description}
             </DialogDescription>
           </DialogHeader>
-          
+
           {/* Show the user's care request */}
           {query && (
             <div className="relative mb-4">
@@ -888,7 +888,7 @@ const CareSearchBar = () => {
               </div>
             </div>
           )}
-          
+
           <form onSubmit={handleCareRequestSubmit} className="space-y-4">
             <Input
               type="email"
@@ -943,13 +943,13 @@ const CareSearchBar = () => {
                 </Button>
               )}
             </div>
-            
+
             {careRequestStatus && (
               <div className={`text-sm ${careRequestStatus.success ? "text-green-600" : "text-red-600"}`}>
                 {careRequestStatus.message}
               </div>
             )}
-            
+
             <DialogFooter className="flex flex-col space-y-2">
               <Button
                 type="submit"
@@ -1035,9 +1035,9 @@ const CareTypeCards = () => {
             </motion.div>
           ))}
         </div>
-        
+
         {/* Learn More button */}
-        <motion.div 
+        <motion.div
           className="flex justify-center mt-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -1049,12 +1049,12 @@ const CareTypeCards = () => {
               size="lg"
               className="bg-purple-600 hover:bg-purple-700 text-gray rounded-full px-8 py-4 text-lg h-auto transition-transform duration-200 hover:scale-105"
               style={{
-              background: 'rgba(255,255,255,0)',
-              borderRadius: '16px',
-              boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
-              backdropFilter: 'blur(9px)',
-              WebkitBackdropFilter: 'blur(9px)',
-              border: '1px solid rgba(255,255,255,0.38)'
+                background: 'rgba(255,255,255,0)',
+                borderRadius: '16px',
+                boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
+                backdropFilter: 'blur(9px)',
+                WebkitBackdropFilter: 'blur(9px)',
+                border: '1px solid rgba(255,255,255,0.38)'
               }}
             >
               {t.howitworksButton}
@@ -1113,7 +1113,7 @@ function GradientBackground() {
     <>
       <div className="gradient-bg">
         <svg>
-          <filter id="goo"><feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur"/><feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo"/><feBlend in="SourceGraphic" in2="goo" /></filter>
+          <filter id="goo"><feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur" /><feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" /><feBlend in="SourceGraphic" in2="goo" /></filter>
         </svg>
         <div className="gradients-container">
           <div className="g1" />
@@ -1298,7 +1298,7 @@ export default function LandingPage() {
       const result = await joinWaitlist(formData.get("email") as string)
       console.log("Waitlist submission result:", result)
 
-      setWaitlistStatus({"success": result.status===200})
+      setWaitlistStatus({ "success": result.status === 200 })
       setIsSubmittingWaitlist(false)
     } catch (error) {
       console.error("Error submitting waitlist form:", error)
@@ -1330,7 +1330,7 @@ export default function LandingPage() {
       console.log("Top waitlist submission result:", result)
 
       setWaitlistStatus({
-        success: result.status===200
+        success: result.status === 200
       })
       setIsSubmittingWaitlist(false)
     } catch (error) {
@@ -1356,7 +1356,7 @@ export default function LandingPage() {
       console.log("Feedback submission result:", result)
 
       setFeedbackStatus({
-        success: result.status===200
+        success: result.status === 200
       })
       setIsSubmittingFeedback(false)
     } catch (error) {
@@ -1393,7 +1393,7 @@ export default function LandingPage() {
     <div className="flex min-h-screen flex-col">
       <GradientBackground />
       {/* Unified Header */}
-      <UnifiedHeader 
+      <UnifiedHeader
         language={language}
         setLanguage={setLanguage}
         translations={{
@@ -1412,101 +1412,101 @@ export default function LandingPage() {
           <div className="container mx-auto max-w-7xl relative h-[90vh]">
             {/* Background Images */}
             <div className="absolute inset-0 overflow-hidden">
-          {/* Left Image - Top Left */}
-          <motion.div 
-          className="absolute left-20 top-20 w-72 h-96 overflow-hidden rounded-2xl shadow-2xl"
-          initial={{ y: -100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1, delay: 0.3 }}
-          >
-          <img 
-            src="https://careneighbour.my.canva.site/_assets/media/9430f0c7baa2a133c4fb84917d601ef8.jpg" 
-            alt="Carer" 
-            className="w-full h-full object-cover"
-          />
-          </motion.div>
+              {/* Left Image - Top Left */}
+              <motion.div
+                className="absolute left-20 top-20 w-72 h-96 overflow-hidden rounded-2xl shadow-2xl"
+                initial={{ y: -100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, delay: 0.3 }}
+              >
+                <img
+                  src="https://careneighbour.my.canva.site/_assets/media/9430f0c7baa2a133c4fb84917d601ef8.jpg"
+                  alt="Carer"
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
 
-          {/* Right Image - Bottom Right */}
-          <motion.div 
-          className="absolute right-20 bottom-20 w-72 h-96 overflow-hidden rounded-2xl shadow-2xl"
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          >
-          <img 
-            src="https://careneighbour.my.canva.site/_assets/media/0c0b73ba778e047274f588bcffbd3b60.jpg" 
-            alt="Care recipient" 
-            className="w-full h-full object-cover"
-          />
-          </motion.div>
+              {/* Right Image - Bottom Right */}
+              <motion.div
+                className="absolute right-20 bottom-20 w-72 h-96 overflow-hidden rounded-2xl shadow-2xl"
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, delay: 0.5 }}
+              >
+                <img
+                  src="https://careneighbour.my.canva.site/_assets/media/0c0b73ba778e047274f588bcffbd3b60.jpg"
+                  alt="Care recipient"
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
 
-          {/* Decorative Elements */}
-          <motion.div 
-          className="absolute left-1 top-1 w-[350px] h-[350px]"
-          initial={{ x: -200, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          >
-          <img 
-            src="https://careneighbour.my.canva.site/_assets/media/c98db77c96ad2963a69c04e453b98af5.png" 
-            alt="Decorative element" 
-            className="w-full h-full object-contain transform rotate-[45deg]"
-          />
-          </motion.div>
+              {/* Decorative Elements */}
+              <motion.div
+                className="absolute left-1 top-1 w-[350px] h-[350px]"
+                initial={{ x: -200, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 1, delay: 0.8 }}
+              >
+                <img
+                  src="https://careneighbour.my.canva.site/_assets/media/c98db77c96ad2963a69c04e453b98af5.png"
+                  alt="Decorative element"
+                  className="w-full h-full object-contain transform rotate-[45deg]"
+                />
+              </motion.div>
 
-          <motion.div 
-          className="absolute right-1 bottom-1 w-[350px] h-[350px]"
-          initial={{ x: 200, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 1, delay: 1 }}
-          >
-          <img 
-            src="https://careneighbour.my.canva.site/_assets/media/c98db77c96ad2963a69c04e453b98af5.png" 
-            alt="Decorative element" 
-            className="w-full h-full object-contain transform rotate-[225deg]"
-          />
-          </motion.div>
+              <motion.div
+                className="absolute right-1 bottom-1 w-[350px] h-[350px]"
+                initial={{ x: 200, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 1, delay: 1 }}
+              >
+                <img
+                  src="https://careneighbour.my.canva.site/_assets/media/c98db77c96ad2963a69c04e453b98af5.png"
+                  alt="Decorative element"
+                  className="w-full h-full object-contain transform rotate-[225deg]"
+                />
+              </motion.div>
             </div>
 
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center space-y-8 relative z-10 h-full">
               {/* Main Title */}
               <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="space-y-4 flex flex-col items-center justify-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="space-y-4 flex flex-col items-center justify-center"
               >
-              <h1 className="text-4xl md:text-7xl font-bold text-white leading-tight tracking-tight drop-shadow-2xl">
-          <motion.span 
-          className="block drop-shadow-lg"
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          style={{ textShadow: '2px 4px 8px rgba(0, 0, 0, 0.7)' }}
-          >
-          {language === 'en' ? 'Find a carer who' : language === 'zh' ? '找到会说你' : '尋找會說你'}
-          </motion.span>
-          <motion.span 
-          className="block drop-shadow-lg"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          style={{ textShadow: '2px 4px 8px rgba(0, 0, 0, 0.7)' }}
-          >
-          {language === 'en' ? 'speaks your language' : language === 'zh' ? '语言的护理员' : '語言的護理員'}
-          </motion.span>
-              </h1>
+                <h1 className="text-4xl md:text-7xl font-bold text-white leading-tight tracking-tight drop-shadow-2xl">
+                  <motion.span
+                    className="block drop-shadow-lg"
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8, delay: 0.1 }}
+                    style={{ textShadow: '2px 4px 8px rgba(0, 0, 0, 0.7)' }}
+                  >
+                    {language === 'en' ? 'Find a carer who' : language === 'zh' ? '找到会说你' : '尋找會說你'}
+                  </motion.span>
+                  <motion.span
+                    className="block drop-shadow-lg"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.5 }}
+                    style={{ textShadow: '2px 4px 8px rgba(0, 0, 0, 0.7)' }}
+                  >
+                    {language === 'en' ? 'speaks your language' : language === 'zh' ? '语言的护理员' : '語言的護理員'}
+                  </motion.span>
+                </h1>
               </motion.div>
 
               {/* Search Bar */}
               <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="max-w-3xl mx-auto drop-shadow-2xl"
-          style={{ filter: 'drop-shadow(0 10px 25px rgba(0, 0, 0, 0.3))' }}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.7 }}
+                className="max-w-3xl mx-auto drop-shadow-2xl"
+                style={{ filter: 'drop-shadow(0 10px 25px rgba(0, 0, 0, 0.3))' }}
               >
-          <CareSearchBar />
+                <CareSearchBar />
               </motion.div>
             </div>
           </div>
@@ -1516,7 +1516,7 @@ export default function LandingPage() {
         <CareTypeCards />
 
         {/* How It Works Section now comes after CareTypeCards */}
-        <section 
+        <section
           id="how-it-works"
           ref={howItWorksRef}
           style={{ scrollMarginTop: '5rem' }}
@@ -1534,41 +1534,41 @@ export default function LandingPage() {
             <p className="sr-only">Find care instantly with our AI-powered matching platform. Get support in seconds, tailored to your needs.</p>
           </div>
         </section>
-        
+
         <section
           className="flex flex-col md:flex-row items-center justify-center w-full px-4"
         >
-            {/* Mobile: stacked image + text for each step */}
-            <div className="block md:hidden w-full px-4">
+          {/* Mobile: stacked image + text for each step */}
+          <div className="block md:hidden w-full px-4">
             {[0, 1, 2].map((idx) => (
               <div key={idx} className="mb-16">
-              <div className="w-full mb-8">
-                <Image
-                src={howItWorksImages[idx]}
-                alt={`Step ${idx + 1} - CareNeighbour AI-powered instant care platform`}
-                width={3840}
-                height={2160}
-                quality={100}
-                className="w-full h-full object-cover rounded-2xl shadow-lg"
-                sizes="100vw"
-                />
-              </div>
-              <div className="px-1 text-center">
-                <h3 className="text-2xl font-semibold mb-2 text-black">{(t as any)[`step${idx + 1}Title`]}</h3>
-                <p className="text-gray-600 text-lg">{(t as any)[`step${idx + 1}Description`]}</p>
-              </div>
+                <div className="w-full mb-8">
+                  <Image
+                    src={howItWorksImages[idx]}
+                    alt={`Step ${idx + 1} - CareNeighbour AI-powered instant care platform`}
+                    width={3840}
+                    height={2160}
+                    quality={100}
+                    className="w-full h-full object-cover rounded-2xl shadow-lg"
+                    sizes="100vw"
+                  />
+                </div>
+                <div className="px-1 text-center">
+                  <h3 className="text-2xl font-semibold mb-2 text-black">{(t as any)[`step${idx + 1}Title`]}</h3>
+                  <p className="text-gray-600 text-lg">{(t as any)[`step${idx + 1}Description`]}</p>
+                </div>
               </div>
             ))}
-            </div>
-            {/* Desktop: sticky image + scrollable steps */}
-            <div className="hidden md:flex md:w-4/5 items-start justify-center relative">
+          </div>
+          {/* Desktop: sticky image + scrollable steps */}
+          <div className="hidden md:flex md:w-4/5 items-start justify-center relative">
+            <div
+              className="sticky top-0 w-[700px] h-[50vh] flex items-center justify-center z-20 md:static md:h-screen md:sticky "
+              style={{ pointerEvents: "none" }}
+            >
               <div
-                className="sticky top-0 w-[700px] h-[50vh] flex items-center justify-center z-20 md:static md:h-screen md:sticky "
-                style={{ pointerEvents: "none" }}
-              >
-                <div
-                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[400px] rounded-2xl shadow-lg"
-                  style={{
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[400px] rounded-2xl shadow-lg"
+                style={{
                   zIndex: 1,
                   pointerEvents: "none",
                   borderRadius: "1rem",
@@ -1577,50 +1577,50 @@ export default function LandingPage() {
                   backdropFilter: "blur(16px)",
                   WebkitBackdropFilter: "blur(16px)",
                   border: "1px solid rgba(255,255,255,0.28)",
-                  }}
-                >
-                {howItWorksImages.map((img, idx) => (
-                <Image
-                key={img}
-                src={img}
-                alt={`Step ${idx + 1} - CareNeighbour AI-powered instant care platform`}
-                width={3840}
-                height={2160}
-                quality={90}
-                sizes="(min-width: 768px) 665px"
-                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] h-full object-contain transition-opacity duration-500 rounded-2xl ${activeStep === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-                style={{
-                  pointerEvents: "none",
-                  transition: "opacity 0.5s",
-                  paddingLeft: "1%",
-                  paddingRight: "1%",
-                  borderRadius: "1.5rem", // Add border radius here
                 }}
-                />
-                ))}
-                </div>
-              </div>
-              
-              <div className="hidden md:block w-1/2 md:ml-auto">
-            {[0, 1, 2].map((idx) => (
-              <div
-          key={idx}
-          ref={(el) => { stepRefs.current[idx] = el }}
-          data-idx={idx}
-          className="min-h-[60vh] md:min-h-screen flex items-center overflow-hidden"
-          style={{ scrollMarginTop: 100 }}
               >
-          <div className="px-4 md:px-8 w-full">
-            <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
-              <span className="text-2xl font-bold text-purple-700">{idx + 1}</span>
+                {howItWorksImages.map((img, idx) => (
+                  <Image
+                    key={img}
+                    src={img}
+                    alt={`Step ${idx + 1} - CareNeighbour AI-powered instant care platform`}
+                    width={3840}
+                    height={2160}
+                    quality={90}
+                    sizes="(min-width: 768px) 665px"
+                    className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] h-full object-contain transition-opacity duration-500 rounded-2xl ${activeStep === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                    style={{
+                      pointerEvents: "none",
+                      transition: "opacity 0.5s",
+                      paddingLeft: "1%",
+                      paddingRight: "1%",
+                      borderRadius: "1.5rem", // Add border radius here
+                    }}
+                  />
+                ))}
+              </div>
             </div>
-            <h3 className="text-2xl font-semibold mb-2 text-black">{(t as any)[`step${idx + 1}Title`]}</h3>
-            <p className="text-gray-600 text-lg">{(t as any)[`step${idx + 1}Description`]}</p>
+
+            <div className="hidden md:block w-1/2 md:ml-auto">
+              {[0, 1, 2].map((idx) => (
+                <div
+                  key={idx}
+                  ref={(el) => { stepRefs.current[idx] = el }}
+                  data-idx={idx}
+                  className="min-h-[60vh] md:min-h-screen flex items-center overflow-hidden"
+                  style={{ scrollMarginTop: 100 }}
+                >
+                  <div className="px-4 md:px-8 w-full">
+                    <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
+                      <span className="text-2xl font-bold text-purple-700">{idx + 1}</span>
+                    </div>
+                    <h3 className="text-2xl font-semibold mb-2 text-black">{(t as any)[`step${idx + 1}Title`]}</h3>
+                    <p className="text-gray-600 text-lg">{(t as any)[`step${idx + 1}Description`]}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-              </div>
-            ))}
-              </div>
-            </div>
         </section>
 
         {/* Problem Statement Section */}
@@ -1629,154 +1629,154 @@ export default function LandingPage() {
             {/* Text content - takes 60% width on desktop, full width on mobile */}
             <div className="flex flex-col mb-12 md:mb-16 md:max-w mx-auto">
               <div className="flex items-center gap-2 mb-8">
-          <motion.h2
-            className="text-4xl md:text-6xl w-full font-bold tracking-tight text-center pb-4 md:max-w-none title-shadow"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="gradient-text-fill">{t.problemTitle}</span>
-          </motion.h2>
+                <motion.h2
+                  className="text-4xl md:text-6xl w-full font-bold tracking-tight text-center pb-4 md:max-w-none title-shadow"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <span className="gradient-text-fill">{t.problemTitle}</span>
+                </motion.h2>
               </div>
               <p className="sr-only">CareNeighbour solves the struggle of finding care by using AI to match you instantly with trusted, culturally sensitive caregivers.</p>
 
               <motion.div
-          className="space-y-6 text-lg md:text-xl text-gray-800 text-center md:text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+                className="space-y-6 text-lg md:text-xl text-gray-800 text-center md:text-center"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
               >
-          <p>
-            {t.problemParagraph1}
-          </p>
-          <p className="text-gray-800 font-medium">
-            {t.problemParagraph2Start} <span className="text-purple-700">{t.problemParagraph2End}</span>
-          </p>
+                <p>
+                  {t.problemParagraph1}
+                </p>
+                <p className="text-gray-800 font-medium">
+                  {t.problemParagraph2Start} <span className="text-purple-700">{t.problemParagraph2End}</span>
+                </p>
               </motion.div>
             </div>
 
             {/* Image carousel for mobile, grid for desktop */}
             <div className="block md:hidden">
               <Carousel
-          opts={{
-            align: "start",
-            loop: true,
-          }}
-          plugins={[plugin.current]}
-          className="w-full"
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+                plugins={[plugin.current]}
+                className="w-full"
               >
-          <CarouselContent>
-            <CarouselItem>
-              <motion.div
-                className="rounded-2xl overflow-hidden shadow-xl"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <Image
-            src="/images/senior-couple.jpg"
-            alt="Senior couple using technology"
-            width={500}
-            height={350}
-            className="object-cover w-full h-[300px]"
-            sizes="100vw"
-                />
-              </motion.div>
-            </CarouselItem>
-            <CarouselItem>
-              <motion.div
-                className="rounded-2xl overflow-hidden shadow-xl"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <Image
-            src="/images/seniors-cards.jpg"
-            alt="Seniors playing cards"
-            width={500}
-            height={350}
-            className="object-cover w-full h-[300px]"
-            sizes="100vw"
-                />
-              </motion.div>
-            </CarouselItem>
-            <CarouselItem>
-              <motion.div
-                className="rounded-2xl overflow-hidden shadow-xl"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <Image
-            src="/images/seniors-social.jpg"
-            alt="Seniors socializing"
-            width={500}
-            height={350}
-            className="object-cover w-full h-[300px]"
-            sizes="100vw"
-                />
-              </motion.div>
-            </CarouselItem>
-          </CarouselContent>
+                <CarouselContent>
+                  <CarouselItem>
+                    <motion.div
+                      className="rounded-2xl overflow-hidden shadow-xl"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <Image
+                        src="/images/senior-couple.jpg"
+                        alt="Senior couple using technology"
+                        width={500}
+                        height={350}
+                        className="object-cover w-full h-[300px]"
+                        sizes="100vw"
+                      />
+                    </motion.div>
+                  </CarouselItem>
+                  <CarouselItem>
+                    <motion.div
+                      className="rounded-2xl overflow-hidden shadow-xl"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <Image
+                        src="/images/seniors-cards.jpg"
+                        alt="Seniors playing cards"
+                        width={500}
+                        height={350}
+                        className="object-cover w-full h-[300px]"
+                        sizes="100vw"
+                      />
+                    </motion.div>
+                  </CarouselItem>
+                  <CarouselItem>
+                    <motion.div
+                      className="rounded-2xl overflow-hidden shadow-xl"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <Image
+                        src="/images/seniors-social.jpg"
+                        alt="Seniors socializing"
+                        width={500}
+                        height={350}
+                        className="object-cover w-full h-[300px]"
+                        sizes="100vw"
+                      />
+                    </motion.div>
+                  </CarouselItem>
+                </CarouselContent>
               </Carousel>
             </div>
 
             {/* Desktop grid */}
             <div className="hidden md:grid md:grid-cols-3 gap-6">
               <motion.div
-          className="rounded-2xl overflow-hidden shadow-xl"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+                className="rounded-2xl overflow-hidden shadow-xl"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
               >
-          <Image
-            src="/images/senior-couple.jpg"
-            alt="Senior couple using technology"
-            width={500}
-            height={350}
-            className="object-cover w-full h-[300px]"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
+                <Image
+                  src="/images/senior-couple.jpg"
+                  alt="Senior couple using technology"
+                  width={500}
+                  height={350}
+                  className="object-cover w-full h-[300px]"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
               </motion.div>
 
               <motion.div
-          className="rounded-2xl overflow-hidden shadow-xl"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+                className="rounded-2xl overflow-hidden shadow-xl"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
               >
-          <Image
-            src="/images/seniors-cards.jpg"
-            alt="Seniors playing cards"
-            width={500}
-            height={350}
-            className="object-cover w-full h-[300px]"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
+                <Image
+                  src="/images/seniors-cards.jpg"
+                  alt="Seniors playing cards"
+                  width={500}
+                  height={350}
+                  className="object-cover w-full h-[300px]"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
               </motion.div>
 
               <motion.div
-          className="rounded-2xl overflow-hidden shadow-xl"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+                className="rounded-2xl overflow-hidden shadow-xl"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
               >
-          <Image
-            src="/images/seniors-social.jpg"
-            alt="Seniors socializing"
-            width={500}
-            height={350}
-            className="object-cover w-full h-[300px]"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
+                <Image
+                  src="/images/seniors-social.jpg"
+                  alt="Seniors socializing"
+                  width={500}
+                  height={350}
+                  className="object-cover w-full h-[300px]"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
               </motion.div>
             </div>
           </div>
@@ -1953,17 +1953,17 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8 md:mb-0">
               <motion.div
-          className="space-y-3"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7 }}
+                className="space-y-3"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.7 }}
               >
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight title-shadow">
-            <span className="gradient-text-fill">{t.approachTitlePart1} {t.approachTitleTech} {t.approachTitlePart2} {t.approachTitleCompassion}</span>
-          </h2>
-          <p className="sr-only">Our AI-driven approach means you get matched with the right care, instantly and effortlessly.</p>
-          <div className="h-8" />
+                <h2 className="text-3xl md:text-5xl font-bold tracking-tight title-shadow">
+                  <span className="gradient-text-fill">{t.approachTitlePart1} {t.approachTitleTech} {t.approachTitlePart2} {t.approachTitleCompassion}</span>
+                </h2>
+                <p className="sr-only">Our AI-driven approach means you get matched with the right care, instantly and effortlessly.</p>
+                <div className="h-8" />
               </motion.div>
             </div>
 
@@ -1977,64 +1977,64 @@ export default function LandingPage() {
             >
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start order-2 md:order-1">
-          <h2 className="text-2xl font-semibold mb-3 title-shadow">
-            <span className="gradient-text-fill">{t.feature1Title}</span>
-          </h2>
-          <p className="text-lg text-gray-700 justify-left min-h-[120px]">
-            {t.feature1Description}
-          </p>
+                <h2 className="text-2xl font-semibold mb-3 title-shadow">
+                  <span className="gradient-text-fill">{t.feature1Title}</span>
+                </h2>
+                <p className="text-lg text-gray-700 justify-left min-h-[120px]">
+                  {t.feature1Description}
+                </p>
               </div>
               {/* Video */}
               <div className="flex-shrink-0 w-full md:w-[350px] flex justify-center order-1 md:order-2">
-          <div
-            style={{
-              width: "100%",
-              maxWidth: "350px",
-              height: "500px",
-              overflow: "hidden",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "2rem",
-              background: 'rgba(255,255,255,0)',
-              boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
-              backdropFilter: 'blur(9px)',
-              WebkitBackdropFilter: 'blur(9px)',
-              border: '1px solid rgba(255,255,255,0.38)',
-              position: 'relative'
-            }}
-          >
-            <div
-              style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 1,
-          pointerEvents: "none",
-          borderRadius: "2.5rem",
-          boxShadow: "0 0 40px 20px rgba(147,51,234,0.18)",
-          filter: "blur(16px)",
-              }}
-            />
-            <ClientOnly>
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                style={{
-                  width: "68%",
-                  height: "100%",
-                  objectFit: "cover",
-                  borderRadius: "2.5rem",
-                  position: "relative",
-                  zIndex: 2,
-                }}
-              >
-                <source src="videos/Care-request-demo.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </ClientOnly>
-          </div>
+                <div
+                  style={{
+                    width: "100%",
+                    maxWidth: "350px",
+                    height: "500px",
+                    overflow: "hidden",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "2rem",
+                    background: 'rgba(255,255,255,0)',
+                    boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
+                    backdropFilter: 'blur(9px)',
+                    WebkitBackdropFilter: 'blur(9px)',
+                    border: '1px solid rgba(255,255,255,0.38)',
+                    position: 'relative'
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      zIndex: 1,
+                      pointerEvents: "none",
+                      borderRadius: "2.5rem",
+                      boxShadow: "0 0 40px 20px rgba(147,51,234,0.18)",
+                      filter: "blur(16px)",
+                    }}
+                  />
+                  <ClientOnly>
+                    <video
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      style={{
+                        width: "68%",
+                        height: "100%",
+                        objectFit: "cover",
+                        borderRadius: "2.5rem",
+                        position: "relative",
+                        zIndex: 2,
+                      }}
+                    >
+                      <source src="videos/Care-request-demo.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </ClientOnly>
+                </div>
               </div>
             </motion.section>
 
@@ -2048,64 +2048,64 @@ export default function LandingPage() {
             >
               {/* Video */}
               <div className="flex-shrink-0 w-full md:w-[350px] flex justify-center">
-          <div
-            style={{
-              width: "100%",
-              maxWidth: "350px",
-              height: "500px",
-              overflow: "hidden",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "2rem",
-              background: 'rgba(255,255,255,0)',
-              boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
-              backdropFilter: 'blur(9px)',
-              WebkitBackdropFilter: 'blur(9px)',
-              border: '1px solid rgba(255,255,255,0.38)',
-              position: 'relative'
-            }}
-          >
-            <div
-              style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 1,
-          pointerEvents: "none",
-          borderRadius: "2.5rem",
-          boxShadow: "0 0 40px 20px rgba(147,51,234,0.18)",
-          filter: "blur(16px)",
-              }}
-            />
-            <ClientOnly>
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                style={{
-                  width: "68%",
-                  height: "100%",
-                  objectFit: "cover",
-                  borderRadius: "2.5rem",
-                  position: "relative",
-                  zIndex: 2,
-                }}
-              >
-                <source src="videos/AI-Chat-demo.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </ClientOnly>
-          </div>
+                <div
+                  style={{
+                    width: "100%",
+                    maxWidth: "350px",
+                    height: "500px",
+                    overflow: "hidden",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "2rem",
+                    background: 'rgba(255,255,255,0)',
+                    boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
+                    backdropFilter: 'blur(9px)',
+                    WebkitBackdropFilter: 'blur(9px)',
+                    border: '1px solid rgba(255,255,255,0.38)',
+                    position: 'relative'
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      zIndex: 1,
+                      pointerEvents: "none",
+                      borderRadius: "2.5rem",
+                      boxShadow: "0 0 40px 20px rgba(147,51,234,0.18)",
+                      filter: "blur(16px)",
+                    }}
+                  />
+                  <ClientOnly>
+                    <video
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      style={{
+                        width: "68%",
+                        height: "100%",
+                        objectFit: "cover",
+                        borderRadius: "2.5rem",
+                        position: "relative",
+                        zIndex: 2,
+                      }}
+                    >
+                      <source src="videos/AI-Chat-demo.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </ClientOnly>
+                </div>
               </div>
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start">
-          <h2 className="text-2xl font-semibold mb-3 title-shadow">
-            <span className="gradient-text-fill">{t.feature2Title}</span>
-          </h2>
-          <p className="text-lg text-gray-700 min-h-[120px]">
-            {t.feature2Description}
-          </p>
+                <h2 className="text-2xl font-semibold mb-3 title-shadow">
+                  <span className="gradient-text-fill">{t.feature2Title}</span>
+                </h2>
+                <p className="text-lg text-gray-700 min-h-[120px]">
+                  {t.feature2Description}
+                </p>
               </div>
             </motion.section>
 
@@ -2119,64 +2119,64 @@ export default function LandingPage() {
             >
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start order-2 md:order-1">
-          <h2 className="text-2xl font-semibold mb-3 title-shadow">
-            <span className="gradient-text-fill">{t.feature3Title}</span>
-          </h2>
-          <p className="text-lg text-gray-700 min-h-[120px]">
-            {t.feature3Description}
-          </p>
+                <h2 className="text-2xl font-semibold mb-3 title-shadow">
+                  <span className="gradient-text-fill">{t.feature3Title}</span>
+                </h2>
+                <p className="text-lg text-gray-700 min-h-[120px]">
+                  {t.feature3Description}
+                </p>
               </div>
               {/* Video */}
               <div className="flex-shrink-0 w-full md:w-[350px] flex justify-center order-1 md:order-2">
-          <div
-            style={{
-              width: "100%",
-              maxWidth: "350px",
-              height: "500px",
-              overflow: "hidden",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "2rem",
-              background: 'rgba(255,255,255,0)',
-              boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
-              backdropFilter: 'blur(9px)',
-              WebkitBackdropFilter: 'blur(9px)',
-              border: '1px solid rgba(255,255,255,0.38)',
-              position: 'relative'
-            }}
-          >
-            <div
-              style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 1,
-          pointerEvents: "none",
-          borderRadius: "2.5rem",
-          boxShadow: "0 0 40px 20px rgba(147,51,234,0.18)",
-          filter: "blur(16px)",
-              }}
-            />
-            <ClientOnly>
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                style={{
-                  width: "68%",
-                  height: "100%",
-                  objectFit: "cover",
-                  borderRadius: "2.5rem",
-                  position: "relative",
-                  zIndex: 2,
-                }}
-              >
-                <source src="videos/Carer-Review-demo.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </ClientOnly>
-          </div>
+                <div
+                  style={{
+                    width: "100%",
+                    maxWidth: "350px",
+                    height: "500px",
+                    overflow: "hidden",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "2rem",
+                    background: 'rgba(255,255,255,0)',
+                    boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
+                    backdropFilter: 'blur(9px)',
+                    WebkitBackdropFilter: 'blur(9px)',
+                    border: '1px solid rgba(255,255,255,0.38)',
+                    position: 'relative'
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      zIndex: 1,
+                      pointerEvents: "none",
+                      borderRadius: "2.5rem",
+                      boxShadow: "0 0 40px 20px rgba(147,51,234,0.18)",
+                      filter: "blur(16px)",
+                    }}
+                  />
+                  <ClientOnly>
+                    <video
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      style={{
+                        width: "68%",
+                        height: "100%",
+                        objectFit: "cover",
+                        borderRadius: "2.5rem",
+                        position: "relative",
+                        zIndex: 2,
+                      }}
+                    >
+                      <source src="videos/Carer-Review-demo.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </ClientOnly>
+                </div>
               </div>
             </motion.section>
 
@@ -2190,64 +2190,64 @@ export default function LandingPage() {
             >
               {/* Video */}
               <div className="flex-shrink-0 w-full md:w-[350px] flex justify-center">
-          <div
-            style={{
-              width: "100%",
-              maxWidth: "350px",
-              height: "500px",
-              overflow: "hidden",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "2rem",
-              background: 'rgba(255,255,255,0)',
-              boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
-              backdropFilter: 'blur(9px)',
-              WebkitBackdropFilter: 'blur(9px)',
-              border: '1px solid rgba(255,255,255,0.38)',
-              position: 'relative'
-            }}
-          >
-            <div
-              style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 1,
-          pointerEvents: "none",
-          borderRadius: "2.5rem",
-          boxShadow: "0 0 40px 20px rgba(147,51,234,0.18)",
-          filter: "blur(16px)",
-              }}
-            />
-            <ClientOnly>
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                style={{
-                  width: "68%",
-                  height: "100%",
-                  objectFit: "cover",
-                  borderRadius: "2.5rem",
-                  position: "relative",
-                  zIndex: 2,
-                }}
-              >
-                <source src="videos/Explore-Page-demo.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </ClientOnly>
-          </div>
+                <div
+                  style={{
+                    width: "100%",
+                    maxWidth: "350px",
+                    height: "500px",
+                    overflow: "hidden",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "2rem",
+                    background: 'rgba(255,255,255,0)',
+                    boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
+                    backdropFilter: 'blur(9px)',
+                    WebkitBackdropFilter: 'blur(9px)',
+                    border: '1px solid rgba(255,255,255,0.38)',
+                    position: 'relative'
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      zIndex: 1,
+                      pointerEvents: "none",
+                      borderRadius: "2.5rem",
+                      boxShadow: "0 0 40px 20px rgba(147,51,234,0.18)",
+                      filter: "blur(16px)",
+                    }}
+                  />
+                  <ClientOnly>
+                    <video
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      style={{
+                        width: "68%",
+                        height: "100%",
+                        objectFit: "cover",
+                        borderRadius: "2.5rem",
+                        position: "relative",
+                        zIndex: 2,
+                      }}
+                    >
+                      <source src="videos/Explore-Page-demo.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </ClientOnly>
+                </div>
               </div>
               {/* Text */}
               <div className="w-full md:w-[320px] text-center md:text-left flex flex-col justify-center items-center md:items-start">
-          <h2 className="text-2xl font-semibold mb-3 title-shadow">
-            <span className="gradient-text-fill">{t.feature4Title}</span>
-          </h2>
-          <p className="text-lg text-gray-700 min-h-[120px]">
-            {t.feature4Description}
-          </p>
+                <h2 className="text-2xl font-semibold mb-3 title-shadow">
+                  <span className="gradient-text-fill">{t.feature4Title}</span>
+                </h2>
+                <p className="text-lg text-gray-700 min-h-[120px]">
+                  {t.feature4Description}
+                </p>
               </div>
             </motion.section>
           </div>
@@ -2264,131 +2264,131 @@ export default function LandingPage() {
         }}>
           <div className="container px-4 md:px-6">
             <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
-          {/* Waitlist Column */}
-          <div className="flex flex-col justify-start space-y-6 self-start">
-          <motion.div
-            className="space-y-3 text-center lg:text-left"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight title-shadow">
-              <span className="gradient-text-fill">{t.waitlistTitle}</span>
-            </h2>
-            <p className="text-gray-700 text-base md:text-lg">{t.waitlistSubtitle}</p>
-          </motion.div>
+              {/* Waitlist Column */}
+              <div className="flex flex-col justify-start space-y-6 self-start">
+                <motion.div
+                  className="space-y-3 text-center lg:text-left"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight title-shadow">
+                    <span className="gradient-text-fill">{t.waitlistTitle}</span>
+                  </h2>
+                  <p className="text-gray-700 text-base md:text-lg">{t.waitlistSubtitle}</p>
+                </motion.div>
 
-          <motion.div
-            className="w-full max-w-md space-y-4"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <form onSubmit={handleWaitlistSubmit} className="space-y-4">
-              <Input
-                type="email"
-                name="email"
-                placeholder={t.waitlistEmailPlaceholder}
-                className="h-14 text-base rounded-xl border-gray-300"
-                required
-                disabled={isSubmittingWaitlist}
-              />
-              <Button
-                type="submit"
-                className="w-full h-14 text-base rounded-xl bg-purple-600 hover:bg-purple-700 text-white"
-                disabled={isSubmittingWaitlist}
-              >
-                {isSubmittingWaitlist ? t.waitlistSubmittingButton : t.waitlistSubmitButton}
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </form>
-            {waitlistStatus && (
-              <div className={`mt-2 text-sm ${waitlistStatus.success ? "text-green-600" : "text-red-600"}`}>
-                {waitlistStatus.message}
-              </div>
-            )}
-            <p className="text-xs text-gray-500 text-center">{t.waitlistPrivacy}</p>
-          </motion.div>
+                <motion.div
+                  className="w-full max-w-md space-y-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                  <form onSubmit={handleWaitlistSubmit} className="space-y-4">
+                    <Input
+                      type="email"
+                      name="email"
+                      placeholder={t.waitlistEmailPlaceholder}
+                      className="h-14 text-base rounded-xl border-gray-300"
+                      required
+                      disabled={isSubmittingWaitlist}
+                    />
+                    <Button
+                      type="submit"
+                      className="w-full h-14 text-base rounded-xl bg-purple-600 hover:bg-purple-700 text-white"
+                      disabled={isSubmittingWaitlist}
+                    >
+                      {isSubmittingWaitlist ? t.waitlistSubmittingButton : t.waitlistSubmitButton}
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </form>
+                  {waitlistStatus && (
+                    <div className={`mt-2 text-sm ${waitlistStatus.success ? "text-green-600" : "text-red-600"}`}>
+                      {waitlistStatus.message}
+                    </div>
+                  )}
+                  <p className="text-xs text-gray-500 text-center">{t.waitlistPrivacy}</p>
+                </motion.div>
 
-          {/* Demo button */}
-          <motion.div
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-            className="mt-4"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{
-              duration: 0.6,
-              delay: 0.4,
-            }}
-          >
-          </motion.div>
+                {/* Demo button */}
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="mt-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: 0.6,
+                    delay: 0.4,
+                  }}
+                >
+                </motion.div>
               </div>
 
               {/* Feedback Column with Image */}
               <div className="flex flex-col space-y-6">
-          <motion.div
-            className="space-y-3 text-center lg:text-left"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight title-shadow">
-              <span className="gradient-text-fill">{t.feedbackTitle}</span>
-            </h2>
-            <p className="text-gray-700 text-base md:text-lg">{t.feedbackSubtitle}</p>
-          </motion.div>
-          <motion.div
-            className="w-full space-y-4"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <form onSubmit={handleFeedbackSubmit} className="space-y-4">
-              <Input
-                type="email"
-                name="email"
-                placeholder={t.feedbackEmailPlaceholder}
-                className="h-14 text-base rounded-xl border-gray-300"
-                required
-                disabled={isSubmittingFeedback}
-              />
-              <textarea
-                name="feedback"
-                placeholder={t.feedbackMessagePlaceholder}
-                className="w-full p-4 border rounded-xl min-h-[120px] bg-white border-gray-300 text-base"
-                required
-                disabled={isSubmittingFeedback}
-              />
-              <Button
-                type="submit"
-                variant="outline"
-                className="w-full h-14 text-base rounded-xl border-purple-300 text-purple-700 hover:bg-purple-50"
-                disabled={isSubmittingFeedback}
-              >
-                {isSubmittingFeedback ? t.feedbackSubmittingButton : t.feedbackSubmitButton}
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </form>
-            {feedbackStatus && (
-              <div className={`mt-2 text-sm ${feedbackStatus.success ? "text-green-600" : "text-red-600"}`}>
-                {feedbackStatus.message}
-              </div>
-            )}
-            <p className="text-xs text-gray-500 text-center">{t.feedbackPrivacy}</p>
-          </motion.div>
+                <motion.div
+                  className="space-y-3 text-center lg:text-left"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight title-shadow">
+                    <span className="gradient-text-fill">{t.feedbackTitle}</span>
+                  </h2>
+                  <p className="text-gray-700 text-base md:text-lg">{t.feedbackSubtitle}</p>
+                </motion.div>
+                <motion.div
+                  className="w-full space-y-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                >
+                  <form onSubmit={handleFeedbackSubmit} className="space-y-4">
+                    <Input
+                      type="email"
+                      name="email"
+                      placeholder={t.feedbackEmailPlaceholder}
+                      className="h-14 text-base rounded-xl border-gray-300"
+                      required
+                      disabled={isSubmittingFeedback}
+                    />
+                    <textarea
+                      name="feedback"
+                      placeholder={t.feedbackMessagePlaceholder}
+                      className="w-full p-4 border rounded-xl min-h-[120px] bg-white border-gray-300 text-base"
+                      required
+                      disabled={isSubmittingFeedback}
+                    />
+                    <Button
+                      type="submit"
+                      variant="outline"
+                      className="w-full h-14 text-base rounded-xl border-purple-300 text-purple-700 hover:bg-purple-50"
+                      disabled={isSubmittingFeedback}
+                    >
+                      {isSubmittingFeedback ? t.feedbackSubmittingButton : t.feedbackSubmitButton}
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </form>
+                  {feedbackStatus && (
+                    <div className={`mt-2 text-sm ${feedbackStatus.success ? "text-green-600" : "text-red-600"}`}>
+                      {feedbackStatus.message}
+                    </div>
+                  )}
+                  <p className="text-xs text-gray-500 text-center">{t.feedbackPrivacy}</p>
+                </motion.div>
               </div>
             </div>
           </div>
         </section>      </main>
 
       {/* Unified Footer */}
-      <UnifiedFooter 
+      <UnifiedFooter
         language={language}
         translations={{
           aboutUs: t.aboutUs,
@@ -2400,43 +2400,69 @@ export default function LandingPage() {
   )
 }
 
-const joinWaitlist = (email:string) => {
+const joinWaitlist = (email: string) => {
   return fetch("/api/sheets", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      email: email,
+      data: {
+        email: email,
+      },
       type: "waitlist",
     }),
   })
 }
 
-const submitFeedback = (email:string, feedback:string) => {
+const submitFeedback = (email: string, feedback: string) => {
   return fetch("/api/sheets", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      email: email,
+      data: {
+        email: email,
+        feedback: feedback,
+      },
       feedback: feedback,
       type: "feedback",
     }),
   })
 }
 
-const sendCareRequest = (email:string, request:string) => {
+const sendCareRequest = (email: string, request: string) => {
   return fetch("/api/sheets", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      email: email,
-      request: request,
+      data: {
+        email: email,
+        request: request,
+      },
       type: "care-request",
+    }),
+  })
+}
+
+const submitOnboarding = (firstName: string, lastName: string, email: string, phone: string, postCode: string) => {
+  return fetch("/api/sheets", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      data: {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phone,
+        postCode: postCode,
+      },
+      type: "onboarding",
     }),
   })
 }

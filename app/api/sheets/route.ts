@@ -124,11 +124,11 @@ async function ensureSheets(sheets: any) {
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { type, email, feedback = "" } = body
+    const { type, data = {} } = body
 
-    console.log(`Processing ${type} submission for ${email}`)
+    console.log(`Processing ${type} submission for ${type}`)
 
-    if (!type || !email) {
+    if (!type || !data || (type !== "waitlist" && type !== "feedback" && type !== "onboarding")) {
       return NextResponse.json({ success: false, message: "Missing required fields" }, { status: 400 })
     }
 
@@ -141,10 +141,19 @@ export async function POST(request: Request) {
       const timestamp = new Date().toISOString()
 
       // Determine which sheet to use based on the type
-      const sheetName = type === "waitlist" ? "Waitlist" : "Feedback"
+      const sheetName = type === "waitlist" ? "Waitlist" : type === "feedback" ? "Feedback" : type === "care-request" ? "Care Request" : "Onboarding"
 
       // Prepare the values to append
-      const values = type === "waitlist" ? [[email, timestamp]] : [[email, feedback, timestamp]]
+      let values: any[] = [];
+      if (type === "waitlist") {
+        values = [[data.email, timestamp]]
+      } else if (type === "feedback") {
+        values = [[data.email, data.feedback, timestamp]]
+      } else if (type === "care-request") {
+        values = [[data.email, data.request, timestamp]]
+      } else if (type === "onboarding") {
+        values = [[data.firstName, data.lastName, data.email, data.phone, data.postCode, timestamp]]
+      }
 
       console.log(`Appending data to ${sheetName}:`, values)
 
