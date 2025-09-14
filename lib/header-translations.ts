@@ -8,7 +8,7 @@ export const getHeaderTranslations = (language: string, currentPageTitle?: strin
       aboutUs: "About Us",
       joinWaitlist: "Join Waitlist",
       becomeACarer: "Become a Carer",
-      SourceforCare: "Source for Care",
+      SourceforCare: "Our Services",
       mainPage: "Home"
     },
     zh: {

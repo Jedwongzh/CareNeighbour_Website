@@ -46,61 +46,83 @@ export function UnifiedHeader({ language, setLanguage, translations }: UnifiedHe
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex gap-6 items-center">
-          {/* Language switcher */}
-          <Button
-            size="sm"
-            variant={language === "en" ? "secondary" : "ghost"}
-            onClick={() => setLanguage("en")}
-            className="bg-transparent"
-          >
-            EN
-          </Button>
-          <Button
-            size="sm"
-            variant={language === "zh" ? "secondary" : "ghost"}
-            onClick={() => setLanguage("zh")}
-            className="transition-all duration-300 ease-in-out hover:scale-105 bg-transparent"
-          >
-            中文
-          </Button>
-          <a
-            href="/"
-            className={`text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out ${pathname === "/" ? glassClass : ""}`}
-            onClick={e => {
-              if (typeof window !== 'undefined' && window.location.pathname === '/') {
-          e.preventDefault()
-          window.scrollTo({ top: 0, behavior: 'smooth' })
-              }
-            }}
-          >
-            {translations.mainPage}
-          </a>
-          <Link
-            href="/about"
-            className={`text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out ${pathname === "/about" ? glassClass : ""}`}
-          >
-            {translations.aboutUs}
-          </Link>
-          <Link
-            href="/services"
-            className={`text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out ${pathname === "/services" ? glassClass : ""}`}
-          >
-            {translations.SourceforCare}
-          </Link>
-          <Link
-            href="/signup"
-            className="text-sm font-medium text-center"
-          >
-            <Button
-              size="sm"
-              className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white font-medium transition-all duration-300 ease-in-out hover:scale-105"
+        {/* Desktop Navigation + Language toggle (far right) */}
+        <div className="hidden md:flex items-center gap-4 ml-auto">
+          <nav className="flex gap-6 items-center">
+            <a
+              href="/"
+              className={`text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out ${pathname === "/" ? glassClass : ""}`}
+              onClick={e => {
+                if (typeof window !== 'undefined' && window.location.pathname === '/') {
+                  e.preventDefault()
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                }
+              }}
             >
-              {translations.becomeACarer || 'Become a Carer'}
-            </Button>
-          </Link>
-        </nav>
+              {translations.mainPage}
+            </a>
+            <Link
+              href="/about"
+              className={`text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out ${pathname === "/about" ? glassClass : ""}`}
+            >
+              {translations.aboutUs}
+            </Link>
+            <Link
+              href="/services"
+              className={`text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out ${pathname === "/services" ? glassClass : ""}`}
+            >
+              {translations.SourceforCare}
+            </Link>
+            <Link
+              href="/signup"
+              className="text-sm font-medium text-center"
+            >
+              <Button
+                size="sm"
+                className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white font-medium transition-all duration-300 ease-in-out hover:scale-105"
+              >
+                {translations.becomeACarer || 'Become a Carer'}
+              </Button>
+            </Link>
+          </nav>
+
+          {/* Visual separator between links and language toggle */}
+          <div className="h-6 w-px bg-gray-200" aria-hidden="true" />
+
+          {/* Language toggle (segmented with sliding thumb) */}
+          <div
+            className="relative inline-flex items-center rounded-full border border-gray-200 bg-white/70 backdrop-blur p-1 shadow-sm"
+            role="group"
+            aria-label="Language toggle"
+          >
+            <span
+              className={`absolute inset-y-1 left-1 w-1/2 rounded-full bg-gray-900 shadow transition-transform duration-300 ease-out ${
+                language === 'zh' ? 'translate-x-full' : 'translate-x-0'
+              }`}
+              aria-hidden="true"
+            />
+            <button
+              type="button"
+              onClick={() => setLanguage("en")}
+              className={`relative z-10 inline-flex items-center justify-center w-16 px-3 py-1.5 text-xs font-medium rounded-full focus:outline-none ${
+                language === 'en' ? 'text-white' : 'text-gray-700 hover:text-gray-900'
+              }`}
+              aria-pressed={language === 'en'}
+            >
+              EN
+            </button>
+            <button
+              type="button"
+              onClick={() => setLanguage("zh")}
+              className={`relative z-10 inline-flex items-center justify-center w-16 px-3 py-1.5 text-xs font-medium rounded-full focus:outline-none ${
+                language === 'zh' ? 'text-white' : 'text-gray-700 hover:text-gray-900'
+              }`}
+              aria-pressed={language === 'zh'}
+            >
+              中文
+            </button>
+          </div>
+        </div>
 
         {/* Mobile Navigation */}
         <MobileNav

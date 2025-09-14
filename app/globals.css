@@ -79,6 +79,13 @@
   }
 }
 
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 /* From https://css.glass */
 .dark-3d-title {
   color: #e5e7eb; /* text-gray-200 */
