@@ -1270,7 +1270,7 @@ export default function LandingPage() {
         <section id="hero" className="relative py-0 px-4 md:px-6 min-h-[90vh] flex items-center justify-center">
           <div className="container mx-auto max-w-7xl relative h-[90vh]">
             {/* Background Images */}
-            <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute inset-0">
               {/* Left Image - Top Left */}
               <motion.div
                 className="absolute left-20 top-20 w-72 h-96 overflow-hidden rounded-2xl shadow-2xl"
