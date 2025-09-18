@@ -9,6 +9,7 @@ export const getHeaderTranslations = (language: string, currentPageTitle?: strin
       joinWaitlist: "Join Waitlist",
       becomeACarer: "Become a Carer",
       SourceforCare: "Our Services",
+      payment: "Payment",
       mainPage: "Home"
     },
     zh: {
@@ -18,6 +19,7 @@ export const getHeaderTranslations = (language: string, currentPageTitle?: strin
       joinWaitlist: "加入等候名单",
       becomeACarer: "成为护理员",
       SourceforCare: "寻找护理",
+      payment: "支付",
       mainPage: "主页"
     },
     yue: {
@@ -27,6 +29,7 @@ export const getHeaderTranslations = (language: string, currentPageTitle?: strin
       joinWaitlist: "加入等候名單", 
       becomeACarer: "成為護理員",
       SourceforCare: "護理服務",
+      payment: "付款",
       mainPage: "主頁"
     }
   }
