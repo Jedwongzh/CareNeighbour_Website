@@ -40,6 +40,7 @@ Structure: Each object in the array must have the following keys and data types:
 id: number (the unique identifier of the Provided Carer (FROM 1 to 5))
 matchScore: number (from 1 to 100)
 reasoning: string[] (an array of strings, with each string being a concise bullet point. Each bullet point must be a direct attribute of the caregiver that matches the care request. Do not provide explanations or qualifiers. For example, instead of "- Speaks Hindi, which matches the language requirement," use "- Speaks Hindi.")
+Give reasoning in the care request language. If the care request is in English, provide reasoning in English. If the care request is in another language, provide reasoning in that language.
 Care Request:
 ${message}
 Candidate Data:
