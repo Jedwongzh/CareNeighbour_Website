@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useState, useEffect, useRef } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import {
@@ -362,6 +362,7 @@ function ChatPageContent() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const initializationRef = useRef(false);
   const searchParams = useSearchParams();
+  const router = useRouter();
   const query = searchParams.get("query") || "I need help finding a carer";
 
   // Check if screen can fit all 3 cards side by side
@@ -614,6 +615,21 @@ function ChatPageContent() {
 
   const handleSendMessage = async () => {
     await sendMessage(inputValue);
+  };
+
+  // Get the last user message for redirecting to chat-with page
+  const getLastUserMessage = () => {
+    const userMessages = messages.filter(msg => msg.type === "user");
+    return userMessages.length > 0 ? userMessages[userMessages.length - 1].content : "";
+  };
+
+  // Handle contact carer button click
+  const handleContactCarer = () => {
+    if (selectedCarer) {
+      const lastUserMessage = getLastUserMessage();
+      const careDetails = encodeURIComponent(lastUserMessage);
+      router.push(`/chat-with?carerId=${selectedCarer.profile.id}&careDetails=${careDetails}`);
+    }
   };
 
   if (isAuth) {
@@ -1063,18 +1079,18 @@ function ChatPageContent() {
 
                   {/* Action Buttons */}
                   <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 pt-3 sm:pt-4">
-                    <Button
+                    {/* <Button
                       className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white h-14"
                       size="lg"
                     >
                       Book {selectedCarer.profile.name} Now
-                    </Button>
+                    </Button> */}
                     <Button
-                      variant="outline"
-                      className="flex-1 border-purple-200 text-purple-600 hover:bg-purple-50 h-14"
+                      className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white h-14"
                       size="lg"
+                      onClick={handleContactCarer}
                     >
-                      Contact First
+                      Contact {selectedCarer.profile.name}
                     </Button>
                     <Button
                       variant="outline"
