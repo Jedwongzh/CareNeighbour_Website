@@ -8,6 +8,9 @@ declare global {
       GOOGLE_PRIVATE_KEY: string;
       GOOGLE_CLIENT_EMAIL: string;
       GOOGLE_SHEET_ID: string;
+
+      // GEMINI API
+      GEMINI_API_KEY: string;
       
       // Next.js Configuration
       NEXT_PUBLIC_SITE_URL: string;
