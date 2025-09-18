@@ -75,7 +75,7 @@ async function ensureSheets(sheets: any) {
     console.log("Existing sheets:", existingSheets)
 
     // Check if our required sheets exist
-    const requiredSheets = ["Waitlist", "Feedback"]
+    const requiredSheets = ["Waitlist", "Feedback", "Care Request"]
     const sheetsToCreate = requiredSheets.filter((sheet) => !existingSheets.includes(sheet))
 
     // Create any missing sheets
@@ -99,7 +99,14 @@ async function ensureSheets(sheets: any) {
 
       // Add headers to the new sheets
       for (const sheet of sheetsToCreate) {
-        const headerValues = sheet === "Waitlist" ? [["Email", "Timestamp"]] : [["Email", "Feedback", "Timestamp"]]
+        let headerValues;
+        if (sheet === "Waitlist") {
+          headerValues = [["Email", "Timestamp"]]
+        } else if (sheet === "Feedback") {
+          headerValues = [["Email", "Feedback", "Timestamp"]]
+        } else if (sheet === "Care Request") {
+          headerValues = [["Email", "Request", "Timestamp"]]
+        }
 
         await sheets.spreadsheets.values.update({
           spreadsheetId: GOOGLE_SHEET_ID,
@@ -128,7 +135,7 @@ export async function POST(request: Request) {
 
     console.log(`Processing ${type} submission for ${type}`)
 
-    if (!type || !data || (type !== "waitlist" && type !== "feedback" && type !== "onboarding")) {
+    if (!type || !data || (type !== "waitlist" && type !== "feedback" && type !== "onboarding" && type !== "care-request")) {
       return NextResponse.json({ success: false, message: "Missing required fields" }, { status: 400 })
     }
 
