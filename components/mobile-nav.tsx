@@ -12,6 +12,7 @@ interface MobileNavProps {
     aboutUs: string
     joinWaitlist: string
     SourceforCare: string
+    payment: string
     becomeACarer?: string
   }
   currentLang: string
@@ -87,6 +88,13 @@ export function MobileNav({
           onClick={() => setIsOpen(false)}
               >
           {translations.SourceforCare}
+              </Link>
+              <Link
+          href="/payment"
+          className="block text-center py-2 text-gray hover:text-primary transition-colors"
+          onClick={() => setIsOpen(false)}
+              >
+          {translations.payment}
               </Link>
             </div>
 
