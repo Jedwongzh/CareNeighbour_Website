@@ -527,16 +527,17 @@ function ChatPageContent() {
 
   const handleSignIn = () => {
     setIsAuth(true);
+    sendMessage(query);
     setShowSignInPrompt(false);
   };
 
-  const handleSendMessage = async () => {
-    if (!inputValue.trim() || isLoading) return;
+  const sendMessage = async (message: string) => {
+    if (!message.trim() || isLoading) return;
 
     const newMessage: Message = {
       id: Date.now().toString(),
       type: "user",
-      content: inputValue,
+      content: message,
       timestamp: new Date(),
     };
 
@@ -609,6 +610,10 @@ function ChatPageContent() {
     setMessages((prev) => [...prev, response]);
     setMobileCardIndexSafe(0); // Reset mobile card index for new recommendations
     setIsLoading(false);
+  };
+
+  const handleSendMessage = async () => {
+    await sendMessage(inputValue);
   };
 
   if (isAuth) {
@@ -941,12 +946,15 @@ function ChatPageContent() {
                       muted
                       playsInline
                     >
-                      <source src={selectedCarer.profile.video} type="video/mp4" />
+                      <source
+                        src={selectedCarer.profile.video}
+                        type="video/mp4"
+                      />
                       Your browser does not support the video tag.
                     </video>
                   </div>
                 )}
-                
+
                 <DialogTitle className="flex flex-col sm:flex-row items-start sm:items-start space-y-3 sm:space-y-0 sm:space-x-3 text-left">
                   {selectedCarer && (
                     <>
