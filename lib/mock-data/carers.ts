@@ -142,9 +142,9 @@ export const mockCarers: CarerProfile[] = [
     photo: "/images/demo-mock-avatars/Yufei.png",
     video: "/videos/mock-video-bios/Yufei.MOV",
     rating: 4.7,
-    experience: "5+ years specializing in medical care",
+    experience: "1+ years specializing in nursing",
     distance: "2.1 km",
-    hourlyRate: 55,
+    hourlyRate: 50,
     bio: "Licensed practical nurse with expertise in post-surgical care and rehabilitation.",
     languages: ["English", "Mandarin", "Chinese"],
     skills: [
