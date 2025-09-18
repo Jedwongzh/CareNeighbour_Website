@@ -42,7 +42,7 @@ import {
 } from "@/components/ui/dialog";
 import { UnifiedFooter } from "@/components/unified-footer";
 import { useLanguage } from "@/app/contexts/LanguageContext";
-import { CarerProfile, mockCarers } from "@/lib/mock-data/carers";
+import { CarerProfile, getCarerById, mockCarers } from "@/lib/mock-data/carers";
 import { GeminiResponse } from "@/lib/service/gemini";
 // header translations handled globally via GlobalHeader
 
@@ -576,7 +576,7 @@ function ChatPageContent() {
     const convertedCarers: CarerRecommendation[] = parsed
       .map((rec) => {
         // Find matching profile from sample data
-        const profile = mockCarers.find((c) => c.id === rec.id);
+        const profile = getCarerById(rec.id);
         if (!profile) return undefined;
         return {
           profile: profile,
@@ -931,6 +931,22 @@ function ChatPageContent() {
           <Dialog open={isCarerDetailOpen} onOpenChange={setIsCarerDetailOpen}>
             <DialogContent className="max-w-md sm:max-w-2xl max-h-[90vh] sm:max-h-[80vh] overflow-y-auto mx-auto p-4 sm:p-6 w-[calc(100vw-2rem)] sm:w-auto">
               <DialogHeader>
+                {/* Show video when there */}
+                {selectedCarer && selectedCarer.profile.video && (
+                  <div className="mb-4 sm:mb-6">
+                    <video
+                      className="w-full aspect-auto max-h-[40vh] sm:max-h-[50vh] object-contain rounded-lg shadow-lg"
+                      controls
+                      autoPlay
+                      muted
+                      playsInline
+                    >
+                      <source src={selectedCarer.profile.video} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                )}
+                
                 <DialogTitle className="flex flex-col sm:flex-row items-start sm:items-start space-y-3 sm:space-y-0 sm:space-x-3 text-left">
                   {selectedCarer && (
                     <>
