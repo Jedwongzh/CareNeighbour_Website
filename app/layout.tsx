@@ -1,7 +1,7 @@
 import type React from "react"
 import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from "next";
-import { Inter } from "next/font/google"
+import { Noto_Sans } from "next/font/google"
 import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AuthProvider } from "@/components/auth-provider"
@@ -12,12 +12,12 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { GlobalHeader } from "@/components/global-header";
 
-// Optimize font loading
-const inter = Inter({
+const notoSans = Noto_Sans({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: 'swap',
   preload: true,
-  variable: '--font-inter'
+  variable: '--font-noto-sans'
 })
 
 // Lazy load GradientBackground for better performance
@@ -116,7 +116,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
       </head>
       <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA4_ID} />
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className={`${notoSans.variable} font-sans antialiased`}>
         {/* Optimized JSON-LD with essential data only */}
         <script
           type="application/ld+json"

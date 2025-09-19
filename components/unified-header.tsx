@@ -15,6 +15,7 @@ interface UnifiedHeaderProps {
     aboutUs: string
     joinWaitlist: string
     SourceforCare: string
+    payment: string
     mainPage?: string
     becomeACarer?: string
   }
@@ -72,6 +73,12 @@ export function UnifiedHeader({ language, setLanguage, translations }: UnifiedHe
               className={`text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out ${pathname === "/services" ? glassClass : ""}`}
             >
               {translations.SourceforCare}
+            </Link>
+            <Link
+              href="/payment"
+              className={`text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out ${pathname?.startsWith("/payment") ? glassClass : ""}`}
+            >
+              {translations.payment}
             </Link>
             <Link
               href="/signup"
@@ -132,6 +139,7 @@ export function UnifiedHeader({ language, setLanguage, translations }: UnifiedHe
             aboutUs: translations.aboutUs,
             joinWaitlist: translations.joinWaitlist,
             SourceforCare: translations.SourceforCare,
+            payment: translations.payment,
             becomeACarer: translations.becomeACarer || 'Become a Carer',
           }}
           currentLang={language}
