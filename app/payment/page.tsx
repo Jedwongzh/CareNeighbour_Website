@@ -55,10 +55,6 @@ const translations = {
         label: "Explore care services",
         href: "/services"
       },
-      tertiaryCta: {
-        label: "Chat with our team",
-        href: "/chat"
-      }
     },
     bookingPreview: {
       title: "Ready to confirm a session?",
@@ -73,10 +69,6 @@ const translations = {
         label: "Go to secure checkout",
         href: "/payment/secure-booking"
       },
-      secondaryCta: {
-        label: "Talk to our team",
-        href: "/chat"
-      }
     },
     highlightsTitle: "Why families trust our payments",
     highlights: [
@@ -225,10 +217,6 @@ const translations = {
         label: "Book a consultation",
         href: "mailto:careneighbour.team@gmail.com"
       },
-      secondaryCta: {
-        label: "Message us",
-        href: "/chat"
-      }
     }
   },
   zh: {
@@ -253,10 +241,6 @@ const translations = {
         label: "浏览护理服务",
         href: "/services"
       },
-      tertiaryCta: {
-        label: "与团队对话",
-        href: "/chat"
-      }
     },
     bookingPreview: {
       title: "准备确认护理服务了吗？",
@@ -271,10 +255,6 @@ const translations = {
         label: "进入安全结帐",
         href: "/payment/secure-booking"
       },
-      secondaryCta: {
-        label: "与我们联系",
-        href: "/chat"
-      }
     },
     highlightsTitle: "为何家庭信任我们的支付系统",
     highlights: [
@@ -408,10 +388,6 @@ const translations = {
         label: "预约咨询",
         href: "mailto:careneighbour.team@gmail.com"
       },
-      secondaryCta: {
-        label: "发送讯息",
-        href: "/chat"
-      }
     }
   }
 }
@@ -427,10 +403,7 @@ const PaymentPageContent = () => {
           <div className="absolute inset-0 -z-10 bg-gradient-to-br from-purple-100/60 via-white to-sky-100/40" />
           <div className="container mx-auto px-4 md:px-8">
             <div className="max-w-3xl">
-              <span className="inline-flex items-center rounded-full bg-purple-100 px-4 py-1 text-sm font-medium text-purple-700">
-                {current.hero.tag}
-              </span>
-              <h1 className="mt-6 text-4xl font-bold tracking-tight text-gray-900 md:text-5xl">
+              <h1 className="mt-6 text-4xl font-bold tracking-tight text-gray-900 md:text-6xl">
                 {current.hero.title}
               </h1>
               <p className="mt-4 text-lg text-gray-700 md:text-xl">
@@ -448,17 +421,12 @@ const PaymentPageContent = () => {
                     {current.hero.secondaryCta.label}
                   </Link>
                 </Button>
-                <Button asChild variant="ghost" size="lg">
-                  <Link href={current.hero.tertiaryCta.href}>
-                    {current.hero.tertiaryCta.label}
-                  </Link>
-                </Button>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="py-16 md:py-24">
+        <section className="py-16 bg-white/60 md:py-16">
           <div className="container mx-auto px-4 md:px-8">
             <div className="grid gap-10 lg:grid-cols-[1.5fr_1fr]">
               <div>
@@ -478,11 +446,6 @@ const PaymentPageContent = () => {
                   <Button asChild size="lg" className="bg-purple-600 text-white hover:bg-purple-700">
                     <Link href={current.bookingPreview.primaryCta.href}>
                       {current.bookingPreview.primaryCta.label}
-                    </Link>
-                  </Button>
-                  <Button asChild variant="outline" size="lg">
-                    <Link href={current.bookingPreview.secondaryCta.href}>
-                      {current.bookingPreview.secondaryCta.label}
                     </Link>
                   </Button>
                 </div>
@@ -508,7 +471,7 @@ const PaymentPageContent = () => {
           </div>
         </section>
 
-        <section className="py-16 md:py-24">
+        <section className="py-16 bg-white/60 md:py-16">
           <div className="container mx-auto px-4 md:px-8">
             <h2 className="text-3xl font-semibold text-gray-900 md:text-4xl">
               {current.highlightsTitle}
@@ -535,7 +498,7 @@ const PaymentPageContent = () => {
           </div>
         </section>
 
-        <section className="bg-white/70 py-16 md:py-24">
+        <section className="bg-white/60 py-16 md:py-16">
           <div className="container mx-auto px-4 md:px-8">
             <div className="md:flex md:items-end md:justify-between">
               <div className="max-w-2xl">
@@ -547,14 +510,12 @@ const PaymentPageContent = () => {
             </div>
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {current.funding.options.map((option, index) => {
-                const Icon = iconMap[option.icon as keyof typeof iconMap]
                 return (
                   <Card
                     key={`${option.title}-${index}`}
                     className="border-none bg-gradient-to-br from-[#F7F4FF] via-white to-[#F0F9FF] shadow-md shadow-purple-100/50"
                   >
                     <CardContent className="flex h-full flex-col gap-4 p-6">
-                      {Icon && <Icon className="h-9 w-9 text-purple-600" />}
                       <div className="space-y-3">
                         <h3 className="text-xl font-semibold text-gray-900">{option.title}</h3>
                         <p className="text-gray-600">{option.description}</p>
@@ -575,7 +536,7 @@ const PaymentPageContent = () => {
           </div>
         </section>
 
-        <section className="py-16 md:py-24">
+        <section className="py-16 bg-white/60 md:py-16">
           <div className="container mx-auto px-4 md:px-8">
             <div className="max-w-2xl">
               <h2 className="text-3xl font-semibold text-gray-900 md:text-4xl">
@@ -591,7 +552,6 @@ const PaymentPageContent = () => {
                     key={step.step}
                     className="relative flex h-full flex-col gap-4 rounded-2xl border border-purple-100 bg-white/80 p-6 shadow-sm"
                   >
-                    <span className="text-sm font-medium text-purple-500">{step.step}</span>
                     {Icon && <Icon className="h-8 w-8 text-purple-600" />}
                     <h3 className="text-lg font-semibold text-gray-900">{step.title}</h3>
                     <p className="text-sm text-gray-600">{step.description}</p>
@@ -602,7 +562,7 @@ const PaymentPageContent = () => {
           </div>
         </section>
 
-        <section className="bg-white/60 py-16 md:py-24">
+        <section className="bg-white/60 py-16 md:py-16">
           <div className="container mx-auto px-4 md:px-8">
             <div className="grid gap-10 md:grid-cols-2">
               <div>
@@ -615,7 +575,9 @@ const PaymentPageContent = () => {
                 <CardContent className="space-y-3 p-6">
                   {current.pricing.factors.map((factor, index) => (
                     <div key={`factor-${index}`} className="flex items-start gap-3">
-                      <PiggyBank className="mt-1 h-5 w-5 text-purple-500" />
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-purple-100 text-sm font-medium text-purple-600">
+                      {index + 1}
+                      </span>
                       <span className="text-gray-700">{factor}</span>
                     </div>
                   ))}
@@ -625,7 +587,7 @@ const PaymentPageContent = () => {
           </div>
         </section>
 
-        <section className="py-16 md:py-24">
+        <section className="py-16 bg-white/60 md:py-16">
           <div className="container mx-auto px-4 md:px-8">
             <h2 className="text-3xl font-semibold text-gray-900 md:text-4xl">
               {current.faqs.title}
@@ -639,32 +601,6 @@ const PaymentPageContent = () => {
                   </CardContent>
                 </Card>
               ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-purple-600 via-purple-500 to-sky-500 py-16">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.4),_transparent_55%)] opacity-40" />
-          <div className="container relative mx-auto px-4 md:px-8">
-            <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-              <div className="max-w-2xl text-white">
-                <h2 className="text-3xl font-semibold md:text-4xl">
-                  {current.supportBanner.title}
-                </h2>
-                <p className="mt-4 text-base md:text-lg">{current.supportBanner.description}</p>
-              </div>
-              <div className="flex flex-wrap gap-4">
-                <Button asChild size="lg" className="bg-white text-purple-600 hover:bg-white/90">
-                  <Link href={current.supportBanner.primaryCta.href}>
-                    {current.supportBanner.primaryCta.label}
-                  </Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="border-white/70 text-white hover:bg-white/10">
-                  <Link href={current.supportBanner.secondaryCta.href}>
-                    {current.supportBanner.secondaryCta.label}
-                  </Link>
-                </Button>
-              </div>
             </div>
           </div>
         </section>
