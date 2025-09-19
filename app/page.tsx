@@ -232,6 +232,18 @@ const pageTranslations = {
         ]
       }
     ],
+    thankYouPopup: {
+      waitlist: {
+        title: "Thank You for Joining!",
+        message: "Feel free to check out our socials to get the latest updates on the team's progress.",
+        followUs: "Follow us on:"
+      },
+      feedback: {
+        title: "Thank You for Your Input!",
+        message: "CareNeighbour always takes advice from everyone to contribute towards our mission to make care sourcing as efficient as possible. One of our team members will get in touch with you if there's anything we need clarification on.",
+        followUs: "Follow us on:"
+      }
+    },
   },
   zh: { // Mandarin Chinese translations
     heroLogo: "零距",
@@ -389,163 +401,18 @@ const pageTranslations = {
         ]
       }
     ],
-  },
-  yue: { // Cantonese translations
-    heroLogo: "零距",
-    heroTitleStart: "立即連接",
-    heroTitleEnd: "合適的護理人員",
-    ourMission: "我們的使命",
-    ourApproach: "服務特色",
-    howItWorks: "運作方式",
-    joinWaitlist: "加入等候名單",
-    becomeACarer: "成為護理員",
-    SourceforCare: "護理服務",
-    BecomeACarer: "成為護理員",
-    aboutUs: "關於我們",
-    // Hero section
-    heroSubtitle: "零距 讓您輕鬆找到認證的照護人員——他們懂您的語言，了解您的文化，為您提供貼心、安心的支持。",
-    heroCtaHowItWorks: "運作方式",
-    heroCtaJoinWaitlist: "加入等候名單",
-    // Problem Statement Section
-    problemTitle: "找到合適的照護本該輕鬆無憂",
-    problemParagraph1: "每年，無數英語非母語的人在尋求照護時感到無助。語言障礙、時間壓力，還有對整個系統的陌生感，讓他們像是被世界遺忘了一樣。這不是簡單的翻譯問題，而是關於被理解、被尊重、被善待的問題。很多人只是希望有人聽懂他們的需求，卻不得不在孤獨中默默撐著，因為現有的系統並不是為他們設計的。",
-    problemParagraph2Start: "我們相信，尋找符合您文化背景的貼心護理應該簡單無憂。",
-    problemParagraph2End: "零距 致力於實現這一目標。",
-    // Experiences Section
-    experiencesTitle: "我們都有共同的困境",
-    experiencesSubtitle: "聆聽那些正在應對照護挑戰的家庭分享他們的真實故事與心路歷程。",
-    testimonialMariaName: "瑪麗亞，48歲",
-    testimonialMariaQuote: "為我父親找到一個會說西班牙語並了解我們傳統的人太難了。我們需要的不僅僅是基本幫助——我們需要一個能與他溝通的人。",
-    testimonialChenName: "陳先生，41歲",
-    testimonialChenQuote: "我的工作時間很不穩定。為我母親（她更喜歡說普通話）協調護理感覺就像第二份工作。",
-    testimonialAhmedName: "艾哈邁德，55歲",
-    testimonialAhmedQuote: "我妻子手術時我們急需人手。快速解釋特定的文化需求和飲食限制壓力很大。找到合適的護理員幾乎是不可能的。",
-    testimonialSarahName: "莎拉，42歲",
-    testimonialSarahQuote: "我住在離需要日常照料的母親幾小時遠的地方，這感覺幾乎不可能。找到可靠、值得信賴的幫助一直讓我憂心忡忡。我需要一個我能完全信任的人。",
-    testimonialElenaName: "埃琳娜，52歲",
-    testimonialElenaQuote: "當我父親開始出現失智症跡象時，我們很難找到一個會說俄語並能理解他的人。語言障礙使他的困惑更加嚴重。",
-    testimonialRajName: "拉吉，45歲",
-    testimonialRajQuote: "我的父母搬來這裡幫忙照顧我們的孩子，但現在他們自己也需要照顧了。找到一個尊重他們素食習慣並了解印度教習俗的人非常具有挑戰性。",
-    // How It Works Section
-    howItWorksTitle: "關懷備至，三步到位",
-    step1Title: "明確需求",
-    step1Description: "簡單講出或者打字你嘅護理要求、偏好語言、文化偏好同位置——我哋令一切變得咁簡單",
-    step2Title: "匹配連接",
-    step2Description: "我哋即時為你連接完全符合你標準嘅認證護理員。如有疑問或額外需求，可同我哋嘅AI護理管家傾計。",
-    step3Title: "輕鬆預訂",
-    step3Description: "查看你嘅配對護理員，輕鬆安排護理，安全管理付款，享受安心，因為你嘅親人得到卓越嘅照顧。",
-    howitworksButton: "了解更多關於我們的服務",
-    // Our Approach Section
-    approachTitlePart1: "科技",
-    approachTitleTech: "有情",
-    approachTitlePart2: "溫暖",
-    approachTitleCompassion: "同行",
-    feature1Title: "即時護理請求",
-    feature1Description: "只需說出或輸入您的需求，我們的人工智能將實時轉錄和處理您的請求。",
-    feature2Title: "您的私人護理管家",
-    feature2Description: "通過我們的智能AI聊天說出您的獨特需求，即可在片刻之間獲得附近可用護理員和服務的個性化推薦。",
-    feature3Title: "信息一目了然",
-    feature3Description: "即時訪問全面的護理員資料，信息簡潔明了地匯總在一頁上。保存您的首選或通過無縫的一鍵操作進行預訂。",
-    feature4Title: "輕鬆探索",
-    feature4Description: "輕鬆瀏覽您所選區域內所有可用護理服務的綜合地圖，讓專業幫助近在咫尺。",
-    // Waitlist & Feedback Section
-    waitlistTitle: "搶先體驗",
-    waitlistSubtitle: "加入我們的等候名單，獲取優先體驗、優先匹配和獨家發布更新。",
-    waitlistEmailPlaceholder: "輸入您的郵箱",
-    waitlistSubmitButton: "加入等候名單",
-    waitlistSubmittingButton: "提交中...",
-    waitlistPrivacy: "我們尊重您的隱私。隨時可以取消訂閱。",
-    feedbackTitle: "分享您的想法",
-    feedbackSubtitle: "有想法或建議嗎？歡迎與我們分享，一起共創更符合文化需求的照護服務未來。",
-    feedbackEmailPlaceholder: "輸入您的郵箱",
-    feedbackMessagePlaceholder: "您的反饋或想法...",
-    feedbackSubmitButton: "發送反饋",
-    feedbackSubmittingButton: "提交中...",
-    feedbackPrivacy: "您的意見對我們來說非常寶貴，所有反饋都會受到嚴格保護，確保您的隱私安全。",
-    // Footer
-    footerCopyright: "零距 . 版權所有。",
-    // Add search-related translations
-    searchPlaceholder: "描述您需要的護理服務...",
-    searchTrySearching: "嘗試搜索:",
-    searchPresetPrompts: {
-      elderlyCare: "老年護理",
-      medicalCare: "醫療護理",
-      culturalCare: "文化護理",
-      respiteCare: "臨時護理",
-      dementiaCare: "失智症護理",
-      homeCare: "居家護理"
-    },
-    searchPresetDescriptions: {
-      elderlyCare: "尋找老年護理人員",
-      medicalCare: "尋找醫療護理協助",
-      culturalCare: "需要文化敏感的護理",
-      respiteCare: "尋找臨時護理支持",
-      dementiaCare: "尋找失智症護理專家",
-      homeCare: "需要居家護理服務"
-    },
-    careTypes: [
-      {
-        title: "長者護理",
-        description: "專業護理員為日常生活、陪伴及醫療支援提供協助",
-        image: "/images/agecareimg.jpg",
-        examples: [
-          "日常生活協助",
-          "藥物管理",
-          "陪伴關懷",
-          "行動支援"
-        ]
+    thankYouPopup: {
+      waitlist: {
+        title: "感謝您的加入！",
+        message: "請隨時關注我們的社交媒體，獲取團隊進展的最新消息。",
+        followUs: "關注我們："
       },
-      {
-        title: "專科醫療護理",
-        description: "針對特定醫療狀況的專業護士及護理員",
-        image: "/images/SpecialisedCare.jpg",
-        examples: [
-          "認知障礙護理",
-          "手術後康復",
-          "慢性病管理",
-          "紓緩治療"
-        ]
-      },
-      {
-        title: "文化護理",
-        description: "了解並尊重文化傳統的護理員",
-        image: "/images/CulturalCareimg.jpg",
-        examples: [
-          "語言專屬護理",
-          "文化飲食需求",
-          "宗教習俗",
-          "傳統療法"
-        ]
-      },
-      {
-        title: "臨時護理",
-        description: "為家庭護理者提供臨時休息的護理服務",
-        image: "/images/RespiteCareimg.jpg",
-        examples: [
-          "短期照顧",
-          "緊急支援",
-          "假期替班",
-          "定期休息"
-        ]
+      feedback: {
+        title: "感謝您的寶貴意見！",
+        message: "零距始終重視每個人的建議，以實現我們讓護理服務盡可能高效的使命。如果我們需要進一步澄清，我們的團隊成員將與您聯繫。",
+        followUs: "關注我們："
       }
-    ],
-    // Care Request Popup translations
-    careRequestPopup: {
-      title: "護理請求即將推出！",
-      description: "我哋將於2025年9月推出護理請求功能。請輸入您嘅郵箱，以便喺我哋推出時獲得免費護理請求積分。",
-      emailPlaceholder: "輸入您嘅郵箱",
-      submitButton: "獲取免費積分",
-      submittingButton: "提交緊...",
-      privacy: "我哋尊重您嘅隱私。隨時可以取消訂閱。",
-      success: "多謝！喺我哋推出時，您將獲得免費護理請求積分。",
-      error: "請提供有效嘅郵箱地址。",
-      yourRequest: "您嘅護理請求:",
-      earlyAccessLabel: "早期訪問代碼（可選）",
-      earlyAccessPlaceholder: "輸入您嘅早期訪問代碼",
-      validateCodeButton: "驗證代碼",
-      accessChatButton: "訪問聊天頁面",
-      invalidCodeError: "無效代碼。請重試或聯繫支援。"
-    }
+    },
   },
 };
 
@@ -1126,6 +993,13 @@ export default function LandingPage() {
   const [feedbackStatus, setFeedbackStatus] = useState<{ success?: boolean; message?: string; error?: string } | null>(
     null,
   );
+  // Social media links
+  const socialLinks = {
+    facebook: "https://www.facebook.com/careneighbour",
+    instagram: "https://www.instagram.com/careneighbour",
+    linkedin: "https://www.linkedin.com/company/careneighbour"
+  };
+  const [showThankYouPopup, setShowThankYouPopup] = useState<{ type: 'waitlist' | 'feedback' | null }>({ type: null });
   const [isSubmittingWaitlist, setIsSubmittingWaitlist] = useState(false);
   const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false);
   const [topWaitlistEmail, setTopWaitlistEmail] = useState("");
@@ -1170,7 +1044,13 @@ export default function LandingPage() {
       const result = await joinWaitlist(formData.get("email") as string)
       console.log("Waitlist submission result:", result)
 
-      setWaitlistStatus({ "success": result.status === 200 })
+      if (result.status === 200) {
+        setShowThankYouPopup({ type: 'waitlist' });
+        // Clear the form
+        (e.target as HTMLFormElement).reset();
+      } else {
+        setWaitlistStatus({ success: false, message: "An error occurred. Please try again." });
+      }
       setIsSubmittingWaitlist(false)
     } catch (error) {
       console.error("Error submitting waitlist form:", error)
@@ -1201,9 +1081,12 @@ export default function LandingPage() {
       const result = await joinWaitlist(topWaitlistEmail)
       console.log("Top waitlist submission result:", result)
 
-      setWaitlistStatus({
-        success: result.status === 200
-      })
+      if (result.status === 200) {
+        setShowThankYouPopup({ type: 'waitlist' });
+        setTopWaitlistEmail("");
+      } else {
+        setWaitlistStatus({ success: false, message: "An error occurred. Please try again." });
+      }
       setIsSubmittingWaitlist(false)
     } catch (error) {
       console.error("Error submitting top waitlist form:", error)
@@ -1227,9 +1110,13 @@ export default function LandingPage() {
       const result = await submitFeedback(formData.get("email") as string, formData.get("feedback") as string)
       console.log("Feedback submission result:", result)
 
-      setFeedbackStatus({
-        success: result.status === 200
-      })
+      if (result.status === 200) {
+        setShowThankYouPopup({ type: 'feedback' });
+        // Clear the form
+        (e.target as HTMLFormElement).reset();
+      } else {
+        setFeedbackStatus({ success: false, message: "An error occurred. Please try again." });
+      }
       setIsSubmittingFeedback(false)
     } catch (error) {
       console.error("Error submitting feedback form:", error)
@@ -2171,6 +2058,70 @@ export default function LandingPage() {
                   <p className="text-xs text-gray-500 text-center">{t.waitlistPrivacy}</p>
                 </motion.div>
 
+                {/* Thank You Popup */}
+      <Dialog open={showThankYouPopup.type !== null} onOpenChange={() => setShowThankYouPopup({ type: null })}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-gray-900 text-center">
+              {showThankYouPopup.type === 'waitlist' 
+                ? t.thankYouPopup.waitlist.title 
+                : t.thankYouPopup.feedback.title}
+            </DialogTitle>
+            <DialogDescription className="text-gray-600 mt-4 text-center text-base leading-relaxed">
+              {showThankYouPopup.type === 'waitlist' 
+                ? t.thankYouPopup.waitlist.message 
+                : t.thankYouPopup.feedback.message}
+            </DialogDescription>
+          </DialogHeader>
+          
+          {/* Social Media Buttons */}
+          <div className="flex flex-col items-center space-y-4 mt-6">
+            <p className="text-sm font-medium text-gray-700">
+              {showThankYouPopup.type === 'waitlist' 
+                ? t.thankYouPopup.waitlist.followUs 
+                : t.thankYouPopup.feedback.followUs}
+            </p>
+            <div className="flex space-x-4">
+              {/* Facebook */}
+              <a
+                href={socialLinks.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center w-12 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors duration-200"
+              >
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+              
+              {/* Instagram */}
+              <a
+                href={socialLinks.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full transition-colors duration-200"
+              >
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </a>
+              
+              {/* LinkedIn */}
+              <a
+                href={socialLinks.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center w-12 h-12 bg-blue-700 hover:bg-blue-800 text-white rounded-full transition-colors duration-200"
+              >
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
                 {/* Demo button */}
                 <motion.div
                   whileHover={{ scale: 1.03 }}
@@ -2244,6 +2195,8 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
+          <div className="fixed bottom-4 right-4 space-y-2 z-50">
+</div>
         </section>      </main>
 
       {/* Unified Footer */}
