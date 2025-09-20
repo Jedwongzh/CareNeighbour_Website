@@ -39,7 +39,7 @@ export function UnifiedHeader({ language, setLanguage, translations }: UnifiedHe
         border: '1px solid rgba(255,255,255,0.38)'
       }}
     >
-      <div className="container px-4 md:px-6 flex h-16 items-center justify-between">
+      <div className="container px-4 md:px-6 flex h-16 items-center justify-between max-w-7xl">
         <Link href="/" className="flex items-center space-x-2 transition-all duration-300 ease-in-out">
           <Image src="/CN_Brandmark_Black.png" alt="CareNeighbour Logo" width={25} height={25} />
           <span className="font-semibold text-lg transition-colors duration-300 ease-in-out">
@@ -48,8 +48,8 @@ export function UnifiedHeader({ language, setLanguage, translations }: UnifiedHe
         </Link>
 
         {/* Desktop Navigation + Language toggle (far right) */}
-        <div className="hidden md:flex items-center gap-4 ml-auto">
-          <nav className="flex gap-6 items-center">
+        <div className="hidden md:flex items-center gap-3 lg:gap-4 ml-auto">
+          <nav className="flex gap-4 lg:gap-6 items-center">
             <a
               href="/"
               className={`text-sm font-medium text-center text-gray-600 hover:text-primary transition-all duration-300 ease-in-out ${pathname === "/" ? glassClass : ""}`}
@@ -82,11 +82,11 @@ export function UnifiedHeader({ language, setLanguage, translations }: UnifiedHe
             </Link>
             <Link
               href="/signup"
-              className="text-sm font-medium text-center"
+              className="text-sm font-medium text-center ml-2"
             >
               <Button
                 size="sm"
-                className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white font-medium transition-all duration-300 ease-in-out hover:scale-105"
+                className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white font-medium transition-all duration-300 ease-in-out hover:scale-105 px-3 py-1.5 text-xs md:px-4 md:py-2 md:text-sm whitespace-nowrap"
               >
                 {translations.becomeACarer || 'Become a Carer'}
               </Button>
@@ -94,7 +94,7 @@ export function UnifiedHeader({ language, setLanguage, translations }: UnifiedHe
           </nav>
 
           {/* Visual separator between links and language toggle */}
-          <div className="h-6 w-px bg-gray-200" aria-hidden="true" />
+          <div className="h-6 w-px bg-gray-200 ml-2 lg:ml-3" aria-hidden="true" />
 
           {/* Language toggle (segmented with sliding thumb) */}
           <div

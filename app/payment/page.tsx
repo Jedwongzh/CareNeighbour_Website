@@ -397,224 +397,242 @@ const PaymentPageContent = () => {
   const current = translations[language as keyof typeof translations] || translations.en
 
   return (
-    <div className="flex-1">
-      <main className="flex-1">
-        <section className="relative overflow-hidden bg-white/60 py-16 md:py-24">
-          <div className="absolute inset-0 -z-10 bg-gradient-to-br from-purple-100/60 via-white to-sky-100/40" />
-          <div className="container mx-auto px-4 md:px-8">
+  <div className="flex-1">
+    <main className="flex-1">
+      {/* Hero Section - Mobile Optimized */}
+      <section className="relative overflow-hidden bg-white/60 py-8 sm:py-12 md:py-16 lg:py-24">
+        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-purple-100/60 via-white to-sky-100/40" />
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
+          <div className="grid gap-6 sm:gap-8 md:gap-12 lg:grid-cols-2 lg:items-center">
             <div className="max-w-3xl">
-              <h1 className="mt-6 text-4xl font-bold tracking-tight text-gray-900 md:text-6xl">
+              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight">
                 {current.hero.title}
               </h1>
-              <p className="mt-4 text-lg text-gray-700 md:text-xl">
+              <p className="mt-3 text-sm text-gray-700 sm:text-base md:text-lg lg:text-xl">
                 {current.hero.subtitle}
               </p>
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Button asChild size="lg">
+              <div className="mt-4 sm:mt-6 flex flex-col gap-2 sm:gap-3 md:flex-row md:gap-4">
+                <Button asChild size="sm" className="w-full sm:w-auto sm:size-lg">
                   <Link href={current.hero.primaryCta.href}>
                     {current.hero.primaryCta.label}
-                    <ArrowRight className="h-4 w-4" />
+                    <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
                   </Link>
                 </Button>
-                <Button asChild variant="outline" size="lg">
+                <Button asChild variant="outline" size="sm" className="w-full sm:w-auto sm:size-lg">
                   <Link href={current.hero.secondaryCta.href}>
                     {current.hero.secondaryCta.label}
                   </Link>
                 </Button>
               </div>
             </div>
+            <div className="relative order-first lg:order-last">
+              <img
+                src="images/payment_img.jpg"
+                alt="Payment illustration"
+                className="w-full max-w-xs h-auto rounded-lg shadow-lg mx-auto sm:max-w-sm md:max-w-md lg:w-3/4"
+              />
+            </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="py-16 bg-white/60 md:py-16">
-          <div className="container mx-auto px-4 md:px-8">
-            <div className="grid gap-10 lg:grid-cols-[1.5fr_1fr]">
-              <div>
-                <h2 className="text-3xl font-semibold text-gray-900 md:text-4xl">
-                  {current.bookingPreview.title}
-                </h2>
-                <p className="mt-4 text-gray-600 md:text-lg">{current.bookingPreview.subtitle}</p>
-                <ul className="mt-6 space-y-3 text-sm text-gray-700">
-                  {current.bookingPreview.features.map((feature, index) => (
-                    <li key={`booking-feature-${index}`} className="flex items-start gap-2">
-                      <CheckCircle className="mt-0.5 h-4 w-4 text-purple-500" />
-                      <span>{feature}</span>
+      {/* Booking Preview Section - Mobile Optimized */}
+      <section className="py-8 sm:py-12 md:py-16 bg-white/60">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
+          <div className="grid gap-6 sm:gap-8 lg:gap-10 lg:grid-cols-[1.5fr_1fr]">
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900 sm:text-2xl md:text-3xl lg:text-4xl">
+                {current.bookingPreview.title}
+              </h2>
+              <p className="mt-3 sm:mt-4 text-sm text-gray-600 sm:text-base md:text-lg">
+                {current.bookingPreview.subtitle}
+              </p>
+              <ul className="mt-4 sm:mt-6 space-y-2 sm:space-y-3 text-xs sm:text-sm text-gray-700">
+                {current.bookingPreview.features.map((feature, index) => (
+                  <li key={`booking-feature-${index}`} className="flex items-start gap-2">
+                    <CheckCircle className="mt-0.5 h-3 w-3 sm:h-4 sm:w-4 text-purple-500 flex-shrink-0" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6 sm:mt-8 flex flex-wrap gap-3 sm:gap-4">
+                <Button asChild size="sm" className="bg-purple-600 text-white hover:bg-purple-700 sm:size-lg">
+                  <Link href={current.bookingPreview.primaryCta.href}>
+                    {current.bookingPreview.primaryCta.label}
+                  </Link>
+                </Button>
+              </div>
+            </div>
+            <Card className="border border-purple-100 bg-gradient-to-br from-white via-purple-50/70 to-sky-50 shadow-md">
+              <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-6">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900">{current.process.title}</h3>
+                <p className="text-xs sm:text-sm text-gray-600">{current.process.description}</p>
+                <ul className="space-y-2 sm:space-y-3 text-xs sm:text-sm text-gray-700">
+                  {current.process.steps.map((step) => (
+                    <li key={`process-preview-${step.step}`} className="flex items-start gap-2">
+                      <span className="font-semibold text-purple-600 flex-shrink-0">{step.step}</span>
+                      <span>
+                        <span className="block font-medium text-gray-900">{step.title}</span>
+                        <span className="text-gray-600">{step.description}</span>
+                      </span>
                     </li>
                   ))}
                 </ul>
-                <div className="mt-8 flex flex-wrap gap-4">
-                  <Button asChild size="lg" className="bg-purple-600 text-white hover:bg-purple-700">
-                    <Link href={current.bookingPreview.primaryCta.href}>
-                      {current.bookingPreview.primaryCta.label}
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-              <Card className="border border-purple-100 bg-gradient-to-br from-white via-purple-50/70 to-sky-50 shadow-md">
-                <CardContent className="space-y-4 p-6">
-                  <h3 className="text-lg font-semibold text-gray-900">{current.process.title}</h3>
-                  <p className="text-sm text-gray-600">{current.process.description}</p>
-                  <ul className="space-y-3 text-sm text-gray-700">
-                    {current.process.steps.map((step) => (
-                      <li key={`process-preview-${step.step}`} className="flex items-start gap-2">
-                        <span className="font-semibold text-purple-600">{step.step}</span>
-                        <span>
-                          <span className="block font-medium text-gray-900">{step.title}</span>
-                          <span className="text-gray-600">{step.description}</span>
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
+              </CardContent>
+            </Card>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="py-16 bg-white/60 md:py-16">
-          <div className="container mx-auto px-4 md:px-8">
-            <h2 className="text-3xl font-semibold text-gray-900 md:text-4xl">
-              {current.highlightsTitle}
-            </h2>
-            <div className="mt-10 grid gap-6 md:grid-cols-2">
-              {current.highlights.map((item, index) => {
-                const Icon = iconMap[item.icon as keyof typeof iconMap]
-                return (
-                  <Card
-                    key={`${item.title}-${index}`}
-                    className="h-full border-none bg-white/70 shadow-lg shadow-purple-100/60 backdrop-blur-sm"
-                  >
-                    <CardContent className="flex flex-col gap-4 p-6">
-                      {Icon && <Icon className="h-10 w-10 text-purple-600" />}
-                      <div>
-                        <h3 className="text-xl font-semibold text-gray-900">{item.title}</h3>
-                        <p className="mt-2 text-gray-600">{item.description}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-white/60 py-16 md:py-16">
-          <div className="container mx-auto px-4 md:px-8">
-            <div className="md:flex md:items-end md:justify-between">
-              <div className="max-w-2xl">
-                <h2 className="text-3xl font-semibold text-gray-900 md:text-4xl">
-                  {current.funding.title}
-                </h2>
-                <p className="mt-4 text-gray-600 md:text-lg">{current.funding.subtitle}</p>
-              </div>
-            </div>
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {current.funding.options.map((option, index) => {
-                return (
-                  <Card
-                    key={`${option.title}-${index}`}
-                    className="border-none bg-gradient-to-br from-[#F7F4FF] via-white to-[#F0F9FF] shadow-md shadow-purple-100/50"
-                  >
-                    <CardContent className="flex h-full flex-col gap-4 p-6">
-                      <div className="space-y-3">
-                        <h3 className="text-xl font-semibold text-gray-900">{option.title}</h3>
-                        <p className="text-gray-600">{option.description}</p>
-                        <ul className="space-y-2 text-sm text-gray-600">
-                          {option.points.map((point, pointIndex) => (
-                            <li key={`${option.title}-point-${pointIndex}`} className="flex items-start gap-2">
-                              <CheckCircle className="mt-0.5 h-4 w-4 text-purple-500" />
-                              <span>{point}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16 bg-white/60 md:py-16">
-          <div className="container mx-auto px-4 md:px-8">
-            <div className="max-w-2xl">
-              <h2 className="text-3xl font-semibold text-gray-900 md:text-4xl">
-                {current.process.title}
-              </h2>
-              <p className="mt-4 text-gray-600 md:text-lg">{current.process.description}</p>
-            </div>
-            <div className="mt-12 grid gap-6 md:grid-cols-4">
-              {current.process.steps.map((step) => {
-                const Icon = iconMap[step.icon as keyof typeof iconMap]
-                return (
-                  <div
-                    key={step.step}
-                    className="relative flex h-full flex-col gap-4 rounded-2xl border border-purple-100 bg-white/80 p-6 shadow-sm"
-                  >
-                    {Icon && <Icon className="h-8 w-8 text-purple-600" />}
-                    <h3 className="text-lg font-semibold text-gray-900">{step.title}</h3>
-                    <p className="text-sm text-gray-600">{step.description}</p>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-white/60 py-16 md:py-16">
-          <div className="container mx-auto px-4 md:px-8">
-            <div className="grid gap-10 md:grid-cols-2">
-              <div>
-                <h2 className="text-3xl font-semibold text-gray-900 md:text-4xl">
-                  {current.pricing.title}
-                </h2>
-                <p className="mt-4 text-gray-600 md:text-lg">{current.pricing.description}</p>
-              </div>
-              <Card className="border-none bg-gradient-to-br from-purple-50 via-white to-sky-50 shadow-md shadow-purple-100/70">
-                <CardContent className="space-y-3 p-6">
-                  {current.pricing.factors.map((factor, index) => (
-                    <div key={`factor-${index}`} className="flex items-start gap-3">
-                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-purple-100 text-sm font-medium text-purple-600">
-                      {index + 1}
-                      </span>
-                      <span className="text-gray-700">{factor}</span>
+      {/* Highlights Section - Mobile Optimized */}
+      <section className="py-8 sm:py-12 md:py-16 bg-white/60">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
+          <h2 className="text-xl font-semibold text-gray-900 sm:text-2xl md:text-3xl lg:text-4xl">
+            {current.highlightsTitle}
+          </h2>
+          <div className="mt-6 sm:mt-8 md:mt-10 grid gap-4 sm:gap-6 md:grid-cols-2">
+            {current.highlights.map((item, index) => {
+              const Icon = iconMap[item.icon as keyof typeof iconMap]
+              return (
+                <Card
+                  key={`${item.title}-${index}`}
+                  className="h-full border-none bg-white/70 shadow-lg shadow-purple-100/60 backdrop-blur-sm"
+                >
+                  <CardContent className="flex flex-col gap-3 sm:gap-4 p-4 sm:p-6">
+                    {Icon && <Icon className="h-8 w-8 sm:h-10 sm:w-10 text-purple-600" />}
+                    <div>
+                      <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900">{item.title}</h3>
+                      <p className="mt-1 sm:mt-2 text-sm sm:text-base text-gray-600">{item.description}</p>
                     </div>
-                  ))}
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16 bg-white/60 md:py-16">
-          <div className="container mx-auto px-4 md:px-8">
-            <h2 className="text-3xl font-semibold text-gray-900 md:text-4xl">
-              {current.faqs.title}
-            </h2>
-            <div className="mt-10 space-y-6">
-              {current.faqs.items.map((faq, index) => (
-                <Card key={`faq-${index}`} className="border border-purple-100 bg-white/70 shadow-sm">
-                  <CardContent className="space-y-2 p-6">
-                    <h3 className="text-lg font-semibold text-gray-900">{faq.question}</h3>
-                    <p className="text-sm text-gray-600">{faq.answer}</p>
                   </CardContent>
                 </Card>
-              ))}
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Funding Section - Mobile Optimized */}
+      <section className="bg-white/60 py-8 sm:py-12 md:py-16">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
+          <div className="md:flex md:items-end md:justify-between">
+            <div className="max-w-2xl">
+              <h2 className="text-xl font-semibold text-gray-900 sm:text-2xl md:text-3xl lg:text-4xl">
+                {current.funding.title}
+              </h2>
+              <p className="mt-3 sm:mt-4 text-sm text-gray-600 sm:text-base md:text-lg">{current.funding.subtitle}</p>
             </div>
           </div>
-        </section>
-      </main>
+          <div className="mt-6 sm:mt-8 md:mt-10 grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {current.funding.options.map((option, index) => {
+              return (
+                <Card
+                  key={`${option.title}-${index}`}
+                  className="border-none bg-gradient-to-br from-[#F7F4FF] via-white to-[#F0F9FF] shadow-md shadow-purple-100/50"
+                >
+                  <CardContent className="flex h-full flex-col gap-3 sm:gap-4 p-4 sm:p-6">
+                    <div className="space-y-2 sm:space-y-3">
+                      <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900">{option.title}</h3>
+                      <p className="text-sm sm:text-base text-gray-600">{option.description}</p>
+                      <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm text-gray-600">
+                        {option.points.map((point, pointIndex) => (
+                          <li key={`${option.title}-point-${pointIndex}`} className="flex items-start gap-2">
+                            <CheckCircle className="mt-0.5 h-3 w-3 sm:h-4 sm:w-4 text-purple-500 flex-shrink-0" />
+                            <span>{point}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </CardContent>
+                </Card>
+              )
+            })}
+          </div>
+        </div>
+      </section>
 
-      <UnifiedFooter
-        language={language}
-        translations={{
-          aboutUs: current.aboutUs,
-          footerCopyright: current.footerCopyright,
-          mainPage: current.mainPage
-        }}
-      />
-    </div>
+      {/* Process Section - Mobile Optimized */}
+      <section className="py-8 sm:py-12 md:py-16 bg-white/60">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
+          <div className="max-w-2xl">
+            <h2 className="text-xl font-semibold text-gray-900 sm:text-2xl md:text-3xl lg:text-4xl">
+              {current.process.title}
+            </h2>
+            <p className="mt-3 sm:mt-4 text-sm text-gray-600 sm:text-base md:text-lg">{current.process.description}</p>
+          </div>
+          <div className="mt-8 sm:mt-10 md:mt-12 grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {current.process.steps.map((step) => {
+              const Icon = iconMap[step.icon as keyof typeof iconMap]
+              return (
+                <div
+                  key={step.step}
+                  className="relative flex h-full flex-col gap-3 sm:gap-4 rounded-2xl border border-purple-100 bg-white/80 p-4 sm:p-6 shadow-sm"
+                >
+                  {Icon && <Icon className="h-6 w-6 sm:h-8 sm:w-8 text-purple-600" />}
+                  <h3 className="text-sm sm:text-base md:text-lg font-semibold text-gray-900">{step.title}</h3>
+                  <p className="text-xs sm:text-sm text-gray-600">{step.description}</p>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section - Mobile Optimized */}
+      <section className="bg-white/60 py-8 sm:py-12 md:py-16">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
+          <div className="grid gap-6 sm:gap-8 md:gap-10 md:grid-cols-2">
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900 sm:text-2xl md:text-3xl lg:text-4xl">
+                {current.pricing.title}
+              </h2>
+              <p className="mt-3 sm:mt-4 text-sm text-gray-600 sm:text-base md:text-lg">{current.pricing.description}</p>
+            </div>
+            <Card className="border-none bg-gradient-to-br from-purple-50 via-white to-sky-50 shadow-md shadow-purple-100/70">
+              <CardContent className="space-y-2 sm:space-y-3 p-4 sm:p-6">
+                {current.pricing.factors.map((factor, index) => (
+                  <div key={`factor-${index}`} className="flex items-start gap-2 sm:gap-3">
+                    <span className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-full bg-purple-100 text-xs sm:text-sm font-medium text-purple-600 flex-shrink-0 mt-0.5">
+                      {index + 1}
+                    </span>
+                    <span className="text-sm sm:text-base text-gray-700">{factor}</span>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQs Section - Mobile Optimized */}
+      <section className="py-8 sm:py-12 md:py-16 bg-white/60">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
+          <h2 className="text-xl font-semibold text-gray-900 sm:text-2xl md:text-3xl lg:text-4xl">
+            {current.faqs.title}
+          </h2>
+          <div className="mt-6 sm:mt-8 md:mt-10 space-y-4 sm:space-y-6">
+            {current.faqs.items.map((faq, index) => (
+              <Card key={`faq-${index}`} className="border border-purple-100 bg-white/70 shadow-sm">
+                <CardContent className="space-y-2 p-4 sm:p-6">
+                  <h3 className="text-sm sm:text-base md:text-lg font-semibold text-gray-900">{faq.question}</h3>
+                  <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">{faq.answer}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <UnifiedFooter
+      language={language}
+      translations={{
+        aboutUs: current.aboutUs,
+        footerCopyright: current.footerCopyright,
+        mainPage: current.mainPage
+      }}
+    />
+  </div>
   )
 }
 
