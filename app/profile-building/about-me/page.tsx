@@ -111,8 +111,9 @@ export default function AboutMePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b sticky top-0 z-10">
+      {/* Content with proper spacing for global header */}
+      <div className="pt-4">
+        {/* Back navigation and page title */}
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -134,10 +135,9 @@ export default function AboutMePage() {
             </Link>
           </div>
         </div>
-      </header>
 
-      <div className="container mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="container mx-auto px-4 py-6">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Left Sidebar - Navigation */}
           <div className="lg:col-span-1 space-y-6">
             {/* Job Details Section */}
@@ -317,6 +317,7 @@ export default function AboutMePage() {
             </Card>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

@@ -2,8 +2,10 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { UnifiedHeader } from '@/components/unified-header';
 import { UnifiedFooter } from '@/components/unified-footer';
-import { useLanguage } from '@/app/contexts/LanguageContext';
+import { LanguageProvider, useLanguage } from '@/app/contexts/LanguageContext';
+import GradientBackground from '@/components/GradientBackground';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight, CheckCircle, Download, UserPlus, MessageSquare, Calendar } from 'lucide-react';
@@ -19,6 +21,7 @@ const GettingStartedPageContent = () => {
       joinWaitlist: "Join Waitlist",
       SourceforCare: "Source for Care",
       BecomeACarer: "Become a Carer",
+      payment: "Payment",
       footerCopyright: "© 2024 CareNeighbour, Inc. All rights reserved.",
 
       title: 'Getting Started on CareNeighbour',
@@ -104,6 +107,7 @@ const GettingStartedPageContent = () => {
       joinWaitlist: "加入等候名单",
       SourceforCare: "护理服务",
       BecomeACarer: "成为护理员",
+      payment: "支付",
       footerCopyright: "© 2024 零距. 版权所有。",
 
       title: '在零距开始',
@@ -183,8 +187,20 @@ const GettingStartedPageContent = () => {
       backToMain: '返回概览'
     }
   };
-
+  
   const currentContent = content[language as keyof typeof content];
+  
+  const headerTranslations = {
+    heroLogo: currentContent.heroLogo,
+    howItWorks: currentContent.howItWorks,
+    aboutUs: currentContent.aboutUs,
+    joinWaitlist: currentContent.joinWaitlist,
+    SourceforCare: currentContent.SourceforCare,
+    mainPage: currentContent.heroLogo,
+    BecomeACarer: currentContent.BecomeACarer,
+    payment: currentContent.payment,
+  };
+  
   const footerTranslations = {
     aboutUs: currentContent.aboutUs,
     mainPage: currentContent.heroLogo,
@@ -192,8 +208,13 @@ const GettingStartedPageContent = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col text-gray-800">
-      {/* Global header rendered via app/layout.tsx */}
+    <div className="flex min-h-screen flex-col bg-gray-50 text-gray-800">
+      <GradientBackground />
+      <UnifiedHeader
+        language={language}
+        setLanguage={setLanguage}
+        translations={headerTranslations}
+      />
       <main className="flex-1">
         {/* Hero Section */}
         <section className="relative text-center py-20 md:py-32 px-4 overflow-hidden">
@@ -332,4 +353,10 @@ const GettingStartedPageContent = () => {
   );
 };
 
-export default GettingStartedPageContent;
+const GettingStartedPage = () => (
+  <LanguageProvider>
+    <GettingStartedPageContent />
+  </LanguageProvider>
+);
+
+export default GettingStartedPage;

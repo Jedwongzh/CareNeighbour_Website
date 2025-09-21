@@ -1,6 +1,7 @@
 "use client"
 
-import { createContext, useState, useEffect, type ReactNode } from "react"
+import { createContext, useState, useEffect, useContext, type ReactNode } from "react"
+import { useRouter } from "next/navigation"
 
 interface AuthContextProps {
   isAuthenticated: boolean
@@ -36,7 +37,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     // Implement logout logic (e.g., remove token from local storage)
     localStorage.removeItem("token")
     setIsAuthenticated(false)
+    
+    // Redirect to main page after logout
+    if (typeof window !== 'undefined') {
+      window.location.href = '/'
+    }
   }
 
   return <AuthContext.Provider value={{ isAuthenticated, login, logout }}>{children}</AuthContext.Provider>
+}
+
+export const useAuth = () => {
+  const context = useContext(AuthContext)
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider")
+  }
+  return context
 }

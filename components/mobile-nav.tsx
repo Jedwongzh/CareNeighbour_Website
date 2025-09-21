@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react"
+import { Menu, X, ChevronDown } from "lucide-react"
 import Link from "next/link"
 
 interface MobileNavProps {
@@ -14,6 +14,9 @@ interface MobileNavProps {
     SourceforCare: string
     payment: string
     becomeACarer?: string
+    getStarted?: string
+    findSupport?: string
+    provideSupport?: string
   }
   currentLang: string
   setLang: (lang: string) => void
@@ -29,9 +32,11 @@ export function MobileNav({
   onJoinWaitlist 
 }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const [isGetStartedOpen, setIsGetStartedOpen] = useState(false)
 
   const handleJoinWaitlist = () => {
     setIsOpen(false)
+    setIsGetStartedOpen(false)
     if (onJoinWaitlist) {
       onJoinWaitlist()
     } else {
@@ -99,18 +104,50 @@ export function MobileNav({
               </Link>
             </div>
 
-            {/* Sign Up Button */}
+            {/* Get Started Button with Dropdown */}
             <div className="pt-3">
-              <Link
-                href="/signup"
-                onClick={() => setIsOpen(false)}
+              <button
+                onClick={() => setIsGetStartedOpen(!isGetStartedOpen)}
+                className="w-full flex items-center justify-center gap-2 py-3 text-gray-700 hover:text-primary transition-colors font-medium"
               >
-                <Button
-                  className="w-full bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white py-3 text-base font-medium"
-                >
-                  {translations.becomeACarer || 'Become a Carer'}
-                </Button>
-              </Link>
+                {translations.getStarted || 'Get Started'}
+                <ChevronDown 
+                  className={`h-4 w-4 transition-transform ${isGetStartedOpen ? 'rotate-180' : ''}`}
+                />
+              </button>
+              
+              {/* Collapsible Get Started Options */}
+              {isGetStartedOpen && (
+                <div className="mt-3 space-y-3 px-4">
+                  <button
+                    onClick={handleJoinWaitlist}
+                    className="w-full p-3 rounded-lg border border-gray-200 bg-blue-50 hover:bg-blue-100 transition-colors text-center"
+                  >
+                    <div className="text-sm font-semibold text-gray-900">
+                      {translations.findSupport || 'Find Support'}
+                    </div>
+                    <div className="text-xs text-gray-600 mt-1">
+                      Join our waitlist for care services
+                    </div>
+                  </button>
+                  
+                  <Link
+                    href="/signup"
+                    onClick={() => {
+                      setIsOpen(false)
+                      setIsGetStartedOpen(false)
+                    }}
+                    className="block w-full p-3 rounded-lg border border-gray-200 bg-purple-50 hover:bg-purple-100 transition-colors text-center"
+                  >
+                    <div className="text-sm font-semibold text-gray-900">
+                      {translations.provideSupport || 'Provide Support'}
+                    </div>
+                    <div className="text-xs text-gray-600 mt-1">
+                      Join as a care provider
+                    </div>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>
