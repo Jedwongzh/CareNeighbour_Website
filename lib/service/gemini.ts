@@ -6,7 +6,7 @@ export type GeminiResponse = GeminiRecommendation[];
 export interface GeminiRecommendation {
   id: number;
   matchScore: number;
-  reasoning: string[];
+  reasoning: string;
 }
 
 export const responseSchema = {
@@ -20,10 +20,7 @@ export const responseSchema = {
           enum: getAllCarerIds(),
         },
         matchScore: { type: Type.NUMBER },
-        reasoning: {
-          type: Type.ARRAY,
-          items: { type: Type.STRING },
-        },
+        reasoning: { type: Type.STRING },
       },
     },
   },

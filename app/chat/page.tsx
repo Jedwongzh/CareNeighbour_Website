@@ -44,6 +44,7 @@ import { UnifiedFooter } from "@/components/unified-footer";
 import { useLanguage } from "@/app/contexts/LanguageContext";
 import { CarerProfile, getCarerById, mockCarers } from "@/lib/mock-data/carers";
 import { GeminiResponse } from "@/lib/service/gemini";
+import { get } from "http";
 // header translations handled globally via GlobalHeader
 
 interface Message {
@@ -57,7 +58,94 @@ interface Message {
 interface CarerRecommendation {
   profile: CarerProfile;
   matchScore: number;
-  reasoning: string[];
+  reasoning: string;
+}
+
+function CarerProfileCard({
+  carer,
+  title,
+  whyWeRecommendText,
+  onMoreInfo,
+}: {
+  carer: CarerRecommendation;
+  title: string;
+  whyWeRecommendText: string;
+  onMoreInfo: (carer: CarerRecommendation) => void;
+}) {
+  const [typedText, setTypedText] = useState("");
+  useEffect(() => {
+    let currentIndex = 0;
+    const typingInterval = setInterval(() => {
+      if (currentIndex <= carer.reasoning.length) {
+        setTypedText(carer.reasoning.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        clearInterval(typingInterval);
+      }
+    }, 30);
+
+    return () => clearInterval(typingInterval);
+  }, [carer.reasoning]);
+  return (
+    <div
+      className="carer-card"
+      onClick={() => onMoreInfo(carer)}
+      style={{ cursor: "pointer" }}
+    >
+      <div className="carer-card-inner">
+        {/* Glassmorphism overlay */}
+        <div className="carer-glare" />
+
+        {/* Circular profile image at top center */}
+        <div className="carer-profile-section">
+          <div className="carer-profile-circle">
+            <img
+              src={carer.profile.photo}
+              alt={carer.profile.name}
+              className="carer-profile-img"
+            />
+          </div>
+        </div>
+
+        {/* Info section with typing effect */}
+        <div className="carer-info-section">
+          <div className="carer-name-badge">
+            <div className="carer-name-row">
+              <h3 className="carer-name">{carer.profile.name}</h3>
+              <span
+                className="carer-ethnicity-badge"
+                style={{ marginLeft: "auto" }}
+              >
+                {carer.profile.languages.length > 1
+                  ? carer.profile.languages[1]
+                  : carer.profile.languages[0]}
+              </span>
+            </div>
+            <p className="carer-title">{title}</p>
+          </div>
+
+          <div className="carer-reasoning-box">
+            <div className="ai-badge">
+              <img
+                src="/CN_Brandmark_Black.png"
+                alt="CareNeighbour"
+                className="ai-logo"
+              />
+              <span className="ai-text">{whyWeRecommendText}</span>
+            </div>
+            <div className="carer-reasoning-wrapper">
+              <p className="carer-reasoning">
+                {typedText}
+                {typedText.length < carer.reasoning.length && (
+                  <span className="typing-cursor">|</span>
+                )}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function CarerRecommendationCard({
@@ -343,7 +431,7 @@ function UserProfileSidebar({
 function ChatPageContent() {
   const [showInitialReply, setShowInitialReply] = useState(false);
   const [showSignInPrompt, setShowSignInPrompt] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(true);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [activeProfileSection, setActiveProfileSection] = useState("activity");
@@ -497,21 +585,15 @@ function ChatPageContent() {
     setHasInitialized(true);
 
     // Show assistant reply after a delay
-    setTimeout(() => {
-      const assistantMessage: Message = {
-        id: "2",
-        type: "assistant",
-        content: `Thank you for reaching out! I understand you're looking for care assistance. Based on your request "${query}", I can help you find the perfect carer who meets your specific needs. To provide you with personalized recommendations and connect you with verified caregivers in your area, please sign in or create an account to continue.`,
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, assistantMessage]);
-      setShowInitialReply(true);
-
-      // Show sign-in prompt after another delay
-      setTimeout(() => {
-        setShowSignInPrompt(true);
-      }, 2000);
-    }, 1500);
+    const assistantMessage: Message = {
+      id: "2",
+      type: "assistant",
+      content: `Thank you for reaching out! I'm here to help you find the perfect carer.`,
+      timestamp: new Date(),
+    };
+    setMessages((prev) => [...prev, assistantMessage]);
+    setShowInitialReply(true);
+    getRecommendations(query);
   }, [query]); // Only depend on query
 
   // Auto-resize textarea
@@ -532,18 +614,7 @@ function ChatPageContent() {
     setShowSignInPrompt(false);
   };
 
-  const sendMessage = async (message: string) => {
-    if (!message.trim() || isLoading) return;
-
-    const newMessage: Message = {
-      id: Date.now().toString(),
-      type: "user",
-      content: message,
-      timestamp: new Date(),
-    };
-
-    setMessages((prev) => [...prev, newMessage]);
-    setInputValue("");
+  const getRecommendations = async (userMessage: string) => {
     const assistantMessage: Message = {
       id: (Date.now() + 1).toString(),
       type: "assistant",
@@ -556,7 +627,7 @@ function ChatPageContent() {
     setIsLoading(true);
 
     // wait for result
-    const result = await sendCareRequest(newMessage.content);
+    const result = await sendCareRequest(userMessage);
     if (!result.ok) {
       // Handle error
       const errorMessage: Message = {
@@ -613,14 +684,31 @@ function ChatPageContent() {
     setIsLoading(false);
   };
 
+  const sendMessage = async (message: string) => {
+    if (!message.trim() || isLoading) return;
+
+    const newMessage: Message = {
+      id: Date.now().toString(),
+      type: "user",
+      content: message,
+      timestamp: new Date(),
+    };
+
+    setMessages((prev) => [...prev, newMessage]);
+    setInputValue("");
+    getRecommendations(message);
+  };
+
   const handleSendMessage = async () => {
     await sendMessage(inputValue);
   };
 
   // Get the last user message for redirecting to chat-with page
   const getLastUserMessage = () => {
-    const userMessages = messages.filter(msg => msg.type === "user");
-    return userMessages.length > 0 ? userMessages[userMessages.length - 1].content : "";
+    const userMessages = messages.filter((msg) => msg.type === "user");
+    return userMessages.length > 0
+      ? userMessages[userMessages.length - 1].content
+      : "";
   };
 
   // Handle contact carer button click
@@ -628,7 +716,9 @@ function ChatPageContent() {
     if (selectedCarer) {
       const lastUserMessage = getLastUserMessage();
       const careDetails = encodeURIComponent(lastUserMessage);
-      router.push(`/chat-with?carerId=${selectedCarer.profile.id}&careDetails=${careDetails}`);
+      router.push(
+        `/chat-with?carerId=${selectedCarer.profile.id}&careDetails=${careDetails}`
+      );
     }
   };
 
@@ -836,8 +926,10 @@ function ChatPageContent() {
                                           flexShrink: 0,
                                         }}
                                       >
-                                        <CarerRecommendationCard
+                                        <CarerProfileCard
                                           carer={carer}
+                                          title=""
+                                          whyWeRecommendText="Why we recommend"
                                           onMoreInfo={(selectedCarer) => {
                                             setSelectedCarer(selectedCarer);
                                             setIsCarerDetailOpen(true);
@@ -950,158 +1042,201 @@ function ChatPageContent() {
 
           {/* Carer Details Dialog */}
           <Dialog open={isCarerDetailOpen} onOpenChange={setIsCarerDetailOpen}>
-            <DialogContent className="max-w-md sm:max-w-2xl max-h-[90vh] sm:max-h-[80vh] overflow-y-auto mx-auto p-4 sm:p-6 w-[calc(100vw-2rem)] sm:w-auto">
-              <DialogHeader>
-                {/* Show video when there */}
-                {selectedCarer && selectedCarer.profile.video && (
-                  <div className="mb-4 sm:mb-6">
-                    <video
-                      className="w-full aspect-auto max-h-[40vh] sm:max-h-[50vh] object-contain rounded-lg shadow-lg"
-                      controls
-                      autoPlay
-                      muted
-                      playsInline
+            <DialogTitle>Carer Details</DialogTitle>
+            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto mx-auto p-6 w-[calc(100vw-2rem)]">
+              {selectedCarer && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  style={{
+                    display: "block",
+                    width: "100%",
+                  }}
+                >
+                  <div className="bento-grid" style={{ marginBottom: "0" }}>
+                    {/* Video Box - Top Left (2/3 of first row) */}
+                    <motion.div
+                      className="bento-box bento-video"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0, duration: 0.3 }}
                     >
-                      <source
-                        src={selectedCarer.profile.video}
-                        type="video/mp4"
-                      />
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
-                )}
-
-                <DialogTitle className="flex flex-col sm:flex-row items-start sm:items-start space-y-3 sm:space-y-0 sm:space-x-3 text-left">
-                  {selectedCarer && (
-                    <>
-                      <div className="relative w-12 h-12 sm:w-16 sm:h-16 shrink-0">
-                        <Image
-                          src={selectedCarer.profile.photo}
-                          alt={selectedCarer.profile.name}
-                          fill
-                          className="rounded-full object-cover shadow-md"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                              selectedCarer.profile.name
-                            )}&background=8b5cf6&color=fff&size=64`;
-                          }}
-                        />
-                      </div>
-                      <div className="min-w-0 text-left">
-                        <h2 className="text-lg sm:text-xl font-bold text-gray-900 text-left">
-                          {selectedCarer.profile.name}
-                        </h2>
-                        <p className="text-sm sm:text-base text-gray-600 text-left">
-                          {selectedCarer.profile.experience}
-                        </p>
-                        <div className="flex items-center space-x-2 sm:space-x-4 mt-1 justify-start">
-                          <div className="flex items-center space-x-1">
-                            <Star className="w-3 h-3 sm:w-4 sm:h-4 fill-yellow-400 text-yellow-400" />
-                            <span className="text-sm sm:text-base font-medium">
-                              {selectedCarer.profile.rating}
-                            </span>
+                      <div className="video-container-bento">
+                        {selectedCarer.profile.video ? (
+                          <video
+                            muted
+                            loop
+                            playsInline
+                            autoPlay
+                            className="bento-video-player"
+                            style={{ objectFit: "contain" }}
+                          >
+                            <source
+                              src={selectedCarer.profile.video}
+                              type="video/mp4"
+                            />
+                          </video>
+                        ) : (
+                          <div className="flex items-center justify-center h-full bg-gray-100">
+                            <Image
+                              src={selectedCarer.profile.photo}
+                              alt={selectedCarer.profile.name}
+                              width={200}
+                              height={200}
+                              className="rounded-lg object-cover"
+                            />
                           </div>
-                          <span className="text-sm sm:text-base text-purple-600 font-bold">
-                            {selectedCarer.matchScore}% match
-                          </span>
+                        )}
+
+                        {/* Feature descriptor overlay */}
+                        <div className="bento-content-overlay"></div>
+                        <div className="bento-feature-descriptor">
+                          <p className="bento-feature-desc-en">
+                            Meet {selectedCarer.profile.name}
+                          </p>
                         </div>
                       </div>
-                    </>
-                  )}
-                </DialogTitle>
-              </DialogHeader>
+                    </motion.div>
 
-              {selectedCarer && (
-                <div className="space-y-4 sm:space-y-6 mt-3 sm:mt-4">
-                  {/* Basic Info */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                    <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
-                      <h3 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
-                        Rate & Distance
-                      </h3>
-                      <p className="text-xl sm:text-2xl font-bold text-purple-600">
-                        ${selectedCarer.profile.hourlyRate}/hr
-                      </p>
-                      <p className="text-gray-600 mt-1 text-sm sm:text-base">
-                        {selectedCarer.profile.distance} away
-                      </p>
-                    </div>
-                    <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
-                      <h3 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
-                        Availability
-                      </h3>
-                      <p className="text-green-600 font-medium text-sm sm:text-base">
-                        {selectedCarer.profile.availability}
-                      </p>
-                    </div>
-                  </div>
+                    {/* Experience Box - Top Right (1/3 of first row) */}
+                    <motion.div
+                      className="bento-box bento-experience"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1, duration: 0.3 }}
+                    >
+                      <div className="bento-content">
+                        <h3 className="bento-title">Past Experiences</h3>
+                        <div className="exp-preview-list">
+                          <div className="experience-timeline">
+                            <div className="timeline-item">
+                              <div className="timeline-icon"></div>
+                              <div className="timeline-content">
+                                <div className="timeline-company">
+                                  {selectedCarer.profile.pastExperience![0]}
+                                </div>
+                                <div className="timeline-role">
+                                  {selectedCarer.profile.pastExperience![1]}
+                                </div>
+                                <div className="timeline-duration"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
 
-                  {/* Skills */}
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">
-                      Skills & Specializations
-                    </h3>
-                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                      {selectedCarer.profile.skills.map((skill, index) => (
-                        <Badge
-                          key={index}
-                          variant="secondary"
-                          className="bg-purple-100 text-purple-700 border-purple-200 text-xs sm:text-sm px-2 py-1"
-                        >
-                          {skill}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
+                        {/* Feature descriptor overlay */}
+                        <div className="bento-content-overlay"></div>
+                        <div className="bento-feature-descriptor">
+                          <p className="bento-feature-desc-en">
+                            Professional background
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
 
-                  {/* Why Recommended */}
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">
-                      Why We Recommend {selectedCarer.profile.name}
-                    </h3>
-                    <div className="bg-purple-50 rounded-lg p-3 sm:p-4 border border-purple-200">
-                      <ul className="space-y-1.5 sm:space-y-2">
-                        {selectedCarer.reasoning.map((reason, index) => (
-                          <li
-                            key={index}
-                            className="text-gray-700 flex items-start text-sm sm:text-base"
+                    {/* About Box - Bottom Left */}
+                    <motion.div
+                      className="bento-box bento-about bento-half"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.05, duration: 0.3 }}
+                    >
+                      <div className="bento-content">
+                        <h3 className="bento-title">About & Skills</h3>
+                        <p className="bento-preview-text">
+                          {selectedCarer.profile.bio}
+                        </p>
+                        <div className="bento-skills-preview">
+                          {selectedCarer.profile.skills
+                            .slice(0, 3)
+                            .map((skill, index) => (
+                              <span key={index} className="skill-chip-mini">
+                                {skill}
+                              </span>
+                            ))}
+                        </div>
+
+                        {/* Feature descriptor overlay */}
+                        <div className="bento-content-overlay"></div>
+                        <div className="bento-feature-descriptor">
+                          <p className="bento-feature-desc-en">
+                            Skills and languages
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* Reviews Box - Bottom Right */}
+                    <motion.div
+                      className="bento-box bento-reviews bento-half"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.15, duration: 0.3 }}
+                    >
+                      <div className="bento-content">
+                        <h3 className="bento-title">Why We Recommend</h3>
+                        <div className="bento-reviews-preview">
+                          <div className="rating-overview-expanded">
+                            <div className="rating-score-large">
+                              <div className="score-big">
+                                {selectedCarer.profile.rating}
+                              </div>
+                              <div className="stars-big">★★★★★</div>
+                              <div className="review-total">
+                                {selectedCarer.matchScore}% match
+                              </div>
+                            </div>
+                          </div>
+
+                          <div
+                            className="reviews-list"
+                            style={{ marginTop: "12px" }}
                           >
-                            <span className="text-purple-600 mr-2 mt-0.5 sm:mt-1">
-                              •
-                            </span>
-                            {reason}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                            {selectedCarer.reasoning}
+                          </div>
+                        </div>
+
+                        {/* Feature descriptor overlay */}
+                        <div className="bento-content-overlay"></div>
+                        <div className="bento-feature-descriptor">
+                          <p className="bento-feature-desc-en">
+                            Perfect match for your needs
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
                   </div>
 
-                  {/* Action Buttons */}
-                  <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 pt-3 sm:pt-4">
-                    {/* <Button
-                      className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white h-14"
-                      size="lg"
-                    >
-                      Book {selectedCarer.profile.name} Now
-                    </Button> */}
-                    <Button
-                      className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white h-14"
-                      size="lg"
-                      onClick={handleContactCarer}
-                    >
-                      Contact {selectedCarer.profile.name}
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      onClick={() => setIsCarerDetailOpen(false)}
-                      className="flex-1 sm:flex-none h-14"
-                    >
-                      Close
-                    </Button>
-                  </div>
-                </div>
+                  {/* Action Buttons - Full width below bento grid */}
+                  <motion.div
+                    className="relative w-full mt-6 bg-gradient-to-br from-white/60 via-white/40 to-purple-50/30 rounded-2xl border border-white/40 p-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.25, duration: 0.3 }}
+                  >
+                    {/* Glassmorphism overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-purple-100/20 to-transparent rounded-2xl pointer-events-none" />
+
+                    <div className="relative flex flex-col sm:flex-row gap-3 w-full">
+                      <Button
+                        className="w-full sm:flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white h-14  font-semibold"
+                        size="lg"
+                        onClick={handleContactCarer}
+                      >
+                        Contact {selectedCarer.profile.name}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="lg"
+                        onClick={() => setIsCarerDetailOpen(false)}
+                        className="w-full sm:w-auto h-14 backdrop-blur-sm bg-white/60 border-white/50 hover:bg-white/80 font-semibold "
+                      >
+                        Close
+                      </Button>
+                    </div>
+                  </motion.div>
+                </motion.div>
               )}
             </DialogContent>
           </Dialog>

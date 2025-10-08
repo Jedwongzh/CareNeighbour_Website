@@ -11,6 +11,7 @@ export interface CarerProfile {
   languages: string[];
   skills: string[];
   availability: string;
+  pastExperience: string[] | undefined;
 }
 
 export function getCarerById(id: number): CarerProfile | undefined {
@@ -135,6 +136,7 @@ export const mockCarers: CarerProfile[] = [
       "Mobility Assistance",
     ],
     availability: "Available immediately",
+    pastExperience: ["City Hospital", "5 years as a certified nurse assistant"],
   },
   {
     id: 7,
@@ -154,6 +156,7 @@ export const mockCarers: CarerProfile[] = [
       "Rehabilitation Support",
     ],
     availability: "Available weekdays",
+    pastExperience: ["Sunrise Clinic", "1 year as a licensed practical nurse"],
   },
   {
     id: 8,
@@ -162,6 +165,10 @@ export const mockCarers: CarerProfile[] = [
     video: "/videos/mock-video-bios/Jed.mp4",
     rating: 4.8,
     experience: "6+ years in dementia care",
+    pastExperience: [
+      "St. Mary's Hospital",
+      "3 years registered nurse in Australia",
+    ],
     distance: "1.8 km",
     hourlyRate: 53,
     bio: "Specialized in dementia and Alzheimer's care with patience and compassion.",
@@ -192,6 +199,10 @@ export const mockCarers: CarerProfile[] = [
       "Social Activities",
     ],
     availability: "Monday to Friday",
+    pastExperience: [
+      "Green Valley Care",
+      "4 years as a disability support worker",
+    ],
   },
   {
     id: 10,
@@ -211,5 +222,6 @@ export const mockCarers: CarerProfile[] = [
       "Spiritual Care",
     ],
     availability: "Available 6 days a week",
+    pastExperience: ["Harmony Hospice", "6 years as a palliative care nurse"],
   },
 ];
