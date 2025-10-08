@@ -42,7 +42,7 @@ import {
 } from "@/components/ui/dialog";
 import { UnifiedFooter } from "@/components/unified-footer";
 import { useLanguage } from "@/app/contexts/LanguageContext";
-import { CarerProfile, getCarerById, mockCarers } from "@/lib/mock-data/carers";
+import { CarerProfile, getCarerById, mockCarers, Review } from "@/lib/mock-data/carers";
 import { GeminiResponse } from "@/lib/service/gemini";
 import { get } from "http";
 // header translations handled globally via GlobalHeader
@@ -1181,7 +1181,7 @@ function ChatPageContent() {
                       transition={{ delay: 0.15, duration: 0.3 }}
                     >
                       <div className="bento-content">
-                        <h3 className="bento-title">Why We Recommend</h3>
+                        <h3 className="bento-title">Reviews</h3>
                         <div className="bento-reviews-preview">
                           <div className="rating-overview-expanded">
                             <div className="rating-score-large">
@@ -1190,16 +1190,33 @@ function ChatPageContent() {
                               </div>
                               <div className="stars-big">★★★★★</div>
                               <div className="review-total">
-                                {selectedCarer.matchScore}% match
+                                {selectedCarer.profile.reviews.length} reviews
                               </div>
                             </div>
                           </div>
 
                           <div
-                            className="reviews-list"
+                            className="space-y-3 overflow-y-auto max-h-48"
                             style={{ marginTop: "12px" }}
                           >
-                            {selectedCarer.reasoning}
+                            {selectedCarer.profile.reviews.slice(0, 2).map((review) => (
+                              <div key={review.id} className="border-l-2 border-purple-200 pl-3">
+                                <div className="flex items-center justify-between mb-1">
+                                  <span className="font-semibold text-sm text-gray-900">
+                                    {review.reviewerName}
+                                  </span>
+                                  <span className="text-xs text-gray-500">{review.date}</span>
+                                </div>
+                                <div className="flex items-center mb-1">
+                                  <span className="text-yellow-500 text-sm">
+                                    {"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}
+                                  </span>
+                                </div>
+                                <p className="text-xs text-gray-700 leading-relaxed">
+                                  {review.comment}
+                                </p>
+                              </div>
+                            ))}
                           </div>
                         </div>
 
@@ -1207,7 +1224,7 @@ function ChatPageContent() {
                         <div className="bento-content-overlay"></div>
                         <div className="bento-feature-descriptor">
                           <p className="bento-feature-desc-en">
-                            Perfect match for your needs
+                            What others are saying
                           </p>
                         </div>
                       </div>

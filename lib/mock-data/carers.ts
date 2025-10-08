@@ -1,3 +1,11 @@
+export interface Review {
+  id: number;
+  reviewerName: string;
+  rating: number;
+  date: string;
+  comment: string;
+}
+
 export interface CarerProfile {
   id: number;
   name: string;
@@ -12,6 +20,7 @@ export interface CarerProfile {
   skills: string[];
   availability: string;
   pastExperience: string[][];
+  reviews: Review[];
 }
 
 export function getCarerById(id: number): CarerProfile | undefined {
@@ -139,6 +148,29 @@ export const mockCarers: CarerProfile[] = [
       ["City Hospital", "Certified Nurse Assistant", "2018 ~ Present"],
       ["Green Acres Retirement Home", "Aged Care Assistant", "2016 ~ 2018"],
     ],
+    reviews: [
+      {
+        id: 1,
+        reviewerName: "Margaret S.",
+        rating: 5,
+        date: "2 weeks ago",
+        comment: "Mahathir has been an absolute blessing for my mother. His patience and attention to detail with her medications is impeccable. He's professional yet warm, and mom always looks forward to his visits."
+      },
+      {
+        id: 2,
+        reviewerName: "Robert T.",
+        rating: 5,
+        date: "1 month ago",
+        comment: "Highly skilled and compassionate caregiver. Mahathir went above and beyond in providing care for my father. His cooking skills are an added bonus - dad loves the traditional meals he prepares!"
+      },
+      {
+        id: 3,
+        reviewerName: "Linda K.",
+        rating: 4,
+        date: "2 months ago",
+        comment: "Very professional and reliable. Mahathir is excellent with mobility assistance and personal care. My only minor note is that he can sometimes run a few minutes late, but he always communicates ahead of time."
+      }
+    ],
   },
   {
     id: 7,
@@ -161,6 +193,29 @@ export const mockCarers: CarerProfile[] = [
     pastExperience: [
       ["Sunrise Clinic", "Licensed Practical Nurse", "2023 ~ Present"],
       ["Willow Creek Nursing Home", "Caregiver Assistant", "2021 ~ 2023"],
+    ],
+    reviews: [
+      {
+        id: 1,
+        reviewerName: "Chen W.",
+        rating: 5,
+        date: "3 weeks ago",
+        comment: "Yufei's post-surgical care for my husband was exceptional. Her wound care expertise and gentle approach made his recovery much easier. Being able to communicate in Mandarin was also incredibly helpful for our family."
+      },
+      {
+        id: 2,
+        reviewerName: "Patricia M.",
+        rating: 5,
+        date: "1 month ago",
+        comment: "Outstanding rehabilitation support! Yufei is patient, knowledgeable, and really knows her stuff. My mother's mobility has improved significantly under her care."
+      },
+      {
+        id: 3,
+        reviewerName: "James L.",
+        rating: 4,
+        date: "2 months ago",
+        comment: "Very competent nurse with great technical skills. Yufei is professional and caring. Would definitely recommend her services."
+      }
     ],
   },
   {
@@ -189,6 +244,29 @@ export const mockCarers: CarerProfile[] = [
       "Family Communication",
     ],
     availability: "Flexible schedule",
+    reviews: [
+      {
+        id: 1,
+        reviewerName: "Susan H.",
+        rating: 5,
+        date: "1 week ago",
+        comment: "Jed has been a godsend for our family. His expertise in dementia care and his musical talents have brought so much joy to my mother. She's calmer and happier when he's around. Cannot recommend him enough!"
+      },
+      {
+        id: 2,
+        reviewerName: "David R.",
+        rating: 5,
+        date: "3 weeks ago",
+        comment: "Exceptional caregiver with a special gift for working with Alzheimer's patients. Jed's patience is remarkable, and his memory activities have really helped keep dad engaged. His multilingual abilities are also a huge plus."
+      },
+      {
+        id: 3,
+        reviewerName: "Emily C.",
+        rating: 5,
+        date: "1 month ago",
+        comment: "Professional, compassionate, and incredibly skilled. Jed understands the challenges of dementia care and communicates so well with the family. We trust him completely with our loved one."
+      }
+    ],
   },
   {
     id: 9,
@@ -211,6 +289,29 @@ export const mockCarers: CarerProfile[] = [
     pastExperience: [
       ["Green Valley Care", "Disability Support Worker", "2021 ~ Present"],
       ["Community Outreach Program", "Volunteer Support Guide", "2020 ~ 2021"],
+    ],
+    reviews: [
+      {
+        id: 1,
+        reviewerName: "Karen B.",
+        rating: 5,
+        date: "2 weeks ago",
+        comment: "Muhammad has been wonderful in supporting my son's independence goals. His positive energy and dedication to social inclusion have made a real difference. He's reliable with transportation and always encourages active participation in community activities."
+      },
+      {
+        id: 2,
+        reviewerName: "Thomas G.",
+        rating: 5,
+        date: "1 month ago",
+        comment: "Fantastic disability support worker! Muhammad's approach is empowering rather than enabling. He genuinely cares about helping people live their best lives independently."
+      },
+      {
+        id: 3,
+        reviewerName: "Rachel P.",
+        rating: 4,
+        date: "2 months ago",
+        comment: "Very supportive and encouraging caregiver. Muhammad is great at building confidence and promoting independence. My daughter enjoys working with him."
+      }
     ],
   },
   {
@@ -238,6 +339,29 @@ export const mockCarers: CarerProfile[] = [
         "End-of-Life Support Specialist",
         "2017 ~ 2019",
       ],
+    ],
+    reviews: [
+      {
+        id: 1,
+        reviewerName: "Victoria L.",
+        rating: 5,
+        date: "4 days ago",
+        comment: "Dennis provided the most compassionate end-of-life care for my father. His expertise in pain management and his gentle, respectful approach gave our family peace during a difficult time. His musical background brought unexpected moments of tranquility."
+      },
+      {
+        id: 2,
+        reviewerName: "Michael K.",
+        rating: 5,
+        date: "2 weeks ago",
+        comment: "An exceptional palliative care specialist. Dennis's holistic approach honored my mother's wishes perfectly. He provided not just medical care but emotional and spiritual support for the whole family. We're forever grateful."
+      },
+      {
+        id: 3,
+        reviewerName: "Jennifer W.",
+        rating: 5,
+        date: "1 month ago",
+        comment: "Dennis is a truly special caregiver with a rare combination of medical expertise and deep compassion. His multilingual skills helped us communicate with all family members, and his presence brought comfort during the hardest time."
+      }
     ],
   },
 ];
