@@ -10,7 +10,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import { HtmlLangUpdater } from "@/components/HtmlLangUpdater";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
-import { GlobalHeader } from "@/components/global-header";
+
 
 // Optimize font loading
 const inter = Inter({
@@ -146,7 +146,6 @@ export default function RootLayout({
                 <Suspense fallback={<div className="fixed inset-0 bg-gradient-to-br from-purple-50 to-violet-100 -z-10" />}>
                   <GradientBackground />
                 </Suspense>
-                <GlobalHeader />
                 {children}
               </div>
               <Toaster />

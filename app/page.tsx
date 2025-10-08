@@ -17,6 +17,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { UnifiedFooter } from "@/components/unified-footer"
 import { useLanguage } from "./contexts/LanguageContext" // Import useLanguage hook
 import VerticalCarousel from "@/components/VerticalCarousel"
+import { GlobalHeader } from "@/components/global-header";
 
 // Lazy load non-critical components
 const FeatureCarousel = lazy(() =>
@@ -551,6 +552,7 @@ const pageTranslations = {
 
 // Add this component before the LandingPage component
 const CareSearchBar = () => {
+  const router = useRouter();
   const [query, setQuery] = useState("")
   const [isFocused, setIsFocused] = useState(false)
   const [isListening, setIsListening] = useState(false)
@@ -804,7 +806,7 @@ const CareSearchBar = () => {
                   transition={{ duration: 0.25, ease: "easeOut" }}
                 >
                   <button
-                    onClick={handleSendClick}
+                    onClick={() => { router.push(`/chat?query=${encodeURIComponent(query)}`) }}
                     className="cursor-pointer hover:scale-110 transition-transform"
                   >
                     <Send className="w-7 h-7 text-purple-600" />
@@ -1264,6 +1266,7 @@ export default function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col">
       {/* Global header rendered via app/layout.tsx */}
+      <GlobalHeader />
 
       <main className="flex-1">
         {/* Hero Section */}
