@@ -11,7 +11,7 @@ export interface CarerProfile {
   languages: string[];
   skills: string[];
   availability: string;
-  pastExperience: string[] | undefined;
+  pastExperience: string[][];
 }
 
 export function getCarerById(id: number): CarerProfile | undefined {
@@ -116,7 +116,6 @@ export const oldMockCarers: CarerProfile[] = [
     availability: "Available 6 days a week",
   },
 ];
-
 export const mockCarers: CarerProfile[] = [
   {
     id: 6,
@@ -127,7 +126,7 @@ export const mockCarers: CarerProfile[] = [
     experience: "7+ years in aged care",
     distance: "5.7 km",
     hourlyRate: 50,
-    bio: "Certified nurse assistant specializing in medication management and personal care.",
+    bio: "I'm a Certified Nurse Assistant with over seven years of experience. I specialize in the safe and effective management of medications and providing comprehensive personal care. My approach is all about respectful support to help clients maintain their independence and dignity. Outside of work, I'm passionate about cooking traditional meals and I volunteer with a local community garden, finding peace in nurturing things.",
     languages: ["English", "Hindi"],
     skills: [
       "Medication Management",
@@ -136,7 +135,10 @@ export const mockCarers: CarerProfile[] = [
       "Mobility Assistance",
     ],
     availability: "Available immediately",
-    pastExperience: ["City Hospital", "5 years as a certified nurse assistant"],
+    pastExperience: [
+      ["City Hospital", "Certified Nurse Assistant", "2018 ~ Present"],
+      ["Green Acres Retirement Home", "Aged Care Assistant", "2016 ~ 2018"],
+    ],
   },
   {
     id: 7,
@@ -144,10 +146,10 @@ export const mockCarers: CarerProfile[] = [
     photo: "/images/demo-mock-avatars/Yufei.png",
     video: "/videos/mock-video-bios/Yufei.MOV",
     rating: 4.7,
-    experience: "1+ years specializing in nursing",
+    experience: "3+ years specializing in nursing",
     distance: "2.1 km",
     hourlyRate: 50,
-    bio: "Licensed practical nurse with expertise in post-surgical care and rehabilitation.",
+    bio: "As a Licensed Practical Nurse, I'm focused on delivering high-quality care, especially for clients needing post-surgical support and rehabilitation. I'm dedicated to helping patients recover smoothly and quickly, and I enjoy leveraging my language skills to connect with diverse families. In my spare time, I love hiking and photography—capturing the beauty in nature helps me bring a calm and observant presence to my work.",
     languages: ["English", "Mandarin", "Chinese"],
     skills: [
       "Medical Care",
@@ -156,7 +158,10 @@ export const mockCarers: CarerProfile[] = [
       "Rehabilitation Support",
     ],
     availability: "Available weekdays",
-    pastExperience: ["Sunrise Clinic", "1 year as a licensed practical nurse"],
+    pastExperience: [
+      ["Sunrise Clinic", "Licensed Practical Nurse", "2023 ~ Present"],
+      ["Willow Creek Nursing Home", "Caregiver Assistant", "2021 ~ 2023"],
+    ],
   },
   {
     id: 8,
@@ -166,12 +171,16 @@ export const mockCarers: CarerProfile[] = [
     rating: 4.8,
     experience: "6+ years in dementia care",
     pastExperience: [
-      "St. Mary's Hospital",
-      "3 years registered nurse in Australia",
+      ["St. Mary's Hospital", "Registered Nurse (Australia)", "2019 ~ Present"],
+      [
+        "Local Community Health Center",
+        "Home Care Assistant (Malaysia)",
+        "2015 ~ 2019",
+      ],
     ],
     distance: "1.8 km",
     hourlyRate: 53,
-    bio: "Specialized in dementia and Alzheimer's care with patience and compassion.",
+    bio: "I have over six years of experience as a Registered Nurse, with a special focus on dementia and Alzheimer's care. My approach is built on genuine patience and compassion, helping clients feel safe and understood through specialized behavioral support and engaging memory activities. I enjoy playing guitar; these creative outlets help me practice patience and attention to detail.",
     languages: ["English", "Malay", "Cantonese", "Mandarin", "Chinese"],
     skills: [
       "Dementia Care",
@@ -190,7 +199,7 @@ export const mockCarers: CarerProfile[] = [
     experience: "4+ years in disability support",
     distance: "8.2 km",
     hourlyRate: 47,
-    bio: "Compassionate caregiver specializing in disability support and independent living assistance.",
+    bio: "I am a Disability Support Worker with a passion for helping clients achieve maximum independence. For the past four years, I've focused on personal growth, safe transportation, and encouraging social inclusion to support a fulfilling and active life. My goal is always to empower the people I work with. On weekends, I'm an avid amateur soccer player, and I find that teamwork and determination on the field translate well to providing dedicated support.",
     languages: ["English", "Indonesian"],
     skills: [
       "Disability Support",
@@ -200,8 +209,8 @@ export const mockCarers: CarerProfile[] = [
     ],
     availability: "Monday to Friday",
     pastExperience: [
-      "Green Valley Care",
-      "4 years as a disability support worker",
+      ["Green Valley Care", "Disability Support Worker", "2021 ~ Present"],
+      ["Community Outreach Program", "Volunteer Support Guide", "2020 ~ 2021"],
     ],
   },
   {
@@ -213,7 +222,7 @@ export const mockCarers: CarerProfile[] = [
     experience: "6+ years in palliative care",
     distance: "13.1 km",
     hourlyRate: 53,
-    bio: "Compassionate palliative care specialist with expertise in end-of-life support and family counseling.",
+    bio: "I am a Palliative Care Specialist committed to providing comfort, dignity, and peace during end-of-life journeys. With six years of experience, I offer expert pain management, emotional support for clients, and sensitive family counseling, integrating spiritual care as needed. I believe in holistic care that respects individual wishes. My passion outside of work is classical music; playing the cello helps me cultivate the serenity and deep listening skills essential for my professional role.",
     languages: ["English", "Cantonese", "Mandarin", "Chinese"],
     skills: [
       "Palliative Care",
@@ -222,6 +231,13 @@ export const mockCarers: CarerProfile[] = [
       "Spiritual Care",
     ],
     availability: "Available 6 days a week",
-    pastExperience: ["Harmony Hospice", "6 years as a palliative care nurse"],
+    pastExperience: [
+      ["Harmony Hospice", "Palliative Care Nurse", "2019 ~ Present"],
+      [
+        "St. Jude's Home Care Services",
+        "End-of-Life Support Specialist",
+        "2017 ~ 2019",
+      ],
+    ],
   },
 ];

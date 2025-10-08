@@ -1062,29 +1062,29 @@ function ChatPageContent() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0, duration: 0.3 }}
                     >
-                      <div className="video-container-bento">
+                      <div className="video-container-bento flex items-center justify-center">
                         {selectedCarer.profile.video ? (
-                          <video
-                            muted
-                            loop
-                            playsInline
-                            autoPlay
-                            className="bento-video-player"
-                            style={{ objectFit: "contain" }}
-                          >
-                            <source
-                              src={selectedCarer.profile.video}
-                              type="video/mp4"
-                            />
-                          </video>
+                          <div className="relative w-64 h-64 rounded-full overflow-hidden border-4 border-white shadow-2xl">
+                            <video
+                              muted
+                              loop
+                              playsInline
+                              autoPlay
+                              className="w-full h-full object-cover"
+                            >
+                              <source
+                                src={selectedCarer.profile.video}
+                                type="video/mp4"
+                              />
+                            </video>
+                          </div>
                         ) : (
-                          <div className="flex items-center justify-center h-full bg-gray-100">
+                          <div className="relative w-64 h-64 rounded-full overflow-hidden border-4 border-white shadow-2xl bg-gray-100 flex items-center justify-center">
                             <Image
                               src={selectedCarer.profile.photo}
                               alt={selectedCarer.profile.name}
-                              width={200}
-                              height={200}
-                              className="rounded-lg object-cover"
+                              fill
+                              className="object-cover"
                             />
                           </div>
                         )}
@@ -1110,18 +1110,24 @@ function ChatPageContent() {
                         <h3 className="bento-title">Past Experiences</h3>
                         <div className="exp-preview-list">
                           <div className="experience-timeline">
-                            <div className="timeline-item">
-                              <div className="timeline-icon"></div>
-                              <div className="timeline-content">
-                                <div className="timeline-company">
-                                  {selectedCarer.profile.pastExperience![0]}
+                            {selectedCarer.profile.pastExperience.map(
+                              (experience, index) => (
+                                <div className="timeline-item" key={index}>
+                                  <div className="timeline-icon"></div>
+                                  <div className="timeline-content">
+                                    <div className="timeline-company">
+                                      {experience[0]}
+                                    </div>
+                                  </div>
+                                  <div className="timeline-role">
+                                    {experience[1]}
+                                  </div>
+                                  <div className="timeline-duration">
+                                    {experience[2]}
+                                  </div>
                                 </div>
-                                <div className="timeline-role">
-                                  {selectedCarer.profile.pastExperience![1]}
-                                </div>
-                                <div className="timeline-duration"></div>
-                              </div>
-                            </div>
+                              )
+                            )}
                           </div>
                         </div>
 
