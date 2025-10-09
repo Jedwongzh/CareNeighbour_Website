@@ -32,99 +32,99 @@ export function getAllCarerIds(): number[] {
 }
 
 // Sample carer data
-export const oldMockCarers: CarerProfile[] = [
-  {
-    id: 1,
-    name: "Sarah Thompson",
-    photo: "/images/caregivers/sarah.jpg",
-    video: "/videos/mock-video-bios/sarah.mp4",
-    rating: 4.9,
-    experience: "7+ years in aged care",
-    distance: "1.2 km",
-    hourlyRate: 28,
-    bio: "Certified nurse assistant specializing in medication management and personal care.",
-    languages: ["English", "Spanish"],
-    skills: [
-      "Medication Management",
-      "Personal Care",
-      "Meal Preparation",
-      "Mobility Assistance",
-    ],
-    availability: "Available immediately",
-  },
-  {
-    id: 2,
-    name: "Michael Reed",
-    photo: "/images/caregivers/michael.jpg",
-    rating: 4.7,
-    experience: "5+ years specializing in medical care",
-    distance: "2.1 km",
-    hourlyRate: 32,
-    bio: "Licensed practical nurse with expertise in post-surgical care and rehabilitation.",
-    languages: ["English", "French"],
-    skills: [
-      "Medical Care",
-      "Physical Therapy",
-      "Wound Care",
-      "Rehabilitation Support",
-    ],
-    availability: "Available weekdays",
-  },
-  {
-    id: 3,
-    name: "Emily Johnson",
-    photo: "/images/caregivers/emily.jpg",
-    rating: 4.8,
-    experience: "6+ years in dementia care",
-    distance: "1.8 km",
-    hourlyRate: 30,
-    bio: "Specialized in dementia and Alzheimer's care with patience and compassion.",
-    languages: ["English"],
-    skills: [
-      "Dementia Care",
-      "Behavioral Support",
-      "Memory Activities",
-      "Family Communication",
-    ],
-    availability: "Flexible schedule",
-  },
-  {
-    id: 4,
-    name: "David Chen",
-    photo: "/images/caregivers/david.jpg",
-    rating: 4.6,
-    experience: "4+ years in disability support",
-    distance: "2.8 km",
-    hourlyRate: 26,
-    bio: "Compassionate caregiver specializing in disability support and independent living assistance.",
-    languages: ["English", "Mandarin"],
-    skills: [
-      "Disability Support",
-      "Independent Living",
-      "Transportation",
-      "Social Activities",
-    ],
-    availability: "Monday to Friday",
-  },
-  {
-    id: 5,
-    name: "Priya Patel",
-    photo: "/images/caregivers/priya.jpg",
-    rating: 4.8,
-    experience: "6+ years in palliative care",
-    distance: "2.2 km",
-    hourlyRate: 29,
-    bio: "Compassionate palliative care specialist with expertise in end-of-life support and family counseling.",
-    languages: ["English", "Hindi", "Gujarati"],
-    skills: [
-      "Palliative Care",
-      "Pain Management",
-      "Family Support",
-      "Spiritual Care",
-    ],
-    availability: "Available 6 days a week",
-  },
-];
+// export const oldMockCarers: CarerProfile[] = [
+//   {
+//     id: 1,
+//     name: "Sarah Thompson",
+//     photo: "/images/caregivers/sarah.jpg",
+//     video: "/videos/mock-video-bios/sarah.mp4",
+//     rating: 4.9,
+//     experience: "7+ years in aged care",
+//     distance: "1.2 km",
+//     hourlyRate: 28,
+//     bio: "Certified nurse assistant specializing in medication management and personal care.",
+//     languages: ["English", "Spanish"],
+//     skills: [
+//       "Medication Management",
+//       "Personal Care",
+//       "Meal Preparation",
+//       "Mobility Assistance",
+//     ],
+//     availability: "Available immediately",
+//   },
+//   {
+//     id: 2,
+//     name: "Michael Reed",
+//     photo: "/images/caregivers/michael.jpg",
+//     rating: 4.7,
+//     experience: "5+ years specializing in medical care",
+//     distance: "2.1 km",
+//     hourlyRate: 32,
+//     bio: "Licensed practical nurse with expertise in post-surgical care and rehabilitation.",
+//     languages: ["English", "French"],
+//     skills: [
+//       "Medical Care",
+//       "Physical Therapy",
+//       "Wound Care",
+//       "Rehabilitation Support",
+//     ],
+//     availability: "Available weekdays",
+//   },
+//   {
+//     id: 3,
+//     name: "Emily Johnson",
+//     photo: "/images/caregivers/emily.jpg",
+//     rating: 4.8,
+//     experience: "6+ years in dementia care",
+//     distance: "1.8 km",
+//     hourlyRate: 30,
+//     bio: "Specialized in dementia and Alzheimer's care with patience and compassion.",
+//     languages: ["English"],
+//     skills: [
+//       "Dementia Care",
+//       "Behavioral Support",
+//       "Memory Activities",
+//       "Family Communication",
+//     ],
+//     availability: "Flexible schedule",
+//   },
+//   {
+//     id: 4,
+//     name: "David Chen",
+//     photo: "/images/caregivers/david.jpg",
+//     rating: 4.6,
+//     experience: "4+ years in disability support",
+//     distance: "2.8 km",
+//     hourlyRate: 26,
+//     bio: "Compassionate caregiver specializing in disability support and independent living assistance.",
+//     languages: ["English", "Mandarin"],
+//     skills: [
+//       "Disability Support",
+//       "Independent Living",
+//       "Transportation",
+//       "Social Activities",
+//     ],
+//     availability: "Monday to Friday",
+//   },
+//   {
+//     id: 5,
+//     name: "Priya Patel",
+//     photo: "/images/caregivers/priya.jpg",
+//     rating: 4.8,
+//     experience: "6+ years in palliative care",
+//     distance: "2.2 km",
+//     hourlyRate: 29,
+//     bio: "Compassionate palliative care specialist with expertise in end-of-life support and family counseling.",
+//     languages: ["English", "Hindi", "Gujarati"],
+//     skills: [
+//       "Palliative Care",
+//       "Pain Management",
+//       "Family Support",
+//       "Spiritual Care",
+//     ],
+//     availability: "Available 6 days a week",
+//   },
+// ];
 export const mockCarers: CarerProfile[] = [
   {
     id: 6,
@@ -154,22 +154,25 @@ export const mockCarers: CarerProfile[] = [
         reviewerName: "Margaret S.",
         rating: 5,
         date: "2 weeks ago",
-        comment: "Mahathir has been an absolute blessing for my mother. His patience and attention to detail with her medications is impeccable. He's professional yet warm, and mom always looks forward to his visits."
+        comment:
+          "Mahathir has been an absolute blessing for my mother. His patience and attention to detail with her medications is impeccable. He's professional yet warm, and mom always looks forward to his visits.",
       },
       {
         id: 2,
         reviewerName: "Robert T.",
         rating: 5,
         date: "1 month ago",
-        comment: "Highly skilled and compassionate caregiver. Mahathir went above and beyond in providing care for my father. His cooking skills are an added bonus - dad loves the traditional meals he prepares!"
+        comment:
+          "Highly skilled and compassionate caregiver. Mahathir went above and beyond in providing care for my father. His cooking skills are an added bonus - dad loves the traditional meals he prepares!",
       },
       {
         id: 3,
         reviewerName: "Linda K.",
         rating: 4,
         date: "2 months ago",
-        comment: "Very professional and reliable. Mahathir is excellent with mobility assistance and personal care. My only minor note is that he can sometimes run a few minutes late, but he always communicates ahead of time."
-      }
+        comment:
+          "Very professional and reliable. Mahathir is excellent with mobility assistance and personal care. My only minor note is that he can sometimes run a few minutes late, but he always communicates ahead of time.",
+      },
     ],
   },
   {
@@ -200,22 +203,25 @@ export const mockCarers: CarerProfile[] = [
         reviewerName: "Chen W.",
         rating: 5,
         date: "3 weeks ago",
-        comment: "Yufei's post-surgical care for my husband was exceptional. Her wound care expertise and gentle approach made his recovery much easier. Being able to communicate in Mandarin was also incredibly helpful for our family."
+        comment:
+          "Yufei's post-surgical care for my husband was exceptional. Her wound care expertise and gentle approach made his recovery much easier. Being able to communicate in Mandarin was also incredibly helpful for our family.",
       },
       {
         id: 2,
         reviewerName: "Patricia M.",
         rating: 5,
         date: "1 month ago",
-        comment: "Outstanding rehabilitation support! Yufei is patient, knowledgeable, and really knows her stuff. My mother's mobility has improved significantly under her care."
+        comment:
+          "Outstanding rehabilitation support! Yufei is patient, knowledgeable, and really knows her stuff. My mother's mobility has improved significantly under her care.",
       },
       {
         id: 3,
         reviewerName: "James L.",
         rating: 4,
         date: "2 months ago",
-        comment: "Very competent nurse with great technical skills. Yufei is professional and caring. Would definitely recommend her services."
-      }
+        comment:
+          "Very competent nurse with great technical skills. Yufei is professional and caring. Would definitely recommend her services.",
+      },
     ],
   },
   {
@@ -250,22 +256,25 @@ export const mockCarers: CarerProfile[] = [
         reviewerName: "Susan H.",
         rating: 5,
         date: "1 week ago",
-        comment: "Jed has been a godsend for our family. His expertise in dementia care and his musical talents have brought so much joy to my mother. She's calmer and happier when he's around. Cannot recommend him enough!"
+        comment:
+          "Jed has been a godsend for our family. His expertise in dementia care and his musical talents have brought so much joy to my mother. She's calmer and happier when he's around. Cannot recommend him enough!",
       },
       {
         id: 2,
         reviewerName: "David R.",
         rating: 5,
         date: "3 weeks ago",
-        comment: "Exceptional caregiver with a special gift for working with Alzheimer's patients. Jed's patience is remarkable, and his memory activities have really helped keep dad engaged. His multilingual abilities are also a huge plus."
+        comment:
+          "Exceptional caregiver with a special gift for working with Alzheimer's patients. Jed's patience is remarkable, and his memory activities have really helped keep dad engaged. His multilingual abilities are also a huge plus.",
       },
       {
         id: 3,
         reviewerName: "Emily C.",
         rating: 5,
         date: "1 month ago",
-        comment: "Professional, compassionate, and incredibly skilled. Jed understands the challenges of dementia care and communicates so well with the family. We trust him completely with our loved one."
-      }
+        comment:
+          "Professional, compassionate, and incredibly skilled. Jed understands the challenges of dementia care and communicates so well with the family. We trust him completely with our loved one.",
+      },
     ],
   },
   {
@@ -296,22 +305,25 @@ export const mockCarers: CarerProfile[] = [
         reviewerName: "Karen B.",
         rating: 5,
         date: "2 weeks ago",
-        comment: "Muhammad has been wonderful in supporting my son's independence goals. His positive energy and dedication to social inclusion have made a real difference. He's reliable with transportation and always encourages active participation in community activities."
+        comment:
+          "Muhammad has been wonderful in supporting my son's independence goals. His positive energy and dedication to social inclusion have made a real difference. He's reliable with transportation and always encourages active participation in community activities.",
       },
       {
         id: 2,
         reviewerName: "Thomas G.",
         rating: 5,
         date: "1 month ago",
-        comment: "Fantastic disability support worker! Muhammad's approach is empowering rather than enabling. He genuinely cares about helping people live their best lives independently."
+        comment:
+          "Fantastic disability support worker! Muhammad's approach is empowering rather than enabling. He genuinely cares about helping people live their best lives independently.",
       },
       {
         id: 3,
         reviewerName: "Rachel P.",
         rating: 4,
         date: "2 months ago",
-        comment: "Very supportive and encouraging caregiver. Muhammad is great at building confidence and promoting independence. My daughter enjoys working with him."
-      }
+        comment:
+          "Very supportive and encouraging caregiver. Muhammad is great at building confidence and promoting independence. My daughter enjoys working with him.",
+      },
     ],
   },
   {
@@ -346,22 +358,25 @@ export const mockCarers: CarerProfile[] = [
         reviewerName: "Victoria L.",
         rating: 5,
         date: "4 days ago",
-        comment: "Dennis provided the most compassionate end-of-life care for my father. His expertise in pain management and his gentle, respectful approach gave our family peace during a difficult time. His musical background brought unexpected moments of tranquility."
+        comment:
+          "Dennis provided the most compassionate end-of-life care for my father. His expertise in pain management and his gentle, respectful approach gave our family peace during a difficult time. His musical background brought unexpected moments of tranquility.",
       },
       {
         id: 2,
         reviewerName: "Michael K.",
         rating: 5,
         date: "2 weeks ago",
-        comment: "An exceptional palliative care specialist. Dennis's holistic approach honored my mother's wishes perfectly. He provided not just medical care but emotional and spiritual support for the whole family. We're forever grateful."
+        comment:
+          "An exceptional palliative care specialist. Dennis's holistic approach honored my mother's wishes perfectly. He provided not just medical care but emotional and spiritual support for the whole family. We're forever grateful.",
       },
       {
         id: 3,
         reviewerName: "Jennifer W.",
         rating: 5,
         date: "1 month ago",
-        comment: "Dennis is a truly special caregiver with a rare combination of medical expertise and deep compassion. His multilingual skills helped us communicate with all family members, and his presence brought comfort during the hardest time."
-      }
+        comment:
+          "Dennis is a truly special caregiver with a rare combination of medical expertise and deep compassion. His multilingual skills helped us communicate with all family members, and his presence brought comfort during the hardest time.",
+      },
     ],
   },
 ];
