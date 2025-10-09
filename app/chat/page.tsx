@@ -42,7 +42,12 @@ import {
 } from "@/components/ui/dialog";
 import { UnifiedFooter } from "@/components/unified-footer";
 import { useLanguage } from "@/app/contexts/LanguageContext";
-import { CarerProfile, getCarerById, mockCarers, Review } from "@/lib/mock-data/carers";
+import {
+  CarerProfile,
+  getCarerById,
+  mockCarers,
+  Review,
+} from "@/lib/mock-data/carers";
 import { GeminiResponse } from "@/lib/service/gemini";
 import { get } from "http";
 // header translations handled globally via GlobalHeader
@@ -585,14 +590,14 @@ function ChatPageContent() {
     setHasInitialized(true);
 
     // Show assistant reply after a delay
-    const assistantMessage: Message = {
-      id: "2",
-      type: "assistant",
-      content: `Thank you for reaching out! I'm here to help you find the perfect carer.`,
-      timestamp: new Date(),
-    };
-    setMessages((prev) => [...prev, assistantMessage]);
-    setShowInitialReply(true);
+    // const assistantMessage: Message = {
+    //   id: "2",
+    //   type: "assistant",
+    //   content: `Thank you for reaching out! I'm here to help you find the perfect carer.`,
+    //   timestamp: new Date(),
+    // };
+    // setMessages((prev) => [...prev, assistantMessage]);
+    // setShowInitialReply(true);
     getRecommendations(query);
   }, [query]); // Only depend on query
 
@@ -615,14 +620,14 @@ function ChatPageContent() {
   };
 
   const getRecommendations = async (userMessage: string) => {
-    const assistantMessage: Message = {
-      id: (Date.now() + 1).toString(),
-      type: "assistant",
-      content:
-        "I'm analyzing your request and finding the best carers for your needs. Let me provide you with some updated recommendations...",
-      timestamp: new Date(),
-    };
-    setMessages((prev) => [...prev, assistantMessage]);
+    // const assistantMessage: Message = {
+    //   id: (Date.now() + 1).toString(),
+    //   type: "assistant",
+    //   content:
+    //     "I'm analyzing your request and finding the best carers for your needs. Let me provide you with some updated recommendations...",
+    //   timestamp: new Date(),
+    // };
+    // setMessages((prev) => [...prev, assistantMessage]);
     setMobileCardIndexSafe(0); // Reset mobile card index for new recommendations
     setIsLoading(true);
 
@@ -1057,7 +1062,7 @@ function ChatPageContent() {
                   <div className="bento-grid" style={{ marginBottom: "0" }}>
                     {/* Video Box - Top Left (2/3 of first row) */}
                     <motion.div
-                      className="bento-box bento-video"
+                      className="bento-video"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0, duration: 0.3 }}
@@ -1066,7 +1071,6 @@ function ChatPageContent() {
                         {selectedCarer.profile.video ? (
                           <div className="relative w-64 h-64 rounded-full overflow-hidden border-4 border-white shadow-2xl">
                             <video
-                              muted
                               loop
                               playsInline
                               autoPlay
@@ -1149,7 +1153,7 @@ function ChatPageContent() {
                       transition={{ delay: 0.05, duration: 0.3 }}
                     >
                       <div className="bento-content">
-                        <h3 className="bento-title">About & Skills</h3>
+                        <h3 className="bento-title">About Me</h3>
                         <p className="bento-preview-text">
                           {selectedCarer.profile.bio}
                         </p>
@@ -1184,13 +1188,17 @@ function ChatPageContent() {
                         <h3 className="bento-title">Reviews</h3>
                         <div className="bento-reviews-preview">
                           <div className="rating-overview-expanded">
-                            <div className="rating-score-large">
+                            <div className="rating-score-large flex items-center gap-3">
                               <div className="score-big">
                                 {selectedCarer.profile.rating}
                               </div>
-                              <div className="stars-big">★★★★★</div>
-                              <div className="review-total">
-                                {selectedCarer.profile.reviews.length} reviews
+                              <div className="flex flex-row items-start align-middle">
+                                <div className="stars-big pr-1 align-middle">
+                                  ★★★★★
+                                </div>
+                                <div className="pt-1 review-total align-middle">
+                                  {`(${selectedCarer.profile.reviews.length})`}
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -1199,24 +1207,32 @@ function ChatPageContent() {
                             className="space-y-3 overflow-y-auto max-h-48"
                             style={{ marginTop: "12px" }}
                           >
-                            {selectedCarer.profile.reviews.slice(0, 2).map((review) => (
-                              <div key={review.id} className="border-l-2 border-purple-200 pl-3">
-                                <div className="flex items-center justify-between mb-1">
-                                  <span className="font-semibold text-sm text-gray-900">
-                                    {review.reviewerName}
-                                  </span>
-                                  <span className="text-xs text-gray-500">{review.date}</span>
+                            {selectedCarer.profile.reviews
+                              .slice(0, 2)
+                              .map((review) => (
+                                <div
+                                  key={review.id}
+                                  className="border-l-2 border-purple-200 pl-3"
+                                >
+                                  <div className="flex items-center justify-between mb-1">
+                                    <span className="font-semibold text-sm text-gray-900">
+                                      {review.reviewerName}
+                                    </span>
+                                    <span className="text-xs text-gray-500">
+                                      {review.date}
+                                    </span>
+                                  </div>
+                                  <div className="flex items-center mb-1">
+                                    <span className="text-yellow-500 text-sm">
+                                      {"★".repeat(review.rating)}
+                                      {"☆".repeat(5 - review.rating)}
+                                    </span>
+                                  </div>
+                                  <p className="text-xs text-gray-700 leading-relaxed">
+                                    {review.comment}
+                                  </p>
                                 </div>
-                                <div className="flex items-center mb-1">
-                                  <span className="text-yellow-500 text-sm">
-                                    {"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}
-                                  </span>
-                                </div>
-                                <p className="text-xs text-gray-700 leading-relaxed">
-                                  {review.comment}
-                                </p>
-                              </div>
-                            ))}
+                              ))}
                           </div>
                         </div>
 
