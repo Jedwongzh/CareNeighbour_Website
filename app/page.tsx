@@ -1,34 +1,57 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useRef, lazy, Suspense, useEffect } from "react"
-import { useRouter } from "next/navigation"
-import Image from "next/image"
-import Link from "next/link"
-import { ArrowRight, MessageSquare, PlayCircle, ChevronRight, Search, Send, Mic, MicOff, ChevronDown } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
-import Autoplay from "embla-carousel-autoplay"
+import { useState, useRef, lazy, Suspense, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
+import {
+  ArrowRight,
+  MessageSquare,
+  PlayCircle,
+  ChevronRight,
+  Search,
+  Send,
+  Mic,
+  MicOff,
+  ChevronDown,
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import Autoplay from "embla-carousel-autoplay";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
-import { UnifiedFooter } from "@/components/unified-footer"
-import { useLanguage } from "./contexts/LanguageContext" // Import useLanguage hook
-import VerticalCarousel from "@/components/VerticalCarousel"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { UnifiedFooter } from "@/components/unified-footer";
+import { useLanguage } from "./contexts/LanguageContext"; // Import useLanguage hook
+import VerticalCarousel from "@/components/VerticalCarousel";
 
 // Lazy load non-critical components
 const FeatureCarousel = lazy(() =>
-  import("@/components/feature-carousel").then((mod) => ({ default: mod.FeatureCarousel })),
-)
+  import("@/components/feature-carousel").then((mod) => ({
+    default: mod.FeatureCarousel,
+  }))
+);
 
 // Loading fallback component
 const LoadingFallback = () => (
   <div className="w-full h-64 flex items-center justify-center">
     <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-600"></div>
   </div>
-)
+);
 
 // Add TypeScript interface for SpeechRecognition
 interface SpeechRecognitionEvent extends Event {
@@ -60,7 +83,9 @@ interface SpeechRecognition extends EventTarget {
   interimResults: boolean;
   lang: string;
   onstart: ((this: SpeechRecognition, ev: Event) => any) | null;
-  onresult: ((this: SpeechRecognition, ev: SpeechRecognitionEvent) => any) | null;
+  onresult:
+    | ((this: SpeechRecognition, ev: SpeechRecognitionEvent) => any)
+    | null;
   onerror: ((this: SpeechRecognition, ev: Event) => any) | null;
   onend: ((this: SpeechRecognition, ev: Event) => any) | null;
   start(): void;
@@ -89,37 +114,50 @@ const pageTranslations = {
     BecomeACarer: "Become a Carer",
     aboutUs: "About Us",
     // Hero section
-    heroSubtitle: "CareNeighbour connects you with verified caregivers who understand your language and culture, making finding the right support effortless.",
+    heroSubtitle:
+      "CareNeighbour connects you with verified caregivers who understand your language and culture, making finding the right support effortless.",
     heroCtaHowItWorks: "How It Works",
     heroCtaJoinWaitlist: "Join Waitlist",
     // Problem Statement Section
     problemTitle: "Finding the Right Care Shouldn't Be a Struggle",
-    problemParagraph1: "Every year, thousands of people who don't speak English as their first language struggle to access the care they need. Language barriers, lack of time, and unfamiliarity with the system leave many feeling isolated and overlooked. It's not just about translation — it's about dignity, understanding, and culturally respectful support. Right now, too many are suffering in silence simply because the system wasn't built for them.",
-    problemParagraph2Start: "We believe finding compassionate care that resonates with your cultural background should be simple and stress-free.",
+    problemParagraph1:
+      "Every year, thousands of people who don't speak English as their first language struggle to access the care they need. Language barriers, lack of time, and unfamiliarity with the system leave many feeling isolated and overlooked. It's not just about translation — it's about dignity, understanding, and culturally respectful support. Right now, too many are suffering in silence simply because the system wasn't built for them.",
+    problemParagraph2Start:
+      "We believe finding compassionate care that resonates with your cultural background should be simple and stress-free.",
     problemParagraph2End: "CareNeighbour is here to make that possible.",
     // Experiences Section
     experiencesTitle: "Shared Experiences, Common Challenges",
-    experiencesSubtitle: "Hear from families navigating the complexities of caregiving.",
+    experiencesSubtitle:
+      "Hear from families navigating the complexities of caregiving.",
     testimonialMariaName: "Maria, 48",
-    testimonialMariaQuote: "Finding someone who speaks Spanish and understands our traditions for my father was so hard. We needed more than just basic help—we needed someone who could connect with him.",
+    testimonialMariaQuote:
+      "Finding someone who speaks Spanish and understands our traditions for my father was so hard. We needed more than just basic help—we needed someone who could connect with him.",
     testimonialChenName: "Chen, 41",
-    testimonialChenQuote: "My work hours are unpredictable. Trying to coordinate care for my mother, who prefers speaking Mandarin, felt like a second job.",
+    testimonialChenQuote:
+      "My work hours are unpredictable. Trying to coordinate care for my mother, who prefers speaking Mandarin, felt like a second job.",
     testimonialAhmedName: "Ahmed, 55",
-    testimonialAhmedQuote: "We needed someone urgently when my wife had surgery. Explaining the specific cultural needs and dietary restrictions quickly was stressful. Finding the right caregiver felt impossible.",
+    testimonialAhmedQuote:
+      "We needed someone urgently when my wife had surgery. Explaining the specific cultural needs and dietary restrictions quickly was stressful. Finding the right caregiver felt impossible.",
     testimonialSarahName: "Sarah, 42",
-    testimonialSarahQuote: "Living hours away from my mom needing daily assistance felt impossible. Finding reliable, trustworthy help was a constant worry. I needed someone I could trust completely.",
+    testimonialSarahQuote:
+      "Living hours away from my mom needing daily assistance felt impossible. Finding reliable, trustworthy help was a constant worry. I needed someone I could trust completely.",
     testimonialElenaName: "Elena, 52",
-    testimonialElenaQuote: "When my father began showing signs of dementia, we struggled to find someone who could speak Russian and understand him. The language barrier made his confusion worse.",
+    testimonialElenaQuote:
+      "When my father began showing signs of dementia, we struggled to find someone who could speak Russian and understand him. The language barrier made his confusion worse.",
     testimonialRajName: "Raj, 45",
-    testimonialRajQuote: "My parents moved here to help raise our children, but now they need care themselves. Finding someone who respects their vegetarian diet and understands Hindu customs has been incredibly challenging.",
+    testimonialRajQuote:
+      "My parents moved here to help raise our children, but now they need care themselves. Finding someone who respects their vegetarian diet and understands Hindu customs has been incredibly challenging.",
     // How It Works Section
     howItWorksTitle: "Care, Simplified in 3 Steps",
     step1Title: "Define Needs",
-    step1Description: "Simply voice or text your care requirements, preferred language, cultural preferences, and location—we make it that easy",
+    step1Description:
+      "Simply voice or text your care requirements, preferred language, cultural preferences, and location—we make it that easy",
     step2Title: "Match & Connect",
-    step2Description: "We instantly connect you with verified caregivers who perfectly match your criteria. Chat with our AI care concierge for any questions or additional needs",
+    step2Description:
+      "We instantly connect you with verified caregivers who perfectly match your criteria. Chat with our AI care concierge for any questions or additional needs",
     step3Title: "Book & Relax",
-    step3Description: "Review your matched caregivers, schedule care effortlessly, manage payments securely, and enjoy peace of mind knowing your loved one is in exceptional hands",
+    step3Description:
+      "Review your matched caregivers, schedule care effortlessly, manage payments securely, and enjoy peace of mind knowing your loved one is in exceptional hands",
     howitworksButton: "Learn more about our services",
     // Our Approach Section
     approachTitlePart1: "When",
@@ -127,22 +165,28 @@ const pageTranslations = {
     approachTitlePart2: "Meets",
     approachTitleCompassion: "Compassion",
     feature1Title: "Instant Care Requests",
-    feature1Description: "Simply speak or type your needs and watch as our AI transcribes and processes your requests in real-time.",
+    feature1Description:
+      "Simply speak or type your needs and watch as our AI transcribes and processes your requests in real-time.",
     feature2Title: "Your Personal Care Concierge",
-    feature2Description: "Voice your unique needs through our intelligent AI chat and receive personalized recommendations for nearby, available carers and services within moments.",
+    feature2Description:
+      "Voice your unique needs through our intelligent AI chat and receive personalized recommendations for nearby, available carers and services within moments.",
     feature3Title: "Clarity at Your Fingertips",
-    feature3Description: "Instantly access comprehensive carer profiles, neatly summarized on a single page. Save your preferred choices or book with seamless, one-click convenience.",
+    feature3Description:
+      "Instantly access comprehensive carer profiles, neatly summarized on a single page. Save your preferred choices or book with seamless, one-click convenience.",
     feature4Title: "Explore with Ease",
-    feature4Description: "Effortlessly browse a comprehensive map of all available care services within your chosen regions, putting expert help right on your doorstep.",
+    feature4Description:
+      "Effortlessly browse a comprehensive map of all available care services within your chosen regions, putting expert help right on your doorstep.",
     // Waitlist & Feedback Section
     waitlistTitle: "Be the First to Know",
-    waitlistSubtitle: "Join our waitlist for early access, priority matching, and exclusive launch updates.",
+    waitlistSubtitle:
+      "Join our waitlist for early access, priority matching, and exclusive launch updates.",
     waitlistEmailPlaceholder: "Enter your email",
     waitlistSubmitButton: "Join Waitlist",
     waitlistSubmittingButton: "Submitting...",
     waitlistPrivacy: "We respect your privacy. Unsubscribe anytime.",
     feedbackTitle: "Share Your Thoughts",
-    feedbackSubtitle: "Have ideas or feedback? Help us shape the future of culturally sensitive caregiving.",
+    feedbackSubtitle:
+      "Have ideas or feedback? Help us shape the future of culturally sensitive caregiving.",
     feedbackEmailPlaceholder: "Enter your email",
     feedbackMessagePlaceholder: "Your feedback or ideas...",
     feedbackSubmitButton: "Send Feedback",
@@ -159,7 +203,7 @@ const pageTranslations = {
       culturalCare: "Cultural Care",
       respiteCare: "Respite Care",
       dementiaCare: "Dementia Care",
-      homeCare: "Home Care"
+      homeCare: "Home Care",
     },
     searchPresetDescriptions: {
       elderlyCare: "Find a caregiver for elderly care",
@@ -167,58 +211,63 @@ const pageTranslations = {
       culturalCare: "Need culturally sensitive care",
       respiteCare: "Find temporary care support",
       dementiaCare: "Looking for dementia care specialist",
-      homeCare: "Need home care services"
+      homeCare: "Need home care services",
     },
     // Care Request Popup translations
     careRequestPopup: {
       title: "Care Request Coming Soon!",
-      description: "We're launching our care request feature in September 2025. Enter your email to receive free care request credits when we launch.",
+      description:
+        "We're launching our care request feature in September 2025. Enter your email to receive free care request credits when we launch.",
       emailPlaceholder: "Enter your email address",
       submitButton: "Get Free Credits",
       submittingButton: "Submitting...",
       privacy: "We respect your privacy. Unsubscribe anytime.",
-      success: "Thank you! You'll receive free care request credits when we launch.",
+      success:
+        "Thank you! You'll receive free care request credits when we launch.",
       error: "Please provide a valid email address.",
       yourRequest: "Your Care Request:",
       earlyAccessLabel: "Early Access Code (optional)",
       earlyAccessPlaceholder: "Enter your early access code",
       validateCodeButton: "Validate Code",
       accessChatButton: "Access Chat Page",
-      invalidCodeError: "Invalid code. Please try again or contact support."
+      invalidCodeError: "Invalid code. Please try again or contact support.",
     },
     careTypes: [
       {
         title: "Elderly Care",
-        description: "Professional caregivers for daily assistance, companionship, and medical support",
+        description:
+          "Professional caregivers for daily assistance, companionship, and medical support",
         image: "/images/agecareimg.jpg",
         examples: [
           "Daily living assistance",
           "Medication management",
           "Companionship",
-          "Mobility support"
-        ]
+          "Mobility support",
+        ],
       },
       {
         title: "Specialized Medical Care",
-        description: "Skilled nurses and caregivers for specific medical conditions",
+        description:
+          "Skilled nurses and caregivers for specific medical conditions",
         image: "/images/SpecialisedCare.jpg",
         examples: [
           "Dementia care",
           "Post-surgery recovery",
           "Chronic condition management",
-          "Palliative care"
-        ]
+          "Palliative care",
+        ],
       },
       {
         title: "Cultural Care",
-        description: "Caregivers who understand and respect cultural traditions",
+        description:
+          "Caregivers who understand and respect cultural traditions",
         image: "/images/CulturalCareimg.jpg",
         examples: [
           "Language-specific care",
           "Cultural dietary needs",
           "Religious practices",
-          "Traditional healing methods"
-        ]
+          "Traditional healing methods",
+        ],
       },
       {
         title: "Respite Care",
@@ -228,24 +277,27 @@ const pageTranslations = {
           "Short-term relief",
           "Emergency backup",
           "Holiday coverage",
-          "Regular breaks"
-        ]
-      }
+          "Regular breaks",
+        ],
+      },
     ],
     thankYouPopup: {
       waitlist: {
         title: "Thank You for Joining!",
-        message: "Feel free to check out our socials to get the latest updates on the team's progress.",
-        followUs: "Follow us on:"
+        message:
+          "Feel free to check out our socials to get the latest updates on the team's progress.",
+        followUs: "Follow us on:",
       },
       feedback: {
         title: "Thank You for Your Input!",
-        message: "CareNeighbour always takes advice from everyone to contribute towards our mission to make care sourcing as efficient as possible. One of our team members will get in touch with you if there's anything we need clarification on.",
-        followUs: "Follow us on:"
-      }
+        message:
+          "CareNeighbour always takes advice from everyone to contribute towards our mission to make care sourcing as efficient as possible. One of our team members will get in touch with you if there's anything we need clarification on.",
+        followUs: "Follow us on:",
+      },
     },
   },
-  zh: { // Mandarin Chinese translations
+  zh: {
+    // Mandarin Chinese translations
     heroLogo: "零距",
     heroTitleStart: "立即连接",
     heroTitleEnd: "合适的护理人员",
@@ -258,37 +310,50 @@ const pageTranslations = {
     BecomeACarer: "成为护理员",
     aboutUs: "关于我们",
     // Hero section
-    heroSubtitle: "零距 让您轻松找到认证的照护人员——他们懂您的语言，了解您的文化，为您提供贴心、安心的支持。",
+    heroSubtitle:
+      "零距 让您轻松找到认证的照护人员——他们懂您的语言，了解您的文化，为您提供贴心、安心的支持。",
     heroCtaHowItWorks: "运作方式",
     heroCtaJoinWaitlist: "加入等候名单",
     // Problem Statement Section
     problemTitle: "找到合适的照护本该轻松无忧",
-    problemParagraph1: "每年，无数英语非母语的人在寻求照护时感到无助。语言障碍、时间压力，还有对整个系统的陌生感，让他们像是被世界遗忘了一样。这不是简单的翻译问题，而是关于被理解、被尊重、被善待的问题。很多人只是希望有人听懂他们的需求，却不得不在孤独中默默撑着，因为现有的系统并不是为他们设计的。",
-    problemParagraph2Start: "我们相信，寻找符合您文化背景的贴心护理应该简单无忧。",
+    problemParagraph1:
+      "每年，无数英语非母语的人在寻求照护时感到无助。语言障碍、时间压力，还有对整个系统的陌生感，让他们像是被世界遗忘了一样。这不是简单的翻译问题，而是关于被理解、被尊重、被善待的问题。很多人只是希望有人听懂他们的需求，却不得不在孤独中默默撑着，因为现有的系统并不是为他们设计的。",
+    problemParagraph2Start:
+      "我们相信，寻找符合您文化背景的贴心护理应该简单无忧。",
     problemParagraph2End: "零距 致力于实现这一目标。",
     // Experiences Section
     experiencesTitle: "我们都有共同的困境",
-    experiencesSubtitle: "聆听那些正在应对照护挑战的家庭分享他们的真实故事与心路历程。",
+    experiencesSubtitle:
+      "聆听那些正在应对照护挑战的家庭分享他们的真实故事与心路历程。",
     testimonialMariaName: "玛丽亚，48岁",
-    testimonialMariaQuote: "为我父亲找到一个会说西班牙语并了解我们传统的人太难了。我们需要的不仅仅是基本帮助——我们需要一个能与他沟通的人。",
+    testimonialMariaQuote:
+      "为我父亲找到一个会说西班牙语并了解我们传统的人太难了。我们需要的不仅仅是基本帮助——我们需要一个能与他沟通的人。",
     testimonialChenName: "陈先生，41岁",
-    testimonialChenQuote: "我的工作时间很不稳定。为我母亲（她更喜欢说普通话）协调护理感觉就像第二份工作。",
+    testimonialChenQuote:
+      "我的工作时间很不稳定。为我母亲（她更喜欢说普通话）协调护理感觉就像第二份工作。",
     testimonialAhmedName: "艾哈迈德，55岁",
-    testimonialAhmedQuote: "我妻子手术时我们急需人手。快速解释特定的文化需求和饮食限制压力很大。找到合适的护理员几乎是不可能的。",
+    testimonialAhmedQuote:
+      "我妻子手术时我们急需人手。快速解释特定的文化需求和饮食限制压力很大。找到合适的护理员几乎是不可能的。",
     testimonialSarahName: "莎拉，42岁",
-    testimonialSarahQuote: "我住在离需要日常照料的母亲几小时远的地方，这感觉几乎不可能。找到可靠、值得信赖的帮助一直让我忧心忡忡。我需要一个我能完全信任的人。",
+    testimonialSarahQuote:
+      "我住在离需要日常照料的母亲几小时远的地方，这感觉几乎不可能。找到可靠、值得信赖的帮助一直让我忧心忡忡。我需要一个我能完全信任的人。",
     testimonialElenaName: "埃琳娜，52岁",
-    testimonialElenaQuote: "当我父亲开始出现失智症迹象时，我们很难找到一个会说俄语并能理解他的人。语言障碍使他的困惑更加严重。",
+    testimonialElenaQuote:
+      "当我父亲开始出现失智症迹象时，我们很难找到一个会说俄语并能理解他的人。语言障碍使他的困惑更加严重。",
     testimonialRajName: "拉吉，45岁",
-    testimonialRajQuote: "我的父母搬来这里帮忙照顾我们的孩子，但现在他们自己也需要照顾了。找到一个尊重他们素食习惯并了解印度教习俗的人非常具有挑战性。",
+    testimonialRajQuote:
+      "我的父母搬来这里帮忙照顾我们的孩子，但现在他们自己也需要照顾了。找到一个尊重他们素食习惯并了解印度教习俗的人非常具有挑战性。",
     // How It Works Section
     howItWorksTitle: "关怀备至，三步到位",
     step1Title: "明确需求",
-    step1Description: "简单地说出或输入您的护理要求、偏好语言、文化偏好和位置——我们让一切变得如此简单",
+    step1Description:
+      "简单地说出或输入您的护理要求、偏好语言、文化偏好和位置——我们让一切变得如此简单",
     step2Title: "匹配连接",
-    step2Description: "我们即时为您连接完全符合您标准的认证护理员。如有疑问或额外需求，可与我们的AI护理管家聊天。",
+    step2Description:
+      "我们即时为您连接完全符合您标准的认证护理员。如有疑问或额外需求，可与我们的AI护理管家聊天。",
     step3Title: "轻松预订",
-    step3Description: "查看您的匹配护理员，轻松安排护理，安全管理付款，享受安心，因为您的亲人得到了卓越的照顾。",
+    step3Description:
+      "查看您的匹配护理员，轻松安排护理，安全管理付款，享受安心，因为您的亲人得到了卓越的照顾。",
     howitworksButton: "了解更多关于我们的服务",
     // Our Approach Section
     approachTitlePart1: "科技",
@@ -296,27 +361,34 @@ const pageTranslations = {
     approachTitlePart2: "温暖",
     approachTitleCompassion: "同行",
     feature1Title: "即时护理请求",
-    feature1Description: "只需说出或输入您的需求，我们的人工智能将实时转录和处理您的请求。",
+    feature1Description:
+      "只需说出或输入您的需求，我们的人工智能将实时转录和处理您的请求。",
     feature2Title: "您的私人护理管家",
-    feature2Description: "通过我们的智能AI聊天说出您的独特需求，即可在片刻之间获得附近可用护理员和服务的个性化推荐。",
+    feature2Description:
+      "通过我们的智能AI聊天说出您的独特需求，即可在片刻之间获得附近可用护理员和服务的个性化推荐。",
     feature3Title: "信息一目了然",
-    feature3Description: "即时访问全面的护理员资料，信息简洁明了地汇总在一页上。保存您的首选或通过无缝的一键操作进行预订。",
+    feature3Description:
+      "即时访问全面的护理员资料，信息简洁明了地汇总在一页上。保存您的首选或通过无缝的一键操作进行预订。",
     feature4Title: "轻松探索",
-    feature4Description: "轻松浏览您所选区域内所有可用护理服务的综合地图，让专业帮助近在咫尺。",
+    feature4Description:
+      "轻松浏览您所选区域内所有可用护理服务的综合地图，让专业帮助近在咫尺。",
     // Waitlist & Feedback Section
     waitlistTitle: "抢先体验",
-    waitlistSubtitle: "加入我们的等候名单，获取优先体验、优先匹配和独家发布更新。",
+    waitlistSubtitle:
+      "加入我们的等候名单，获取优先体验、优先匹配和独家发布更新。",
     waitlistEmailPlaceholder: "输入您的邮箱",
     waitlistSubmitButton: "加入等候名单",
     waitlistSubmittingButton: "提交中...",
     waitlistPrivacy: "我们尊重您的隐私。随时可以取消订阅。",
     feedbackTitle: "分享您的想法",
-    feedbackSubtitle: "有想法或建议吗？欢迎与我们分享，一起共创更符合文化需求的照护服务未来。",
+    feedbackSubtitle:
+      "有想法或建议吗？欢迎与我们分享，一起共创更符合文化需求的照护服务未来。",
     feedbackEmailPlaceholder: "输入您的邮箱",
     feedbackMessagePlaceholder: "您的反馈或想法...",
     feedbackSubmitButton: "发送反馈",
     feedbackSubmittingButton: "提交中...",
-    feedbackPrivacy: "您的意见对我们来说非常宝贵，所有反馈都会受到严格保护，确保您的隐私安全。",
+    feedbackPrivacy:
+      "您的意见对我们来说非常宝贵，所有反馈都会受到严格保护，确保您的隐私安全。",
     // Footer
     footerCopyright: "零距 . 版权所有。",
     // Add search-related translations
@@ -328,7 +400,7 @@ const pageTranslations = {
       culturalCare: "文化護理",
       respiteCare: "臨時護理",
       dementiaCare: "失智症護理",
-      homeCare: "居家護理"
+      homeCare: "居家護理",
     },
     searchPresetDescriptions: {
       elderlyCare: "尋找老年護理人員",
@@ -336,12 +408,13 @@ const pageTranslations = {
       culturalCare: "需要文化敏感的護理",
       respiteCare: "尋找臨時護理支持",
       dementiaCare: "尋找失智症護理專家",
-      homeCare: "需要居家護理服務"
+      homeCare: "需要居家護理服務",
     },
     // Care Request Popup translations
     careRequestPopup: {
       title: "護理請求即將推出！",
-      description: "我們將於2025年9月推出護理請求功能。請輸入您的郵箱，以便在我們推出時獲得免費護理請求積分。",
+      description:
+        "我們將於2025年9月推出護理請求功能。請輸入您的郵箱，以便在我們推出時獲得免費護理請求積分。",
       emailPlaceholder: "輸入您的郵箱",
       submitButton: "獲取免費積分",
       submittingButton: "提交中...",
@@ -353,87 +426,74 @@ const pageTranslations = {
       earlyAccessPlaceholder: "輸入您的早期訪問代碼",
       validateCodeButton: "驗證代碼",
       accessChatButton: "訪問聊天頁面",
-      invalidCodeError: "無效代碼。請重試或聯繫支持。"
+      invalidCodeError: "無效代碼。請重試或聯繫支持。",
     },
     careTypes: [
       {
         title: "老年护理",
         description: "专业护理员为日常生活、陪伴和医疗支持提供帮助",
         image: "/images/agecareimg.jpg",
-        examples: [
-          "日常生活协助",
-          "药物管理",
-          "陪伴关怀",
-          "行动支持"
-        ]
+        examples: ["日常生活协助", "药物管理", "陪伴关怀", "行动支持"],
       },
       {
         title: "专业医疗护理",
         description: "针对特定医疗状况的专业护士和护理员",
         image: "/images/SpecialisedCare.jpg",
-        examples: [
-          "失智症护理",
-          "术后康复",
-          "慢性病管理",
-          "缓和医疗"
-        ]
+        examples: ["失智症护理", "术后康复", "慢性病管理", "缓和医疗"],
       },
       {
         title: "文化护理",
         description: "了解并尊重文化传统的护理员",
         image: "/images/CulturalCareimg.jpg",
-        examples: [
-          "语言专属护理",
-          "文化饮食需求",
-          "宗教习俗",
-          "传统疗法"
-        ]
+        examples: ["语言专属护理", "文化饮食需求", "宗教习俗", "传统疗法"],
       },
       {
         title: "临时护理",
         description: "为家庭护理者提供临时休息的护理服务",
         image: "/images/RespiteCareimg.jpg",
-        examples: [
-          "短期照护",
-          "紧急支援",
-          "假期替班",
-          "定期休息"
-        ]
-      }
+        examples: ["短期照护", "紧急支援", "假期替班", "定期休息"],
+      },
     ],
     thankYouPopup: {
       waitlist: {
         title: "感謝您的加入！",
         message: "請隨時關注我們的社交媒體，獲取團隊進展的最新消息。",
-        followUs: "關注我們："
+        followUs: "關注我們：",
       },
       feedback: {
         title: "感謝您的寶貴意見！",
-        message: "零距始終重視每個人的建議，以實現我們讓護理服務盡可能高效的使命。如果我們需要進一步澄清，我們的團隊成員將與您聯繫。",
-        followUs: "關注我們："
-      }
+        message:
+          "零距始終重視每個人的建議，以實現我們讓護理服務盡可能高效的使命。如果我們需要進一步澄清，我們的團隊成員將與您聯繫。",
+        followUs: "關注我們：",
+      },
     },
   },
 };
 
 // Add this component before the LandingPage component
 const CareSearchBar = () => {
-  const [query, setQuery] = useState("")
-  const [isFocused, setIsFocused] = useState(false)
-  const [isListening, setIsListening] = useState(false)
-  const [isRecording, setIsRecording] = useState(false)
-  const [placeholderIndex, setPlaceholderIndex] = useState(0)
-  const [showCareRequestPopup, setShowCareRequestPopup] = useState(false)
-  const [careRequestEmail, setCareRequestEmail] = useState("")
-  const [isSubmittingCareRequest, setIsSubmittingCareRequest] = useState(false)
-  const [careRequestStatus, setCareRequestStatus] = useState<{ success?: boolean; message?: string; error?: string } | null>(null)
+  const [query, setQuery] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [showCareRequestPopup, setShowCareRequestPopup] = useState(false);
+  const [careRequestEmail, setCareRequestEmail] = useState("");
+  const [isSubmittingCareRequest, setIsSubmittingCareRequest] = useState(false);
+  const [careRequestStatus, setCareRequestStatus] = useState<{
+    success?: boolean;
+    message?: string;
+    error?: string;
+  } | null>(null);
   const [earlyAccessCode, setEarlyAccessCode] = useState("");
   const [isCodeValid, setIsCodeValid] = useState(false);
   const [codeError, setCodeError] = useState("");
-  const recognitionRef = useRef<SpeechRecognition | null>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
-  const { language } = useLanguage()
-  const t = pageTranslations[language as keyof typeof pageTranslations] || pageTranslations.en
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { language } = useLanguage();
+  const t =
+    pageTranslations[language as keyof typeof pageTranslations] ||
+    pageTranslations.en;
 
   // Common prompts for cycling placeholder (translation-compatible)
   const cyclingPrompts = [
@@ -442,160 +502,164 @@ const CareSearchBar = () => {
     t.searchPresetDescriptions.culturalCare,
     t.searchPresetDescriptions.respiteCare,
     t.searchPresetDescriptions.dementiaCare,
-    t.searchPresetDescriptions.homeCare
-  ]
+    t.searchPresetDescriptions.homeCare,
+  ];
 
   // Cycle placeholder every 2.5 seconds
   useEffect(() => {
-    if (isFocused || query.length > 0) return // Don't cycle if focused or typing
+    if (isFocused || query.length > 0) return; // Don't cycle if focused or typing
     const interval = setInterval(() => {
-      setPlaceholderIndex((prev) => (prev + 1) % cyclingPrompts.length)
-    }, 2500)
-    return () => clearInterval(interval)
-  }, [isFocused, query, cyclingPrompts.length])
+      setPlaceholderIndex((prev) => (prev + 1) % cyclingPrompts.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, [isFocused, query, cyclingPrompts.length]);
 
   const presetPrompts = [
     {
-      key: 'elderlyCare',
-      icon: '➕',
+      key: "elderlyCare",
+      icon: "➕",
       title: t.searchPresetPrompts.elderlyCare,
-      description: t.searchPresetDescriptions.elderlyCare
+      description: t.searchPresetDescriptions.elderlyCare,
     },
     {
-      key: 'medicalCare',
-      icon: '➕',
+      key: "medicalCare",
+      icon: "➕",
       title: t.searchPresetPrompts.medicalCare,
-      description: t.searchPresetDescriptions.medicalCare
+      description: t.searchPresetDescriptions.medicalCare,
     },
     {
-      key: 'culturalCare',
-      icon: '➕',
+      key: "culturalCare",
+      icon: "➕",
       title: t.searchPresetPrompts.culturalCare,
-      description: t.searchPresetDescriptions.culturalCare
+      description: t.searchPresetDescriptions.culturalCare,
     },
     {
-      key: 'respiteCare',
-      icon: '➕',
+      key: "respiteCare",
+      icon: "➕",
       title: t.searchPresetPrompts.respiteCare,
-      description: t.searchPresetDescriptions.respiteCare
+      description: t.searchPresetDescriptions.respiteCare,
     },
     {
-      key: 'dementiaCare',
-      icon: '➕',
+      key: "dementiaCare",
+      icon: "➕",
       title: t.searchPresetPrompts.dementiaCare,
-      description: t.searchPresetDescriptions.dementiaCare
+      description: t.searchPresetDescriptions.dementiaCare,
     },
     {
-      key: 'homeCare',
-      icon: '➕',
+      key: "homeCare",
+      icon: "➕",
       title: t.searchPresetPrompts.homeCare,
-      description: t.searchPresetDescriptions.homeCare
-    }
-  ]
+      description: t.searchPresetDescriptions.homeCare,
+    },
+  ];
 
   const startListening = () => {
-    if (!('webkitSpeechRecognition' in window)) {
-      alert('Speech recognition is not supported in your browser. Please use Chrome or Edge.')
-      return
+    if (!("webkitSpeechRecognition" in window)) {
+      alert(
+        "Speech recognition is not supported in your browser. Please use Chrome or Edge."
+      );
+      return;
     }
 
-    const SpeechRecognition = window.webkitSpeechRecognition
-    recognitionRef.current = new SpeechRecognition()
-    recognitionRef.current.continuous = true
-    recognitionRef.current.interimResults = true
+    const SpeechRecognition = window.webkitSpeechRecognition;
+    recognitionRef.current = new SpeechRecognition();
+    recognitionRef.current.continuous = true;
+    recognitionRef.current.interimResults = true;
 
     recognitionRef.current.onstart = () => {
-      setIsRecording(true)
-    }
+      setIsRecording(true);
+    };
 
     recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
       const transcript = Array.from(event.results)
         .map((result) => result[0])
         .map((result) => result.transcript)
-        .join('')
+        .join("");
 
-      setQuery(transcript)
-    }
+      setQuery(transcript);
+    };
 
     recognitionRef.current.onerror = (event: Event) => {
-      console.error('Speech recognition error:', event)
-      setIsRecording(false)
-    }
+      console.error("Speech recognition error:", event);
+      setIsRecording(false);
+    };
 
     recognitionRef.current.onend = () => {
-      setIsRecording(false)
-    }
+      setIsRecording(false);
+    };
 
-    recognitionRef.current.start()
-  }
+    recognitionRef.current.start();
+  };
 
   const stopListening = () => {
     if (recognitionRef.current) {
-      recognitionRef.current.stop()
-      setIsRecording(false)
+      recognitionRef.current.stop();
+      setIsRecording(false);
     }
-  }
+  };
 
   const toggleListening = () => {
     if (isRecording) {
-      stopListening()
+      stopListening();
     } else {
-      startListening()
+      startListening();
     }
-  }
+  };
 
-  const handleCareRequestSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const handleCareRequestSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
     if (!careRequestEmail || !careRequestEmail.includes("@")) {
       setCareRequestStatus({
         success: false,
         message: t.careRequestPopup.error,
-      })
-      return
+      });
+      return;
     }
 
-    setIsSubmittingCareRequest(true)
-    setCareRequestStatus(null)
+    setIsSubmittingCareRequest(true);
+    setCareRequestStatus(null);
 
     try {
-      console.log("Submitting care request form...")
-      const result = await sendCareRequest(careRequestEmail, query)
-      console.log("Care request submission result:", result)
+      console.log("Submitting care request form...");
+      const result = await sendCareRequest(careRequestEmail, query);
+      console.log("Care request submission result:", result);
 
       if (result.status === 200) {
         setCareRequestStatus({
           success: true,
           message: t.careRequestPopup.success,
-        })
-        setCareRequestEmail("")
-        setQuery("") // Clear the search query after successful submission
+        });
+        setCareRequestEmail("");
+        setQuery(""); // Clear the search query after successful submission
         setTimeout(() => {
-          setShowCareRequestPopup(false)
-          setCareRequestStatus(null)
-        }, 3000)
+          setShowCareRequestPopup(false);
+          setCareRequestStatus(null);
+        }, 3000);
       } else {
         setCareRequestStatus({
           success: false,
           message: t.careRequestPopup.error,
-        })
+        });
       }
     } catch (error) {
-      console.error("Error submitting care request form:", error)
+      console.error("Error submitting care request form:", error);
       setCareRequestStatus({
         success: false,
         message: "An error occurred. Please try again later.",
         error: error instanceof Error ? error.message : String(error),
-      })
+      });
     } finally {
-      setIsSubmittingCareRequest(false)
+      setIsSubmittingCareRequest(false);
     }
-  }
+  };
 
   const handleSendClick = () => {
     if (query.trim().length > 0) {
-      setShowCareRequestPopup(true)
+      setShowCareRequestPopup(true);
     }
-  }
+  };
 
   return (
     <div className="w-full max-w-3xl mx-auto">
@@ -618,7 +682,7 @@ const CareSearchBar = () => {
             duration: 8,
             repeat: Infinity,
             ease: "linear",
-            repeatType: "loop"
+            repeatType: "loop",
           }}
         />
         <motion.div
@@ -626,11 +690,11 @@ const CareSearchBar = () => {
           animate={{
             height: query.length > 100 ? "auto" : "4rem",
             minHeight: "4rem",
-            maxHeight: "12rem"
+            maxHeight: "12rem",
           }}
           transition={{
             duration: 0.3,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
         >
           <Input
@@ -643,9 +707,9 @@ const CareSearchBar = () => {
             onBlur={() => setTimeout(() => setIsFocused(false), 200)}
             className="flex h-10 w-full px-3 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-base md:text-xl relative pl-6 pr-24 py-8 rounded-full border-2 border-purple-200 focus:border-purple-500 focus:ring-purple-500 shadow-lg bg-white whitespace-pre-wrap break-words overflow-y-auto"
             style={{
-              height: '100%',
-              minHeight: '4rem',
-              maxHeight: '12rem'
+              height: "100%",
+              minHeight: "4rem",
+              maxHeight: "12rem",
             }}
           />
           <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-2">
@@ -653,7 +717,9 @@ const CareSearchBar = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={toggleListening}
-              className={`p-2 rounded-full ${isRecording ? 'bg-red-100' : 'bg-purple-100'} hover:bg-purple-200 transition-colors`}
+              className={`p-2 rounded-full ${
+                isRecording ? "bg-red-100" : "bg-purple-100"
+              } hover:bg-purple-200 transition-colors`}
             >
               {isRecording ? (
                 <MicOff className="w-6 h-6 text-red-600" />
@@ -718,13 +784,13 @@ const CareSearchBar = () => {
       <div className="flex flex-col items-center mt-2">
         <button
           onClick={() => {
-            const el = document.getElementById('how-it-works');
+            const el = document.getElementById("how-it-works");
             if (el) {
-              el.scrollIntoView({ behavior: 'smooth' });
+              el.scrollIntoView({ behavior: "smooth" });
             }
           }}
           className="focus:outline-none text-white text-lg font-semibold flex flex-col items-center bg-transparent border-none p-0 hover:text-purple-900"
-          style={{ background: 'none', border: 'none' }}
+          style={{ background: "none", border: "none" }}
         >
           {t.howItWorks}
           <span>
@@ -734,7 +800,10 @@ const CareSearchBar = () => {
       </div>
 
       {/* Care Request Popup */}
-      <Dialog open={showCareRequestPopup} onOpenChange={setShowCareRequestPopup}>
+      <Dialog
+        open={showCareRequestPopup}
+        onOpenChange={setShowCareRequestPopup}
+      >
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-gray-900">
@@ -748,11 +817,11 @@ const CareSearchBar = () => {
           {/* Show the user's care request */}
           {query && (
             <div className="relative mb-4">
-              <div
-                className="absolute -inset-2 rounded-lg bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-sky-600 via-indigo-600 to-rose-600 opacity-50 blur-2xl"
-              ></div>
+              <div className="absolute -inset-2 rounded-lg bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-sky-600 via-indigo-600 to-rose-600 opacity-50 blur-2xl"></div>
               <div className="relative rounded-lg p-4 backdrop-blur-md bg-gray-200/10 bg-clip-padding">
-                <h4 className="font-semibold text-purple-800 mb-2">{t.careRequestPopup.yourRequest}</h4>
+                <h4 className="font-semibold text-purple-800 mb-2">
+                  {t.careRequestPopup.yourRequest}
+                </h4>
                 <p className="text-gray-700 text-sm italic">"{query}"</p>
               </div>
             </div>
@@ -770,13 +839,18 @@ const CareSearchBar = () => {
             />
             {/* Early Access Code Section */}
             <div className="space-y-2">
-              <label htmlFor="early-access-code" className="block text-sm font-medium text-gray-700">{t.careRequestPopup.earlyAccessLabel}</label>
+              <label
+                htmlFor="early-access-code"
+                className="block text-sm font-medium text-gray-700"
+              >
+                {t.careRequestPopup.earlyAccessLabel}
+              </label>
               <Input
                 id="early-access-code"
                 type="text"
                 placeholder={t.careRequestPopup.earlyAccessPlaceholder}
                 value={earlyAccessCode}
-                onChange={e => {
+                onChange={(e) => {
                   setEarlyAccessCode(e.target.value);
                   setIsCodeValid(false);
                   setCodeError("");
@@ -784,7 +858,9 @@ const CareSearchBar = () => {
                 className="h-12 text-base"
                 disabled={isSubmittingCareRequest}
               />
-              {codeError && <div className="text-sm text-red-600">{codeError}</div>}
+              {codeError && (
+                <div className="text-sm text-red-600">{codeError}</div>
+              )}
               {isCodeValid && (
                 <a
                   href={`/chat?query=${encodeURIComponent(query)}`}
@@ -798,7 +874,9 @@ const CareSearchBar = () => {
                   type="button"
                   className="w-full h-10 text-base bg-blue-600 hover:bg-blue-700 text-white mt-2"
                   onClick={() => {
-                    if (earlyAccessCode.trim().toUpperCase() === "EARLYACCESS2024") {
+                    if (
+                      earlyAccessCode.trim().toUpperCase() === "EARLYACCESS2024"
+                    ) {
                       setIsCodeValid(true);
                       setCodeError("");
                     } else {
@@ -814,7 +892,11 @@ const CareSearchBar = () => {
             </div>
 
             {careRequestStatus && (
-              <div className={`text-sm ${careRequestStatus.success ? "text-green-600" : "text-red-600"}`}>
+              <div
+                className={`text-sm ${
+                  careRequestStatus.success ? "text-green-600" : "text-red-600"
+                }`}
+              >
                 {careRequestStatus.message}
               </div>
             )}
@@ -825,7 +907,9 @@ const CareSearchBar = () => {
                 className="w-full h-12 text-base bg-purple-600 hover:bg-purple-700 text-white"
                 disabled={isSubmittingCareRequest}
               >
-                {isSubmittingCareRequest ? t.careRequestPopup.submittingButton : t.careRequestPopup.submitButton}
+                {isSubmittingCareRequest
+                  ? t.careRequestPopup.submittingButton
+                  : t.careRequestPopup.submitButton}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               <p className="text-xs text-gray-500 text-center">
@@ -836,14 +920,18 @@ const CareSearchBar = () => {
         </DialogContent>
       </Dialog>
     </div>
-  )
-}
+  );
+};
 
 // Add this component before the LandingPage component
 const CareTypeCards = () => {
-  const carouselPlugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: false }))
+  const carouselPlugin = useRef(
+    Autoplay({ delay: 4000, stopOnInteraction: false })
+  );
   const { language } = useLanguage();
-  const t = pageTranslations[language as keyof typeof pageTranslations] || pageTranslations.en;
+  const t =
+    pageTranslations[language as keyof typeof pageTranslations] ||
+    pageTranslations.en;
   const careTypes = t.careTypes;
 
   return (
@@ -870,10 +958,18 @@ const CareTypeCards = () => {
                     className="rounded-xl shadow-lg hover:shadow-xl transition-shadow h-full flex flex-col overflow-hidden backdrop-blur-md bg-gray-200/10 bg-clip-padding"
                   >
                     <div className="w-full h-40">
-                      <Image src={type.image} alt={type.title} width={400} height={220} className="object-cover w-full h-full" />
+                      <Image
+                        src={type.image}
+                        alt={type.title}
+                        width={400}
+                        height={220}
+                        className="object-cover w-full h-full"
+                      />
                     </div>
                     <div className="flex-1 flex flex-col p-6">
-                      <h3 className="text-xl font-semibold mb-2 text-black">{type.title}</h3>
+                      <h3 className="text-xl font-semibold mb-2 text-black">
+                        {type.title}
+                      </h3>
                       <p className="text-gray-600 mb-4">{type.description}</p>
                     </div>
                   </motion.div>
@@ -895,10 +991,18 @@ const CareTypeCards = () => {
               className="rounded-xl shadow-lg hover:shadow-xl transition-shadow flex flex-col overflow-hidden backdrop-blur-md bg-gray-200/10 bg-clip-padding"
             >
               <div className="w-full h-40">
-                <Image src={type.image} alt={type.title} width={400} height={220} className="object-cover w-full h-full" />
+                <Image
+                  src={type.image}
+                  alt={type.title}
+                  width={400}
+                  height={220}
+                  className="object-cover w-full h-full"
+                />
               </div>
               <div className="flex-1 flex flex-col p-6">
-                <h3 className="text-xl font-semibold mb-2 text-black">{type.title}</h3>
+                <h3 className="text-xl font-semibold mb-2 text-black">
+                  {type.title}
+                </h3>
                 <p className="text-gray-600 mb-4">{type.description}</p>
               </div>
             </motion.div>
@@ -918,12 +1022,12 @@ const CareTypeCards = () => {
               size="lg"
               className="bg-purple-600 hover:bg-purple-700 text-gray rounded-full px-8 py-4 text-lg h-auto transition-transform duration-200 hover:scale-105"
               style={{
-                background: 'rgba(255,255,255,0)',
-                borderRadius: '16px',
-                boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
-                backdropFilter: 'blur(9px)',
-                WebkitBackdropFilter: 'blur(9px)',
-                border: '1px solid rgba(255,255,255,0.38)'
+                background: "rgba(255,255,255,0)",
+                borderRadius: "16px",
+                boxShadow: "0 4px 30px rgba(0,0,0,0.1)",
+                backdropFilter: "blur(9px)",
+                WebkitBackdropFilter: "blur(9px)",
+                border: "1px solid rgba(255,255,255,0.38)",
               }}
             >
               {t.howitworksButton}
@@ -933,36 +1037,56 @@ const CareTypeCards = () => {
         </motion.div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 // How It Works step images
 const howItWorksImages = [
   "/images/Step1.jpg", // Replace with your actual images
   "/images/Step2.jpg",
-  "/images/Step3.jpg"
-]
+  "/images/Step3.jpg",
+];
 
 // Add StepBlock component after CareTypeCards
-const StepBlock = ({ idx, title, description, image, setActiveStep, isMobile }: { idx: number, title: string, description: string, image: string, setActiveStep: (idx: number) => void, isMobile?: boolean }) => {
-  const ref = useRef<HTMLDivElement>(null)
+const StepBlock = ({
+  idx,
+  title,
+  description,
+  image,
+  setActiveStep,
+  isMobile,
+}: {
+  idx: number;
+  title: string;
+  description: string;
+  image: string;
+  setActiveStep: (idx: number) => void;
+  isMobile?: boolean;
+}) => {
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new window.IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) setActiveStep(idx)
+        if (entry.isIntersecting) setActiveStep(idx);
       },
       { threshold: 0.5 }
-    )
-    if (ref.current) observer.observe(ref.current)
-    return () => { if (ref.current) observer.unobserve(ref.current) }
-  }, [idx, setActiveStep])
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => {
+      if (ref.current) observer.unobserve(ref.current);
+    };
+  }, [idx, setActiveStep]);
 
   return (
     <div ref={ref} className="flex flex-col items-center md:items-start w-full">
       {isMobile && (
         <div className="w-full mb-4">
-          <img src={image} alt={title} className="w-full h-48 object-cover rounded-2xl shadow-lg" />
+          <img
+            src={image}
+            alt={title}
+            className="w-full h-48 object-cover rounded-2xl shadow-lg"
+          />
         </div>
       )}
       <div className="w-full">
@@ -973,9 +1097,8 @@ const StepBlock = ({ idx, title, description, image, setActiveStep, isMobile }: 
         <p className="text-gray-600 text-lg">{description}</p>
       </div>
     </div>
-  )
-}
-
+  );
+};
 
 // Add ClientOnly component for client-side-only rendering
 function ClientOnly({ children }: { children: React.ReactNode }) {
@@ -987,19 +1110,25 @@ function ClientOnly({ children }: { children: React.ReactNode }) {
 
 export default function LandingPage() {
   const router = useRouter();
-  const [waitlistStatus, setWaitlistStatus] = useState<{ success?: boolean; message?: string; error?: string } | null>(
-    null,
-  );
-  const [feedbackStatus, setFeedbackStatus] = useState<{ success?: boolean; message?: string; error?: string } | null>(
-    null,
-  );
+  const [waitlistStatus, setWaitlistStatus] = useState<{
+    success?: boolean;
+    message?: string;
+    error?: string;
+  } | null>(null);
+  const [feedbackStatus, setFeedbackStatus] = useState<{
+    success?: boolean;
+    message?: string;
+    error?: string;
+  } | null>(null);
   // Social media links
   const socialLinks = {
     facebook: "https://www.facebook.com/careneighbour",
     instagram: "https://www.instagram.com/careneighbour",
-    linkedin: "https://www.linkedin.com/company/careneighbour"
+    linkedin: "https://www.linkedin.com/company/careneighbour",
   };
-  const [showThankYouPopup, setShowThankYouPopup] = useState<{ type: 'waitlist' | 'feedback' | null }>({ type: null });
+  const [showThankYouPopup, setShowThankYouPopup] = useState<{
+    type: "waitlist" | "feedback" | null;
+  }>({ type: null });
   const [isSubmittingWaitlist, setIsSubmittingWaitlist] = useState(false);
   const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false);
   const [topWaitlistEmail, setTopWaitlistEmail] = useState("");
@@ -1012,21 +1141,25 @@ export default function LandingPage() {
   const { language, setLanguage } = useLanguage();
 
   // Helper to get current translations
-  const t = pageTranslations[language as keyof typeof pageTranslations] || pageTranslations.en;
+  const t =
+    pageTranslations[language as keyof typeof pageTranslations] ||
+    pageTranslations.en;
 
   // Define available languages for the switcher (used by MobileNav)
   const availableLangs = { en: "EN", zh: "中文" };
 
   // Refs for scroll animations
-  const problemRef = useRef(null)
-  const approachRef = useRef(null)
+  const problemRef = useRef(null);
+  const approachRef = useRef(null);
   const howItWorksScrollRef = useRef<HTMLDivElement>(null);
 
   // Ref for autoplay plugin
-  const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: false }))
+  const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: false }));
 
   // Testimonial carousel autoplay
-  const testimonialPlugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: false }))
+  const testimonialPlugin = useRef(
+    Autoplay({ delay: 5000, stopOnInteraction: false })
+  );
 
   // Handler for next/prev navigation
   const goToStep = (idx: number) => {
@@ -1034,108 +1167,122 @@ export default function LandingPage() {
   };
 
   const handleWaitlistSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsSubmittingWaitlist(true)
-    setWaitlistStatus(null)
+    e.preventDefault();
+    setIsSubmittingWaitlist(true);
+    setWaitlistStatus(null);
 
     try {
-      const formData = new FormData(e.target as HTMLFormElement)
-      console.log("Submitting waitlist form...")
-      const result = await joinWaitlist(formData.get("email") as string)
-      console.log("Waitlist submission result:", result)
+      const formData = new FormData(e.target as HTMLFormElement);
+      console.log("Submitting waitlist form...");
+      const result = await joinWaitlist(formData.get("email") as string);
+      console.log("Waitlist submission result:", result);
 
       if (result.status === 200) {
-        setShowThankYouPopup({ type: 'waitlist' });
+        setShowThankYouPopup({ type: "waitlist" });
         // Clear the form
         (e.target as HTMLFormElement).reset();
       } else {
-        setWaitlistStatus({ success: false, message: "An error occurred. Please try again." });
+        setWaitlistStatus({
+          success: false,
+          message: "An error occurred. Please try again.",
+        });
       }
-      setIsSubmittingWaitlist(false)
+      setIsSubmittingWaitlist(false);
     } catch (error) {
-      console.error("Error submitting waitlist form:", error)
+      console.error("Error submitting waitlist form:", error);
       setWaitlistStatus({
         success: false,
         message: "An error occurred. Please try again later.",
         error: error instanceof Error ? error.message : String(error),
-      })
-      setIsSubmittingWaitlist(false)
+      });
+      setIsSubmittingWaitlist(false);
     }
-  }
+  };
 
-  const handleTopWaitlistSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const handleTopWaitlistSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
     if (!topWaitlistEmail || !topWaitlistEmail.includes("@")) {
       setWaitlistStatus({
         success: false,
         message: "Please provide a valid email address.",
-      })
-      return
+      });
+      return;
     }
 
-    setIsSubmittingWaitlist(true)
-    setWaitlistStatus(null)
+    setIsSubmittingWaitlist(true);
+    setWaitlistStatus(null);
 
     try {
-      console.log("Submitting top waitlist form...")
-      const result = await joinWaitlist(topWaitlistEmail)
-      console.log("Top waitlist submission result:", result)
+      console.log("Submitting top waitlist form...");
+      const result = await joinWaitlist(topWaitlistEmail);
+      console.log("Top waitlist submission result:", result);
 
       if (result.status === 200) {
-        setShowThankYouPopup({ type: 'waitlist' });
+        setShowThankYouPopup({ type: "waitlist" });
         setTopWaitlistEmail("");
       } else {
-        setWaitlistStatus({ success: false, message: "An error occurred. Please try again." });
+        setWaitlistStatus({
+          success: false,
+          message: "An error occurred. Please try again.",
+        });
       }
-      setIsSubmittingWaitlist(false)
+      setIsSubmittingWaitlist(false);
     } catch (error) {
-      console.error("Error submitting top waitlist form:", error)
+      console.error("Error submitting top waitlist form:", error);
       setWaitlistStatus({
         success: false,
         message: "An error occurred. Please try again later.",
         error: error instanceof Error ? error.message : String(error),
-      })
-      setIsSubmittingWaitlist(false)
+      });
+      setIsSubmittingWaitlist(false);
     }
-  }
+  };
 
   const handleFeedbackSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsSubmittingFeedback(true)
-    setFeedbackStatus(null)
+    e.preventDefault();
+    setIsSubmittingFeedback(true);
+    setFeedbackStatus(null);
 
     try {
-      const formData = new FormData(e.target as HTMLFormElement)
-      console.log("Submitting feedback form...")
-      const result = await submitFeedback(formData.get("email") as string, formData.get("feedback") as string)
-      console.log("Feedback submission result:", result)
+      const formData = new FormData(e.target as HTMLFormElement);
+      console.log("Submitting feedback form...");
+      const result = await submitFeedback(
+        formData.get("email") as string,
+        formData.get("feedback") as string
+      );
+      console.log("Feedback submission result:", result);
 
       if (result.status === 200) {
-        setShowThankYouPopup({ type: 'feedback' });
+        setShowThankYouPopup({ type: "feedback" });
         // Clear the form
         (e.target as HTMLFormElement).reset();
       } else {
-        setFeedbackStatus({ success: false, message: "An error occurred. Please try again." });
+        setFeedbackStatus({
+          success: false,
+          message: "An error occurred. Please try again.",
+        });
       }
-      setIsSubmittingFeedback(false)
+      setIsSubmittingFeedback(false);
     } catch (error) {
-      console.error("Error submitting feedback form:", error)
+      console.error("Error submitting feedback form:", error);
       setFeedbackStatus({
         success: false,
         message: "An error occurred. Please try again later.",
         error: error instanceof Error ? error.message : String(error),
-      })
-      setIsSubmittingFeedback(false)
+      });
+      setIsSubmittingFeedback(false);
     }
-  }
+  };
 
   // Intersection Observer for step tracking
   useEffect(() => {
     const observer = new window.IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
+      (entries) => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const idx = Number(entry.target.getAttribute('data-idx'));
+            const idx = Number(entry.target.getAttribute("data-idx"));
             setActiveStep(idx);
           }
         });
@@ -1154,7 +1301,10 @@ export default function LandingPage() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section id="hero" className="relative py-0 px-4 md:px-6 min-h-[90vh] flex items-center justify-center">
+        <section
+          id="hero"
+          className="relative py-0 px-4 md:px-6 min-h-[90vh] flex items-center justify-center"
+        >
           <div className="container mx-auto max-w-7xl relative h-[90vh]">
             {/* Background Images */}
             <div className="absolute inset-0">
@@ -1194,7 +1344,7 @@ export default function LandingPage() {
                 transition={{ duration: 1, delay: 0.8 }}
               >
                 <img
-                  src="https://careneighbour.my.canva.site/_assets/media/c98db77c96ad2963a69c04e453b98af5.png"
+                  src="/DecorativeElement.png"
                   alt="Decorative element"
                   className="w-full h-full object-contain transform rotate-[45deg]"
                 />
@@ -1207,9 +1357,9 @@ export default function LandingPage() {
                 transition={{ duration: 1, delay: 1 }}
               >
                 <img
-                  src="https://careneighbour.my.canva.site/_assets/media/c98db77c96ad2963a69c04e453b98af5.png"
+                  src="/DecorativeElementRotated.png"
                   alt="Decorative element"
-                  className="w-full h-full object-contain transform rotate-[225deg]"
+                  className="w-full h-full object-contain transform"
                 />
               </motion.div>
             </div>
@@ -1228,18 +1378,26 @@ export default function LandingPage() {
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8, delay: 0.1 }}
-                    style={{ textShadow: '2px 4px 8px rgba(0, 0, 0, 0.7)' }}
+                    style={{ textShadow: "2px 4px 8px rgba(0, 0, 0, 0.7)" }}
                   >
-                    {language === 'en' ? 'Find a carer who' : language === 'zh' ? '找到会说你' : '尋找會說你'}
+                    {language === "en"
+                      ? "Find a carer who"
+                      : language === "zh"
+                      ? "找到会说你"
+                      : "尋找會說你"}
                   </motion.span>
                   <motion.span
                     className="block drop-shadow-lg"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.5 }}
-                    style={{ textShadow: '2px 4px 8px rgba(0, 0, 0, 0.7)' }}
+                    style={{ textShadow: "2px 4px 8px rgba(0, 0, 0, 0.7)" }}
                   >
-                    {language === 'en' ? 'speaks your language' : language === 'zh' ? '语言的护理员' : '語言的護理員'}
+                    {language === "en"
+                      ? "speaks your language"
+                      : language === "zh"
+                      ? "语言的护理员"
+                      : "語言的護理員"}
                   </motion.span>
                 </h1>
               </motion.div>
@@ -1250,23 +1408,24 @@ export default function LandingPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.7 }}
                 className="max-w-3xl mx-auto drop-shadow-2xl"
-                style={{ filter: 'drop-shadow(0 10px 25px rgba(0, 0, 0, 0.3))' }}
+                style={{
+                  filter: "drop-shadow(0 10px 25px rgba(0, 0, 0, 0.3))",
+                }}
               >
                 <CareSearchBar />
               </motion.div>
             </div>
           </div>
         </section>
-
         {/* CareTypeCards now comes right after Hero */}
         <CareTypeCards />
-
         {/* How It Works Section now comes after CareTypeCards */}
         <section
           id="how-it-works"
           ref={howItWorksRef}
-          style={{ scrollMarginTop: '5rem' }}
-          className="w-full py-6">
+          style={{ scrollMarginTop: "5rem" }}
+          className="w-full py-6"
+        >
           <div className="container px-4 md:px-6 mx-auto">
             <motion.h2
               className="text-4xl md:text-6xl font-bold tracking-tight text-center pb-4 title-shadow"
@@ -1277,13 +1436,13 @@ export default function LandingPage() {
             >
               <span className="gradient-text-fill">{t.howItWorksTitle}</span>
             </motion.h2>
-            <p className="sr-only">Find care instantly with our AI-powered matching platform. Get support in seconds, tailored to your needs.</p>
+            <p className="sr-only">
+              Find care instantly with our AI-powered matching platform. Get
+              support in seconds, tailored to your needs.
+            </p>
           </div>
         </section>
-
-        <section
-          className="flex flex-col md:flex-row items-center justify-center w-full px-4"
-        >
+        <section className="flex flex-col md:flex-row items-center justify-center w-full px-4">
           {/* Mobile: stacked image + text for each step */}
           <div className="block md:hidden w-full px-4">
             {[0, 1, 2].map((idx) => (
@@ -1291,7 +1450,9 @@ export default function LandingPage() {
                 <div className="w-full mb-8">
                   <Image
                     src={howItWorksImages[idx]}
-                    alt={`Step ${idx + 1} - CareNeighbour AI-powered instant care platform`}
+                    alt={`Step ${
+                      idx + 1
+                    } - CareNeighbour AI-powered instant care platform`}
                     width={3840}
                     height={2160}
                     quality={100}
@@ -1300,8 +1461,12 @@ export default function LandingPage() {
                   />
                 </div>
                 <div className="px-1 text-center">
-                  <h3 className="text-2xl font-semibold mb-2 text-black">{(t as any)[`step${idx + 1}Title`]}</h3>
-                  <p className="text-gray-600 text-lg">{(t as any)[`step${idx + 1}Description`]}</p>
+                  <h3 className="text-2xl font-semibold mb-2 text-black">
+                    {(t as any)[`step${idx + 1}Title`]}
+                  </h3>
+                  <p className="text-gray-600 text-lg">
+                    {(t as any)[`step${idx + 1}Description`]}
+                  </p>
                 </div>
               </div>
             ))}
@@ -1329,12 +1494,16 @@ export default function LandingPage() {
                   <Image
                     key={img}
                     src={img}
-                    alt={`Step ${idx + 1} - CareNeighbour AI-powered instant care platform`}
+                    alt={`Step ${
+                      idx + 1
+                    } - CareNeighbour AI-powered instant care platform`}
                     width={3840}
                     height={2160}
                     quality={90}
                     sizes="(min-width: 768px) 665px"
-                    className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] h-full object-contain transition-opacity duration-500 rounded-2xl ${activeStep === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                    className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] h-full object-contain transition-opacity duration-500 rounded-2xl ${
+                      activeStep === idx ? "opacity-100 z-10" : "opacity-0 z-0"
+                    }`}
                     style={{
                       pointerEvents: "none",
                       transition: "opacity 0.5s",
@@ -1351,26 +1520,37 @@ export default function LandingPage() {
               {[0, 1, 2].map((idx) => (
                 <div
                   key={idx}
-                  ref={(el) => { stepRefs.current[idx] = el }}
+                  ref={(el) => {
+                    stepRefs.current[idx] = el;
+                  }}
                   data-idx={idx}
                   className="min-h-[60vh] md:min-h-screen flex items-center overflow-hidden"
                   style={{ scrollMarginTop: 100 }}
                 >
                   <div className="px-4 md:px-8 w-full">
                     <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
-                      <span className="text-2xl font-bold text-purple-700">{idx + 1}</span>
+                      <span className="text-2xl font-bold text-purple-700">
+                        {idx + 1}
+                      </span>
                     </div>
-                    <h3 className="text-2xl font-semibold mb-2 text-black">{(t as any)[`step${idx + 1}Title`]}</h3>
-                    <p className="text-gray-600 text-lg">{(t as any)[`step${idx + 1}Description`]}</p>
+                    <h3 className="text-2xl font-semibold mb-2 text-black">
+                      {(t as any)[`step${idx + 1}Title`]}
+                    </h3>
+                    <p className="text-gray-600 text-lg">
+                      {(t as any)[`step${idx + 1}Description`]}
+                    </p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
         </section>
-
         {/* Problem Statement Section */}
-        <section id="problem-statement" className="w-full py-10 md:py-28 relative overflow-hidden" ref={problemRef}>
+        <section
+          id="problem-statement"
+          className="w-full py-10 md:py-28 relative overflow-hidden"
+          ref={problemRef}
+        >
           <div className="container px-6 md:px-12 relative z-10">
             {/* Text content - takes 60% width on desktop, full width on mobile */}
             <div className="flex flex-col mb-12 md:mb-16 md:max-w mx-auto">
@@ -1385,7 +1565,11 @@ export default function LandingPage() {
                   <span className="gradient-text-fill">{t.problemTitle}</span>
                 </motion.h2>
               </div>
-              <p className="sr-only">CareNeighbour solves the struggle of finding care by using AI to match you instantly with trusted, culturally sensitive caregivers.</p>
+              <p className="sr-only">
+                CareNeighbour solves the struggle of finding care by using AI to
+                match you instantly with trusted, culturally sensitive
+                caregivers.
+              </p>
 
               <motion.div
                 className="space-y-6 text-lg md:text-xl text-gray-800 text-center md:text-center"
@@ -1394,11 +1578,12 @@ export default function LandingPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <p>
-                  {t.problemParagraph1}
-                </p>
+                <p>{t.problemParagraph1}</p>
                 <p className="text-gray-800 font-medium">
-                  {t.problemParagraph2Start} <span className="text-purple-700">{t.problemParagraph2End}</span>
+                  {t.problemParagraph2Start}{" "}
+                  <span className="text-purple-700">
+                    {t.problemParagraph2End}
+                  </span>
                 </p>
               </motion.div>
             </div>
@@ -1527,9 +1712,11 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
-
         {/* Experiences Section */}
-        <section id="experiences" className="w-full py-20 md:py-5 overflow-hidden">
+        <section
+          id="experiences"
+          className="w-full py-20 md:py-5 overflow-hidden"
+        >
           <div className="container px-6 md:px-12">
             <div className="flex flex-col space-y-4 mb-12 md:mb-16 max-w-full">
               <motion.div
@@ -1539,10 +1726,18 @@ export default function LandingPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 1 }}
               >
-                <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-center pb-4 w-full title-shadow" style={{ color: "#000" }}>
-                  <span className="gradient-text-fill">{t.experiencesTitle}</span>
+                <h2
+                  className="text-4xl md:text-6xl font-bold tracking-tight text-center pb-4 w-full title-shadow"
+                  style={{ color: "#000" }}
+                >
+                  <span className="gradient-text-fill">
+                    {t.experiencesTitle}
+                  </span>
                 </h2>
-                <p className="sr-only">Hear how CareNeighbour's AI-powered platform delivers instant, trusted care for families like yours.</p>
+                <p className="sr-only">
+                  Hear how CareNeighbour's AI-powered platform delivers instant,
+                  trusted care for families like yours.
+                </p>
               </motion.div>
             </div>
 
@@ -1562,19 +1757,27 @@ export default function LandingPage() {
                   <div
                     className="p-8 rounded-2xl h-full flex flex-col overflow-hidden w-full"
                     style={{
-                      background: 'rgba(255,255,255,0)',
-                      borderRadius: '16px',
-                      boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
-                      backdropFilter: 'blur(9px)',
-                      WebkitBackdropFilter: 'blur(9px)',
-                      border: '1px solid rgba(255,255,255,0.38)'
+                      background: "rgba(255,255,255,0)",
+                      borderRadius: "16px",
+                      boxShadow: "0 4px 30px rgba(0,0,0,0.1)",
+                      backdropFilter: "blur(9px)",
+                      WebkitBackdropFilter: "blur(9px)",
+                      border: "1px solid rgba(255,255,255,0.38)",
                     }}
                   >
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium" style={{ color: "#000", fontWeight: "bold" }}>{t.testimonialMariaName}</p>
+                      <p
+                        className="text-sm font-medium"
+                        style={{ color: "#000", fontWeight: "bold" }}
+                      >
+                        {t.testimonialMariaName}
+                      </p>
                     </div>
-                    <blockquote className="justify-left flex-grow" style={{ color: "#000" }}>
+                    <blockquote
+                      className="justify-left flex-grow"
+                      style={{ color: "#000" }}
+                    >
                       {t.testimonialMariaQuote}
                     </blockquote>
                   </div>
@@ -1584,19 +1787,27 @@ export default function LandingPage() {
                   <div
                     className="p-8 rounded-2xl h-full flex flex-col overflow-hidden w-full"
                     style={{
-                      background: 'rgba(255,255,255,0)',
-                      borderRadius: '16px',
-                      boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
-                      backdropFilter: 'blur(9px)',
-                      WebkitBackdropFilter: 'blur(9px)',
-                      border: '1px solid rgba(255,255,255,0.38)'
+                      background: "rgba(255,255,255,0)",
+                      borderRadius: "16px",
+                      boxShadow: "0 4px 30px rgba(0,0,0,0.1)",
+                      backdropFilter: "blur(9px)",
+                      WebkitBackdropFilter: "blur(9px)",
+                      border: "1px solid rgba(255,255,255,0.38)",
                     }}
                   >
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium" style={{ color: "#000", fontWeight: "bold" }}>{t.testimonialChenName}</p>
+                      <p
+                        className="text-sm font-medium"
+                        style={{ color: "#000", fontWeight: "bold" }}
+                      >
+                        {t.testimonialChenName}
+                      </p>
                     </div>
-                    <blockquote className="justify-left flex-grow" style={{ color: "#000" }}>
+                    <blockquote
+                      className="justify-left flex-grow"
+                      style={{ color: "#000" }}
+                    >
                       {t.testimonialChenQuote}
                     </blockquote>
                   </div>
@@ -1606,19 +1817,27 @@ export default function LandingPage() {
                   <div
                     className="p-8 rounded-2xl h-full flex flex-col overflow-hidden w-full"
                     style={{
-                      background: 'rgba(255,255,255,0)',
-                      borderRadius: '16px',
-                      boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
-                      backdropFilter: 'blur(9px)',
-                      WebkitBackdropFilter: 'blur(9px)',
-                      border: '1px solid rgba(255,255,255,0.38)'
+                      background: "rgba(255,255,255,0)",
+                      borderRadius: "16px",
+                      boxShadow: "0 4px 30px rgba(0,0,0,0.1)",
+                      backdropFilter: "blur(9px)",
+                      WebkitBackdropFilter: "blur(9px)",
+                      border: "1px solid rgba(255,255,255,0.38)",
                     }}
                   >
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium" style={{ color: "#000", fontWeight: "bold" }}>{t.testimonialAhmedName}</p>
+                      <p
+                        className="text-sm font-medium"
+                        style={{ color: "#000", fontWeight: "bold" }}
+                      >
+                        {t.testimonialAhmedName}
+                      </p>
                     </div>
-                    <blockquote className="justify-left flex-grow" style={{ color: "#000" }}>
+                    <blockquote
+                      className="justify-left flex-grow"
+                      style={{ color: "#000" }}
+                    >
                       {t.testimonialAhmedQuote}
                     </blockquote>
                   </div>
@@ -1628,19 +1847,27 @@ export default function LandingPage() {
                   <div
                     className="p-8 rounded-2xl h-full flex flex-col overflow-hidden w-full"
                     style={{
-                      background: 'rgba(255,255,255,0)',
-                      borderRadius: '16px',
-                      boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
-                      backdropFilter: 'blur(9px)',
-                      WebkitBackdropFilter: 'blur(9px)',
-                      border: '1px solid rgba(255,255,255,0.38)'
+                      background: "rgba(255,255,255,0)",
+                      borderRadius: "16px",
+                      boxShadow: "0 4px 30px rgba(0,0,0,0.1)",
+                      backdropFilter: "blur(9px)",
+                      WebkitBackdropFilter: "blur(9px)",
+                      border: "1px solid rgba(255,255,255,0.38)",
                     }}
                   >
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium" style={{ color: "#000", fontWeight: "bold" }}>{t.testimonialSarahName}</p>
+                      <p
+                        className="text-sm font-medium"
+                        style={{ color: "#000", fontWeight: "bold" }}
+                      >
+                        {t.testimonialSarahName}
+                      </p>
                     </div>
-                    <blockquote className="justify-left flex-grow" style={{ color: "#000" }}>
+                    <blockquote
+                      className="justify-left flex-grow"
+                      style={{ color: "#000" }}
+                    >
                       {t.testimonialSarahQuote}
                     </blockquote>
                   </div>
@@ -1650,19 +1877,27 @@ export default function LandingPage() {
                   <div
                     className="p-8 rounded-2xl h-full flex flex-col overflow-hidden w-full"
                     style={{
-                      background: 'rgba(255,255,255,0)',
-                      borderRadius: '16px',
-                      boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
-                      backdropFilter: 'blur(9px)',
-                      WebkitBackdropFilter: 'blur(9px)',
-                      border: '1px solid rgba(255,255,255,0.38)'
+                      background: "rgba(255,255,255,0)",
+                      borderRadius: "16px",
+                      boxShadow: "0 4px 30px rgba(0,0,0,0.1)",
+                      backdropFilter: "blur(9px)",
+                      WebkitBackdropFilter: "blur(9px)",
+                      border: "1px solid rgba(255,255,255,0.38)",
                     }}
                   >
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium" style={{ color: "#000", fontWeight: "bold" }}>{t.testimonialElenaName} </p>
+                      <p
+                        className="text-sm font-medium"
+                        style={{ color: "#000", fontWeight: "bold" }}
+                      >
+                        {t.testimonialElenaName}{" "}
+                      </p>
                     </div>
-                    <blockquote className="justify-left flex-grow" style={{ color: "#000" }}>
+                    <blockquote
+                      className="justify-left flex-grow"
+                      style={{ color: "#000" }}
+                    >
                       {t.testimonialElenaQuote}
                     </blockquote>
                   </div>
@@ -1672,19 +1907,27 @@ export default function LandingPage() {
                   <div
                     className="p-8 rounded-2xl h-full flex flex-col overflow-hidden w-full"
                     style={{
-                      background: 'rgba(255,255,255,0)',
-                      borderRadius: '16px',
-                      boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
-                      backdropFilter: 'blur(9px)',
-                      WebkitBackdropFilter: 'blur(9px)',
-                      border: '1px solid rgba(255,255,255,0.38)'
+                      background: "rgba(255,255,255,0)",
+                      borderRadius: "16px",
+                      boxShadow: "0 4px 30px rgba(0,0,0,0.1)",
+                      backdropFilter: "blur(9px)",
+                      WebkitBackdropFilter: "blur(9px)",
+                      border: "1px solid rgba(255,255,255,0.38)",
                     }}
                   >
                     <div className="flex items-center mb-4 text-gray-500">
                       <MessageSquare className="h-5 w-5 mr-2 text-purple-600" />
-                      <p className="text-sm font-medium" style={{ color: "#000", fontWeight: "bold" }}>{t.testimonialRajName}</p>
+                      <p
+                        className="text-sm font-medium"
+                        style={{ color: "#000", fontWeight: "bold" }}
+                      >
+                        {t.testimonialRajName}
+                      </p>
                     </div>
-                    <blockquote className="justify-left flex-grow" style={{ color: "#000" }}>
+                    <blockquote
+                      className="justify-left flex-grow"
+                      style={{ color: "#000" }}
+                    >
                       {t.testimonialRajQuote}
                     </blockquote>
                   </div>
@@ -1693,9 +1936,12 @@ export default function LandingPage() {
             </Carousel>
           </div>
         </section>
-
         {/* Our Approach Section - Apple-inspired with feature carousel */}
-        <section id="our-approach" className="w-full py-20 md:py-28" ref={approachRef}>
+        <section
+          id="our-approach"
+          className="w-full py-20 md:py-28"
+          ref={approachRef}
+        >
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8 md:mb-0">
               <motion.div
@@ -1706,9 +1952,15 @@ export default function LandingPage() {
                 transition={{ duration: 0.7 }}
               >
                 <h2 className="text-3xl md:text-5xl font-bold tracking-tight title-shadow">
-                  <span className="gradient-text-fill">{t.approachTitlePart1} {t.approachTitleTech} {t.approachTitlePart2} {t.approachTitleCompassion}</span>
+                  <span className="gradient-text-fill">
+                    {t.approachTitlePart1} {t.approachTitleTech}{" "}
+                    {t.approachTitlePart2} {t.approachTitleCompassion}
+                  </span>
                 </h2>
-                <p className="sr-only">Our AI-driven approach means you get matched with the right care, instantly and effortlessly.</p>
+                <p className="sr-only">
+                  Our AI-driven approach means you get matched with the right
+                  care, instantly and effortlessly.
+                </p>
                 <div className="h-8" />
               </motion.div>
             </div>
@@ -1742,12 +1994,12 @@ export default function LandingPage() {
                     alignItems: "center",
                     justifyContent: "center",
                     borderRadius: "2rem",
-                    background: 'rgba(255,255,255,0)',
-                    boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
-                    backdropFilter: 'blur(9px)',
-                    WebkitBackdropFilter: 'blur(9px)',
-                    border: '1px solid rgba(255,255,255,0.38)',
-                    position: 'relative'
+                    background: "rgba(255,255,255,0)",
+                    boxShadow: "0 4px 30px rgba(0,0,0,0.1)",
+                    backdropFilter: "blur(9px)",
+                    WebkitBackdropFilter: "blur(9px)",
+                    border: "1px solid rgba(255,255,255,0.38)",
+                    position: "relative",
                   }}
                 >
                   <div
@@ -1776,7 +2028,10 @@ export default function LandingPage() {
                         zIndex: 2,
                       }}
                     >
-                      <source src="/videos/Care-request-demo.mp4" type="video/mp4" />
+                      <source
+                        src="/videos/Care-request-demo.mp4"
+                        type="video/mp4"
+                      />
                       Your browser does not support the video tag.
                     </video>
                   </ClientOnly>
@@ -1804,12 +2059,12 @@ export default function LandingPage() {
                     alignItems: "center",
                     justifyContent: "center",
                     borderRadius: "2rem",
-                    background: 'rgba(255,255,255,0)',
-                    boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
-                    backdropFilter: 'blur(9px)',
-                    WebkitBackdropFilter: 'blur(9px)',
-                    border: '1px solid rgba(255,255,255,0.38)',
-                    position: 'relative'
+                    background: "rgba(255,255,255,0)",
+                    boxShadow: "0 4px 30px rgba(0,0,0,0.1)",
+                    backdropFilter: "blur(9px)",
+                    WebkitBackdropFilter: "blur(9px)",
+                    border: "1px solid rgba(255,255,255,0.38)",
+                    position: "relative",
                   }}
                 >
                   <div
@@ -1884,12 +2139,12 @@ export default function LandingPage() {
                     alignItems: "center",
                     justifyContent: "center",
                     borderRadius: "2rem",
-                    background: 'rgba(255,255,255,0)',
-                    boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
-                    backdropFilter: 'blur(9px)',
-                    WebkitBackdropFilter: 'blur(9px)',
-                    border: '1px solid rgba(255,255,255,0.38)',
-                    position: 'relative'
+                    background: "rgba(255,255,255,0)",
+                    boxShadow: "0 4px 30px rgba(0,0,0,0.1)",
+                    backdropFilter: "blur(9px)",
+                    WebkitBackdropFilter: "blur(9px)",
+                    border: "1px solid rgba(255,255,255,0.38)",
+                    position: "relative",
                   }}
                 >
                   <div
@@ -1918,7 +2173,10 @@ export default function LandingPage() {
                         zIndex: 2,
                       }}
                     >
-                      <source src="/videos/Carer-Review-demo.mp4" type="video/mp4" />
+                      <source
+                        src="/videos/Carer-Review-demo.mp4"
+                        type="video/mp4"
+                      />
                       Your browser does not support the video tag.
                     </video>
                   </ClientOnly>
@@ -1946,12 +2204,12 @@ export default function LandingPage() {
                     alignItems: "center",
                     justifyContent: "center",
                     borderRadius: "2rem",
-                    background: 'rgba(255,255,255,0)',
-                    boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
-                    backdropFilter: 'blur(9px)',
-                    WebkitBackdropFilter: 'blur(9px)',
-                    border: '1px solid rgba(255,255,255,0.38)',
-                    position: 'relative'
+                    background: "rgba(255,255,255,0)",
+                    boxShadow: "0 4px 30px rgba(0,0,0,0.1)",
+                    backdropFilter: "blur(9px)",
+                    WebkitBackdropFilter: "blur(9px)",
+                    border: "1px solid rgba(255,255,255,0.38)",
+                    position: "relative",
                   }}
                 >
                   <div
@@ -1980,7 +2238,10 @@ export default function LandingPage() {
                         zIndex: 2,
                       }}
                     >
-                      <source src="/videos/Explore-Page-demo.mp4" type="video/mp4" />
+                      <source
+                        src="/videos/Explore-Page-demo.mp4"
+                        type="video/mp4"
+                      />
                       Your browser does not support the video tag.
                     </video>
                   </ClientOnly>
@@ -1998,16 +2259,19 @@ export default function LandingPage() {
             </motion.section>
           </div>
         </section>
-
         {/* Early Access Signup & Feedback - Apple-inspired with clean forms */}
-        <section id="waitlist" className="w-full py-20 md:py-18" style={{
-          background: 'rgba(255,255,255,0)',
-          borderRadius: '0px',
-          boxShadow: '0 4px 30px rgba(0,0,0,0.1)',
-          backdropFilter: 'blur(9px)',
-          WebkitBackdropFilter: 'blur(9px)',
-          border: '1px solid rgba(255,255,255,0.38)'
-        }}>
+        <section
+          id="waitlist"
+          className="w-full py-20 md:py-18"
+          style={{
+            background: "rgba(255,255,255,0)",
+            borderRadius: "0px",
+            boxShadow: "0 4px 30px rgba(0,0,0,0.1)",
+            backdropFilter: "blur(9px)",
+            WebkitBackdropFilter: "blur(9px)",
+            border: "1px solid rgba(255,255,255,0.38)",
+          }}
+        >
           <div className="container px-4 md:px-6">
             <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
               {/* Waitlist Column */}
@@ -2020,9 +2284,13 @@ export default function LandingPage() {
                   transition={{ duration: 0.6 }}
                 >
                   <h2 className="text-3xl md:text-4xl font-bold tracking-tight title-shadow">
-                    <span className="gradient-text-fill">{t.waitlistTitle}</span>
+                    <span className="gradient-text-fill">
+                      {t.waitlistTitle}
+                    </span>
                   </h2>
-                  <p className="text-gray-700 text-base md:text-lg">{t.waitlistSubtitle}</p>
+                  <p className="text-gray-700 text-base md:text-lg">
+                    {t.waitlistSubtitle}
+                  </p>
                 </motion.div>
 
                 <motion.div
@@ -2046,81 +2314,106 @@ export default function LandingPage() {
                       className="w-full h-14 text-base rounded-xl bg-purple-600 hover:bg-purple-700 text-white"
                       disabled={isSubmittingWaitlist}
                     >
-                      {isSubmittingWaitlist ? t.waitlistSubmittingButton : t.waitlistSubmitButton}
+                      {isSubmittingWaitlist
+                        ? t.waitlistSubmittingButton
+                        : t.waitlistSubmitButton}
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </form>
                   {waitlistStatus && (
-                    <div className={`mt-2 text-sm ${waitlistStatus.success ? "text-green-600" : "text-red-600"}`}>
+                    <div
+                      className={`mt-2 text-sm ${
+                        waitlistStatus.success
+                          ? "text-green-600"
+                          : "text-red-600"
+                      }`}
+                    >
                       {waitlistStatus.message}
                     </div>
                   )}
-                  <p className="text-xs text-gray-500 text-center">{t.waitlistPrivacy}</p>
+                  <p className="text-xs text-gray-500 text-center">
+                    {t.waitlistPrivacy}
+                  </p>
                 </motion.div>
 
                 {/* Thank You Popup */}
-      <Dialog open={showThankYouPopup.type !== null} onOpenChange={() => setShowThankYouPopup({ type: null })}>
-        <DialogContent className="sm:max-w-lg">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-gray-900 text-center">
-              {showThankYouPopup.type === 'waitlist' 
-                ? t.thankYouPopup.waitlist.title 
-                : t.thankYouPopup.feedback.title}
-            </DialogTitle>
-            <DialogDescription className="text-gray-600 mt-4 text-center text-base leading-relaxed">
-              {showThankYouPopup.type === 'waitlist' 
-                ? t.thankYouPopup.waitlist.message 
-                : t.thankYouPopup.feedback.message}
-            </DialogDescription>
-          </DialogHeader>
-          
-          {/* Social Media Buttons */}
-          <div className="flex flex-col items-center space-y-4 mt-6">
-            <p className="text-sm font-medium text-gray-700">
-              {showThankYouPopup.type === 'waitlist' 
-                ? t.thankYouPopup.waitlist.followUs 
-                : t.thankYouPopup.feedback.followUs}
-            </p>
-            <div className="flex space-x-4">
-              {/* Facebook */}
-              <a
-                href={socialLinks.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center w-12 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors duration-200"
-              >
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-              </a>
-              
-              {/* Instagram */}
-              <a
-                href={socialLinks.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full transition-colors duration-200"
-              >
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                </svg>
-              </a>
-              
-              {/* LinkedIn */}
-              <a
-                href={socialLinks.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center w-12 h-12 bg-blue-700 hover:bg-blue-800 text-white rounded-full transition-colors duration-200"
-              >
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+                <Dialog
+                  open={showThankYouPopup.type !== null}
+                  onOpenChange={() => setShowThankYouPopup({ type: null })}
+                >
+                  <DialogContent className="sm:max-w-lg">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold text-gray-900 text-center">
+                        {showThankYouPopup.type === "waitlist"
+                          ? t.thankYouPopup.waitlist.title
+                          : t.thankYouPopup.feedback.title}
+                      </DialogTitle>
+                      <DialogDescription className="text-gray-600 mt-4 text-center text-base leading-relaxed">
+                        {showThankYouPopup.type === "waitlist"
+                          ? t.thankYouPopup.waitlist.message
+                          : t.thankYouPopup.feedback.message}
+                      </DialogDescription>
+                    </DialogHeader>
+
+                    {/* Social Media Buttons */}
+                    <div className="flex flex-col items-center space-y-4 mt-6">
+                      <p className="text-sm font-medium text-gray-700">
+                        {showThankYouPopup.type === "waitlist"
+                          ? t.thankYouPopup.waitlist.followUs
+                          : t.thankYouPopup.feedback.followUs}
+                      </p>
+                      <div className="flex space-x-4">
+                        {/* Facebook */}
+                        <a
+                          href={socialLinks.facebook}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center w-12 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors duration-200"
+                        >
+                          <svg
+                            className="w-6 h-6"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                          </svg>
+                        </a>
+
+                        {/* Instagram */}
+                        <a
+                          href={socialLinks.instagram}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full transition-colors duration-200"
+                        >
+                          <svg
+                            className="w-6 h-6"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                          </svg>
+                        </a>
+
+                        {/* LinkedIn */}
+                        <a
+                          href={socialLinks.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center w-12 h-12 bg-blue-700 hover:bg-blue-800 text-white rounded-full transition-colors duration-200"
+                        >
+                          <svg
+                            className="w-6 h-6"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
 
                 {/* Demo button */}
                 <motion.div
@@ -2134,8 +2427,7 @@ export default function LandingPage() {
                     duration: 0.6,
                     delay: 0.4,
                   }}
-                >
-                </motion.div>
+                ></motion.div>
               </div>
 
               {/* Feedback Column with Image */}
@@ -2148,9 +2440,13 @@ export default function LandingPage() {
                   transition={{ duration: 0.6 }}
                 >
                   <h2 className="text-3xl md:text-4xl font-bold tracking-tight title-shadow">
-                    <span className="gradient-text-fill">{t.feedbackTitle}</span>
+                    <span className="gradient-text-fill">
+                      {t.feedbackTitle}
+                    </span>
                   </h2>
-                  <p className="text-gray-700 text-base md:text-lg">{t.feedbackSubtitle}</p>
+                  <p className="text-gray-700 text-base md:text-lg">
+                    {t.feedbackSubtitle}
+                  </p>
                 </motion.div>
                 <motion.div
                   className="w-full space-y-4"
@@ -2181,23 +2477,33 @@ export default function LandingPage() {
                       className="w-full h-14 text-base rounded-xl border-purple-300 text-purple-700 hover:bg-purple-50"
                       disabled={isSubmittingFeedback}
                     >
-                      {isSubmittingFeedback ? t.feedbackSubmittingButton : t.feedbackSubmitButton}
+                      {isSubmittingFeedback
+                        ? t.feedbackSubmittingButton
+                        : t.feedbackSubmitButton}
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </form>
                   {feedbackStatus && (
-                    <div className={`mt-2 text-sm ${feedbackStatus.success ? "text-green-600" : "text-red-600"}`}>
+                    <div
+                      className={`mt-2 text-sm ${
+                        feedbackStatus.success
+                          ? "text-green-600"
+                          : "text-red-600"
+                      }`}
+                    >
                       {feedbackStatus.message}
                     </div>
                   )}
-                  <p className="text-xs text-gray-500 text-center">{t.feedbackPrivacy}</p>
+                  <p className="text-xs text-gray-500 text-center">
+                    {t.feedbackPrivacy}
+                  </p>
                 </motion.div>
               </div>
             </div>
           </div>
-          <div className="fixed bottom-4 right-4 space-y-2 z-50">
-</div>
-        </section>      </main>
+          <div className="fixed bottom-4 right-4 space-y-2 z-50"></div>
+        </section>{" "}
+      </main>
 
       {/* Unified Footer */}
       <UnifiedFooter
@@ -2205,11 +2511,11 @@ export default function LandingPage() {
         translations={{
           aboutUs: t.aboutUs,
           mainPage: t.heroLogo,
-          footerCopyright: t.footerCopyright
+          footerCopyright: t.footerCopyright,
         }}
       />
     </div>
-  )
+  );
 }
 
 const joinWaitlist = (email: string) => {
@@ -2224,8 +2530,8 @@ const joinWaitlist = (email: string) => {
       },
       type: "waitlist",
     }),
-  })
-}
+  });
+};
 
 const submitFeedback = (email: string, feedback: string) => {
   return fetch("/api/sheets", {
@@ -2241,8 +2547,8 @@ const submitFeedback = (email: string, feedback: string) => {
       feedback: feedback,
       type: "feedback",
     }),
-  })
-}
+  });
+};
 
 const sendCareRequest = (email: string, request: string) => {
   return fetch("/api/sheets", {
@@ -2257,10 +2563,16 @@ const sendCareRequest = (email: string, request: string) => {
       },
       type: "care-request",
     }),
-  })
-}
+  });
+};
 
-const submitOnboarding = (firstName: string, lastName: string, email: string, phone: string, postCode: string) => {
+const submitOnboarding = (
+  firstName: string,
+  lastName: string,
+  email: string,
+  phone: string,
+  postCode: string
+) => {
   return fetch("/api/sheets", {
     method: "POST",
     headers: {
@@ -2276,5 +2588,5 @@ const submitOnboarding = (firstName: string, lastName: string, email: string, ph
       },
       type: "onboarding",
     }),
-  })
-}
+  });
+};
