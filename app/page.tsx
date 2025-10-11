@@ -1316,7 +1316,7 @@ export default function LandingPage() {
                 transition={{ duration: 1, delay: 0.3 }}
               >
                 <img
-                  src="https://careneighbour.my.canva.site/_assets/media/9430f0c7baa2a133c4fb84917d601ef8.jpg"
+                  src="/images/main_1.jpg"
                   alt="Carer"
                   className="w-full h-full object-cover"
                 />
@@ -1330,7 +1330,7 @@ export default function LandingPage() {
                 transition={{ duration: 1, delay: 0.5 }}
               >
                 <img
-                  src="https://careneighbour.my.canva.site/_assets/media/0c0b73ba778e047274f588bcffbd3b60.jpg"
+                  src="/images/main_2.jpg"
                   alt="Care recipient"
                   className="w-full h-full object-cover"
                 />
