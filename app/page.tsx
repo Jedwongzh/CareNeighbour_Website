@@ -1344,9 +1344,9 @@ export default function LandingPage() {
                 transition={{ duration: 1, delay: 0.8 }}
               >
                 <img
-                  src="/DecorativeElement.png"
+                  src="/DecorativeElementRotated.png"
                   alt="Decorative element"
-                  className="w-full h-full object-contain transform rotate-[45deg]"
+                  className="w-full h-full object-contain transform rotate-[180deg]"
                 />
               </motion.div>
 
